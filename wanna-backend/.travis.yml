@@ -1,0 +1,55 @@
+language: node_js
+node_js: '8'
+addons:
+  postgresql: "9.6"
+  apt:
+    update: true
+
+cache:
+  directories:
+    - node_modules
+
+git:
+  depth: 3
+
+branches:
+  only:
+    - master
+    - /^greenkeeper/.*$/
+services:
+  - postgresql
+
+env:
+  global:
+    - NODE_ENV=test
+    - PORT=8000
+    - AUTH_TOKEN_LIFE=1h
+    - REFRESH_TOKEN_LIFE=3
+    - FACEBOOK_APP_ID=some_facebook_id
+    - FACEBOOK_SECRET=some_facebook_secret_code
+    - SECRET_STRING=some-secret-string
+    - SITE_URL=express-api.com
+    - EMAIL_HOST=smtp.gmail.com
+    - EMAIL_SENDER=some.email@gmail.com
+    - EMAIL_PASSWORD=some_pass
+    - DB_USER=postgres
+    - DB_PASSWORD=wanna
+    - DB_DATABASE=wanna
+    - DB_HOST=localhost
+
+script: yarn validate
+
+before_install: yarn global add greenkeeper-lockfile@1
+before_script:
+  - greenkeeper-lockfile-update
+  - psql -c 'create database starter_test;' -U postgres
+  - cp src/database/config.example.js src/database/config.js
+
+
+after_script: greenkeeper-lockfile-upload
+
+# deploy:
+# - provider: script
+#   script: yarn deploy
+
+after_success: yarn coverage
