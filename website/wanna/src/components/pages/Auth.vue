@@ -60,7 +60,7 @@
 
 <script>
 export default {
-  name: 'Signinup',
+  name: 'Auth',
   data () {
     return {
     email: '',
@@ -123,7 +123,7 @@ body{
   padding: 0px 0;
   height: 100%;
   width: 100%;
-  background-image: url("../assets/login-back.png");
+  background-image: url("../../assets/login-back.png");
   background-size: cover;
 	position: fixed;
   left: 0px;
@@ -144,7 +144,7 @@ a{color:inherit;text-decoration:none}
 	max-width:450px;
 	min-height:100%;
 	position:relative;
-	background:url("../assets/logo.png") no-repeat center;
+	background:url("../../assets/logo.png") no-repeat center;
 	box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.068),0 17px 50px 0 rgba(0, 0, 0, 0.075);
 } 
 .login-html{
