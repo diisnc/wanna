@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1> INSPIRE </h1>
+    <h1> WISHLIST </h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Inspire',
+  name: 'Wishlist',
   data () {
     return {
       
