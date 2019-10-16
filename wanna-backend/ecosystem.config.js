@@ -28,7 +28,8 @@ module.exports = {
       watch: true,
       exec_mode: 'fork',
       ignoreWatch: ['.idea/*', '.git/*'],
-      log_date_format: 'DD-MM-YY HH:mm',
+	  log_date_format: 'DD-MM-YY HH:mm',
+	  error_file: "/dev/null",
       env: {
         NODE_ENV: 'development',
         node_args: ['--debug=7000'],
