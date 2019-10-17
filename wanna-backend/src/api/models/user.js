@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		services: {
 			type: DataTypes.JSONB,
+			defaultValue: 'local',
 		},
 		role: {
 			type: DataTypes.ENUM(['user', 'admin']),

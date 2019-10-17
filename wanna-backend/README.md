@@ -13,6 +13,12 @@ yarn
 yarn local
 ```
 
+## Populating the database with test data
+
+```bash
+npx sequelize-cli db:seed:all
+```
+
 ## Running in Production
 
 ```bash
