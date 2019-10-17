@@ -1,25 +1,35 @@
 const faker = require('faker');
+const { generateRefreshToken } = require('../../api/services/tokenGenerator');
 
 // eslint-disable-next-line no-unused-expressions
 ('use strict');
 
-module.exports = {
-	up: (queryInterface, Sequelize) => {
-		const users = [];
+faker.locale = 'pt_BR';
 
-		for (let i = 0; i < 10; i++) {
-			users.push({
-				firstName: faker.name.firstName(),
-				lastName: faker.name.lastName(),
-				email: faker.internet.email(),
-				password: faker.internet.password(),
-				role: 'user',
-				createdAt: Sequelize.literal('CURRENT_TIMESTAMP'),
-				updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
-			});
-		}
-		return queryInterface.bulkInsert('Users', users);
-	},
+exports.createFakeData = (Sequelize, nr) => {
+	const users = [];
 
-	down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
+	var hisID = 200;
+
+	for (let i = 0; i < nr; i++) {
+		const userTemp = { id: hisID };
+
+		const user = {
+			firstName: faker.name.firstName(),
+			lastName: faker.name.lastName(),
+			email: faker.internet.email(),
+			password: faker.internet.password(),
+			role: 'user',
+			refreshToken: generateRefreshToken(userTemp),
+		};
+
+		hisID = hisID + 1;
+		users.push(user);
+	}
+
+	console.log('Foram criados ' + nr + ' utilizadores.');
+
+	return users;
 };
+
+module.exports = this;

@@ -11,7 +11,9 @@ module.exports = {
       exec_mode: 'cluster_mode',
       instances: 'max',
       ignoreWatch: ['.idea/*', '.git/*'],
-      log_date_format: 'DD-MM-YY HH:mm',
+	  log_date_format: 'DD-MM-YY HH:mm',
+	  out_file: "/dev/null",
+	  error_file: "/dev/null",
       env: {
         NODE_ENV: 'development',
       },
@@ -29,6 +31,7 @@ module.exports = {
       exec_mode: 'fork',
       ignoreWatch: ['.idea/*', '.git/*'],
 	  log_date_format: 'DD-MM-YY HH:mm',
+	  out_file: "/dev/null",
 	  error_file: "/dev/null",
       env: {
         NODE_ENV: 'development',

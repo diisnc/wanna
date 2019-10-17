@@ -47,7 +47,6 @@ exports.local = new LocalStrategy(
 	async (email, password, cb) => {
 		try {
 			const user = await strategies.local(email, password);
-			user.service = 'local';
 			cb(null, user);
 		} catch (e) {
 			cb(e);

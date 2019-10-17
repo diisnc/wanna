@@ -76,8 +76,6 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	});
 
-	// User.sync({ force: true });
-
 	User.associate = function(models) {
 		User.belongsToMany(models.Post, {
 			through: 'UserPost',

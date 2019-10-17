@@ -9,6 +9,8 @@ const config = require('../../database/config.js')[env];
 const db = {};
 const basename = path.basename(__filename);
 
+const { createFakeData } = require('../../database/factories/usersFactory');
+
 if (!config.password) {
 	config.password = '';
 }
@@ -41,6 +43,8 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-sequelize.sync({ force: true });
+// sequelize.sync({ force: true });
+
+db.User.bulkCreate(createFakeData(sequelize, 10), { individualHooks: true });
 
 module.exports = db;
