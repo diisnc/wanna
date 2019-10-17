@@ -22,6 +22,15 @@ const sequelize = new Sequelize(
 	config,
 );
 
+sequelize
+	.authenticate()
+	.then(() => {
+		console.log('Conexão com a DB Heroku estabelecida com sucesso.');
+	})
+	.catch(err => {
+		console.error('Não foi possível conectar à DB Heroku:', err);
+	});
+
 fs.readdirSync(__dirname)
 	.filter(
 		file =>
@@ -45,6 +54,17 @@ db.Sequelize = Sequelize;
 
 // sequelize.sync({ force: true });
 
-db.User.bulkCreate(createFakeData(sequelize, 10), { individualHooks: true });
+// db.User.bulkCreate(createFakeData(sequelize, 10), { individualHooks: true });
+
+sequelize.sync({ force: true }).then(
+	function() {
+		db.User.bulkCreate(createFakeData(sequelize, 10), {
+			individualHooks: true,
+		});
+	},
+	function() {
+		console.log('Erro na sincronização com a BD');
+	},
+);
 
 module.exports = db;
