@@ -1,8 +1,5 @@
 /* eslint-disable no-param-reassign */
-const bcrypt = require('bcryptjs');
-const uuidv4 = require('uuid/v4');
 const { omit } = require('lodash');
-const mailer = require('../services/mailer');
 
 module.exports = (sequelize, DataTypes) => {
 	const Post = sequelize.define('Post', {
@@ -34,9 +31,25 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
+		Post.hasMany(models.Comment, {
+			foreignKey: 'idPost',
+			sourceKey: 'id',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
+		Post.hasMany(models.Category, {
+			foreignKey: 'idPost',
+			sourceKey: 'id',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
+		Post.belongsTo(models.User, {
+			foreignKey: 'idUser',
+			targetKey: 'id',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
 	};
-
-	// Post.sync({ force: true });
 
 	/* TODO - cena pra alterar um post... alterar descrição, preço...
 	/** Models Hooks
@@ -68,32 +81,6 @@ module.exports = (sequelize, DataTypes) => {
 				'refreshToken',
 				'resetToken',
 			]);
-		},
-
-		/**
-		 * Compare hashed passwords
-		 * @param password
-		 * @returns {Promise}
-		 */
-		async verifyPassword(password) {
-			return bcrypt.compare(password, this.password);
-		},
-
-		/**
-		 * Create reset password token and send email
-		 * @returns {Promise}
-		 */
-		async resetPassword() {
-			this.resetToken = uuidv4();
-			const post = await this.save();
-			return mailer(
-				post.email,
-				'Reset password email',
-				'reset-password',
-				{
-					post,
-				},
-			);
 		},
 	};
 

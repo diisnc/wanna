@@ -84,6 +84,12 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
+		User.hasMany(models.Filter, {
+			foreignKey: 'idUser',
+			sourceKey: 'id',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
 	};
 
 	/** Static methods */

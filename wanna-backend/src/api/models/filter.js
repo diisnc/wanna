@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-	const Photo = sequelize.define('Photo', {
-		photoData: {
+	const Filter = sequelize.define('Filter', {
+		FilterData: {
 			type: DataTypes.BLOB,
 		},
 		imageType: {
@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
 		},
 	});
 
-	Photo.associate = function(models) {
-		Photo.belongsTo(models.Post, {
-			foreignKey: 'idPost',
+	Filter.associate = function(models) {
+		Filter.belongsTo(models.Filter, {
+			foreignKey: 'idFilter',
 			targetKey: 'id',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
 	};
 
-	return Photo;
+	return Filter;
 };

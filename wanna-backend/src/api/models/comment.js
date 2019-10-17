@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-	const Photo = sequelize.define('Photo', {
-		photoData: {
+	const Comment = sequelize.define('Comment', {
+		CommentData: {
 			type: DataTypes.BLOB,
 		},
 		imageType: {
@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 		},
 	});
 
-	Photo.associate = function(models) {
-		Photo.belongsTo(models.Post, {
+	Comment.associate = function(models) {
+		Comment.belongsTo(models.Post, {
 			foreignKey: 'idPost',
 			targetKey: 'id',
 			onDelete: 'SET NULL',
@@ -18,5 +18,5 @@ module.exports = (sequelize, DataTypes) => {
 		});
 	};
 
-	return Photo;
+	return Comment;
 };
