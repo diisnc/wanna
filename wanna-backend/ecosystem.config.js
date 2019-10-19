@@ -29,7 +29,7 @@ module.exports = {
       script: 'src',
       watch: true,
       exec_mode: 'fork',
-      ignoreWatch: ['.idea/*', '.git/*'],
+	  ignore_watch: ['.idea/*', '.git/*', 'src/api/routes/v1/images'],
 	  log_date_format: 'DD-MM-YY HH:mm',
 	  out_file: "/dev/null",
 	  error_file: "/dev/null",
