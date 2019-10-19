@@ -1,55 +1,48 @@
 language: node_js
-node_js: '8'
+node_js: '10'
 addons:
-  postgresql: "9.6"
+  postgresql: '9.6'
   apt:
     update: true
-
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 git:
   depth: 3
-
 branches:
   only:
-    - master
-    - /^greenkeeper/.*$/
+  - master
+  - "/^greenkeeper/.*$/"
 services:
-  - postgresql
-
+- postgresql
 env:
   global:
-    - NODE_ENV=test
-    - PORT=8000
-    - AUTH_TOKEN_LIFE=1h
-    - REFRESH_TOKEN_LIFE=3
-    - FACEBOOK_APP_ID=some_facebook_id
-    - FACEBOOK_SECRET=some_facebook_secret_code
-    - SECRET_STRING=some-secret-string
-    - SITE_URL=express-api.com
-    - EMAIL_HOST=smtp.gmail.com
-    - EMAIL_SENDER=some.email@gmail.com
-    - EMAIL_PASSWORD=some_pass
-    - DB_USER=postgres
-    - DB_PASSWORD=wanna
-    - DB_DATABASE=wanna
-    - DB_HOST=localhost
-
+  - NODE_ENV=test
+  - PORT=8000
+  - AUTH_TOKEN_LIFE=1h
+  - REFRESH_TOKEN_LIFE=3
+  - FACEBOOK_APP_ID=some_facebook_id
+  - FACEBOOK_SECRET=some_facebook_secret_code
+  - SECRET_STRING=some-secret-string
+  - SITE_URL=express-api.com
+  - EMAIL_HOST=smtp.gmail.com
+  - EMAIL_SENDER=some.email@gmail.com
+  - EMAIL_PASSWORD=some_pass
+  - DB_USER=rrktideuavzfsi
+  - DB_PASSWORD=bb12bbdd7950e8870431e79288e622d47e72745399e5f0793448cb2060320955
+  - DB_DATABASE=d2apsh82fja208
+  - DB_HOST=ec2-46-137-91-216.eu-west-1.compute.amazonaws.com
+  matrix:
+    secure: OvwMXZt2ElVmT4DL9dwPE19HlaICHOAEg7vxZfsbRIUIJHp4xIvZUrktxqquocg6qY5WzPLMx9LzMamWobKSvrTTFAWznRPvexDkr1R+Bb5ivAHhFwffNGYM1cG28lD8MlDFmgHF4GWQPqlMJFBu4r0ixV0Pw0PnEfxyHN+zMgI/S7KwimHL3E8Wo5CvvWOfi+gEsp2onHqGczy4y70bDiMcVskQeVx/nNKIjgIe7olYY8/+P2zyhWruL9XwvJh93pGFd8xE/EtdWGXqHrV6NVtQB+SU0LeecmAPpcNBglfRnPW3Doz9uu7DuRs4lP62UldNFEm7GfdO5t/1Za5mHOWnoBXLF6Cb9JGPqqmrU7Q+Ers/QDvowjuV7voQzhPUVZQJm6ItG3UeZWMnQb62ha/VdbzXV/+5K22+sTun3dqdG5/r0/xuYPWFiTA4YQI7mrgFaHwJYPUVq3xy8GFXPVhPO2AF/fUVAL2AMj4E2AzcYAI8iijQs1lv5ne1zt7lOh0xqTWR11Mg63ArkD0o58+Gs9/G+ZR3e6z6pOXk+0Bo5wg+oOEwwsoyxDPOvbrS3B5ayqnX/Z3K0laCgt4KCG9KfkTO0Jft+C1o34lJBQE+LdqLhM9oc1yr630bidGqP1NnZy7vKdw3rZzVZF/hI/WQgLpY0KoqoP7zPpOginw=
 script: yarn validate
-
 before_install: yarn global add greenkeeper-lockfile@1
 before_script:
-  - greenkeeper-lockfile-update
-  - psql -c 'create database starter_test;' -U postgres
-  - cp src/database/config.example.js src/database/config.js
-
-
+- greenkeeper-lockfile-update
+- psql -c 'create database starter_test;' -U postgres
+- cp src/database/config.example.js src/database/config.js
 after_script: greenkeeper-lockfile-upload
-
-# deploy:
-# - provider: script
-#   script: yarn deploy
-
+deploy:
+  provider: heroku
+  api_key:
+    secure: TRX2BCcrnOIv5yURAlXzjw05zgCha8vxVL+5tvl/8w5cY7SY+jQbqUzqG2NFHH+mYc2Or2eWtneQ28N6fLKMs8naFxmCwc03ylmNPxOd87WX0EO6V67VcBMuDqLBhPoG289JVktIB2KafOGs8NxZJImr85Zoop/NO8H74WAwn14yRRtCrmh25IwJLL18NZJelpO3b9B1suBKTPY3VR+YdcGD0Ysu6LVjUTFD2kYmS9R1x6VloBBaI3tlF++ANbtBVne3uiYfi5QXagDm6SIHzsh/czbD57VMuaHvPX2kQ7qqPtQpoAxY+yFKnmSXYtepQtb4bG9pPK01Ctx4fgNWFdU8cNkm6Z5la5LXja3ZXMUTMpwB8Ca1F+kjANme+WoapgnabRXrYtg7Mbn3kPHCyOVJt/4rzuQzvIlfpVxENXNgs7+2+mTP6OM63OYQ9KC/taqO2Zceyrc4L3CQgZ/gBMhx3MboKYXViCRcIwa6wdArF4udkZGoqfv+sIV0fkbXYtMN4w1fqz7WA5ebHJF9vA5nSlwYwqWilUJUQGyDOpDvWldB0x96yzzfGwGXyDdUUSY/8DV4tWIDMc4kUkA0mJDpjEVmZ4L80INAJauLizNnDgfuGqJPl4lySSOohU3k6FXHBjULSPt4Pb3rBG8eR0iDWJHdI32+aI3sSoCMSiI=
 after_success: yarn coverage
