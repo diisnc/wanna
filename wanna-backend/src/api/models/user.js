@@ -84,6 +84,20 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
+		User.belongsToMany(models.User, {
+			through: 'FollowRelationship',
+			as: 'followed',
+			foreignKey: 'followed_id',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
+		User.belongsToMany(models.User, {
+			through: 'FollowRelationship',
+			as: 'followers',
+			foreignKey: 'follower_id',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
 		User.hasMany(models.Filter, {
 			foreignKey: 'idUser',
 			sourceKey: 'id',
