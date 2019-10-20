@@ -69,6 +69,20 @@ module.exports = (sequelize, DataTypes) => {
 
 	*/
 
+	/**
+	 * Return feed
+	 * @returns {Promise<*>}
+	 */
+	Post.feed = async function feed() {
+		result = await this.sequelize.query(
+			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description", "Posts"."isAvailable", "Posts"."price", "Photos"."photoData" FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost" ORDER BY "Posts"."createdAt"',
+			{
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	};
+
 	/** Object methods */
 	const objectMethods = {
 		/**

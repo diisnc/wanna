@@ -20,6 +20,8 @@ router
 	.post(validate(rules.createPost), controller.create);
 */
 
+router.route('/feed').get(controller.feed);
+
 router
 	.route('/createPost')
 	.post(

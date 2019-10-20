@@ -56,3 +56,16 @@ exports.create = async (req, res, next) => {
 		next(e);
 	}
 };
+
+/**
+ * Returns Get feed
+ * @public
+ */
+exports.feed = async (req, res, next) => {
+	try {
+		list = await Post.feed();
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};
