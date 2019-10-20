@@ -10,18 +10,13 @@ module.exports = {
       watch: false,
       exec_mode: 'cluster_mode',
       instances: 'max',
-      ignoreWatch: ['.idea/*', '.git/*'],
+      ignoreWatch: ['.idea/*', '.git/*', 'src/api/routes/v1/images'],
 	  log_date_format: 'DD-MM-YY HH:mm',
 	  out_file: "/dev/null",
 	  error_file: "/dev/null",
       env: {
         NODE_ENV: 'development',
-      },
-      env_staging: {
-        NODE_ENV: 'production',
-      },
-      env_production: {
-        NODE_ENV: 'production',
+        node_args: ['--debug=7000'],
       },
     },
     {
