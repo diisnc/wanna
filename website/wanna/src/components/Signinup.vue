@@ -24,6 +24,16 @@
             <div class="group">
               <input type="submit" class="button" v-on:click="login" value="Sign In">
             </div>
+			<br/>
+				<div>
+					<button class="loginBtn loginBtn--facebook">
+					Login with Facebook
+					</button>
+
+					<button class="loginBtn loginBtn--google">
+					Login with Google
+					</button>
+				</div>
           </div>
           
 					
@@ -49,10 +59,10 @@
             <div class="group">
               <input type="submit" class="button" v-on:click="onSubmit" value="Sign Up">
             </div>
+
           </div>
-        
 				
-				</div>
+		</div>
       </div>
     </div>
   </div>
@@ -120,15 +130,15 @@ body{
 }
 
 .container-full { 
-  padding: 0px 0;
+  padding: 5% 5%;
   height: 100%;
   width: 100%;
   background-image: url("../assets/login-back.png");
   background-size: cover;
-	position: fixed;
+  position: fixed;
   left: 0px;
   top: 0px;
-	overflow: hidden;
+  overflow: hidden;
 }
 
 
@@ -140,11 +150,12 @@ a{color:inherit;text-decoration:none}
 /* ORIGINAL: max-width:525px*/
 .login-wrap{  
 	width:100%;
+    border-radius: 25px;
 	margin: auto;
 	max-width:450px;
-	min-height:100%;
+	min-height:100%; 
 	position:relative;
-	background:url("../assets/logo.png") no-repeat center;
+	background:url("../assets/black-back.jpg") no-repeat center;
 	box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.068),0 17px 50px 0 rgba(0, 0, 0, 0.075);
 } 
 .login-html{
@@ -185,7 +196,7 @@ a{color:inherit;text-decoration:none}
 .login-html .sign-in:checked + .tab,
 .login-html .sign-up:checked + .tab{
 	color:#fff;
-	border-color:orange;
+	border-color:#55abf2;
 }
 .login-form{
 	min-height:345px;
@@ -219,7 +230,7 @@ a{color:inherit;text-decoration:none}
 	font-size:12px;
 }
 .login-form .group .button{
-	background:orange;
+	background:#55abf2;
 }
 .login-form .group label .icon{
 	width:15px;
@@ -253,7 +264,7 @@ a{color:inherit;text-decoration:none}
 	color:#fff;
 }
 .login-form .group .check:checked + label .icon{
-	background:orange;
+	background:#55abf2;
 }
 .login-form .group .check:checked + label .icon:before{
 	transform:scale(1) rotate(45deg);
@@ -275,6 +286,77 @@ a{color:inherit;text-decoration:none}
 }
 .foot-lnk{
 	text-align:center;
+}
+/* --------------------------- Log in with facebook / google --------------------------- */
+
+/* Shared */
+.loginBtn {
+  box-sizing: border-box;
+  position: relative;
+  /* width: 13em;  - apply for fixed size */
+  margin: 0.2em;
+  padding: 0 15px 0 46px;
+  border: none;
+  text-align: left;
+  line-height: 34px;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  font-size: 16px;
+  color: #FFF;
+}
+.loginBtn:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 100%;
+}
+.loginBtn:focus {
+  outline: none;
+}
+.loginBtn:active {
+  box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+}
+
+
+/* Facebook */
+.loginBtn--facebook {
+  display: inline-block;
+  width: 210px;
+  text-align: center;
+  background-color: #4C69BA;
+  background-image: linear-gradient(#4C69BA, #3B55A0);
+  /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
+  text-shadow: 0 -1px 0 #354C8C;
+}
+.loginBtn--facebook:before {
+  border-right: #364e92 1px solid;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png') 6px 6px no-repeat;
+}
+.loginBtn--facebook:hover,
+.loginBtn--facebook:focus {
+  background-color: #5B7BD5;
+  background-image: linear-gradient(#5B7BD5, #4864B1);
+}
+
+
+/* Google */
+.loginBtn--google {
+  display: inline-block;
+  width: 210px;
+  text-align: center;
+  /*font-family: "Roboto", Roboto, arial, sans-serif;*/
+  background: #DD4B39;
+}
+.loginBtn--google:before {
+  border-right: #BB3F30 1px solid;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png') 6px 6px no-repeat;
+}
+.loginBtn--google:hover,
+.loginBtn--google:focus {
+  background: #E74B37;
 }
 
 </style>
