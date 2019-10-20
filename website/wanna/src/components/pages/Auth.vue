@@ -6,7 +6,7 @@
         <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
         
 
-		<div class="login-form">
+				<div class="login-form">
           <div class="sign-in-htm">
             <div class="group">
               <label for="user" class="label">Email</label>
@@ -24,16 +24,15 @@
             <div class="group">
               <input type="submit" class="button" v-on:click="login" value="Sign In">
             </div>
-			<br/>
-				<div>
-					<button class="loginBtn loginBtn--facebook">
-					Login with Facebook
-					</button>
+            <div>
+              <button class="loginBtn loginBtn--facebook">
+              Login with Facebook
+              </button>
 
-					<button class="loginBtn loginBtn--google">
-					Login with Google
-					</button>
-				</div>
+              <button class="loginBtn loginBtn--google">
+              Login with Google
+              </button>
+            </div>
           </div>
           
 					
@@ -59,10 +58,10 @@
             <div class="group">
               <input type="submit" class="button" v-on:click="onSubmit" value="Sign Up">
             </div>
-
           </div>
+        
 				
-		</div>
+				</div>
       </div>
     </div>
   </div>
@@ -149,13 +148,15 @@ a{color:inherit;text-decoration:none}
 
 /* ORIGINAL: max-width:525px*/
 .login-wrap{  
+  text-align: center;
 	width:100%;
-    border-radius: 25px;
+  border-radius: 25px;
 	margin: auto;
 	max-width:450px;
 	min-height:100%; 
 	position:relative;
-	background:url("../assets/black-back.jpg") no-repeat center;
+  /* CHANGE THIS BACKGROUND */
+	background:url("../../assets/logo.png") no-repeat center;
 	box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.068),0 17px 50px 0 rgba(0, 0, 0, 0.075);
 } 
 .login-html{
