@@ -11,7 +11,7 @@
     "yarn": "*"
   },
   "scripts": {
-	"postinstall": "cd wanna-backend",
+	"postinstall": "cd wanna-backend && yarn",
     "precommit": "pretty-quick --staged && yarn lint",
     "prestart": "yarn docs",
     "start": "yarn migrate && pm2 start ecosystem.config.js --only API --env production",

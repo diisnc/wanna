@@ -1,5 +1,5 @@
 {
   "scripts": {
-	"heroku-prebuild": "cd wanna-backend && yarn"
+	"heroku-prebuild": "cd wanna-backend"
   }
 }
