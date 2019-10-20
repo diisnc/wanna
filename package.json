@@ -1,0 +1,5 @@
+{
+  "scripts": {
+	"heroku-prebuild": "cd wanna-backend && yarn"
+  }
+}
