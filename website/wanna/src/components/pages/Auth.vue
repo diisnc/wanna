@@ -25,6 +25,7 @@
               <input type="submit" class="button" v-on:click="login" value="Sign In">
             </div>
             <div>
+              <br/>
               <button class="loginBtn loginBtn--facebook">
               Login with Facebook
               </button>

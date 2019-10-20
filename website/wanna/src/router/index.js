@@ -6,6 +6,7 @@ import Inspire from '@/components/pages/Inspire'
 import Wishlist from '@/components/pages/Wishlist'
 import Outfit from '@/components/pages/Outfit'
 import Profile from '@/components/pages/Profile'
+import Management from '@/components/pages/Management'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '',
       name: 'Auth',
       component: Auth
+    },
+    {
+      path: '/management',
+      name: 'Management',
+      component: Management
     },
     {
       path: '/inspire',
