@@ -11,7 +11,6 @@
     "yarn": "*"
   },
   "scripts": {
-	"heroku-prebuild": "yarn",
     "precommit": "pretty-quick --staged && yarn lint",
     "prestart": "yarn docs",
     "start": "pm2 start ecosystem.config.js --only API && pm2 logs",
