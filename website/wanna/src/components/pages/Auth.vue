@@ -157,8 +157,9 @@ a{color:inherit;text-decoration:none}
 	min-height:100%; 
 	position:relative;
   /* CHANGE THIS BACKGROUND */
-	background:url("../../assets/logo.png") no-repeat center;
-	box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.068),0 17px 50px 0 rgba(0, 0, 0, 0.075);
+	 background:url("../../assets/logo.png") no-repeat center;
+	/* background-color: blue; */
+  box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.068),0 17px 50px 0 rgba(0, 0, 0, 0.075);
 } 
 .login-html{
 	width:100%;
@@ -197,8 +198,12 @@ a{color:inherit;text-decoration:none}
 }
 .login-html .sign-in:checked + .tab,
 .login-html .sign-up:checked + .tab{
-	color:#fff;
+	color: rgba(255, 255, 255, 0.918);
 	border-color:#55abf2;
+}
+.login-html .sign-in:not(:checked) + .tab,
+.login-html .sign-up:not(:checked) + .tab{
+  color: #aaa;
 }
 .login-form{
 	min-height:345px;
@@ -320,6 +325,9 @@ a{color:inherit;text-decoration:none}
 }
 .loginBtn:active {
   box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+}
+.login-form .group .input:focus {
+  outline: none;
 }
 
 
