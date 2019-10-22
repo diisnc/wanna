@@ -1,6 +1,7 @@
 const { Post } = require('../models');
 const { Photo } = require('../models');
 const { UserPost } = require('../models');
+const { Comment } = require('../models');
 var fs = require('fs');
 const httpStatus = require('http-status');
 
@@ -85,6 +86,20 @@ exports.createUserPost = async (req, res, next) =>{
 			post_id: req.body.idPost,
 		});
 	    return res.status(httpStatus.CREATED).json(userPost);
+	} catch (e) {
+		next(e);
+	}
+
+};
+
+exports.createComment = async (req, res, next) =>{
+	try {
+		const comment = await Comment.create({
+			commentData: req.body.commentData, 
+			idUser: req.user.id,
+			idPost: req.body.idPost,
+		});
+	    return res.status(httpStatus.CREATED).json(comment);
 	} catch (e) {
 		next(e);
 	}

@@ -37,6 +37,14 @@ router
 		controller.createUserPost,
 	);
 
+router	
+	.route('/comment')
+	.post(
+		validate(rules.createComment),
+		controller.createComment,
+	);
+
+
 /*
 router
 	.route('/:postId')

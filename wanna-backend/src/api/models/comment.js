@@ -1,17 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
 	const Comment = sequelize.define('Comment', {
-		CommentData: {
+		commentData: {
 			type: DataTypes.BLOB,
-		},
-		imageType: {
-			type: DataTypes.STRING,
-			allowNull: false,
 		},
 	});
 
 	Comment.associate = function(models) {
 		Comment.belongsTo(models.Post, {
 			foreignKey: 'idPost',
+			targetKey: 'id',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
+		Comment.belongsTo(models.User, {
+			foreignKey: 'idUser',
 			targetKey: 'id',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
