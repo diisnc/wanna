@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const controller = require('../../controllers/profile.controller');
+const rules = require('../../validations/profile.validation');
 
 router
 	.route('/')
@@ -22,5 +23,11 @@ router
 	 * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
 	 */
 	.get(controller.profileInfo);
+
+router.route('/follow/:userID').post(validate(rules.follow), controller.follow);
+
+router
+	.route('/unfollow/:userID')
+	.post(validate(rules.follow), controller.unfollow);
 
 module.exports = router;

@@ -30,20 +30,13 @@ router
 		controller.create,
 	);
 
-router	
+router
 	.route('/createUserPost')
-	.post(
-		validate(rules.createUserPost),
-		controller.createUserPost,
-	);
+	.post(validate(rules.createUserPost), controller.createUserPost);
 
-router	
+router
 	.route('/comment')
-	.post(
-		validate(rules.createComment),
-		controller.createComment,
-	);
-
+	.post(validate(rules.createComment), controller.createComment);
 
 /*
 router
