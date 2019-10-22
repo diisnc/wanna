@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataTypes) => {
 	const UserPost = sequelize.define('UserPost', {
 		likeTimeStamp: {
@@ -18,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 	});
 
-	// UserPost.sync({ force: true });
+// UserPost.sync({ force: true });
 
 	return UserPost;
 };

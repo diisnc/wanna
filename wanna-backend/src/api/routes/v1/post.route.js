@@ -30,6 +30,13 @@ router
 		controller.create,
 	);
 
+router	
+	.route('/createUserPost')
+	.post(
+		validate(rules.createUserPost),
+		controller.createUserPost,
+	);
+
 /*
 router
 	.route('/:postId')

@@ -1,5 +1,6 @@
 const { Post } = require('../models');
 const { Photo } = require('../models');
+const { UserPost } = require('../models');
 var fs = require('fs');
 const httpStatus = require('http-status');
 
@@ -68,4 +69,24 @@ exports.feed = async (req, res, next) => {
 	} catch (e) {
 		next(e);
 	}
+};
+
+/**
+ * 
+ * Creates a UserPost 
+ * @public
+ */
+
+exports.createUserPost = async (req, res, next) =>{
+	try {
+		const userPost = await UserPost.create({
+			likeTimeStamp: new Date(), 
+			user_id: req.user.id,
+			post_id: req.body.idPost,
+		});
+	    return res.status(httpStatus.CREATED).json(userPost);
+	} catch (e) {
+		next(e);
+	}
+
 };
