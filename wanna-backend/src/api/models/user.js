@@ -85,14 +85,14 @@ module.exports = (sequelize, DataTypes) => {
 			onUpdate: 'CASCADE',
 		});
 		User.belongsToMany(models.User, {
-			through: 'FollowRelationship',
+			through: 'followRelationship',
 			as: 'followed',
 			foreignKey: 'followed_id',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
 		User.belongsToMany(models.User, {
-			through: 'FollowRelationship',
+			through: 'followRelationship',
 			as: 'followers',
 			foreignKey: 'follower_id',
 			onDelete: 'SET NULL',

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const controller = require('../../controllers/profile.controller');
 const rules = require('../../validations/profile.validation');
+const validate = require('../../validations/handler');
 
 router
 	.route('/')
