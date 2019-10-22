@@ -68,7 +68,7 @@
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn } from 'mdbvue';
 // import NavbarToOffcanvasAdmin from '../components/NavBarToOffcanvasAdmin'    NAVBAR DO VITOR
 export default {
-  name: 'Management',
+  name: 'Manageposts',
   data () {
     return {
       modal: false,

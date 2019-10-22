@@ -6,7 +6,10 @@ import Inspire from '@/components/pages/Inspire'
 import Wishlist from '@/components/pages/Wishlist'
 import Outfit from '@/components/pages/Outfit'
 import Profile from '@/components/pages/Profile'
-import Management from '@/components/pages/Management'
+import Manageusers from '@/components/admin/Manageusers'
+import Home from '@/components/admin/Home'
+import Manageposts from '@/components/admin/Manageposts'
+
 
 Vue.use(Router)
 
@@ -17,31 +20,92 @@ export default new Router({
       path: '',
       name: 'Auth',
       component: Auth
+      /* meta: { guest: true } */
     },
     {
-      path: '/management',
-      name: 'Management',
-      component: Management
+      path: '/manageposts',
+      name: 'Manageposts',
+      component: Manageposts
+      /* meta: { requiresAuth: true, isAdmin: true } */
+    },
+    {
+      path: '/manageusers',
+      name: 'Manageusers',
+      component: Manageusers
+      /* meta: { requiresAuth: true, isAdmin: true } */
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home
+      /* meta: { requiresAuth: true, isAdmin: true } */
     },
     {
       path: '/inspire',
       name: 'Inspire',
       component: Inspire
+      /* meta: { requiresAuth: true } */
     },
     {
       path: '/wishlist',
       name: 'Wishlist',
       component: Wishlist
+      /* meta: { requiresAuth: true } */
     },
     {
       path: '/outfit',
       name: 'Outfit',
       component: Outfit
+      /* meta: { requiresAuth: true } */
     },
     {
       path: '/:username',
       name: 'Profile',
       component: Profile
+      /* meta: { requiresAuth: true } */
     }
   ]
 })
+
+
+
+/*  Com parâmetros (signinup, admin, ...) do meu tp de web. Posteriormente alterar
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => {console.log(record.meta); return record.meta.requiresAuth})) {
+    console.log(store.state.login.accesstoken)
+      if ( !store.state.login.accesstoken) {
+          next({
+              name: 'signinup'
+              // params: { nextUrl: to.fullPath }
+          })
+      } else if(to.matched.some(record => record.meta.isAdmin)) {
+          if(store.state.login.isAdmin === true){
+              next()
+          }
+          else{
+              next({ name: 'user'})
+          }
+      }else {
+          next()
+      }
+  } else if(to.matched.some(record => record.meta.guest)) {
+      if( store.state.login.accesstoken){
+        if (!store.state.login.isAdmin){
+          next({ name: 'user'})
+        } else {
+          next({ name: 'admin'})
+        }
+      }
+      else {
+        next()
+      }
+  } else {
+      next() 
+  }
+})
+
+export default router
+
+
+*/
