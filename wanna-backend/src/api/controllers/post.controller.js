@@ -66,42 +66,73 @@ exports.create = async (req, res, next) => {
 exports.feed = async (req, res, next) => {
 	try {
 		list = await Post.feed();
-		res.json(list);
+
+		const result1 = [];
+
+		for (var i = 0; i < list.length;) {
+			var currentID = list[i].id;
+			const post = {
+				id: list[i].id,
+				idUser: list[i].idUser,
+				description: list[i].description,
+				isAvailable: list[i].isAvailable,
+				price: list[i].price,
+				photoType1: list[i].photoType,
+				photoData1: list[i].photoData,
+			};
+
+			i += 1;
+
+			var index = 2;
+			while (
+				(parseInt(list[i].id, 10) == currentID) &
+				(i < list.length)
+			) {
+				post['photoType' + index] = list[i].photoType;
+				post['photoData' + index] = list[i].photoData;
+				i += 1;
+				index += 1;
+
+				if (i >= list.length) break;
+			}
+
+			result1.push(post);
+		}
+
+		res.json(result1);
 	} catch (e) {
 		next(e);
 	}
 };
 
 /**
- * 
- * Creates a UserPost 
+ *
+ * Creates a UserPost
  * @public
  */
 
-exports.createUserPost = async (req, res, next) =>{
+exports.createUserPost = async (req, res, next) => {
 	try {
 		const userPost = await UserPost.create({
-			likeTimeStamp: new Date(), 
+			likeTimeStamp: new Date(),
 			user_id: req.user.id,
 			post_id: req.body.idPost,
 		});
-	    return res.status(httpStatus.CREATED).json(userPost);
+		return res.status(httpStatus.CREATED).json(userPost);
 	} catch (e) {
 		next(e);
 	}
-
 };
 
-exports.createComment = async (req, res, next) =>{
+exports.createComment = async (req, res, next) => {
 	try {
 		const comment = await Comment.create({
-			commentData: req.body.commentData, 
+			commentData: req.body.commentData,
 			idUser: req.user.id,
 			idPost: req.body.idPost,
 		});
-	    return res.status(httpStatus.CREATED).json(comment);
+		return res.status(httpStatus.CREATED).json(comment);
 	} catch (e) {
 		next(e);
 	}
-
 };

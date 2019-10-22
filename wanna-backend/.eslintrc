@@ -6,7 +6,8 @@
       {
         "singleQuote": true,
         "trailingComma": "all",
-        "prettier.tabWidth": 4
+		"prettier.tabWidth": 4,
+		"endOfLine": "auto"
       }
     ],
     "no-console": 0,

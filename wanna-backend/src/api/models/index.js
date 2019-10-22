@@ -56,6 +56,7 @@ db.Sequelize = Sequelize;
 
 // db.User.bulkCreate(createFakeData(sequelize, 10), { individualHooks: true });
 
+/*
 sequelize.sync({ force: true }).then(
 	function() {
 		db.User.bulkCreate(createFakeData(sequelize, 10), {
@@ -66,5 +67,6 @@ sequelize.sync({ force: true }).then(
 		console.log('Erro na sincronização com a BD');
 	},
 );
+*/
 
 module.exports = db;
