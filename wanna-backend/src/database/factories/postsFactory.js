@@ -10,8 +10,8 @@ exports.createFakeDataPosts = (Sequelize, nr) => {
 	for (let i = 0; i < nr; i++) {
 		const post = {
 			id: hisID,
-			description: faker.name.jobDescriptor(),
-			price: faker.commerce.price(),
+			description: faker.random.words(),
+			price: faker.finance.amount(),
 			isAvailable: faker.random.boolean(),
 		};
 		hisID = hisID + 1;

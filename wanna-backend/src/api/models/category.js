@@ -1,11 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 	const Category = sequelize.define('Category', {
-		CategoryData: {
-			type: DataTypes.BLOB,
-		},
-		imageType: {
-			type: DataTypes.STRING,
-			allowNull: false,
+		name: {
+			type: DataTypes.TEXT,
 		},
 	});
 

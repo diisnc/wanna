@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: '',
 		},
 		price: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.DECIMAL(10,2),
 			defaultValue: 0,
 		},
 		isAvailable: {

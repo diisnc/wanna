@@ -1,10 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
 	const Comment = sequelize.define('Comment', {
-		commentData: {
-			type: DataTypes.BLOB,
+		commentText: {
+			type: DataTypes.TEXT,
 		},
 	});
-
 	Comment.associate = function(models) {
 		Comment.belongsTo(models.Post, {
 			foreignKey: 'idPost',
@@ -19,6 +18,5 @@ module.exports = (sequelize, DataTypes) => {
 			onUpdate: 'CASCADE',
 		});
 	};
-
 	return Comment;
 };

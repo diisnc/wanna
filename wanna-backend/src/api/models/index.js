@@ -15,6 +15,12 @@ const {
 const {
 	createFakeDataPosts,
 } = require('../../database/factories/postsFactory');
+const {
+	createFakeDataComments,
+} = require('../../database/factories/commentsFactory');
+const {
+	createFakeDataCategories,
+} = require('../../database/factories/categoriesFactory');
 
 if (!config.password) {
 	config.password = '';
@@ -66,9 +72,13 @@ sequelize.sync({ force: true }).then(
 		db.User.bulkCreate(createFakeDataUsers(sequelize, 10), {
 			individualHooks: true,
 		});
-	},
-	function() {
-		db.User.bulkCreate(createFakeDataPosts(sequelize, 40), {
+		db.Post.bulkCreate(createFakeDataPosts(sequelize, 40), {
+			individualHooks: true,
+		});
+		db.Comment.bulkCreate(createFakeDataComments(sequelize, 20), {
+			individualHooks: true,
+		});
+		db.Category.bulkCreate(createFakeDataCategories(sequelize, 7), {
 			individualHooks: true,
 		});
 	},
