@@ -51,18 +51,13 @@ app.use('/v1', routes);
 
 const pathIndex = path.join(__dirname, '../views/index.html');
 const pathCss = path.join(__dirname, '../views/index.css');
-const pathLib = path.join(__dirname, '../../node_modules/compass-mixins/lib/compass/css3');
 
 app.get('/', function(req, res) {
 	res.sendfile(pathIndex);
 });
 
-app.get('/style.css', function(req, res) {
+app.get('/index.css', function(req, res) {
 	res.sendFile(pathCss);
-});
-
-app.get('/compass/css3', function(req, res) {
-	res.sendFile(pathLib);
 });
 
 // mount errors handlers
