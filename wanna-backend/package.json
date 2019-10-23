@@ -11,7 +11,6 @@
     "yarn": "*"
   },
   "scripts": {
-    "precommit": "pretty-quick --staged && yarn lint",
     "start": "pm2 start ecosystem.config.js --only API && pm2 logs",
     "dev": "yarn migrate && yarn docs && pm2 start ecosystem.config.js --only API --env develop",
     "local": "pm2 start ecosystem.config.js --only API_LOCAL && pm2 logs",

@@ -6,7 +6,7 @@ const { generateRefreshToken } = require('../../api/services/tokenGenerator');
 
 faker.locale = 'pt_BR';
 
-exports.createFakeData = (Sequelize, nr) => {
+exports.createFakeDataUsers = (Sequelize, nr) => {
 	const users = [];
 
 	var hisID = 200;

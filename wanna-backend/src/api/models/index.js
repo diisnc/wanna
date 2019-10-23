@@ -9,7 +9,12 @@ const config = require('../../database/config.js')[env];
 const db = {};
 const basename = path.basename(__filename);
 
-const { createFakeData } = require('../../database/factories/usersFactory');
+const {
+	createFakeDataUsers,
+} = require('../../database/factories/usersFactory');
+const {
+	createFakeDataPosts,
+} = require('../../database/factories/postsFactory');
 
 if (!config.password) {
 	config.password = '';
@@ -54,11 +59,16 @@ db.Sequelize = Sequelize;
 
 // sequelize.sync({ force: true });
 
-// db.User.bulkCreate(createFakeData(sequelize, 10), { individualHooks: true });
+// db.User.bulkCreate(createFakeDataUsers(sequelize, 10), { individualHooks: true });
 
 sequelize.sync({ force: true }).then(
 	function() {
-		db.User.bulkCreate(createFakeData(sequelize, 10), {
+		db.User.bulkCreate(createFakeDataUsers(sequelize, 10), {
+			individualHooks: true,
+		});
+	},
+	function() {
+		db.User.bulkCreate(createFakeDataPosts(sequelize, 40), {
 			individualHooks: true,
 		});
 	},
