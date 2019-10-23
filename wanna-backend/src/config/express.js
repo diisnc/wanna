@@ -11,6 +11,7 @@ const errorHandler = require('../api/middlewares/errorHandler');
 const httpStatus = require('http-status');
 const strategies = require('./passport');
 const passport = require('passport');
+var path = require('path');
 
 /**
  * Express instance
@@ -47,6 +48,22 @@ passport.use('jwt', strategies.jwt);
 
 // mount api v1 routes
 app.use('/v1', routes);
+
+const pathIndex = path.join(__dirname, '../views/index.html');
+const pathCss = path.join(__dirname, '../views/index.css');
+const pathLib = path.join(__dirname, '../../node_modules/compass-mixins/lib/compass/css3');
+
+app.get('/', function(req, res) {
+	res.sendfile(pathIndex);
+});
+
+app.get('/style.css', function(req, res) {
+	res.sendFile(pathCss);
+});
+
+app.get('/compass/css3', function(req, res) {
+	res.sendFile(pathLib);
+});
 
 // mount errors handlers
 app.use(errorHandler);
