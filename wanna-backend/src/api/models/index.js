@@ -16,6 +16,9 @@ const {
 	createFakeDataPosts,
 } = require('../../database/factories/postsFactory');
 const {
+	createFakeDataPhotos,
+} = require('../../database/factories/photosFactory');
+const {
 	createFakeDataComments,
 } = require('../../database/factories/commentsFactory');
 const {
@@ -72,8 +75,13 @@ sequelize.sync({ force: true }).then(
 		db.User.bulkCreate(createFakeDataUsers(sequelize, 10), {
 			individualHooks: true,
 		});
-		db.Post.bulkCreate(createFakeDataPosts(sequelize, 40), {
+		db.Post.bulkCreate(createFakeDataPosts(sequelize, 10), {
 			individualHooks: true,
+		});
+		createFakeDataPhotos(sequelize, 10).then(function(value) {
+			db.Photo.bulkCreate(value, {
+				individualHooks: true,
+			});
 		});
 		db.Comment.bulkCreate(createFakeDataComments(sequelize, 20), {
 			individualHooks: true,
@@ -86,5 +94,7 @@ sequelize.sync({ force: true }).then(
 		console.log('Erro na sincronização com a BD');
 	},
 );
+
+
 
 module.exports = db;
