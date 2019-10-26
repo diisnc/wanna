@@ -1,4 +1,5 @@
 const { followRelationship } = require('../models');
+const { User } = require('../models');
 const httpStatus = require('http-status');
 
 /**
