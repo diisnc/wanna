@@ -29,6 +29,7 @@ function hasPermissions(userRole, allowedRole) {
 }
 
 module.exports = (role = 'guest') => (req, res, next) => {
+	// Se a chamada à função for com 0 argumentos, o role = guest em vez de null
 	passport.authenticate('jwt', { session: false }, (error, user) => {
 		if (error) {
 			return next(new ApiError(invalidToken));
