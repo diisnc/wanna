@@ -5,6 +5,7 @@ const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const profileRoutes = require('./profile.route');
 const postRoutes = require('./post.route');
+const filterRoutes = require('./filter.route');
 const authenticate = require('../../middlewares/authenticate');
 
 const router = express.Router();
@@ -24,6 +25,7 @@ router.use('/docs-examples', express.static('docs-examples'));
 router.use('/users', jwtAuth, authenticate('admin'), userRoutes);
 router.use('/profile', jwtAuth, authenticate('user'), profileRoutes);
 router.use('/post', jwtAuth, authenticate('user'), postRoutes);
+router.use('/filter', jwtAuth, authenticate('user'), filterRoutes);
 router.use('/auth', authRoutes);
 
 module.exports = router;

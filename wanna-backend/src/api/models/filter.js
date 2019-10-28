@@ -35,5 +35,10 @@ module.exports = (sequelize, DataTypes) => {
 		});
 	};
 
+	Filter.getFilters = async function feed() {
+		result = await this.findAll({ where: { idUser: req.user.username } });
+		return result;
+	};
+
 	return Filter;
 };

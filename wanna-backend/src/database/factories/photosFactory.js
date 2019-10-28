@@ -1,8 +1,5 @@
 const faker = require('faker');
-var request = require('request'),
-	fs = require('fs');
-
-const http = require('http');
+var request = require('request');
 // eslint-disable-next-line no-unused-expressions
 ('use strict');
 

@@ -9,15 +9,9 @@ const config = require('../../database/config.js')[env];
 const db = {};
 const basename = path.basename(__filename);
 
-const {
-	createFakeUsers,
-} = require('../../database/factories/usersFactory');
-const {
-	createFakePosts,
-} = require('../../database/factories/postsFactory');
-const {
-	createFakePhotos,
-} = require('../../database/factories/photosFactory');
+const { createFakeUsers } = require('../../database/factories/usersFactory');
+const { createFakePosts } = require('../../database/factories/postsFactory');
+const { createFakePhotos } = require('../../database/factories/photosFactory');
 const {
 	createFakeComments,
 } = require('../../database/factories/commentsFactory');
@@ -86,5 +80,5 @@ async function createFakeData() {
 	}
 }
 
-createFakeData();
+// createFakeData();
 module.exports = db;
