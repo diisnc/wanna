@@ -75,12 +75,12 @@ async function createFakeData() {
 		db.Comment.bulkCreate(comments, {
 			individualHooks: true,
 		});
-		const followers = await createFakeFollowers(db, sequelize, 900);
-		db.FollowRelationship.bulkCreate(followers, {
+		const followers = await createFakeFollowers(db, sequelize, 100);
+		db.followRelationship.bulkCreate(followers, {
 			individualHooks: true,
 		});
-		const likes = await createFakeLikes(db, sequelize, 2000);
-		db.Likes.bulkCreate(likes, {
+		const likes = await createFakeLikes(db, sequelize, 100);
+		db.Like.bulkCreate(likes, {
 			individualHooks: true,
 		});
 	} catch (e) {
@@ -88,5 +88,5 @@ async function createFakeData() {
 	}
 }
 
-// createFakeData();
+createFakeData();
 module.exports = db;
