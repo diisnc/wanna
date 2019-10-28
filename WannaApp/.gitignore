@@ -1,5 +1,6 @@
 # Dependency directories
-node_modules
+.gitignore
+node_modules/
 jspm_packages
 
 package-lock.json
