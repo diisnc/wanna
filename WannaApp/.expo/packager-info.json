@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 11724,
-  "expoServerNgrokUrl": "https://ia-3ee.anonymous.wannaapp.exp.direct",
-  "packagerNgrokUrl": "https://packager.ia-3ee.anonymous.wannaapp.exp.direct",
-  "ngrokPid": 12660
+  "devToolsPort": 19002,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://w3-deb.anonymous.wannaapp.exp.direct",
+  "packagerNgrokUrl": "https://packager.w3-deb.anonymous.wannaapp.exp.direct",
+  "ngrokPid": 6020
 }

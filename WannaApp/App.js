@@ -8,6 +8,7 @@ import Wanted from './screens/Wanted'
 import Combine from './screens/Combine'
 import Add from './screens/Add'
 import Profile from './screens/Profile'
+import Filters from './screens/Filters'
 
 
 export default createBottomTabNavigator({
@@ -26,6 +27,15 @@ export default createBottomTabNavigator({
       tabBarLabel: 'WANTED',
       tabBarIcon: ({ tintColor }) => (
         <MaterialCommunityIcons name="heart-outline" color={tintColor} size={24} />
+      )
+    }
+  },
+  Filters: {
+    screen: Filters,
+    navigationOptions: {
+      tabBarLabel: 'FILTERS',
+      tabBarIcon: ({ tintColor }) => (
+        <MaterialCommunityIcons name="filter-outline" color={tintColor} size={24} />
       )
     }
   },

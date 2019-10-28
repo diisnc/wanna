@@ -11,7 +11,6 @@ import {
     Dimensions
 } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
-import Category from './components/Inspire/Category'
 global.Buffer = global.Buffer || require('buffer').Buffer
 
 const { height, width } = Dimensions.get('window')
@@ -66,9 +65,7 @@ class Inspire extends Component {
                     alignItems: 'stretch'
                 }}>
                     {this.buildHeader()}
-                    {/*this.buildFeed()*/}
-                    {/*this.buildHorizontalScrollView()*/}
-                    {this.buildFeedTileTest()}
+                    {this.buildFeed()}
                 </View>
             </SafeAreaView>
             
@@ -104,86 +101,6 @@ class Inspire extends Component {
 
     // Builds feed of the page
     buildFeed() {
-        return (
-                <View style={{ height: 500, backgroundColor: 'pink', borderBottomWidth: 1, borderBottomColor: '#dddddd' }}>
-                    
-                </View>
-        );
-    }
-
-    // Build Horizontal ScrollView
-    buildHorizontalScrollView() {
-
-        // just to test with local data
-        // should be replaced with the data fetched in the mounting
-        const localFeedData = require('./json/responseFeed');
-
-        return (
-            <ScrollView scrollEventThrottle={16}>
-                <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 20 }}>
-                    this.buildFeedTile(localFeedData);
-                {/*
-               
-                this.state.feedData.map((post) => {
-
-                    console.log(post)
-                });
-
-                for(let i = 0; i < posts; i++) {
-                    console.log(i)
-
-                };
-
-                */}
-
-
-
-
-
-
-                    <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20 }}>
-                        What can we help you find, Varun?
-                    </Text>
-
-                    <View style={{ height: 130, marginTop: 20 }}>
-                        <ScrollView
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                        >
-                            <Category imageUri={require('../assets/home.jpg')}
-                                name="Home"
-                            />
-                            <Category imageUri={require('../assets/experiences.jpg')}
-                                name="Experiences"
-                            />
-                            <Category imageUri={require('../assets/restaurant.jpg')}
-                                name="Resturant"
-                            />
-                        </ScrollView>
-                    </View>
-                    <View style={{ marginTop: 40, paddingHorizontal: 20 }}>
-                        <Text style={{ fontSize: 24, fontWeight: '700' }}>
-                            Introducing Airbnb Plus
-                        </Text>
-                        <Text style={{ fontWeight: '100', marginTop: 10 }}>
-                            A new selection of homes verified for quality & comfort
-
-                        </Text>
-                        <View style={{ width: width - 40, height: 200, marginTop: 20 }}>
-                            <Image
-                                style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1, borderColor: '#dddddd' }}
-                                source={require('../assets/home.jpg')}
-                            />
-
-                        </View>
-                    </View>
-                </View>
-            </ScrollView>
-        );
-    }
-
-    buildFeedTileTest() {
-
         return (
             <ScrollView scrollEventThrottle={16}>
                 <View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
@@ -568,7 +485,6 @@ class Inspire extends Component {
         this.setState({feedData: newState, numPosts: newState.length})
 
        return;
-
     }
 
 }

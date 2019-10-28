@@ -7,7 +7,8 @@ import {
     TextInput,
     Platform,
     ScrollView,
-    Image
+    Image,
+    Switch
 } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer
@@ -17,8 +18,36 @@ class Wanted extends Component {
     state = 
     {
         wishlistData: [],
-        numPosts: 0
+        numPosts: 0,
+        selectedFilters: [],
+        switchValues: [false, false]
     }
+    
+    //onValueChange of the switch this function will be called
+    toggleSwitch(newState) {
+        //console.log("Antigo state: " + this.state.selectedFilters)
+
+        // change toggle value
+        let switchValuesCopy = [...this.state.switchValues];
+        switchValuesCopy[newState.i] = newState.newValue;
+        this.setState({switchValues: switchValuesCopy});
+        // add to selected filters
+        var selectedFiltersCopy = [...this.state.selectedFilters];
+        if(newState.newValue == true) {
+            selectedFiltersCopy.push(newState.filterId);
+        }
+        // remove from selected filters
+        else {
+            let index = selectedFiltersCopy.indexOf(newState.filterId);
+            if (index > -1) {
+                selectedFiltersCopy.splice(index, 1);
+            }
+        }
+        this.setState({selectedFilters: selectedFiltersCopy});
+
+        //console.log(newState.newValue)
+        //console.log(newState.filterId)
+     }
 
     componentDidMount() {
         this.startHeaderHeight = 80
@@ -48,7 +77,8 @@ class Wanted extends Component {
                     alignItems: 'stretch'
                 }}>
                     {this.buildHeader()}
-                    {this.buildWishlist()}
+                    {/* this.buildWishlist() */}
+                    {this.buildFilterList()}
                 </View>
             </SafeAreaView>
             
@@ -79,6 +109,45 @@ class Wanted extends Component {
                         />
                     </View>
                 </View>
+        );
+    }
+
+    // Builds list of filters
+    buildFilterList() {
+        return (
+            <ScrollView scrollEventThrottle={16}>
+                <View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
+                    {/* um filtro */}
+                    <View key={"filter1"} style={{height: 80, flexDirection: 'row', alignItems: 'stretch', backgroundColor: 'green'}}>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>Camisola</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>Azul</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>L</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>10€</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>15€</Text>
+                        <Switch
+                            style={{margin: 10}}
+                            // controla switchValues, filterId servirá para selectedFilters
+                            onValueChange = {(value) => this.toggleSwitch({i: 0, newValue: value, filterId: "filter1"})}
+                            value = {this.state.switchValues[0]}>
+                        </Switch>
+                    </View>
+                    {/* um filtro */}
+                    <View key={"filter2"} style={{height: 100, flexDirection: 'row', alignItems: 'stretch', backgroundColor: 'yellow'}}>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>Calças</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>Preto</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>M</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>20€</Text>
+                        <Text style={{flex: 1, margin: 10, justifyContent: "center"}}>25€</Text>
+                        <Switch
+                            style={{margin: 10}}
+                            // controla switchValues, filterId servirá para selectedFilters
+                            onValueChange = {(value) => this.toggleSwitch({i: 1, newValue: value, filterId: "filter2"})}
+                            value = {this.state.switchValues[1]}>
+                        </Switch>
+                    </View>
+
+                </View>
+            </ScrollView>
         );
     }
 
