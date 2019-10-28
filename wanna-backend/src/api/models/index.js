@@ -70,31 +70,33 @@ db.Sequelize = Sequelize;
 
 // db.User.bulkCreate(createFakeDataUsers(sequelize, 10), { individualHooks: true });
 
-sequelize.sync({ force: true }).then(
-	function() {
-		db.User.bulkCreate(createFakeDataUsers(sequelize, 10), {
+async function getAPIData() {
+	let payload;
+	try {
+		await sequelize.sync({ force: true });
+		await db.User.bulkCreate(createFakeDataUsers(sequelize, 10), {
 			individualHooks: true,
 		});
-		db.Post.bulkCreate(createFakeDataPosts(sequelize, 10), {
+		const posts = await createFakeDataPosts(db, sequelize, 10);
+		await db.Post.bulkCreate(posts, {
 			individualHooks: true,
 		});
-		createFakeDataPhotos(sequelize, 10).then(function(value) {
-			db.Photo.bulkCreate(value, {
-				individualHooks: true,
-			});
+		const photos = await createFakeDataPhotos(db, sequelize, 10);
+		await db.Photo.bulkCreate(photos, {
+			individualHooks: true,
 		});
+
 		db.Comment.bulkCreate(createFakeDataComments(sequelize, 20), {
 			individualHooks: true,
 		});
 		db.Category.bulkCreate(createFakeDataCategories(sequelize, 7), {
 			individualHooks: true,
 		});
-	},
-	function() {
-		console.log('Erro na sincronização com a BD');
-	},
-);
 
+	} catch(e) {
+	  console.log(e);
+	}
+}
 
-
+getAPIData();
 module.exports = db;
