@@ -23,7 +23,7 @@ exports.follow = async (req, res, next) => {
 	try {
 		const followPost = await followRelationship.create({
 			followed_id: req.params.userID,
-			follower_id: req.user.id,
+			follower_id: req.user.username,
 		});
 
 		return res.status(httpStatus.CREATED).json(followPost);
@@ -41,7 +41,7 @@ exports.unfollow = async (req, res, next) => {
 		.destroy({
 			where: {
 				followed_id: req.params.userID,
-				follower_id: req.user.id,
+				follower_id: req.user.username,
 			},
 		})
 		.then(function(deletedRecord) {
@@ -54,7 +54,7 @@ exports.unfollow = async (req, res, next) => {
 			}
 		})
 		.catch(function(error) {
-			res.status(500).json(error);
+			res.status(500).json('Erro na operação ' + error);
 		});
 };
 
