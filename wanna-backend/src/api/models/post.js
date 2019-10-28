@@ -58,12 +58,6 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
-		Post.hasMany(models.Category, {
-			foreignKey: 'idPost',
-			sourceKey: 'id',
-			onDelete: 'SET NULL',
-			onUpdate: 'CASCADE',
-		});
 		Post.belongsTo(models.User, {
 			foreignKey: 'idUser',
 			targetKey: 'username',

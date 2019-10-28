@@ -30,7 +30,7 @@ var doRequest = function() {
 	});
 };
 
-exports.createFakeDataPhotos = async (db, sequelize, nr) => {
+exports.createFakePhotos = async (db, sequelize, nr) => {
 	const photos = [];
 	var hisID = 200;
 

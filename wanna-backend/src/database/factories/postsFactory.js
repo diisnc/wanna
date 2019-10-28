@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 
 faker.locale = 'pt_BR';
 
-exports.createFakeDataPosts = async (db, sequelize, nr) => {
+exports.createFakePosts = async (db, sequelize, nr) => {
 	var categories = ['Top', 'Blusa', 'Camisola', 'Camisa', 'T-Shirt', 'Calças', 'Calções', 'Sapatos', 'Acessórios'];
 	var colors = ['Preto', 'Branco', 'Vermelho', 'Azul', 'Bege', 'Rosa'];
 	var sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];

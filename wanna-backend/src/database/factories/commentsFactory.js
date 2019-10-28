@@ -4,13 +4,13 @@ const faker = require('faker');
 
 faker.locale = 'pt_BR';
 
-exports.createFakeDataComments = (Sequelize, nr) => {
+exports.createFakeComments = (Sequelize, nr) => {
 	const comments = [];
 	var hisID = 200;
 	for (let i = 0; i < nr; i++) {
 		const comment = {
 			id: hisID,
-			commentText: faker.random.words()
+			commentText: faker.random.words(),
 		};
 		hisID = hisID + 1;
 		comments.push(comment);

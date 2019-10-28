@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	Filter.associate = function(models) {
-		Filter.belongsTo(models.Filter, {
-			foreignKey: 'idFilter',
-			targetKey: 'id',
+		Filter.belongsTo(models.User, {
+			foreignKey: 'idUser',
+			targetKey: 'username',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});

@@ -10,20 +10,17 @@ const db = {};
 const basename = path.basename(__filename);
 
 const {
-	createFakeDataUsers,
+	createFakeUsers,
 } = require('../../database/factories/usersFactory');
 const {
-	createFakeDataPosts,
+	createFakePosts,
 } = require('../../database/factories/postsFactory');
 const {
-	createFakeDataPhotos,
+	createFakePhotos,
 } = require('../../database/factories/photosFactory');
 const {
-	createFakeDataComments,
+	createFakeComments,
 } = require('../../database/factories/commentsFactory');
-const {
-	createFakeDataCategories,
-} = require('../../database/factories/categoriesFactory');
 
 if (!config.password) {
 	config.password = '';
@@ -66,37 +63,28 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// sequelize.sync({ force: true });
-
-// db.User.bulkCreate(createFakeDataUsers(sequelize, 10), { individualHooks: true });
-
-async function getAPIData() {
-	let payload;
+async function createFakeData() {
 	try {
 		await sequelize.sync({ force: true });
-		await db.User.bulkCreate(createFakeDataUsers(sequelize, 10), {
+		await db.User.bulkCreate(createFakeUsers(sequelize, 10), {
 			individualHooks: true,
 		});
-		const posts = await createFakeDataPosts(db, sequelize, 10);
+		const posts = await createFakePosts(db, sequelize, 10);
 		await db.Post.bulkCreate(posts, {
 			individualHooks: true,
 		});
-		const photos = await createFakeDataPhotos(db, sequelize, 10);
+		const photos = await createFakePhotos(db, sequelize, 10);
 		await db.Photo.bulkCreate(photos, {
 			individualHooks: true,
 		});
 
-		db.Comment.bulkCreate(createFakeDataComments(sequelize, 20), {
+		db.Comment.bulkCreate(createFakeComments(sequelize, 20), {
 			individualHooks: true,
 		});
-		db.Category.bulkCreate(createFakeDataCategories(sequelize, 7), {
-			individualHooks: true,
-		});
-
-	} catch(e) {
-	  console.log(e);
+	} catch (e) {
+		console.log(e);
 	}
 }
 
-getAPIData();
+createFakeData();
 module.exports = db;
