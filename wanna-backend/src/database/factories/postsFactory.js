@@ -12,7 +12,6 @@ exports.createFakePosts = async (db, sequelize, nr) => {
 	var sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 	const posts = [];
-	var hisID = 200;
 
 	// console.log(Sequelize);
 
@@ -29,8 +28,6 @@ exports.createFakePosts = async (db, sequelize, nr) => {
 			size: sizes[Math.floor(Math.random() * sizes.length)],
 			isAvailable: faker.random.boolean(),
 		};
-
-		hisID = hisID + 1;
 
 		posts.push(post);
 	}

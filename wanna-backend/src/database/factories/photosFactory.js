@@ -32,7 +32,6 @@ var doRequest = function() {
 
 exports.createFakePhotos = async (db, sequelize, nr) => {
 	const photos = [];
-	var hisID = 200;
 
 	for (let i = 0; i < nr; i++) {
 		const nrImages = Math.floor(Math.random() * (5 - 1) + 1);
@@ -51,8 +50,6 @@ exports.createFakePhotos = async (db, sequelize, nr) => {
 				photos.push(photo);
 			});
 		}
-
-		hisID = hisID + 1;
 	}
 
 	console.log('Foram criados ' + photos.length + ' fotos.');

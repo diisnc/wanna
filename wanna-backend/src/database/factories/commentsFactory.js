@@ -4,15 +4,22 @@ const faker = require('faker');
 
 faker.locale = 'pt_BR';
 
-exports.createFakeComments = (Sequelize, nr) => {
+exports.createFakeComments = async (db, sequelize, nr) => {
 	const comments = [];
-	var hisID = 200;
 	for (let i = 0; i < nr; i++) {
+		const user = await db.User.findOne({
+			order: sequelize.random(),
+		});
+
+		const post = await db.Post.findOne({
+			order: sequelize.random(),
+		});
+
 		const comment = {
-			id: hisID,
-			commentText: faker.random.words(),
+			commentText: faker.lorem.paragraph(),
+			idUser: user.username,
+			idPost: post.id,
 		};
-		hisID = hisID + 1;
 		comments.push(comment);
 	}
 	console.log('Foram criados ' + nr + ' comments.');

@@ -9,22 +9,19 @@ faker.locale = 'pt_BR';
 exports.createFakeUsers = (Sequelize, nr) => {
 	const users = [];
 
-	var hisID = 200;
-
 	for (let i = 0; i < nr; i++) {
-		const userTemp = { id: hisID };
+		const usernameT = faker.internet.userName();
 
 		const user = {
-			username: faker.internet.userName(),
+			username: usernameT,
 			firstName: faker.name.firstName(),
 			lastName: faker.name.lastName(),
 			email: faker.internet.email(),
 			password: faker.internet.password(),
 			role: 'user',
-			refreshToken: generateRefreshToken(userTemp),
+			refreshToken: generateRefreshToken(usernameT),
 		};
 
-		hisID = hisID + 1;
 		users.push(user);
 	}
 

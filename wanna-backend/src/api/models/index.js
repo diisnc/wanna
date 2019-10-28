@@ -77,8 +77,8 @@ async function createFakeData() {
 		await db.Photo.bulkCreate(photos, {
 			individualHooks: true,
 		});
-
-		db.Comment.bulkCreate(createFakeComments(sequelize, 20), {
+		const comments = await createFakeComments(db, sequelize, 20);
+		db.Comment.bulkCreate(comments, {
 			individualHooks: true,
 		});
 	} catch (e) {
