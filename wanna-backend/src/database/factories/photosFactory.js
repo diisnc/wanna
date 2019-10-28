@@ -30,7 +30,7 @@ var doRequest = function() {
 	});
 };
 
-exports.createFakeDataPhotos = async (Sequelize, nr) => {
+exports.createFakeDataPhotos = async (db, sequelize, nr) => {
 	const photos = [];
 	var hisID = 200;
 
@@ -39,10 +39,14 @@ exports.createFakeDataPhotos = async (Sequelize, nr) => {
 
 		for (var j = 0; j < nrImages; j++) {
 			await doRequest().then(function(value) {
+				const post = db.Post.findOne({
+					order: sequelize.random(),
+				});
+
 				const photo = {
 					photoData: value,
 					photoType: 'image/jpeg',
-					idPost: hisID,
+					idPost: post.id,
 				};
 				photos.push(photo);
 			});

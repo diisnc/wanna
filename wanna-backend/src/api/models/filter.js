@@ -1,11 +1,28 @@
 module.exports = (sequelize, DataTypes) => {
 	const Filter = sequelize.define('Filter', {
-		FilterData: {
-			type: DataTypes.BLOB,
-		},
-		imageType: {
+		category: {
 			type: DataTypes.STRING,
-			allowNull: false,
+			defaultValue: '',
+		},
+		color: {
+			type: DataTypes.STRING,
+			defaultValue: '',
+		},
+		priceMin: {
+			type: DataTypes.DECIMAL(10, 2),
+			defaultValue: 0,
+		},
+		priceMax: {
+			type: DataTypes.DECIMAL(10, 2),
+			defaultValue: 0,
+		},
+		size: {
+			type: DataTypes.STRING,
+			defaultValue: '',
+		},
+		isActive: {
+			defaultValue: true,
+			type: DataTypes.BOOLEAN,
 		},
 	});
 

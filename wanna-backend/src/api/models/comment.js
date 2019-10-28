@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 		});
 		Comment.belongsTo(models.User, {
 			foreignKey: 'idUser',
-			targetKey: 'id',
+			targetKey: 'username',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});

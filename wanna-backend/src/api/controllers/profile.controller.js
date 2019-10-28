@@ -8,7 +8,7 @@ const httpStatus = require('http-status');
  */
 exports.profileInfo = async (req, res, next) => {
 	try {
-		list = await User.getProfileInfo(req.user.id);
+		list = await User.getProfileInfo(req.user.username);
 		res.json(list);
 	} catch (e) {
 		next(e);

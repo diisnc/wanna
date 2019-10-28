@@ -15,6 +15,7 @@ exports.createFakeDataUsers = (Sequelize, nr) => {
 		const userTemp = { id: hisID };
 
 		const user = {
+			username: faker.internet.userName(),
 			firstName: faker.name.firstName(),
 			lastName: faker.name.lastName(),
 			email: faker.internet.email(),

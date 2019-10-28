@@ -8,8 +8,29 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: '',
 		},
 		price: {
-			type: DataTypes.DECIMAL(10,2),
+			type: DataTypes.DECIMAL(10, 2),
 			defaultValue: 0,
+		},
+		category: {
+			type: DataTypes.STRING,
+			defaultValue: '',
+			validate: {
+				notEmpty: { msg: 'Category is required' },
+			},
+		},
+		color: {
+			type: DataTypes.STRING,
+			defaultValue: '',
+			validate: {
+				notEmpty: { msg: 'Color is required' },
+			},
+		},
+		size: {
+			type: DataTypes.STRING,
+			defaultValue: '',
+			validate: {
+				notEmpty: { msg: 'Size is required' },
+			},
 		},
 		isAvailable: {
 			defaultValue: true,
@@ -45,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
 		});
 		Post.belongsTo(models.User, {
 			foreignKey: 'idUser',
-			targetKey: 'id',
+			targetKey: 'username',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});

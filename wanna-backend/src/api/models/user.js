@@ -7,6 +7,15 @@ const mailer = require('../services/mailer');
 
 module.exports = (sequelize, DataTypes) => {
 	const User = sequelize.define('User', {
+		username: {
+			type: DataTypes.STRING,
+			primaryKey: true,
+			defaultValue: '',
+			unique: { msg: 'Username already exists' },
+			validate: {
+				notEmpty: { msg: 'Username is required' },
+			},
+		},
 		firstName: {
 			type: DataTypes.STRING,
 			defaultValue: '',
@@ -59,6 +68,10 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: true,
 			type: DataTypes.BOOLEAN,
 		},
+		rating: {
+			defaultValue: 3.0,
+			type: DataTypes.DECIMAL(10, 1),
+		},
 	});
 
 	/** Models Hooks */
@@ -100,13 +113,13 @@ module.exports = (sequelize, DataTypes) => {
 		});
 		User.hasMany(models.Filter, {
 			foreignKey: 'idUser',
-			sourceKey: 'id',
+			sourceKey: 'username',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
 		User.hasMany(models.Comment, {
 			foreignKey: 'idUser',
-			sourceKey: 'id',
+			sourceKey: 'username',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
@@ -145,11 +158,11 @@ module.exports = (sequelize, DataTypes) => {
 	 * Return profile
 	 * @returns {Promise<*>}
 	 */
-	User.getProfileInfo = async function getProfileInfo(idLog) {
+	User.getProfileInfo = async function getProfileInfo(usernameLog) {
 		result = await this.sequelize.query(
-			'SELECT "firstName", "lastName", "email" FROM "Users" WHERE "Users"."id" = (:id)',
+			'SELECT "firstName", "lastName", "email" FROM "Users" WHERE "Users"."username" = (:username)',
 			{
-				replacements: { id: idLog },
+				replacements: { username: usernameLog },
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
