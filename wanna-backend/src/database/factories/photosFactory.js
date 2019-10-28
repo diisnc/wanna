@@ -37,12 +37,12 @@ exports.createFakeDataPhotos = async (db, sequelize, nr) => {
 	for (let i = 0; i < nr; i++) {
 		const nrImages = Math.floor(Math.random() * (5 - 1) + 1);
 
+		const post = await db.Post.findOne({
+			order: sequelize.random(),
+		});
+
 		for (var j = 0; j < nrImages; j++) {
 			await doRequest().then(function(value) {
-				const post = db.Post.findOne({
-					order: sequelize.random(),
-				});
-
 				const photo = {
 					photoData: value,
 					photoType: 'image/jpeg',
