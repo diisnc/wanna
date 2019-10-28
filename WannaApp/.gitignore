@@ -1,5 +1,4 @@
 # Dependency directories
-.gitignore
 node_modules/
 jspm_packages
 
