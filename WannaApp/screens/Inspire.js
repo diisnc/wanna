@@ -79,6 +79,7 @@ class Inspire extends Component {
                 <View style={{ height: this.startHeaderHeight, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#dddddd' }}>
                     {/* Search Box */}
                     <View style={{
+                        height: '90%',
                         flexDirection: 'row', padding: 10,
                         backgroundColor: 'white', marginHorizontal: 20,
                         shadowOffset: { width: 0, height: 0 },

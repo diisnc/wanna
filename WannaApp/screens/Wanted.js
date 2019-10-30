@@ -7,9 +7,10 @@ import {
     TextInput,
     Platform,
     ScrollView,
-    Image
+    Image,
+    TouchableHighlight
 } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer
 
 class Wanted extends Component {
@@ -58,27 +59,25 @@ class Wanted extends Component {
     // Builds header of the page
     buildHeader() {
         return (
-                // Safe Box for Android
-                <View style={{ height: this.startHeaderHeight, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#dddddd' }}>
-                    {/* Search Box */}
-                    <View style={{
-                        flexDirection: 'row', padding: 10,
-                        backgroundColor: 'white', marginHorizontal: 20,
-                        shadowOffset: { width: 0, height: 0 },
-                        shadowColor: 'black',
-                        shadowOpacity: 0.2,
-                        elevation: 1,
-                        justifyContent: 'flex-end'
-                    }}>
-                        <MaterialIcons name="search" size={20} style={{ marginRight: 10 }} />
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            placeholder="Try Camisola"
-                            placeholderTextColor="grey"
-                            style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
-                        />
-                    </View>
+            // Safe Box for Android
+            <View style={{ height: this.startHeaderHeight, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#dddddd' }}>
+                <View style={{
+                    height: '90%',
+                    flexDirection: 'row', padding: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: "blue"
+                }}>
+                    <Text style={{flex: 3, textAlign: "center"}}>
+                        WANTED
+                    </Text>
+                    <MaterialCommunityIcons.Button 
+                        name="filter-variant" size={40} 
+                        style={{flex: 1}} 
+                        onPress={() => this.props.navigation.navigate('Filters')}
+                    />
                 </View>
+            </View>
         );
     }
 

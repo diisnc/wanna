@@ -9,6 +9,7 @@ import Combine from './screens/Combine'
 import Add from './screens/Add'
 import Profile from './screens/Profile'
 import Filters from './screens/Filters'
+import NewFilter from './screens/NewFilters'
 
 
 export default createBottomTabNavigator({
@@ -36,6 +37,15 @@ export default createBottomTabNavigator({
       tabBarLabel: 'FILTERS',
       tabBarIcon: ({ tintColor }) => (
         <MaterialCommunityIcons name="filter-outline" color={tintColor} size={24} />
+      )
+    }
+  },
+  NewFilter: {
+    screen: NewFilter,
+    navigationOptions: {
+      tabBarLabel: 'NEW FILTER',
+      tabBarIcon: ({ tintColor }) => (
+        <MaterialCommunityIcons name="plus-box-outline" color={tintColor} size={24} />
       )
     }
   },
