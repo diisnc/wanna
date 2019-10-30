@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
 				notEmpty: { msg: 'TimeStamp is required' },
 			},
 		},
+		type: {
+			type: DataTypes.INTEGER(1)
+		},
 		user_id: {
 			type: DataTypes.INTEGER(),
 			primaryKey: true,

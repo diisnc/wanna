@@ -16,7 +16,8 @@ exports.createFakeLikes = async (db, sequelize, nr) => {
 		const like = {
 			user_id: user.username,
 			post_id: post.id,
-			likeTimeStamp: faker.date.recent()
+			likeTimeStamp: faker.date.recent(),
+			type: faker.random.number({ max: 1, min: 0 })
 		};
 		likes.push(like);
 	}

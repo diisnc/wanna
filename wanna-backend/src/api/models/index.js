@@ -88,5 +88,5 @@ async function createFakeData() {
 	}
 }
 
-createFakeData();
+//createFakeData();
 module.exports = db;
