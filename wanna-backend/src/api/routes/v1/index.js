@@ -23,7 +23,9 @@ router.use(statusMonitor);
 router.use('/docs', express.static('docs'));
 router.use('/docs-examples', express.static('docs-examples'));
 
-router.use('/users', jwtAuth, authenticate('admin'), userRoutes);
+//Questão do search ter ou não um controlador proprio
+//router.use('/users', jwtAuth, authenticate('admin'), userRoutes);
+router.use('/users', jwtAuth, authenticate('user'), userRoutes);
 router.use('/profile', jwtAuth, authenticate('user'), profileRoutes);
 router.use('/post', jwtAuth, authenticate('user'), postRoutes);
 router.use('/filter', jwtAuth, authenticate('user'), filterRoutes);
