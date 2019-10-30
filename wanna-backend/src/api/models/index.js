@@ -76,11 +76,11 @@ async function createFakeData() {
 			individualHooks: true,
 		});
 		const followers = await createFakeFollowers(db, sequelize, 100);
-		db.followRelationship.bulkCreate(followers, {
+		db.FollowRelationship.bulkCreate(followers, {
 			individualHooks: true,
 		});
 		const likes = await createFakeLikes(db, sequelize, 100);
-		db.Like.bulkCreate(likes, {
+		db.UserPost.bulkCreate(likes, {
 			individualHooks: true,
 		});
 	} catch (e) {

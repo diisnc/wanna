@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const followRelationship = sequelize.define('followRelationship', {
+	const FollowRelationship = sequelize.define('FollowRelationship', {
 		followed_id: {
 			type: DataTypes.INTEGER(),
 			primaryKey: true,
@@ -11,5 +11,5 @@ module.exports = (sequelize, DataTypes) => {
 			references: { model: 'User', key: 'id' },
 		},
 	});
-	return followRelationship;
+	return FollowRelationship;
 };
