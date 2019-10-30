@@ -131,4 +131,8 @@ router
 	 */
 	.delete(controller.remove);
 
+router
+	.route('/search/:userString')
+	.get(validate(rules.search),controller.search);
+
 module.exports = router;
