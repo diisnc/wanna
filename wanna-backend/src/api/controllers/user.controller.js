@@ -87,3 +87,16 @@ exports.remove = async (req, res, next) => {
 		next(e);
 	}
 };
+
+/**
+ * Returns searched Usernames
+ * @public
+ */
+exports.search = async (req,res,next) => {
+	try{
+		list = await User.getUsernames(req.params.userString);
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+}
