@@ -180,6 +180,21 @@ module.exports = (sequelize, DataTypes) => {
 		);
 		return result;
 	};
+	
+	/**
+	 * Return user profiles
+	 * @returns {Promise<*>}
+	 */
+	 User.getUsernames = async function getUsernames(usernameString) {
+		result = await this.sequelize.query(
+			'SELECT "username" FROM "Users" WHERE "Users"."username" LIKE :usernameLike',
+			{
+				replacements: { usernameLike: "%"+usernameString+"%" },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	};
 
 	User.oAuthLogin = async function oAuthLogin({
 		service,
