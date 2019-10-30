@@ -28,7 +28,10 @@ exports.create = async (req, res, next) => {
 			description: req.body.description,
 			price: req.body.price,
 			isAvailable: req.body.isAvailable,
-			idUser: req.user.id,
+			idUser: req.user.username,
+			color: req.body.color,
+			category: req.body.category,
+			size: req.body.size,
 		});
 
 		for (var i = 0; i < req.files.length; i++) {
@@ -115,7 +118,7 @@ exports.createUserPost = async (req, res, next) => {
 	try {
 		const userPost = await UserPost.create({
 			likeTimeStamp: new Date(),
-			user_id: req.user.id,
+			user_id: req.user.username,
 			post_id: req.body.idPost,
 		});
 		return res.status(httpStatus.CREATED).json(userPost);
@@ -128,7 +131,7 @@ exports.createComment = async (req, res, next) => {
 	try {
 		const comment = await Comment.create({
 			commentData: req.body.commentData,
-			idUser: req.user.id,
+			idUser: req.user.username,
 			idPost: req.body.idPost,
 		});
 		return res.status(httpStatus.CREATED).json(comment);

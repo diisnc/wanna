@@ -12,9 +12,9 @@ const basename = path.basename(__filename);
 const { createFakeUsers } = require('../../database/factories/usersFactory');
 const { createFakePosts } = require('../../database/factories/postsFactory');
 const { createFakePhotos } = require('../../database/factories/photosFactory');
-const {
-	createFakeComments,
-} = require('../../database/factories/commentsFactory');
+const { createFakeComments } = require('../../database/factories/commentsFactory');
+const { createFakeFollowers } = require('../../database/factories/followersFactory');
+const { createFakeLikes } = require('../../database/factories/likesFactory');
 
 if (!config.password) {
 	config.password = '';
@@ -75,10 +75,18 @@ async function createFakeData() {
 		db.Comment.bulkCreate(comments, {
 			individualHooks: true,
 		});
+		const followers = await createFakeFollowers(db, sequelize, 100);
+		db.FollowRelationship.bulkCreate(followers, {
+			individualHooks: true,
+		});
+		const likes = await createFakeLikes(db, sequelize, 100);
+		db.UserPost.bulkCreate(likes, {
+			individualHooks: true,
+		});
 	} catch (e) {
 		console.log(e);
 	}
 }
 
-// createFakeData();
+createFakeData();
 module.exports = db;

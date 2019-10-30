@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
 	const UserPost = sequelize.define('UserPost', {
 		likeTimeStamp: {
@@ -18,8 +17,5 @@ module.exports = (sequelize, DataTypes) => {
 			references: { model: 'Post', key: 'id' },
 		},
 	});
-
-// UserPost.sync({ force: true });
-
 	return UserPost;
 };

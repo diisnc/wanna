@@ -98,14 +98,14 @@ module.exports = (sequelize, DataTypes) => {
 			onUpdate: 'CASCADE',
 		});
 		User.belongsToMany(models.User, {
-			through: 'followRelationship',
+			through: 'FollowRelationship',
 			as: 'followed',
 			foreignKey: 'followed_id',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
 		User.belongsToMany(models.User, {
-			through: 'followRelationship',
+			through: 'FollowRelationship',
 			as: 'followers',
 			foreignKey: 'follower_id',
 			onDelete: 'SET NULL',
@@ -119,6 +119,18 @@ module.exports = (sequelize, DataTypes) => {
 		});
 		User.hasMany(models.Comment, {
 			foreignKey: 'idUser',
+			sourceKey: 'username',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
+		User.hasMany(models.UserMessage, {
+			foreignKey: 'sender',
+			sourceKey: 'username',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
+		User.hasMany(models.UserMessage, {
+			foreignKey: 'receiver',
 			sourceKey: 'username',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
