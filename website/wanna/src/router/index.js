@@ -6,8 +6,6 @@ import Inspire from '@/components/pages/Inspire'
 import Wishlist from '@/components/pages/Wishlist'
 import Outfit from '@/components/pages/Outfit'
 import Profile from '@/components/pages/Profile'
-import Manageusers from '@/components/admin/Manageusers'
-import Home from '@/components/admin/Home'
 import Manageposts from '@/components/admin/Manageposts'
 
 
@@ -28,18 +26,12 @@ export default new Router({
       component: Manageposts
       /* meta: { requiresAuth: true, isAdmin: true } */
     },
-    {
-      path: '/manageusers',
-      name: 'Manageusers',
-      component: Manageusers
+   // {
+   //   path: '/manageusers',
+   //   name: 'Manageusers',
+   //   component: Manageusers
       /* meta: { requiresAuth: true, isAdmin: true } */
-    },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-      /* meta: { requiresAuth: true, isAdmin: true } */
-    },
+   // },
     {
       path: '/inspire',
       name: 'Inspire',
@@ -64,6 +56,7 @@ export default new Router({
       component: Profile
       /* meta: { requiresAuth: true } */
     }
+    // marketplace ?
   ]
 })
 

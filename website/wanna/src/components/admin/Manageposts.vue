@@ -18,7 +18,7 @@
                 <br/>
 
                 <div class="btn-box">
-                  <button type="button" class="btn btn-submit" v-on:click="postTeam()">Submit</button>
+                  <button type="button" color="primary" class="btn btn-submit" v-on:click="postTeam()">Submit</button>
                 </div>
 
               </form>
@@ -26,19 +26,25 @@
           </div>
 
           <div style="width: 75%; float:right;" id="events">
-            <h3 style="text-align: left; padding-top: 3.5px;"> Teams' List </h3>
+            <h3 style="text-align: left; padding-top: 3.5px;"> Reported Posts </h3>
             <hr id="hr"/>
             <div class="container" style="padding-top:3%">
               <div class="row">
                 <div class="col-12 col-sm-8 col-lg-5" style="min-width: 70%; margin:auto;">
                   <ul class="list-group">
                     
-                    <li v-for="team in $store.state.teams.teams" :key="team.team_id" class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
+                   <!-- <li v-for="team in $store.state.teams.teams" :key="team.team_id" class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
                       <center>{{team.team_id}}</center>
                       <center>{{team.name}}</center>
+                    -->
+                    <li class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
+                      <center> 1253 </center>
+                      <center> 9002021 </center>
 
-                      <div>
-                        <mdb-btn color="primary" @click.native="modal = true"><i class="fa fa-times"></i></mdb-btn>
+
+
+                      <div> <!-- POR UM IF NESTE BOTÃO, SÓ APARECE "X" QUANDO A LINHA TIVER CONTEUDO -->
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fas fa-eye"></i></mdb-btn>
                         <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
                             <mdb-modal-header>
                                 <mdb-modal-title>Delete Team</mdb-modal-title>
@@ -51,7 +57,97 @@
                         </mdb-modal>
                       </div>  
 
-                       <button class="btn" v-on:click="remove(team.team_id)"><i class="fa fa-times"></i></button> 
+
+
+                      <div> <!-- POR UM IF NESTE BOTÃO, SÓ APARECE "X" QUANDO A LINHA TIVER CONTEUDO -->
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fa fa-times"></i></mdb-btn>
+                        <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
+                            <mdb-modal-header>
+                                <mdb-modal-title>Delete Post</mdb-modal-title>
+                            </mdb-modal-header>
+                            <mdb-modal-body>Are you sure you want to delete this post?</mdb-modal-body>
+                            <mdb-modal-footer>
+                                <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+                                <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
+                            </mdb-modal-footer>
+                        </mdb-modal>
+                      </div>  
+
+
+
+
+
+                      <div> <!-- POR UM IF NESTE BOTÃO, SÓ APARECE "X" QUANDO A LINHA TIVER CONTEUDO -->
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fas fa-user-clock"></i></mdb-btn>
+                        <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
+                            <mdb-modal-header>
+                                <mdb-modal-title>Block User</mdb-modal-title>
+                            </mdb-modal-header>
+                            <mdb-modal-body>Are you sure you want to block this user?</mdb-modal-body>
+                            <mdb-modal-footer>
+                                <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+                                <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
+                            </mdb-modal-footer>
+                        </mdb-modal>
+                      </div>
+
+
+
+
+
+
+                      <div> <!-- POR UM IF NESTE BOTÃO, SÓ APARECE "X" QUANDO A LINHA TIVER CONTEUDO -->
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fa fa-user-times"></i></mdb-btn>
+                        <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
+                            <mdb-modal-header>
+                                <mdb-modal-title>Ban User</mdb-modal-title>
+                            </mdb-modal-header>
+                            <mdb-modal-body>Are you sure you want to ban this user?</mdb-modal-body>
+                            <mdb-modal-footer>
+                                <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+                                <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
+                            </mdb-modal-footer>
+                        </mdb-modal>
+                      </div>
+
+
+
+<!-- 
+
+                      <div> 
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fas fa-user-check"></i></mdb-btn>
+                        <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
+                            <mdb-modal-header>
+                                <mdb-modal-title>Delete Team</mdb-modal-title>
+                            </mdb-modal-header>
+                            <mdb-modal-body>Are you sure you want to delete this item?</mdb-modal-body>
+                            <mdb-modal-footer>
+                                <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+                                <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
+                            </mdb-modal-footer>
+                        </mdb-modal>
+                      </div>
+-->
+
+
+
+
+                      <div> 
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fas fa-check-circle"></i></mdb-btn>
+                        <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
+                            <mdb-modal-header>
+                                <mdb-modal-title>Dismiss Post</mdb-modal-title>
+                            </mdb-modal-header>
+                            <mdb-modal-body>Are you sure you want to dismiss this post?</mdb-modal-body>
+                            <mdb-modal-footer>
+                                <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+                                <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
+                            </mdb-modal-footer>
+                        </mdb-modal>
+                      </div>
+
+
+
                     </li>
                   
                   </ul>
@@ -149,10 +245,11 @@ export default {
 }
 
 /* Darker background on mouse-over */
+/* 
 .btn:hover {
-  background-color: orange !important;
+  background-color: #55abf2 !important; 
 } 
-
+*/
 #events {
   padding: 15px;
   margin: auto;
@@ -227,7 +324,7 @@ textarea:focus ~ label,
 textarea:valid ~ label {
   top: -14px;
   font-size: 12px;
-  color: orange;
+  color: #55abf2;
 }
 input:focus ~ .bar:before,
 textarea:focus ~ .bar:before {
@@ -260,7 +357,7 @@ label {
   width: 0;
   bottom: 0px;
   position: absolute;
-  background: orange;
+  background: #55abf2;
   transition: 300ms ease all;
   left: 0%;
 }
@@ -291,13 +388,13 @@ label {
 }
 .btn.btn-submit {
   background: black;
-  color: orange;
-  border: solid orange; 
+  color: #55abf2;
+  border: solid #55abf2; 
   border-width: 1px 1px 1px 1px;
   float: right;
 }
 .btn.btn-submit:hover {
-  background: orange;
+  background: #55abf2;
   color: black;
 }
 .btn.btn-cancel {

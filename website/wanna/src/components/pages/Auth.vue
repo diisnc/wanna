@@ -221,6 +221,15 @@ a{color:inherit;text-decoration:none}
 	color:#fff;
 	display:block;
 }
+.login-form .group .button:focus{
+  outline: none;
+}
+
+.login-form .group .button:hover,
+.login-form .group .button:focus {
+  background-color: #55b8f2f1;
+}
+
 .login-form .group .input,
 .login-form .group .button{
 	border:none;
@@ -273,6 +282,9 @@ a{color:inherit;text-decoration:none}
 .login-form .group .check:checked + label .icon{
 	background:#55abf2;
 }
+.login-form .group .check:not(checked) + label{
+	color:#aaa;
+}
 .login-form .group .check:checked + label .icon:before{
 	transform:scale(1) rotate(45deg);
 }
@@ -285,6 +297,9 @@ a{color:inherit;text-decoration:none}
 .login-html .sign-up:checked + .tab + .login-form .sign-up-htm{
 	transform:rotate(0);
 }
+.login-form .group .input:focus {
+  outline: none;
+}
 
 .hr{
 	height:2px;
@@ -294,6 +309,8 @@ a{color:inherit;text-decoration:none}
 .foot-lnk{
 	text-align:center;
 }
+
+
 /* --------------------------- Log in with facebook / google --------------------------- */
 
 /* Shared */
@@ -325,9 +342,6 @@ a{color:inherit;text-decoration:none}
 }
 .loginBtn:active {
   box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
-}
-.login-form .group .input:focus {
-  outline: none;
 }
 
 
