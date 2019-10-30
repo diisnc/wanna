@@ -27,4 +27,9 @@ module.exports = {
 		}),
 		param('userId', 'User id is required').exists(),
 	],
+	
+	// PATCH /v1/users/:userString
+	search: [
+		param('userString', 'Username id is required').exists(),
+	],
 };
