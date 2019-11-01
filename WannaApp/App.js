@@ -53,21 +53,24 @@ class ConnectedComponent extends React.Component {
 
 	checkAuth() {
 		console.log('tentou pre-login');
-		console.log(this.props.checkAuthStatus);
+		this.props.checkAuthStatus();
 	}
 
 	render() {
-		const { loggedIn } = this.props;
-
+		const loggedIn = this.props.loggedIn;
+		console.log('estado do login: ' + loggedIn);
 		// Vítor
 		// if (loggedIn == null) {return <Login /> }
 		// if (loggedIn) { return <Main /> }
-		return <Main />
+		return <Login />
 	}
 }
 
-function mapStateToProps(store, ownProps) {
-	return {};
+function mapStateToProps(store) {
+	return {
+		loggedIn: store.auth.loggedIn,
+		authToken: store.auth.authToken
+	};
 }
 function mapDispatchToProps(dispatch) {
 	return {
@@ -77,6 +80,6 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-Entry = connect(null, mapDispatchToProps)(ConnectedComponent);
+Entry = connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);
 
 export default App;

@@ -4,6 +4,11 @@ export const setAuthPending = () => {
 		type: 'SET_AUTH_PENDING'
 	};
 };
+export const setNoLogin = () => {
+	return {
+		type: 'SET_NO_LOGIN'
+	};
+};
 export const setLoginSuccess = (authToken, refreshToken) => {
 	return {
 		type: 'SET_LOGIN_SUCCESS',
@@ -58,6 +63,11 @@ export default function(state = initialState, action) {
 		return {
 			...state,
 			authPending: true
+		};
+	case 'SET_NO_LOGIN':
+		return {
+			...state,
+			loggedIn: false
 		};
 	case 'SET_LOGIN_SUCCESS':
 		return {

@@ -40,6 +40,8 @@ export const checkAuthStatus = () => async dispatch => {
 		if (authToken != null && refreshToken != null) {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken));
 		}
+
+		else dispatch(AuthReducer.setNoLogin());
 		console.log('oi?');
 		return authToken;
 	} catch (error) {
