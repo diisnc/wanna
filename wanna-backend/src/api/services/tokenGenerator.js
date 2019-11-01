@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
 	generateRefreshToken: user => {
-		const token = `${user.username}.${crypto.randomBytes(40).toString('hex')}`;
+		const token = `${user.username}.${crypto
+			.randomBytes(40)
+			.toString('hex')}`;
 		const expires = moment()
 			.add(process.env.REFRESH_TOKEN_LIFE, 'days')
 			.toDate();
