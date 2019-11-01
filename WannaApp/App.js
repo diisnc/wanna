@@ -1,101 +1,82 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { Component } from 'react';
+import thunk from 'redux-thunk'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { connect } from "react-redux";
+import { setAccessToken } from "redux-refresh-token";
+import Main from './screens/Main'
+import Login from './screens/Login'
+import { checkAuthStatus } from './modules/auth/auth.service';
+import { jwt } from './modules/middleware';
+import logger from 'redux-logger';
+import { reducer as formReducer } from 'redux-form';
+import auth from './modules/auth/auth.reducer';
+import error from './modules/errors/error.reducer';
 
-import { createBottomTabNavigator } from 'react-navigation'
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Inspire from './screens/Inspire'
-import Wanted from './screens/Wanted'
-import Combine from './screens/Combine'
-import Add from './screens/Add'
-import Profile from './screens/Profile'
-import Filters from './screens/Filters'
-import NewFilter from './screens/NewFilters'
-
-
-export default createBottomTabNavigator({
-  Inspire: {
-    screen: Inspire,
-    navigationOptions: {
-      tabBarLabel: 'INSPIRE',
-      tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons name="home-outline" color={tintColor} size={24} />
-      )
-    }
-  },
-  Wanted: {
-    screen: Wanted,
-    navigationOptions: {
-      tabBarLabel: 'WANTED',
-      tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons name="heart-outline" color={tintColor} size={24} />
-      )
-    }
-  },
-  Filters: {
-    screen: Filters,
-    navigationOptions: {
-      tabBarLabel: 'FILTERS',
-      tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons name="filter-outline" color={tintColor} size={24} />
-      )
-    }
-  },
-  NewFilter: {
-    screen: NewFilter,
-    navigationOptions: {
-      tabBarLabel: 'NEW FILTER',
-      tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons name="plus-box-outline" color={tintColor} size={24} />
-      )
-    }
-  },
-  Add: {
-    screen: Add,
-    navigationOptions: {
-      tabBarLabel: 'ADD',
-      tabBarIcon: ({ tintColor }) => (
-        <Image source={require('./assets/logo64.png')} style={{ height: 24, width: 24}} />
-      )
-    }
-  },
-  Combine: {
-    screen: Combine,
-    navigationOptions: {
-      tabBarLabel: 'COMBINE',
-      tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons name="vector-combine" color={tintColor} size={24} />
-      )
-    }
-  },
-  Profile: {
-    screen: Profile,
-    navigationOptions: {
-      tabBarLabel: 'PROFILE',
-      tabBarIcon: ({ tintColor }) => (
-        <MaterialIcons name="person-outline" color={tintColor} size={24} />
-      )
-    }
-  }
-}, {
-    tabBarOptions: {
-      activeTintColor: 'red',
-      inactiveTintColor: 'grey',
-      style: {
-        backgroundColor: 'white',
-        borderTopWidth: 0,
-        shadowOffset: { width: 5, height: 3 },
-        shadowColor: 'black',
-        shadowOpacity: 0.5,
-        elevation: 5
-      }
-    }
-  })
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const rootReducer = combineReducers({
+	auth,
+	error,
+	form: formReducer
 });
+
+export const store = createStore(rootReducer, applyMiddleware(jwt, thunk, logger));
+
+class App extends Component {
+	render() {
+		return (
+			<Provider store={store}>
+				<Entry />
+			</Provider>
+		);
+	}
+}
+
+class ConnectedComponent extends React.Component {
+
+	constructor(props) {
+		super(props);
+		console.log('passou aqui');
+		this.checkAuth = this.checkAuth.bind(this);
+	}
+
+	componentDidMount() {
+		this.checkAuth();
+	}
+
+	login() {
+		console.log('tentou login');
+		this.props.dispatch(login('sergio', 'jorge')).then(response => {
+			this.props.dispatch(setAccessToken(response.payload));
+			console.log('logged in')
+		});
+	}
+
+	checkAuth() {
+		console.log('tentou pre-login');
+		console.log(this.props.checkAuthStatus);
+	}
+
+	render() {
+		const { loggedIn } = this.props;
+
+		// Vítor
+		// if (loggedIn == null) {return <Login /> }
+		// if (loggedIn) { return <Main /> }
+		return <Main />
+	}
+}
+
+function mapStateToProps(store, ownProps) {
+	return {};
+}
+function mapDispatchToProps(dispatch) {
+	return {
+		checkAuthStatus: () => {
+			dispatch(checkAuthStatus());
+		}
+	};
+}
+
+Entry = connect(null, mapDispatchToProps)(ConnectedComponent);
+
+export default App;
