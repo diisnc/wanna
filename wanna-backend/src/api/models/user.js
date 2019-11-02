@@ -72,6 +72,14 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: 3.0,
 			type: DataTypes.DECIMAL(10, 1),
 		},
+		avatarData: {
+			type: DataTypes.BLOB(),
+			allowNull: true,
+		},
+		avatarType: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
 	});
 
 	/** Models Hooks */
@@ -180,7 +188,7 @@ module.exports = (sequelize, DataTypes) => {
 		);
 		return result;
 	};
-	
+
 	/**
 	 * Return user profiles
 	 * @returns {Promise<*>}

@@ -5,19 +5,6 @@ const { Comment } = require('../models');
 var fs = require('fs');
 const httpStatus = require('http-status');
 
-/* Load post and append to req.
- * @public
- */
-exports.load = async (req, res, next, id) => {
-	try {
-		const post = await Post.findByPk(id);
-		if (!post) throw new ApiError({ status: httpStatus.NOT_FOUND });
-		next();
-	} catch (e) {
-		next(e);
-	}
-};
-
 /**
  * Returns Upload photo
  * @public
