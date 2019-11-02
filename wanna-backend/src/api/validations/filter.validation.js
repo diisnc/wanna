@@ -2,12 +2,12 @@ const { body } = require('express-validator');
 
 module.exports = {
 	createFilter: [
-		body('category').exists(),
-		body('priceMin').exists(),
-		body('priceMax').exists(),
-		body('size').exists(),
-		body('color').exists(),
-		body('isActive').exists(),
+		body('category'),
+		body('priceMin'),
+		body('priceMax'),
+		body('size'),
+		body('color'),
+		body('isActive'),
 	],
 
 	searchByFilter: [body('idFilter', 'Filter id is required').exists()],

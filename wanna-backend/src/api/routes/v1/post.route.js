@@ -13,13 +13,6 @@ const upload = multer({ dest: __dirname + '/images' });
  */
 router.param('postId', controller.load);
 
-/*
-router
-	.route('/')
-	.get(validate(rules.listPosts), controller.list)
-	.post(validate(rules.createPost), controller.create);
-*/
-
 router.route('/feed').get(controller.feed);
 
 router

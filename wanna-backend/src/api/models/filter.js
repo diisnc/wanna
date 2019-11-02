@@ -2,23 +2,23 @@ module.exports = (sequelize, DataTypes) => {
 	const Filter = sequelize.define('Filter', {
 		category: {
 			type: DataTypes.STRING,
-			defaultValue: '',
+			allowNull: true,
 		},
 		color: {
 			type: DataTypes.STRING,
-			defaultValue: '',
+			allowNull: true,
 		},
 		priceMin: {
 			type: DataTypes.DECIMAL(10, 2),
-			defaultValue: 0,
+			allowNull: true,
 		},
 		priceMax: {
 			type: DataTypes.DECIMAL(10, 2),
-			defaultValue: 0,
+			allowNull: true,
 		},
 		size: {
 			type: DataTypes.STRING,
-			defaultValue: '',
+			allowNull: true,
 		},
 		isActive: {
 			defaultValue: true,

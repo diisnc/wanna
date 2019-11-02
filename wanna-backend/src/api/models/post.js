@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: true,
 			type: DataTypes.BOOLEAN,
 		},
+		status: {
+			defaultValue: true,
+			type: DataTypes.INTEGER(),
+			defaultValue: 0,
+		},
 	});
 
 	Post.associate = function(models) {

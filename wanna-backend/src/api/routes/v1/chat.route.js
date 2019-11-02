@@ -9,8 +9,7 @@ const validate = require('../../validations/handler');
 //router.route('/:userName');
 
 router
-    .route('/sendMessage/:userName')
-    .post(validate(rules.sendMessage), controller.sendMessage);
-
+	.route('/sendMessage/:userName')
+	.post(validate(rules.sendMessage), controller.sendMessage);
 
 module.exports = router;

@@ -57,17 +57,18 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-async function createFakeData() {
+async function createFakeData(nrPosts) {
 	try {
 		await sequelize.sync({ force: true });
-		await db.User.bulkCreate(createFakeUsers(sequelize, 10), {
+		const users = await createFakeUsers(sequelize, 50);
+		await db.User.bulkCreate(users, {
 			individualHooks: true,
 		});
-		const posts = await createFakePosts(db, sequelize, 10);
+		const posts = await createFakePosts(db, sequelize, nrPosts);
 		await db.Post.bulkCreate(posts, {
 			individualHooks: true,
 		});
-		const photos = await createFakePhotos(db, sequelize, 10);
+		const photos = await createFakePhotos(db, sequelize, nrPosts);
 		await db.Photo.bulkCreate(photos, {
 			individualHooks: true,
 		});
@@ -88,5 +89,7 @@ async function createFakeData() {
 	}
 }
 
-//createFakeData();
+// passar o número de posts a criar como argumento
+// createFakeData(30);
+
 module.exports = db;

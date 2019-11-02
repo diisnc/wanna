@@ -7,7 +7,10 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		type: {
-			type: DataTypes.INTEGER(1)
+			type: DataTypes.INTEGER(),
+			validate: {
+				notEmpty: { msg: 'Type is required' },
+			},
 		},
 		user_id: {
 			type: DataTypes.INTEGER(),

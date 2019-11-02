@@ -3,7 +3,7 @@ const { omit } = require('lodash');
 module.exports = (sequelize, DataTypes) => {
 	const Photo = sequelize.define('Photo', {
 		photoData: {
-			type: DataTypes.BLOB('long'),
+			type: DataTypes.BLOB(),
 		},
 		photoType: {
 			type: DataTypes.STRING,
