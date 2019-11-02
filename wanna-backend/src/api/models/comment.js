@@ -2,6 +2,9 @@ module.exports = (sequelize, DataTypes) => {
 	const Comment = sequelize.define('Comment', {
 		commentText: {
 			type: DataTypes.TEXT,
+			validate: {
+				notEmpty: { msg: 'Text is required' },
+			},
 		},
 	});
 	Comment.associate = function(models) {

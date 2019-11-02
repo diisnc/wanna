@@ -8,11 +8,14 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		type: {
 			type: DataTypes.INTEGER(),
+			validate: {
+				notEmpty: { msg: 'Type is required' },
+			},
 		},
 		user_id: {
 			type: DataTypes.INTEGER(),
 			primaryKey: true,
-			references: { model: 'User', key: 'username' },
+			references: { model: 'User', key: 'id' },
 		},
 		post_id: {
 			type: DataTypes.INTEGER(),
