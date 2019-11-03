@@ -5,14 +5,14 @@
 - **Descrição:** Feed com paginate
 - **Método:** GET
 - **Rota:** v1/post/feed
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Ver post qualquer
 - **Método:** GET
 - **Rota:** v1/post/:idPost
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
@@ -26,28 +26,28 @@
 - **Descrição:** Apagar Artigo
 - **Método:** POST
 - **Rota:** v1/post/deletePost
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Editar Artigo
 - **Método:** PATCH
 - **Rota:** v1/post/editPost
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Guardar artigo
 - **Método:** POST
 - **Rota:** v1/post/save/:idPost
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Remover artigo dos guardados
 - **Método:** POST
 - **Rota:** v1/post/unsave/:idPost
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
@@ -61,7 +61,7 @@
 - **Descrição:** Dar like/dislike
 - **Método:** POST
 - **Rota:** v1/post/createUserPost
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 -- mudar a rota e verificar os tipos
 
 ---
@@ -69,7 +69,7 @@
 - **Descrição:** Obter comentários de um post
 - **Método:** POST
 - **Rota:** v1/post/getComments
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
@@ -83,14 +83,14 @@
 - **Descrição:** Apagar comentário em post
 - **Método:** POST
 - **Rota:** v1/post/deleteComment
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Marcar post como indisponível
 - **Método:** POST
 - **Rota:** v1/post/markUnavailable
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ## Perfis
 
@@ -111,49 +111,49 @@
 - **Descrição:** Ver posts guardados
 - **Método:** GET
 - **Rota:** v1/profile/wishlist
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Pessoas que o seguem
 - **Método:** GET
 - **Rota:** v1/profile/followers
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Pessoas que segue
 - **Método:** GET
 - **Rota:** v1/profile/followings
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Ver perfil pessoal com fotos e infos
 - **Método:** GET
 - **Rota:** /v1/profile
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Ver perfil alheio com fotos e infos
 - **Método:** GET
 - **Rota:** /v1/profile/:username
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Ver histórico de compras
 - **Método:** GET
 - **Rota:** v1/profile/buyHistory
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ---
 
 - **Descrição:** Ver histórico de vendas
 - **Método:** GET
 - **Rota:** v1/profile/salesHistory
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 ## Autenticação
 
@@ -195,7 +195,7 @@
 - **Descrição:** Pesquisar por filtro
 - **Método:** POST
 - **Rota:** v1/filter/searchByFilter
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 -- falta receber o ID
 
 ---
@@ -203,7 +203,7 @@
 - **Descrição:** Apagar filtro
 - **Método:** POST
 - **Rota:** v1/filter/deleteFilter
-- **Estado:** :heavy_balot_x:
+- **Estado:** :heavy_ballot_x:
 
 Fazer compra
 Dar review em compra
