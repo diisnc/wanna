@@ -174,7 +174,7 @@
 - **Descrição:** Logout
 - **Método:** POST
 - **Rota:** v1/auth/logout
-- **Estado:** [x]
+- [x]
 
 ## Filtros
 
