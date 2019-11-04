@@ -1,15 +1,16 @@
 import { ourFetchWithToken } from '../api';
+import { CALL_API } from '../api';
 
-export const follow = usernameToFollow => ({
-	[CALL_API]: {
-		endpoint: '/v1/profile/follow/${}',
+export const follow = usernameToFollow => {
+	const config = {
+		endpoint: '/v1/profile/follow/',
 		method: 'POST',
-		body: {
-			email: 'esben@esben.dk',
-			password: '1234'
+		query: {
+			username: usernameToFollow
 		}
-	}
-});
+	};
+	ourFetchWithToken(config);
+};
 
 export const unfollow = usernameToUnfollow => ({
 	[CALL_API]: {
@@ -21,7 +22,11 @@ export const unfollow = usernameToUnfollow => ({
 export const getWishlist = () => ({
 	[CALL_API]: {
 		endpoint: '/v1/profile/wishlist',
-		method: 'POST'
+		method: 'POST',
+		body: {
+			email: 'esben@esben.dk',
+			password: '1234'
+		}
 	}
 });
 

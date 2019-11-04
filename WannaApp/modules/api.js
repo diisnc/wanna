@@ -2,11 +2,11 @@ import { handleTokenErrors } from './errors/error.service';
 
 const config = { url: 'http://192.168.1.11:8000' };
 
-export const CALL_API = 'Call API';
-// import qs from "query-string";
+let currentAuthToken = null;
 
-const API_ROOT = '/api';
-import { attemptTokenRefresh, logout } from './actions';
+export function setToken(token) {
+	currentAuthToken = token;
+}
 
 export const ourFetch = (route, methodA, bodyA) => {
 	return fetch(`${config.url}${route}`, {
@@ -21,37 +21,34 @@ export const ourFetch = (route, methodA, bodyA) => {
 		});
 };
 
-export const ourFetchWithToken = (action, next) => {
-	const callAPI = action[CALL_API];
-	if (typeof callAPI === 'undefined') {
-		return next(action);
-	}
+function getQueryString(params) {
+	var esc = encodeURIComponent;
+	return Object.keys(params)
+		.map(k => esc(k) + '=' + esc(params[k]))
+		.join('&');
+}
 
-	if (body) {
-		body = JSON.stringify(body);
-	}
+export const ourFetchWithToken = store => next => action => {
+	method = action.method;
+	endpoint = action.endpoint;
+
+	let body = JSON.stringify(action.body);
 
 	let querystring = '';
-	if (query) {
-		//querystring += "?" + qs.stringify(query);
+	if (action.query) {
+		querystring = '?' + getQueryString(action.query);
 	}
-
-	headers['Content-Type'] = 'application/json';
-
-	/*
-	const token = store.getState().token.access_token;
-	if (typeof token === "string") {
-		headers.Authorization = `Bearer ${token}`;
-	}
-	*/
+	//const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+	const headers = {
+		'Content-Type': 'application/json',
+		Authorization: 'Bearer ${this.currentAuthToken}'
+	};
 
 	console.log(endpoint);
 	console.log(method);
 	console.log(body);
-	console.log(query);
+	console.log(querystring);
 	console.log(headers);
-
-	let { endpoint, method, body, query, headers = {} } = callAPI;
 
 	return fetch(`${config.url}${endpoint}${querystring}`, {
 		method,

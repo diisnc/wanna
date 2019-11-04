@@ -14,6 +14,8 @@ import auth from './modules/auth/auth.reducer';
 import permissions, { setCameraPermission, setCameraFolderPermission } from './modules/permissions/permissions.reducer';
 import error from './modules/errors/error.reducer';
 import * as Permissions from 'expo-permissions';
+import { ourFetchWithToken } from './modules/api';
+import { follow } from './modules/profile/profile.api';
 
 const rootReducer = combineReducers({
 	auth,
@@ -25,7 +27,6 @@ const rootReducer = combineReducers({
 export const store = createStore(rootReducer, applyMiddleware(jwt, thunk, logger));
 
 class App extends Component {
-
 	render() {
 		return (
 			<Provider store={store}>
@@ -45,6 +46,8 @@ class ConnectedComponent extends React.Component {
 
 	async componentDidMount() {
 		this.checkAuth();
+		// ourFetchWithToken('login');
+		follow();
 		this.cameraAccess();
 		this.cameraRollAccess();
 	}
