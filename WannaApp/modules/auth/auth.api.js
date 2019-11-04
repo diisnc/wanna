@@ -1,59 +1,25 @@
-import { handleTokenErrors } from '../errors/error.service';
-
-const config = { url: 'http://192.168.1.11:8000'};
+import { ourFetch, ourFetchWithToken  } from '../api';
 
 class AuthApi {
+
 	static login(email, password) {
-		console.log(config.url);
-		console.log('cenas');
-		return fetch(`${config.url}/v1/auth/login`, {
-			method: 'POST',
-			body: JSON.stringify({ email: email, password: password }),
-			headers: { "Content-Type": "application/json" },
-		})
-			.then(response => response.text())
-			.then(handleTokenErrors)
-			.catch(error => {
-				throw error;
-			});
+		ourFetch('/v1/auth/login', 'POST', { email: email, password: password })
 	}
-	static register(first, last, email, password) {
-		return fetch(`${config.url}/api/auth/signup`, {
-			method: 'POST',
-			body: JSON.stringify({ first, last, email, password }),
-			headers: config.configHeaders
-		})
-			.then(response => response.json())
-			.then(handleTokenErrors)
-			.catch(error => {
-				throw error;
-			});
+
+	static logout(refreshToken) {
+		ourFetch('/v1/auth/logout', 'POST', { refreshToken: refreshToken })
+	}
+	static register(username, firstName, lastName, email, password) {
+		ourFetch('/v1/auth/register', 'POST', {
+			username: username, firstName: firstName,
+			lastName: lastName, email: email, password: password
+		});
 	}
 	static refreshToken(refreshToken) {
-		return fetch(`${config.url}/api/auth/refreshToken`, {
-			method: 'POST',
-			body: JSON.stringify({ refreshToken: refreshToken }),
-			headers: config.configHeaders
-		})
-			.then(response => response.json())
-			.then(handleTokenErrors)
-			.catch(error => {
-				throw error;
-			});
+		ourFetch('/v1/auth/refresh', 'POST', { refreshToken: refreshToken });
 	}
 	static checkAuthTest(token) {
-		return fetch(`${config.url}/api/auth/getAll`, {
-			method: 'POST',
-			headers: {
-				...config.configHeaders,
-				Authorization: 'Bearer ' + token
-			}
-		})
-			.then(response => response.json())
-			.then(handleTokenErrors)
-			.catch(error => {
-				throw error;
-			});
+		ourFetchWithToken('/v1/auth/test', 'GET', null);
 	}
 }
 export default AuthApi;

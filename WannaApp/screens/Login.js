@@ -42,7 +42,7 @@ class Login extends Component {
 						title={'Create account'}
 					/>
 				</View>
-				</View>
+			</View>
 		);
 	}
 	goToRegister() {
@@ -101,7 +101,10 @@ function mapDispatchToProps(dispatch) {
 		}
 	};
 }
-let LoginConnect = connect(mapStateToProps, mapDispatchToProps)(Login);
+let LoginConnect = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Login);
 export default reduxForm({
 	form: 'loginForm'
 })(LoginConnect);
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
 		marginVertical: 18,
 		width: '80%',
 		alignSelf: 'center',
-		backgroundColor: '#000000',
+		backgroundColor: '#000000'
 	},
 	accessBtn: {
 		marginHorizontal: 0,

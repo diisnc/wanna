@@ -37,11 +37,11 @@ export const checkAuthStatus = () => async dispatch => {
 		console.log('será que está a pssar por aqui?');
 		const authToken = await AsyncStorage.getItem('authToken');
 		const refreshToken = await AsyncStorage.getItem('refreshToken');
+
 		if (authToken != null && refreshToken != null) {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken));
-		}
+		} else dispatch(AuthReducer.setNoLogin());
 
-		else dispatch(AuthReducer.setNoLogin());
 		console.log('oi?');
 		return authToken;
 	} catch (error) {
@@ -80,11 +80,9 @@ export const login = (email, password) => dispatch => {
 	dispatch(AuthReducer.setAuthPending());
 	return AuthApi.login(email, password)
 		.then(response => {
-			console.log("Resposta: " + response);
+			console.log('Resposta: ' + response);
 			if (response.success) {
-				dispatch(
-					AuthReducer.setLoginSuccess(response.authToken, response.refreshToken)
-				);
+				dispatch(AuthReducer.setLoginSuccess(response.authToken, response.refreshToken));
 				_saveItem('authToken', response.authToken)
 					.then(resp => {
 						_saveItem('refreshToken', response.refreshToken)

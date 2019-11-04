@@ -6,11 +6,7 @@ export const jwt = store => next => action => {
 	buffer.push(action);
 	if (action.type === 'INVALID_TOKEN') {
 		let theStore = store.getState();
-		if (
-			theStore.auth &&
-			theStore.auth.authToken &&
-			theStore.auth.refreshToken
-		) {
+		if (theStore.auth && theStore.auth.authToken && theStore.auth.refreshToken) {
 			if (!theStore.auth.pendingRefreshingToken) {
 				store.dispatch({ type: 'REFRESHING_TOKEN' });
 				store.dispatch(refreshToken(theStore.auth.refreshToken)).then(() => {
