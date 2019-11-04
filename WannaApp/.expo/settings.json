@@ -1,8 +1,8 @@
 {
-  "hostType": "localhost",
+  "hostType": "tunnel",
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "w3-deb",
+  "urlRandomness": "dr-xes",
   "https": false
 }

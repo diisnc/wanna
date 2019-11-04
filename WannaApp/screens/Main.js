@@ -6,7 +6,8 @@ import Profile from './Profile'
 import Filters from './Filters'
 import NewFilter from './NewFilter'
 import React, { Component } from 'react';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createAppContainer } from 'react-navigation'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image } from 'react-native';
 

@@ -11,10 +11,13 @@ import { jwt } from './modules/middleware';
 import logger from 'redux-logger';
 import { reducer as formReducer } from 'redux-form';
 import auth from './modules/auth/auth.reducer';
+import permissions, { setCameraPermission, setCameraFolderPermission } from './modules/permissions/permissions.reducer';
 import error from './modules/errors/error.reducer';
+import * as Permissions from 'expo-permissions';
 
 const rootReducer = combineReducers({
 	auth,
+	permissions,
 	error,
 	form: formReducer
 });
@@ -22,6 +25,7 @@ const rootReducer = combineReducers({
 export const store = createStore(rootReducer, applyMiddleware(jwt, thunk, logger));
 
 class App extends Component {
+
 	render() {
 		return (
 			<Provider store={store}>
@@ -39,8 +43,10 @@ class ConnectedComponent extends React.Component {
 		this.checkAuth = this.checkAuth.bind(this);
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		this.checkAuth();
+		this.cameraAccess();
+		this.cameraRollAccess();
 	}
 
 	login() {
@@ -62,8 +68,27 @@ class ConnectedComponent extends React.Component {
 		// Vítor
 		// if (loggedIn == null) {return <Login /> }
 		// if (loggedIn) { return <Main /> }
-		return <Login />
+		return <Main />
 	}
+
+	// aux for gallery permissions
+	cameraRollAccess = async () => {
+		const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+
+		if (status === 'granted') {
+			this.props.setCameraFolderPermission();
+		}
+	}
+
+	// aux for camera permissions
+	cameraAccess = async () => {
+		const { status } = await Permissions.askAsync(Permissions.CAMERA)
+
+		if (status === 'granted') {
+			this.props.setCameraPermission();
+		}
+	}
+
 }
 
 function mapStateToProps(store) {
@@ -72,10 +97,17 @@ function mapStateToProps(store) {
 		authToken: store.auth.authToken
 	};
 }
+
 function mapDispatchToProps(dispatch) {
 	return {
 		checkAuthStatus: () => {
 			dispatch(checkAuthStatus());
+		},
+		setCameraPermission: () => {
+			dispatch(setCameraPermission());
+		},
+		setCameraFolderPermission: () => {
+			dispatch(setCameraFolderPermission());
 		}
 	};
 }
