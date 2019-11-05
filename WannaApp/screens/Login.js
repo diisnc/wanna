@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Input, Button } from 'react-native-elements';
-import { login, checkAuthTest } from '../modules/auth/auth.service';
+import { loginService, checkAuthTest } from '../modules/auth/auth.service';
 
 import { globalStyle, defaultNavigator } from './style';
 
@@ -94,7 +94,7 @@ function mapStateToProps(store, ownProps) {
 function mapDispatchToProps(dispatch) {
 	return {
 		login: (email, password) => {
-			dispatch(login(email, password));
+			dispatch(loginService(email, password));
 		},
 		checkAuthTest: () => {
 			dispatch(checkAuthTest());

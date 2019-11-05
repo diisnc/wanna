@@ -42,26 +42,27 @@ class ConnectedComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		console.log('passou aqui');
-		this.checkAuth = this.checkAuth.bind(this);
+		// this.checkAuth = this.checkAuth.bind(this);
 	}
 
 	async componentDidMount() {
-		this.checkAuth();
-		follow();
+		this.props.checkAuthStatus();
+		// follow();
 		this.cameraAccess();
 		this.cameraRollAccess();
 	}
 
-	checkAuth() {
-		console.log('tentou pre-login');
-		this.props.checkAuthStatus();
-	}
-
 	render() {
+		//this.props.checkAuthStatus();
+
 		const loggedIn = this.props.loggedIn;
 		console.log('estado do login: ' + loggedIn);
 		// Vítor
-		// if (loggedIn == false) {return <Login /> }
+		/*
+		if (loggedIn == false) {
+			return <Login />;
+		}
+		*/
 		// if (loggedIn) { return <Main /> }
 		return <Main />;
 	}

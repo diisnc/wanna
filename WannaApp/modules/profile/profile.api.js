@@ -25,11 +25,7 @@ export const unfollow = usernameToUnfollow => {
 export const getWishlist = () => {
 	const config = {
 		endpoint: '/v1/profile/wishlist',
-		method: 'GET',
-		body: {
-			email: 'esben@esben.dk',
-			password: '1234'
-		}
+		method: 'GET'
 	};
 	ourFetchWithToken(config);
 };
@@ -60,7 +56,7 @@ export const getMyProfile = () => {
 
 export const getUserProfile = userID => {
 	const config = {
-		endpoint: '/v1/profile/${}',
+		endpoint: '/v1/profile/',
 		method: 'GET',
 		query: {
 			username: userID

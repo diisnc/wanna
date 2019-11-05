@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import AuthApi from './auth.api';
+import { login } from './auth.api';
 import { asyncError, generalError } from '../errors/error.service';
 import * as AuthReducer from './auth.reducer';
 import App from '../../app';
@@ -43,7 +43,7 @@ export const checkAuthStatus = () => async dispatch => {
 		} else dispatch(AuthReducer.setNoLogin());
 
 		console.log('oi?');
-		return authToken;
+		// return authToken;
 	} catch (error) {
 		console.log('erro crlhhh');
 		dispatch(asyncError(error));
@@ -76,11 +76,13 @@ export const register = (first, last, email, password) => dispatch => {
 		});
 };
 
-export const login = (email, password) => dispatch => {
+export const loginService = (email, password) => dispatch => {
 	dispatch(AuthReducer.setAuthPending());
-	return AuthApi.login(email, password)
+	return login(email, password)
 		.then(response => {
-			console.log('Resposta: ' + response);
+			response.json().then(data => {
+				console.log(data);
+			});
 			if (response.success) {
 				dispatch(AuthReducer.setLoginSuccess(response.authToken, response.refreshToken));
 				_saveItem('authToken', response.authToken)

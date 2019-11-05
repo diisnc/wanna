@@ -1,6 +1,6 @@
 import { handleTokenErrors } from './errors/error.service';
 
-const config = { url: 'http://192.168.1.11:8000' };
+const config = { url: 'http://192.168.1.5:8000' };
 
 let currentAuthToken = null;
 
@@ -8,7 +8,7 @@ export function setToken(token) {
 	currentAuthToken = token;
 }
 
-export const ourFetchAuth = action => {
+export const ourFetchAuth = async action => {
 	method = action.method;
 	endpoint = action.endpoint;
 
@@ -21,20 +21,14 @@ export const ourFetchAuth = action => {
 	console.log(endpoint);
 	console.log(method);
 	console.log(body);
-	console.log(querystring);
 	console.log(headers);
 
-	return fetch(`${config.url}${endpoint}${querystring}`, {
+	return await fetch(`${config.url}${endpoint}`, {
 		method,
 		body,
 		headers,
 		credentials: 'same-origin'
-	})
-		.then(response => response.text())
-		.then(handleTokenErrors)
-		.catch(error => {
-			throw error;
-		});
+	});
 };
 
 function getQueryString(params) {

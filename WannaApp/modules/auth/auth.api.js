@@ -9,7 +9,7 @@ export const login = (email, password) => {
 			password: password
 		}
 	};
-	ourFetchAuth(config);
+	return ourFetchAuth(config);
 };
 
 export const register = (username, firstName, lastName, email, password) => {
