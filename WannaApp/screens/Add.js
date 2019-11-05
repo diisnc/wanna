@@ -17,7 +17,7 @@ class Add extends Component {
 	state = {
 		wishlistData: [],
 		numPosts: 0,
-		base64image: null
+		pickedImagesUri: []
 	};
 
 	componentDidMount() {
@@ -86,47 +86,42 @@ class Add extends Component {
 		return (
 			<ScrollView scrollEventThrottle={16}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
+					{this.buildPickedImagesScroll()}
 					{this.buildImagePicker()}
 				</View>
 			</ScrollView>
 		);
 	}
 
-	// Build space to pick image
-	buildImagePicker() {
-		return (
-			<View style={{ flex: 1 }}>
-				<View
-					style={{
-						height: 200,
-						flexDirection: 'row',
-						padding: 10,
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: 'pink'
-					}}>
-					{/* Take photo */}
-					<MaterialCommunityIcons.Button
-						name="camera"
-						size={40}
-						style={{ flex: 1 }}
-						onPress={this.takePhoto}
-					/>
-					{/* Select from gallery */}
-					<MaterialCommunityIcons.Button
-						name="folder-image"
-						size={40}
-						style={{ flex: 1 }}
-						onPress={this.pickImage}
-					/>
-				</View>
-				<View
-					style={{
-						height: 200
-					}}>
+	// Builds lateral scroll for picked images
+	buildPickedImagesScroll() {
+		if (this.state.pickedImagesUri.length > 0) {
+			return (
+				<ScrollView 
+					scrollEventThrottle={16} 
+					horizontal={true}
+					style={{ height: 100, backgroundColor: 'green', margin: 10 }}
+				>
+					{this.buildImages()}
+				</ScrollView>
+			);
+		}
+		return;
+	}
+
+	// build all the images
+	buildImages() {
+		const items = [];
+
+		for (let index = 0; index < this.state.pickedImagesUri.length; index++) {
+			let imageUri = this.state.pickedImagesUri[index]
+
+			items.push(
+				<View key={index} style={{width: 100, backgroundColor: "yellow", margin: 5}}>
 					<Image
+						key={index}
 						source={{
-							uri: 'data:' + 'image' + ';base64,' + this.state.base64image + ''
+							uri: imageUri
 						}}
 						style={{
 							width: 'auto',
@@ -135,7 +130,47 @@ class Add extends Component {
 							overflow: 'hidden'
 						}}
 					/>
+					<TouchableHighlight
+						underlayColor = "#ffa456"
+						onPress = {() => this.deleteImage(index)}
+						style = {{ backgroundColor: '#fff', height: '20%'}}
+					>
+						<Text>Remover</Text>
+					</TouchableHighlight>
 				</View>
+			);
+		}
+
+		return items;
+	}
+	
+
+	// Build space to pick image
+	buildImagePicker() {
+		return (
+			<View
+				style={{
+					height: 100,
+					flexDirection: 'row',
+					padding: 10,
+					justifyContent: 'center',
+					alignItems: 'center',
+					backgroundColor: 'pink'
+				}}>
+				{/* Take photo */}
+				<MaterialCommunityIcons.Button
+					name="camera"
+					size={40}
+					style={{ flex: 1 }}
+					onPress={this.takePhoto}
+				/>
+				{/* Select from gallery */}
+				<MaterialCommunityIcons.Button
+					name="folder-image"
+					size={40}
+					style={{ flex: 1 }}
+					onPress={this.pickImage}
+				/>
 			</View>
 		);
 	}
@@ -143,10 +178,12 @@ class Add extends Component {
 	// handle image result
 	handleImagePicked(pickerResult) {
 		{
-			/* save image on base64 to state */
+			/* add image to rui list */
 		}
-		this.setState({ base64image: pickerResult.base64 });
-		//console.log(pickerResult.base64)
+		let pickedImagesUriCopy = [...this.state.pickedImagesUri];
+		pickedImagesUriCopy.push(pickerResult.uri);
+		this.setState({ pickedImagesUri: pickedImagesUriCopy });
+		//console.log(pickedImagesUri)
 	}
 
 	// access camera and take photo
@@ -170,6 +207,18 @@ class Add extends Component {
 
 		this.handleImagePicked(pickerResult);
 	};
+
+	deleteImage(index) {
+		console.log("apagar imagem selecionada, no index: " + index);
+		// copia das imagens colocadas
+		var pickedImagesUriCopy = [...this.state.pickedImagesUri];
+		// remover elemento
+		if (index > -1) {
+			pickedImagesUriCopy.splice(index, 1);
+		}
+		// novo estado
+		this.setState({ pickedImagesUri: pickedImagesUriCopy });
+	}
 
 	// Get Data to Build Feed and Transform it to Json Object
 	getWishlistDataFromApiAsync() {
