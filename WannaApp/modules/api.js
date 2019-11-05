@@ -8,11 +8,27 @@ export function setToken(token) {
 	currentAuthToken = token;
 }
 
-export const ourFetch = (route, methodA, bodyA) => {
-	return fetch(`${config.url}${route}`, {
-		method: methodA,
-		body: JSON.stringify({ bodyA }),
-		headers: { 'Content-Type': 'application/json' }
+export const ourFetchAuth = action => {
+	method = action.method;
+	endpoint = action.endpoint;
+
+	let body = JSON.stringify(action.body);
+
+	const headers = {
+		'Content-Type': 'application/json'
+	};
+
+	console.log(endpoint);
+	console.log(method);
+	console.log(body);
+	console.log(querystring);
+	console.log(headers);
+
+	return fetch(`${config.url}${endpoint}${querystring}`, {
+		method,
+		body,
+		headers,
+		credentials: 'same-origin'
 	})
 		.then(response => response.text())
 		.then(handleTokenErrors)
@@ -28,7 +44,7 @@ function getQueryString(params) {
 		.join('&');
 }
 
-export const ourFetchWithToken = store => next => action => {
+export const ourFetchWithToken = action => {
 	method = action.method;
 	endpoint = action.endpoint;
 

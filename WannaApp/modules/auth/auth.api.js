@@ -1,25 +1,50 @@
-import { ourFetch, ourFetchWithToken  } from '../api';
+import { ourFetchAuth } from '../api';
 
-class AuthApi {
+export const login = (email, password) => {
+	const config = {
+		endpoint: '/v1/auth/login',
+		method: 'POST',
+		body: {
+			email: email,
+			password: password
+		}
+	};
+	ourFetchAuth(config);
+};
 
-	static login(email, password) {
-		ourFetch('/v1/auth/login', 'POST', { email: email, password: password })
-	}
+export const register = (username, firstName, lastName, email, password) => {
+	const config = {
+		endpoint: '/v1/auth/register',
+		method: 'POST',
+		body: {
+			username: username,
+			firstName: firstName,
+			lastName: lastName,
+			email: email,
+			password: password
+		}
+	};
+	ourFetchAuth(config);
+};
 
-	static logout(refreshToken) {
-		ourFetch('/v1/auth/logout', 'POST', { refreshToken: refreshToken })
-	}
-	static register(username, firstName, lastName, email, password) {
-		ourFetch('/v1/auth/register', 'POST', {
-			username: username, firstName: firstName,
-			lastName: lastName, email: email, password: password
-		});
-	}
-	static refreshToken(refreshToken) {
-		ourFetch('/v1/auth/refresh', 'POST', { refreshToken: refreshToken });
-	}
-	static checkAuthTest(token) {
-		ourFetchWithToken('/v1/auth/test', 'GET', null);
-	}
-}
-export default AuthApi;
+export const logout = refreshToken => {
+	const config = {
+		endpoint: '/v1/auth/logout',
+		method: 'POST',
+		body: {
+			refreshToken: refreshToken
+		}
+	};
+	ourFetchAuth(config);
+};
+
+export const refreshToken = refreshToken => {
+	const config = {
+		endpoint: '/v1/auth/refresh',
+		method: 'POST',
+		body: {
+			refreshToken: refreshToken
+		}
+	};
+	ourFetchAuth(config);
+};
