@@ -76,36 +76,32 @@ export const register = (first, last, email, password) => dispatch => {
 		});
 };
 
-export const loginService = (email, password) => dispatch => {
+export const loginService = (email, password) => async dispatch => {
 	dispatch(AuthReducer.setAuthPending());
-	return login(email, password)
-		.then(response => {
-			response.json().then(data => {
-				console.log(data);
-			});
-			if (response.success) {
-				dispatch(AuthReducer.setLoginSuccess(response.authToken, response.refreshToken));
-				_saveItem('authToken', response.authToken)
+	let response = await login(email, password);
+	let data = await response.json();
+	if (response.status == 200) {
+		dispatch(AuthReducer.setLoginSuccess(response.authToken, response.refreshToken));
+		_saveItem('authToken', response.authToken)
+			.then(resp => {
+				_saveItem('refreshToken', response.refreshToken)
 					.then(resp => {
-						_saveItem('refreshToken', response.refreshToken)
-							.then(resp => {
-								App.startAppLoggedIn();
-							})
-							.catch(error => {
-								dispatch(asyncError(error));
-							});
+						App.startAppLoggedIn();
 					})
 					.catch(error => {
 						dispatch(asyncError(error));
 					});
-			} else {
-				dispatch(AuthReducer.setLoginError(response.message));
-			}
-		})
-		.catch(error => {
-			console.log(error);
-			//dispatch(generalError(error));
-		});
+			})
+			.catch(error => {
+				dispatch(asyncError(error));
+			});
+	} else {
+		let error = JSON.stringify(data);
+		// console.log('Está a despachar o erro: ' + error.errors);
+		console.log('Error1 ' + error);
+		dispatch(AuthReducer.setLoginError(error));
+	}
+	//dispatch(generalError(error));
 };
 
 //test function on the login and logged in areas to show the JWT is working

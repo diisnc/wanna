@@ -36,10 +36,16 @@ class Login extends Component {
 						title="Log in"
 					/>
 					<Button
-						onPress={this.goToRegister}
+						onPress={() => this.props.navigation.navigate('Register')}
 						buttonStyle={[globalStyle.btn, styles.authBtn]}
 						titleStyle={globalStyle.btnText}
 						title={'Create account'}
+					/>
+					<Button
+						onPress={() => this.props.navigation.navigate('Main')}
+						buttonStyle={[globalStyle.btn, styles.authBtn]}
+						titleStyle={globalStyle.btnText}
+						title={'Mudar'}
 					/>
 				</View>
 			</View>
@@ -47,7 +53,7 @@ class Login extends Component {
 	}
 	goToRegister() {
 		this.props.navigator.push({
-			screen: 'testapp.Register',
+			screen: 'Register',
 			title: 'Register',
 			passProps: {},
 			animated: true,

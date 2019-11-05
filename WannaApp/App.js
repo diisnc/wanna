@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { connect } from 'react-redux';
 import Main from './screens/Main';
 import Login from './screens/Login';
+import Register from './screens/Register';
 import { checkAuthStatus } from './modules/auth/auth.service';
 import { jwt, saveAuthToken } from './modules/middleware';
 import logger from 'redux-logger';
@@ -18,6 +19,7 @@ import permissions, {
 import error from './modules/errors/error.reducer';
 import * as Permissions from 'expo-permissions';
 import { follow } from './modules/profile/profile.api';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 const rootReducer = combineReducers({
 	auth,
@@ -37,6 +39,29 @@ class App extends Component {
 		);
 	}
 }
+
+const AppStackNav = createSwitchNavigator({
+	Login: {
+		screen: Login,
+		navigationOptions: {
+			header: null
+		}
+	},
+	Main: {
+		screen: Main,
+		navigationOptions: {
+			header: null
+		}
+	},
+	Register: {
+		screen: Register,
+		navigationOptions: {
+			header: null
+		}
+	}
+});
+
+const Navigator = createAppContainer(AppStackNav);
 
 class ConnectedComponent extends React.Component {
 	constructor(props) {
@@ -58,11 +83,11 @@ class ConnectedComponent extends React.Component {
 		const loggedIn = this.props.loggedIn;
 		console.log('estado do login: ' + loggedIn);
 		// Vítor
-		/*
+
 		if (loggedIn == false) {
-			return <Login />;
+			return <Navigator />;
 		}
-		*/
+
 		// if (loggedIn) { return <Main /> }
 		return <Main />;
 	}

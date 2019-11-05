@@ -5,7 +5,6 @@ import { reduxForm, Field } from 'redux-form';
 import { Input, Button } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 
-import ErrorBar from '../viewcomponents/ErrorBar';
 import { register } from '../modules/auth/auth.service';
 
 import { globalStyle, defaultNavigator } from './style';
@@ -22,9 +21,7 @@ class Register extends Component {
 		};
 
 		return (
-			<LinearGradient colors={['#3A1C71', '#D76D77', '#FFAF7B']} style={styles.container}>
-				<ErrorBar />
-
+			<View>
 				<Field name="first" placeholder="First name" component={renderInput} />
 				<Field name="last" placeholder="Last name" component={renderInput} />
 				<Field name="email" placeholder="Email" component={renderInput} />
@@ -39,17 +36,22 @@ class Register extends Component {
 					titleStyle={globalStyle.btnText}
 					title={'Register'}
 				/>
+				<Button
+					onPress={() => this.props.navigation.navigate('Login')}
+					buttonStyle={[globalStyle.btn]}
+					titleStyle={globalStyle.btnText}
+					title={'Voltar'}
+				/>
 				{this.props.registered ? (
 					<Text style={styles.loggedInDesc}>Register was successfull</Text>
 				) : null}
-			</LinearGradient>
+			</View>
 		);
 	}
 }
 
 //must be rendered outside of the render method as this will cause it to re-render each time the props change
 const renderInput = ({ input: { onChange, ...restInput }, placeholder }) => {
-	console.log(placeholder);
 	return (
 		<Input
 			inputContainerStyle={styles.input}
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
 		fontSize: 12
 	},
 	submitButton: {
-		backgroundColor: '#ffffff',
+		backgroundColor: '#000000',
 		borderRadius: 10,
 		marginTop: 20,
 		borderWidth: 1,
