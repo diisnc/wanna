@@ -22,20 +22,13 @@ class Register extends Component {
 		};
 
 		return (
-			<LinearGradient
-				colors={['#3A1C71', '#D76D77', '#FFAF7B']}
-				style={styles.container}
-			>
+			<LinearGradient colors={['#3A1C71', '#D76D77', '#FFAF7B']} style={styles.container}>
 				<ErrorBar />
 
 				<Field name="first" placeholder="First name" component={renderInput} />
 				<Field name="last" placeholder="Last name" component={renderInput} />
 				<Field name="email" placeholder="Email" component={renderInput} />
-				<Field
-					name="password"
-					placeholder="Password"
-					component={renderPassword}
-				/>
+				<Field name="password" placeholder="Password" component={renderPassword} />
 				<View style={styles.errorMessage}>
 					<Text>{this.props.errorMessage}</Text>
 				</View>
@@ -94,7 +87,10 @@ function mapDispatchToProps(dispatch) {
 		}
 	};
 }
-let RegisterConnect = connect(mapStateToProps, mapDispatchToProps)(Register);
+let RegisterConnect = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Register);
 export default reduxForm({
 	form: 'registerForm'
 })(RegisterConnect);

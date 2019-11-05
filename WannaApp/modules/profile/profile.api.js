@@ -1,5 +1,4 @@
 import { ourFetchWithToken } from '../api';
-import { CALL_API } from '../api';
 
 export const follow = usernameToFollow => {
 	const config = {
@@ -12,62 +11,76 @@ export const follow = usernameToFollow => {
 	ourFetchWithToken(config);
 };
 
-export const unfollow = usernameToUnfollow => ({
-	[CALL_API]: {
-		endpoint: '/v1/profile/unfollow/${}',
-		method: 'POST'
-	}
-});
-
-export const getWishlist = () => ({
-	[CALL_API]: {
-		endpoint: '/v1/profile/wishlist',
+export const unfollow = usernameToUnfollow => {
+	const config = {
+		endpoint: '/v1/profile/unfollow/',
 		method: 'POST',
+		query: {
+			username: usernameToUnFollow
+		}
+	};
+	ourFetchWithToken(config);
+};
+
+export const getWishlist = () => {
+	const config = {
+		endpoint: '/v1/profile/wishlist',
+		method: 'GET',
 		body: {
 			email: 'esben@esben.dk',
 			password: '1234'
 		}
-	}
-});
+	};
+	ourFetchWithToken(config);
+};
 
-export const getFollowers = () => ({
-	[CALL_API]: {
+export const getFollowers = () => {
+	const config = {
 		endpoint: '/v1/profile/followers',
-		method: 'POST'
-	}
-});
+		method: 'GET'
+	};
+	ourFetchWithToken(config);
+};
 
-export const getFollowings = () => ({
-	[CALL_API]: {
+export const getFollowings = () => {
+	const config = {
 		endpoint: '/v1/profile/followings',
-		method: 'POST'
-	}
-});
+		method: 'GET'
+	};
+	ourFetchWithToken(config);
+};
 
-export const getMyProfile = () => ({
-	[CALL_API]: {
+export const getMyProfile = () => {
+	const config = {
 		endpoint: '/v1/profile/',
-		method: 'POST'
-	}
-});
+		method: 'GET'
+	};
+	ourFetchWithToken(config);
+};
 
-export const getUserProfile = () => ({
-	[CALL_API]: {
+export const getUserProfile = userID => {
+	const config = {
 		endpoint: '/v1/profile/${}',
-		method: 'POST'
-	}
-});
+		method: 'GET',
+		query: {
+			username: userID
+		}
+	};
+	ourFetchWithToken(config);
+};
 
-export const getBuyHistory = () => ({
-	[CALL_API]: {
+export const getBuyHistory = () => {
+	const config = {
 		endpoint: '/v1/profile/buyHistory',
-		method: 'POST'
-	}
-});
+		method: 'GET'
+	};
+	ourFetchWithToken(config);
+};
 
-export const getSalesHistory = () => ({
-	[CALL_API]: {
+export const getSalesHistory = () => {
+	const config = {
 		endpoint: '/v1/profile/salesHistory',
-		method: 'POST'
-	}
-});
+		method: 'GET'
+	};
+	ourFetchWithToken(config);
+};
