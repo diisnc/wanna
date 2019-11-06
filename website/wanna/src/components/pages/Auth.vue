@@ -157,7 +157,7 @@ a{color:inherit;text-decoration:none}
 	min-height:100%; 
 	position:relative;
   /* CHANGE THIS BACKGROUND */
-	 background:url("../../assets/logo.png") no-repeat center;
+	background:url("../../assets/logo.png") no-repeat center;
 	/* background-color: blue; */
   box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.068),0 17px 50px 0 rgba(0, 0, 0, 0.075);
 } 
