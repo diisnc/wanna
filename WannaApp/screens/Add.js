@@ -13,9 +13,10 @@ import {
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
-import { CheckBox } from 'react-native-elements';
+import CheckBox from 'react-native-check-box';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { AppLoading } from 'expo';
 
 const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
@@ -25,6 +26,7 @@ const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '5
 
 class Add extends Component {
 	state = {
+		loading: true,
 		wishlistData: [],
 		numPosts: 0,
 		pickedImagesUri: [],
@@ -54,6 +56,14 @@ class Add extends Component {
 	}
 
 	render() {
+
+		// loading screen
+		if (this.state.loading) {
+			return (
+			  <AppLoading/>
+			);
+		}
+
 		return (
 			/*
             Fazer View Englobadora da página
@@ -315,10 +325,10 @@ class Add extends Component {
 					/>
 					{/* incluir portes? */}
 					<CheckBox
-						title='Portes grátis'
-						iconType='material-community'
-						checked={this.state.offerPostage}
-						onPress={() => this.setState({offerPostage: !this.state.offerPostage})}
+						style={{flex: 1, padding: 10}}
+						leftText={"Portes Grátis"}
+						isChecked={this.state.offerPostage}
+						onClick={() => {this.setState({offerPostage: !this.state.offerPostage})}}
 					/>
 					{/* preço portes */}
 					{!this.state.offerPostage ? (
@@ -469,7 +479,7 @@ class Add extends Component {
         */
 
 		const newState = require('./json/responseFeed');
-		this.setState({ wishlistData: newState, numPosts: newState.length });
+		this.setState({ wishlistData: newState, numPosts: newState.length, loading: false });
 
 		return;
 	}
