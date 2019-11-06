@@ -75,10 +75,12 @@ module.exports = (sequelize, DataTypes) => {
 		avatarData: {
 			type: DataTypes.BLOB(),
 			allowNull: true,
+			defaultValue: null,
 		},
 		avatarType: {
 			type: DataTypes.STRING,
 			allowNull: true,
+			defaultValue: null,
 		},
 	});
 
