@@ -1,10 +1,11 @@
 import { logout, refreshToken } from './auth/auth.service';
-import { api } from './api';
+import { api, setToken } from './api';
 
 export const saveAuthToken = store => next => action => {
-	if (action.type === 'LOGIN_SUCCESS') {
+	if (action.type === 'SET_LOGIN_SUCCESS') {
 		// after a successful login, update the token in the API
-		api.setToken(action.payload.authToken);
+		setToken(action.authToken);
+		// api.currentAuthToken = action.authToken;
 	}
 	// continue processing this action
 	return next(action);

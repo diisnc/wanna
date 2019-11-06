@@ -1,6 +1,7 @@
 const passport = require('passport');
 const httpStatus = require('http-status');
 const { ApiError } = require('../utils/customErrors');
+const jwt = require('jsonwebtoken');
 
 const roles = {
 	admin: ['guest', 'user'],
@@ -14,6 +15,10 @@ const invalidToken = {
 };
 const userBlocked = {
 	message: 'User is blocked',
+	status: httpStatus.UNAUTHORIZED,
+};
+const expiredToken = {
+	message: 'Token is expired',
 	status: httpStatus.UNAUTHORIZED,
 };
 const noPermissions = {
@@ -31,6 +36,14 @@ function hasPermissions(userRole, allowedRole) {
 module.exports = (role = 'guest') => (req, res, next) => {
 	// Se a chamada à função for com 0 argumentos, o role = guest em vez de null
 	passport.authenticate('jwt', { session: false }, (error, user) => {
+		let token = req.headers.authentication.split(' ')[1];
+		// Use to ensure token is valid and debug non-working bearer
+		try {
+			jwt.verify(token, process.env.SECRET_STRING);
+		} catch (e) {
+			return next(new ApiError(expiredToken));
+		}
+
 		if (error) {
 			return next(new ApiError(invalidToken));
 		}

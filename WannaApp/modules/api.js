@@ -1,11 +1,11 @@
 import { handleTokenErrors } from './errors/error.service';
 
-const config = { url: 'http://192.168.1.12:8000' };
+const config = { url: 'http://192.168.43.171:8000' };
 
-let currentAuthToken = null;
+var currentAuthToken;
 
 export function setToken(token) {
-	currentAuthToken = token;
+	this.currentAuthToken = token;
 }
 
 export const ourFetchAuth = async action => {
@@ -38,7 +38,7 @@ function getQueryString(params) {
 		.join('&');
 }
 
-export const ourFetchWithToken = action => {
+export const ourFetchWithToken = async action => {
 	method = action.method;
 	endpoint = action.endpoint;
 
@@ -51,24 +51,30 @@ export const ourFetchWithToken = action => {
 	//const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 	const headers = {
 		'Content-Type': 'application/json',
-		Authorization: 'Bearer ${this.currentAuthToken}'
+		Authentication: `Bearer ${this.currentAuthToken}`
 	};
 
-	console.log(endpoint);
+	console.log(endpoint + ' ' + method);
 	console.log(method);
-	console.log(body);
-	console.log(querystring);
 	console.log(headers);
+	// console.log(body);
+	// console.log(querystring);
+	// console.log(headers);
 
-	return fetch(`${config.url}${endpoint}${querystring}`, {
+	console.log('Oi');
+
+	let response = await fetch(`${config.url}${endpoint}${querystring}`, {
 		method,
 		body,
 		headers,
 		credentials: 'same-origin'
-	})
-		.then(response => response.text())
-		.then(handleTokenErrors)
-		.catch(error => {
-			throw error;
-		});
+	});
+
+	// console.log(response);
+
+	let data = await response.text();
+	console.log('Olá');
+	console.log('Nice: ' + data);
+	//handleTokenErrors(data);
+	return data;
 };

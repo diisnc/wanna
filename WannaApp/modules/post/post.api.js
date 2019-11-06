@@ -1,5 +1,13 @@
 import { ourFetchWithToken } from '../api';
 
+export const feed = () => {
+	const config = {
+		endpoint: '/v1/post/feed',
+		method: 'GET'
+	};
+	ourFetchWithToken(config);
+};
+
 export const like = (idPost, type) => {
 	const config = {
 		endpoint: '/v1/post/createUserPost',

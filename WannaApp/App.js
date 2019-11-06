@@ -66,7 +66,6 @@ const Navigator = createAppContainer(AppStackNav);
 class ConnectedComponent extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log('passou aqui');
 		// this.checkAuth = this.checkAuth.bind(this);
 	}
 

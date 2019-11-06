@@ -34,7 +34,6 @@ export const refreshToken = refreshToken => dispatch => {
 // used on app startup
 export const checkAuthStatus = () => async dispatch => {
 	try {
-		console.log('será que está a pssar por aqui?');
 		const authToken = await AsyncStorage.getItem('authToken');
 		const refreshToken = await AsyncStorage.getItem('refreshToken');
 
@@ -42,10 +41,9 @@ export const checkAuthStatus = () => async dispatch => {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken));
 		} else dispatch(AuthReducer.setNoLogin());
 
-		console.log('oi?');
 		// return authToken;
 	} catch (error) {
-		console.log('erro crlhhh');
+		console.log('erro crlhhh ' + error);
 		dispatch(asyncError(error));
 	}
 };
@@ -76,15 +74,17 @@ export const register = (first, last, email, password) => dispatch => {
 		});
 };
 
-export const loginService = (email, password) => async dispatch => {
+export const loginService = (email = 'stoj97@gmail.com', password = '123456') => async dispatch => {
 	dispatch(AuthReducer.setAuthPending());
 	let response = await login(email, password);
 	let data = await response.json();
 	if (response.status == 200) {
-		dispatch(AuthReducer.setLoginSuccess(response.authToken, response.refreshToken));
-		_saveItem('authToken', response.authToken)
+		console.log(data);
+		dispatch(AuthReducer.setLoginSuccess(data.tokens.accessToken, data.tokens.refreshToken));
+		console.log('Token: ' + data.tokens.accessToken);
+		_saveItem('authToken', data.tokens.accessToken)
 			.then(resp => {
-				_saveItem('refreshToken', response.refreshToken)
+				_saveItem('refreshToken', data.tokens.refreshToken)
 					.then(resp => {
 						App.startAppLoggedIn();
 					})
@@ -96,7 +96,8 @@ export const loginService = (email, password) => async dispatch => {
 				dispatch(asyncError(error));
 			});
 	} else {
-		let error = JSON.stringify(data);
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
 		// console.log('Está a despachar o erro: ' + error.errors);
 		console.log('Error1 ' + error);
 		dispatch(AuthReducer.setLoginError(error));
