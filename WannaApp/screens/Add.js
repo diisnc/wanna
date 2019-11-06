@@ -8,16 +8,39 @@ import {
 	Platform,
 	ScrollView,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	Button
 } from 'react-native';
+import ModalDropdown from 'react-native-modal-dropdown';
+import { TextInputMask } from 'react-native-masked-text';
+import { CheckBox } from 'react-native-elements';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+
+const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
+const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
+const colors = ['Azul', 'Vermelho', 'Preto', 'Branco', 'Outra'];
+const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
+const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
 
 class Add extends Component {
 	state = {
 		wishlistData: [],
 		numPosts: 0,
-		pickedImagesUri: []
+		pickedImagesUri: [],
+		/* form */
+		optionsGenre: ['Masculino', 'Feminino'],
+		optionsClothes: [],
+		optionsColors: [],
+		optionsSizes: [],
+		selectedGenre: null,
+		selectedClothe: null,
+		selectedColor: null,
+		selectedSize: null,
+		price: null,
+		offerPostage: false,
+		postagePrice: null,
+		completed: false
 	};
 
 	componentDidMount() {
@@ -88,6 +111,7 @@ class Add extends Component {
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
 					{this.buildPickedImagesScroll()}
 					{this.buildImagePicker()}
+					{this.buildFilterForm()}
 				</View>
 			</ScrollView>
 		);
@@ -144,7 +168,6 @@ class Add extends Component {
 		return items;
 	}
 	
-
 	// Build space to pick image
 	buildImagePicker() {
 		return (
@@ -175,6 +198,169 @@ class Add extends Component {
 		);
 	}
 
+	// Builds list of filters
+	buildFilterForm() {
+		return (
+			<ScrollView scrollEventThrottle={16}>
+				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
+					{/* género */}
+					<View
+						key={'genre'}
+						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						<ModalDropdown
+							onSelect={(index, value) => {
+								this.handleGenre({ selected: value });
+							}}
+							options={this.state.optionsGenre}
+							defaultValue={'Género'}
+							dropdownTextStyle={{
+								backgroundColor: '#fff',
+								fontSize: 17
+							}} /*Style here*/
+							style={{
+								flex: 1,
+								backgroundColor: '#fff',
+								borderRadius: 30,
+								backgroundColor: 'rgb(19, 119, 237)'
+							}}
+							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							dropdownStyle={{ width: '60%' }}
+						/>
+					</View>
+					{/* tipo roupa */}
+					<View
+						key={'clothe'}
+						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						<ModalDropdown
+							onSelect={(index, value) => {
+								this.handleClothe({ selected: value });
+							}}
+							options={this.state.optionsClothes}
+							defaultValue={'Peça'}
+							dropdownTextStyle={{
+								backgroundColor: '#fff',
+								fontSize: 17
+							}} /*Style here*/
+							style={{
+								flex: 1,
+								backgroundColor: '#fff',
+								borderRadius: 30,
+								backgroundColor: 'rgb(19, 119, 237)'
+							}}
+							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							dropdownStyle={{ width: '60%' }}
+						/>
+					</View>
+					{/* cor */}
+					<View
+						key={'color'}
+						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						<ModalDropdown
+							onSelect={(index, value) => {
+								this.handleColor({ selected: value });
+							}}
+							options={this.state.optionsColors}
+							defaultValue={'Cor'}
+							dropdownTextStyle={{
+								backgroundColor: '#fff',
+								fontSize: 17
+							}} /*Style here*/
+							style={{
+								flex: 1,
+								backgroundColor: '#fff',
+								borderRadius: 30,
+								backgroundColor: 'rgb(19, 119, 237)'
+							}}
+							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							dropdownStyle={{ width: '60%' }}
+						/>
+					</View>
+					{/* tamanhos */}
+					<View
+						key={'sizes'}
+						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						<ModalDropdown
+							onSelect={(index, value) => {
+								this.handleSizes({ selected: value });
+							}}
+							options={this.state.optionsSizes}
+							defaultValue={'Tamanho'}
+							dropdownTextStyle={{
+								backgroundColor: '#fff',
+								fontSize: 17
+							}} /*Style here*/
+							style={{
+								flex: 1,
+								backgroundColor: '#fff',
+								borderRadius: 30,
+								backgroundColor: 'rgb(19, 119, 237)'
+							}}
+							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							dropdownStyle={{ width: '60%' }}
+						/>
+					</View>
+					{/* preço */}
+					<TextInputMask
+						type={'money'}
+						options={{
+							unit: "€"
+						}}
+						keyboardType={'numeric'}
+						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
+						underlineColorAndroid="transparent"
+						placeholder="Inserir preço"
+						placeholderTextColor="grey"
+						value={this.state.price}
+						onChangeText={text => this.setState({price: text})}
+					/>
+					{/* incluir portes? */}
+					<CheckBox
+						title='Portes grátis'
+						iconType='material-community'
+						checked={this.state.offerPostage}
+						onPress={() => this.setState({offerPostage: !this.state.offerPostage})}
+					/>
+					{/* preço portes */}
+					{!this.state.offerPostage ? (
+						<TextInputMask
+							type={'money'}
+							options={{
+								unit: "€"
+							}}
+							keyboardType={'numeric'}
+							style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
+							underlineColorAndroid="transparent"
+							placeholder="Inserir portes"
+							placeholderTextColor="grey"
+							value={this.state.postagePrice}
+							onChangeText={text => this.setState({postagePrice: text})}
+						/>
+					) : null}
+					{/* create post */}
+					{this.state.completed ? (
+						<Button
+							title="Criar"
+							onPress={console.log(
+								'Submit: ' +
+									this.state.selectedGenre +
+									', ' +
+									this.state.selectedClothe +
+									', ' +
+									this.state.selectedColor +
+									', ' +
+									this.state.selectedSize +
+									', ' +
+									this.state.selectedMinPrice +
+									', ' +
+									this.state.selectedMaxPrice
+							)}
+						/>
+					) : null}
+				</View>
+			</ScrollView>
+		);
+	}
+
 	// handle image result
 	handleImagePicked(pickerResult) {
 		{
@@ -184,6 +370,54 @@ class Add extends Component {
 		pickedImagesUriCopy.push(pickerResult.uri);
 		this.setState({ pickedImagesUri: pickedImagesUriCopy });
 		//console.log(pickedImagesUri)
+	}
+
+	//onValueChange of the switch this function will be called
+	handleGenre(newState) {
+		//console.log("Genre selecionado: " + newState.selected);
+
+		// save selected genre
+		this.setState({ selectedGenre: newState.selected });
+
+		// give options for next step
+		if (newState.selected == 'Masculino') {
+			this.setState({ optionsClothes: maleClothes });
+		} else {
+			this.setState({ optionsClothes: femaleClothes });
+		}
+	}
+
+	//onValueChange of the switch this function will be called
+	handleClothe(newState) {
+		//console.log("Clothe selecionada: " + newState.selected);
+
+		// save selected genre
+		this.setState({ selectedClothe: newState.selected });
+
+		// give options for next step
+		this.setState({ optionsColors: colors });
+	}
+
+	//onValueChange of the switch this function will be called
+	handleColor(newState) {
+		//console.log("Cor selecionada: " + newState.selected);
+
+		// save selected genre
+		this.setState({ selectedColor: newState.selected });
+
+		// give options for next step
+		this.setState({ optionsSizes: sizes });
+	}
+
+	//onValueChange of the switch this function will be called
+	handleSizes(newState) {
+		//console.log("Cor selecionada: " + newState.selected);
+
+		// save selected genre
+		this.setState({ selectedSize: newState.selected });
+
+		// give options for next step
+		this.setState({ completed: true });
 	}
 
 	// access camera and take photo
