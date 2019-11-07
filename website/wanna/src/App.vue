@@ -76,5 +76,6 @@ export default {
 
   .btn-secondary:hover{
     background-color: #4A53FC !important;
+    border-radius: 50px !important;
   }
 </style>
