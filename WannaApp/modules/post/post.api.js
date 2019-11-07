@@ -1,12 +1,11 @@
 import { ourFetchWithToken } from '../api';
 
-export const feed = (dispatch) => {
-	console.log('dispatchfeed: ' + dispatch);
+export const feed = () => {
 	const config = {
 		endpoint: '/v1/post/feed',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const like = (idPost, type) => {
@@ -17,7 +16,7 @@ export const like = (idPost, type) => {
 			idPost: idPost
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getComments = idPost => {
@@ -28,7 +27,7 @@ export const getComments = idPost => {
 			idPost: idPost
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const comment = (idPost, type) => {
@@ -39,7 +38,7 @@ export const comment = (idPost, type) => {
 			idPost: idPost
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const deleteComment = (idPost, type) => {
@@ -50,7 +49,7 @@ export const deleteComment = (idPost, type) => {
 			idPost: idPost
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const markPost = (idPost, type) => {
@@ -61,7 +60,7 @@ export const markPost = (idPost, type) => {
 			idPost: idPost
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const createPost = post => {
@@ -72,7 +71,7 @@ export const createPost = post => {
 			username: usernameToUnFollow
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const editPost = idPost => {
@@ -83,7 +82,7 @@ export const editPost = idPost => {
 			idPost: idPost
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const deleteFilter = idFilter => {
@@ -94,5 +93,5 @@ export const deleteFilter = idFilter => {
 			idFilter: idFilter
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };

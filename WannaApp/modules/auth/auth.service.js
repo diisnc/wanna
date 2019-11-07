@@ -83,9 +83,7 @@ export const loginService = (email = 'stoj97@gmail.com', password = '123456') =>
 	let response = await login(email, password);
 	let data = await response.json();
 	if (response.status == 200) {
-		console.log(data);
 		dispatch(AuthReducer.setLoginSuccess(data.tokens.accessToken, data.tokens.refreshToken));
-		console.log('Token: ' + data.tokens.accessToken);
 		_saveItem('authToken', data.tokens.accessToken)
 			.then(resp => {
 				_saveItem('refreshToken', data.tokens.refreshToken)

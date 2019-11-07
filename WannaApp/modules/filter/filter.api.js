@@ -5,7 +5,7 @@ export const getFilters = () => {
 		endpoint: '/v1/filter/',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const createFilter = filter => {
@@ -16,7 +16,7 @@ export const createFilter = filter => {
 			username: usernameToUnFollow
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const searchByFilter = idFilter => {
@@ -27,7 +27,7 @@ export const searchByFilter = idFilter => {
 			idFilter: idFilter
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const deleteFilter = idFilter => {
@@ -38,5 +38,5 @@ export const deleteFilter = idFilter => {
 			idFilter: idFilter
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };

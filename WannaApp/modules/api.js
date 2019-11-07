@@ -56,13 +56,11 @@ export const ourFetchWithToken = async action => {
 	};
 
 	console.log(endpoint + ' ' + method);
-	console.log(method);
-	console.log(headers);
+	//console.log(method);
+	console.log(headers.Authorization);
 	// console.log(body);
 	// console.log(querystring);
 	// console.log(headers);
-
-	console.log('Oi');
 
 	let response = await fetch(`${config.url}${endpoint}${querystring}`, {
 		method,
@@ -73,14 +71,18 @@ export const ourFetchWithToken = async action => {
 
 	// console.log(response);
 	let data = await response.json();
-	if (data.status == 200) {
+	// console.log(data);
+	// console.log('data que retorna do feed: ' + data);
+	if (response.status == 200 || response.status == 304) {
+		console.log('Tamanho do que retornou do backend: ' + data.length);
 		return data;
 	} else {
+		console.log('erro');
 		data = JSON.stringify(data);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
 		// console.log('Está a despachar o erro: ' + error.errors);
 		store.dispatch({ type: 'INVALID_TOKEN' });
-		return data;
+		// return data;
 		console.log('Error1 ' + error);
 		// dispatch(AuthReducer.setLoginError(error));
 	}

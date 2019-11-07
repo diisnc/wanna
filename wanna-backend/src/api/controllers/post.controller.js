@@ -89,7 +89,7 @@ exports.feed = async (req, res, next) => {
 			result1.push(post);
 		}
 
-		res.json(result1);
+		return res.status(httpStatus.OK).json(result1);
 	} catch (e) {
 		next(e);
 	}

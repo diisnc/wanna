@@ -24,7 +24,7 @@ export const register = (username, firstName, lastName, email, password) => {
 			password: password
 		}
 	};
-	ourFetchAuth(config);
+	return ourFetchAuth(config);
 };
 
 export const logout = refreshToken => {
@@ -35,7 +35,7 @@ export const logout = refreshToken => {
 			refreshToken: refreshToken
 		}
 	};
-	ourFetchAuth(config);
+	return ourFetchAuth(config);
 };
 
 export const refreshToken = refreshToken => {

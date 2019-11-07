@@ -8,7 +8,7 @@ export const follow = usernameToFollow => {
 			username: usernameToFollow
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const unfollow = usernameToUnfollow => {
@@ -19,7 +19,7 @@ export const unfollow = usernameToUnfollow => {
 			username: usernameToUnFollow
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getWishlist = () => {
@@ -27,7 +27,7 @@ export const getWishlist = () => {
 		endpoint: '/v1/profile/wishlist',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getFollowers = () => {
@@ -35,7 +35,7 @@ export const getFollowers = () => {
 		endpoint: '/v1/profile/followers',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getFollowings = () => {
@@ -43,7 +43,7 @@ export const getFollowings = () => {
 		endpoint: '/v1/profile/followings',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getMyProfile = () => {
@@ -51,7 +51,7 @@ export const getMyProfile = () => {
 		endpoint: '/v1/profile/',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getUserProfile = userID => {
@@ -62,7 +62,7 @@ export const getUserProfile = userID => {
 			username: userID
 		}
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getBuyHistory = () => {
@@ -70,7 +70,7 @@ export const getBuyHistory = () => {
 		endpoint: '/v1/profile/buyHistory',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
 
 export const getSalesHistory = () => {
@@ -78,5 +78,5 @@ export const getSalesHistory = () => {
 		endpoint: '/v1/profile/salesHistory',
 		method: 'GET'
 	};
-	ourFetchWithToken(config);
+	return ourFetchWithToken(config);
 };
