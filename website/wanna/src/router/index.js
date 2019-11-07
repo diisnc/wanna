@@ -56,7 +56,6 @@ export default new Router({
       component: Profile
       /* meta: { requiresAuth: true } */
     }
-    // marketplace ?
   ]
 })
 

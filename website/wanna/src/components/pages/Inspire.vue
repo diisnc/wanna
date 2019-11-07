@@ -8,11 +8,6 @@
          <h1>olá mundo</h1>
       <button>olaa</button>
       <b-button block variant="primary">{{this.route}}</b-button>
-
-
-                
-
-
     </div>
   </layout-basic>
 </template>
@@ -27,14 +22,11 @@ export default {
   },
   data () {
     return {
-      route: this.$router.currentRoute.name,
-
-
-      
+      route: this.$router.currentRoute.name
     }
   },
   mounted: function() {
-    console.log(this.$router);
+    //console.log(this.$router);
   },
 }
 </script>
