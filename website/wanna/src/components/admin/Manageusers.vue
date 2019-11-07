@@ -9,9 +9,9 @@
 
             <div class="container" style="padding-top:3%">
               <div class="row">
-                <div class="col-12 col-sm-8 col-lg-5" style="min-width: 80%; margin:auto;">
+                <div class="col-12 col-sm-8 col-lg-5" style="min-width: 70%; margin:auto;">
                   <ul class="list-group">
-                  <li class="nav-header disabled" style="padding-top: 2%"><a> Publicações Denunciadas </a></li>
+                  <li class="nav-header disabled" style="padding-top: 2%"><a> Utilizadores Bloqueados </a></li>
                   <hr>
                     
                    <!-- <li v-for="team in $store.state.teams.teams" :key="team.team_id" class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
@@ -20,12 +20,10 @@
                     -->
                     <li class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
                       <center> 1253 </center>
-                      <center> 9002021 </center>
-
 
                       <!-- Tirar modal daqui -->
                       <div> <!-- POR UM IF NESTE BOTÃO, SÓ APARECE "X" QUANDO A LINHA TIVER CONTEUDO -->
-                        <mdb-btn color="primary" @click.native="modal = true"><i class="fas fa-eye"></i></mdb-btn>
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fa fa-user"></i></mdb-btn>
                         <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
                             <mdb-modal-header>
                                 <mdb-modal-title>Delete Team</mdb-modal-title>
@@ -41,39 +39,18 @@
 
 
                       <div> <!-- POR UM IF NESTE BOTÃO, SÓ APARECE "X" QUANDO A LINHA TIVER CONTEUDO -->
-                        <mdb-btn color="primary" @click.native="modal = true"><i class="fa fa-times"></i></mdb-btn>
+                        <mdb-btn color="primary" @click.native="modal = true"><i class="fa fa-unlock"></i></mdb-btn>
                         <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
                             <mdb-modal-header>
-                                <mdb-modal-title>Delete Post</mdb-modal-title>
+                                <mdb-modal-title>Unblock User</mdb-modal-title>
                             </mdb-modal-header>
-                            <mdb-modal-body>Are you sure you want to delete this post?</mdb-modal-body>
+                            <mdb-modal-body>Are you sure you want to unblock this user?</mdb-modal-body>
                             <mdb-modal-footer>
                                 <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
                                 <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
                             </mdb-modal-footer>
                         </mdb-modal>
                       </div>  
-
-
-
-
-
-                      <div> <!-- POR UM IF NESTE BOTÃO, SÓ APARECE "X" QUANDO A LINHA TIVER CONTEUDO -->
-                        <mdb-btn color="primary" @click.native="modal = true"><i class="fas fa-user-clock"></i></mdb-btn>
-                        <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
-                            <mdb-modal-header>
-                                <mdb-modal-title>Block User</mdb-modal-title>
-                            </mdb-modal-header>
-                            <mdb-modal-body>Are you sure you want to block this user?</mdb-modal-body>
-                            <mdb-modal-footer>
-                                <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
-                                <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
-                            </mdb-modal-footer>
-                        </mdb-modal>
-                      </div>
-
-
-
 
 
 
@@ -109,26 +86,6 @@
                         </mdb-modal>
                       </div>
 -->
-
-
-
-
-                      <div> 
-                        <mdb-btn color="primary" @click.native="modal = true"><i class="fas fa-check-circle"></i></mdb-btn>
-                        <mdb-modal removeBackdrop side position="top-right" :show="modal" @close="modal = false">
-                            <mdb-modal-header>
-                                <mdb-modal-title>Dismiss Post</mdb-modal-title>
-                            </mdb-modal-header>
-                            <mdb-modal-body>Are you sure you want to dismiss this post?</mdb-modal-body>
-                            <mdb-modal-footer>
-                                <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
-                                <mdb-btn color="primary" v-on:click="remove(team.team_id); modal = false;">Save changes</mdb-btn>
-                            </mdb-modal-footer>
-                        </mdb-modal>
-                      </div>
-
-
-
                     </li>
                   
                   </ul>
@@ -144,7 +101,7 @@
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn } from 'mdbvue';
 import LayoutBasic from "../layouts/BottomBar.vue"
 export default {
-  name: 'Manageposts',
+  name: 'Manageusers',
   data () {
     return {
       modal: false

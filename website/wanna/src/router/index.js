@@ -7,6 +7,7 @@ import Wishlist from '@/components/pages/Wishlist'
 import Outfit from '@/components/pages/Outfit'
 import Profile from '@/components/pages/Profile'
 import Manageposts from '@/components/admin/Manageposts'
+import Manageusers from '@/components/admin/Manageusers'
 
 
 Vue.use(Router)
@@ -26,12 +27,12 @@ export default new Router({
       component: Manageposts
       /* meta: { requiresAuth: true, isAdmin: true } */
     },
-   // {
-   //   path: '/manageusers',
-   //   name: 'Manageusers',
-   //   component: Manageusers
+   {
+      path: '/manageusers',
+      name: 'Manageusers',
+      component: Manageusers
       /* meta: { requiresAuth: true, isAdmin: true } */
-   // },
+    },
     {
       path: '/inspire',
       name: 'Inspire',
