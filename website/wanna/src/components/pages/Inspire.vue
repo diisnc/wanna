@@ -1,12 +1,8 @@
 <template>
   <layout-basic>
-
     <div id="app" class="page">
-      <h1>olá mundo</h1>
+      <h1>inspire</h1>
 
-
-
-      
     </div>
   </layout-basic>
 </template>

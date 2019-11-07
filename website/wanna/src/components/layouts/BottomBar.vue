@@ -31,7 +31,7 @@
           <div v-if="window.width>700" class="center-side-bar">
             <b-form-group class="search-bar">
               <b-input-group style="transition: width 1s">
-                <b-form-input class="search-bar" type="text" placeholder="Pesquisar"></b-form-input>
+                <b-form-input class="search-bar" type="text" placeholder="Pesquisar pessoas..."></b-form-input>
                 <b-input-group-append>
                   <b-button class="search-bar"><i class="fa fa-search"></i></b-button>
                 </b-input-group-append>
