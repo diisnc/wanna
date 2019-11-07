@@ -1,6 +1,7 @@
 import { handleTokenErrors } from './errors/error.service';
+import { store } from "../App";
 
-const config = { url: 'http://192.168.43.171:8000' };
+const config = { url: 'http://192.168.1.5:8000' };
 
 var currentAuthToken;
 
@@ -51,7 +52,7 @@ export const ourFetchWithToken = async action => {
 	//const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 	const headers = {
 		'Content-Type': 'application/json',
-		Authentication: `Bearer ${this.currentAuthToken}`
+		Authorization: `Bearer ${this.currentAuthToken}`
 	};
 
 	console.log(endpoint + ' ' + method);
@@ -71,10 +72,16 @@ export const ourFetchWithToken = async action => {
 	});
 
 	// console.log(response);
-
-	let data = await response.text();
-	console.log('Olá');
-	console.log('Nice: ' + data);
-	//handleTokenErrors(data);
-	return data;
+	let data = await response.json();
+	if (data.status == 200) {
+		return data;
+	} else {
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
+		// console.log('Está a despachar o erro: ' + error.errors);
+		store.dispatch({ type: 'INVALID_TOKEN' });
+		return data;
+		console.log('Error1 ' + error);
+		// dispatch(AuthReducer.setLoginError(error));
+	}
 };
