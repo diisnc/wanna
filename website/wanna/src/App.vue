@@ -67,4 +67,14 @@ export default {
   .page{
     padding-top: 65px;
   }
+
+  .form-control:focus{
+    background-color: #EEE !important;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0) !important;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0,123,255,0) !important;
+  }
+
+  .btn-secondary:hover{
+    background-color: #4A53FC !important;
+  }
 </style>
