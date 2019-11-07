@@ -1,13 +1,12 @@
 <template>
   <layout-basic>
 
-    <div id="app">
+    <div id="app" class="page">
       <h1>olá mundo</h1>
-       <h1>olá mundo</h1>
-        <h1>olá mundo</h1>
-         <h1>olá mundo</h1>
-      <button>olaa</button>
-      <b-button block variant="primary">{{this.route}}</b-button>
+
+
+
+      
     </div>
   </layout-basic>
 </template>

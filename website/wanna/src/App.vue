@@ -63,4 +63,8 @@ export default {
   .arrow{
     border: 0px !important;
   }
+
+  .page{
+    padding-top: 65px;
+  }
 </style>
