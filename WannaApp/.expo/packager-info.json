@@ -1,9 +1,9 @@
 {
-  "expoServerNgrokUrl": "https://ea-9pn.anonymous.wannaapp.exp.direct",
-  "packagerNgrokUrl": "https://packager.ea-9pn.anonymous.wannaapp.exp.direct",
-  "ngrokPid": 16108,
+  "expoServerNgrokUrl": "https://ue-64f.anonymous.wannaapp.exp.direct",
+  "packagerNgrokUrl": "https://packager.ue-64f.anonymous.wannaapp.exp.direct",
+  "ngrokPid": 803,
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 3164
+  "packagerPid": 779
 }

@@ -28,7 +28,8 @@ const rootReducer = combineReducers({
 	form: formReducer
 });
 
-export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, thunk, logger));
+// export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, thunk, logger));
+export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, thunk));
 
 class App extends Component {
 	render() {

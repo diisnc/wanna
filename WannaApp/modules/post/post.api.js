@@ -1,6 +1,7 @@
 import { ourFetchWithToken } from '../api';
 
-export const feed = () => {
+export const feed = (dispatch) => {
+	console.log('dispatchfeed: ' + dispatch);
 	const config = {
 		endpoint: '/v1/post/feed',
 		method: 'GET'

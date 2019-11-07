@@ -13,6 +13,7 @@ const {
  */
 const authResponse = async (req, res, next) => {
 	try {
+		console.log('vai devolver novas cenas');
 		const accessToken = generateAccessToken(req.user);
 
 		req.user.refreshToken = generateRefreshToken(req.user);
@@ -94,24 +95,21 @@ exports.oAuth = authResponse;
  * Returns a new jwt when given a valid refresh token
  * @public
  */
-exports.refresh = [
-	async (req, res, next) => {
-		try {
-			const user = await User.getByRefreshToken(req.body.refreshToken);
-			if (!user) {
-				return next({
-					status: httpStatus.UNAUTHORIZED,
-					message: 'Refresh token is invalid',
-				});
-			}
-			req.user = user;
-			return next();
-		} catch (e) {
-			return next(e);
+exports.refresh = async (req, res, next) => {
+	try {
+		const user = await User.getByRefreshToken(req.body.refreshToken);
+		if (!user) {
+			return res.status(httpStatus.UNAUTHORIZED).json('Invalid Token');
 		}
-	},
-	authResponse,
-];
+		console.log(user);
+		req.user = user;
+
+		authResponse;
+		return next();
+	} catch (e) {
+		return next(e);
+	}
+};
 
 /**
  * Send reset password email

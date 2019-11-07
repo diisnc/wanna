@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { login } from './auth.api';
+import { login, refreshToken } from './auth.api';
 import { asyncError, generalError } from '../errors/error.service';
 import * as AuthReducer from './auth.reducer';
 import App from '../../app';
@@ -12,23 +12,27 @@ const _saveItem = async (item, selectedValue) => {
 	}
 };
 
-export const refreshToken = refreshToken => dispatch => {
-	return AuthApi.refreshToken(refreshToken)
-		.then(response => {
-			if (response.success) {
-				dispatch(AuthReducer.saveAppToken(response.authToken));
-				_saveItem('authToken', response.authToken)
-					.then(resp => {
-						console.log('Refresh finished');
-					})
-					.catch(error => {
-						dispatch(asyncError(error));
-					});
-			}
-		})
-		.catch(error => {
-			dispatch(generalError(error));
-		});
+export const refreshTokenService = refreshTokenArg => async dispatch => {
+	//ver os try depois e catch dispatch general error
+	let response = await refreshToken(refreshTokenArg);
+	console.log('Resposta do refresh token: ' + response);
+	let data = await response.text();
+	console.log('data do tokenservice: ' + data);
+	if (response.status == 200) {
+		dispatch(AuthReducer.saveAppToken(response.authToken));
+		_saveItem('authToken', response.authToken)
+			.then(resp => {
+				console.log('Refresh finished');
+			})
+			.catch(error => {
+				dispatch(asyncError(error));
+			});
+	} else dispatch({ type: 'REFRESH_EXPIRED' });
+	/*
+	.catch(error => {
+		dispatch(generalError(error));
+	});
+	*/
 };
 
 // used on app startup

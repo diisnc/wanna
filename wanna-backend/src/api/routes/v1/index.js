@@ -25,11 +25,11 @@ router.use('/docs-examples', express.static('docs-examples'));
 
 //Questão do search ter ou não um controlador proprio
 //router.use('/users', jwtAuth, authenticate('admin'), userRoutes);
-router.use('/users', jwtAuth, authenticate('user'), userRoutes);
-router.use('/profile', jwtAuth, authenticate('user'), profileRoutes);
+router.use('/users', authenticate('user'), userRoutes);
+router.use('/profile', authenticate('user'), profileRoutes);
 router.use('/post', authenticate('user'), postRoutes);
-router.use('/filter', jwtAuth, authenticate('user'), filterRoutes);
-router.use('/chat', jwtAuth, authenticate('user'), chatRoutes);
+router.use('/filter', authenticate('user'), filterRoutes);
+router.use('/chat', authenticate('user'), chatRoutes);
 router.use('/auth', authRoutes);
 
 module.exports = router;

@@ -36,7 +36,7 @@ function hasPermissions(userRole, allowedRole) {
 module.exports = (role = 'guest') => (req, res, next) => {
 	// Se a chamada à função for com 0 argumentos, o role = guest em vez de null
 	passport.authenticate('jwt', { session: false }, (error, user) => {
-		let token = req.headers.authentication.split(' ')[1];
+		let token = req.headers.authorization.split(' ')[1];
 		// Use to ensure token is valid and debug non-working bearer
 		try {
 			jwt.verify(token, process.env.SECRET_STRING);

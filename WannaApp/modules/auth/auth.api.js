@@ -40,11 +40,11 @@ export const logout = refreshToken => {
 
 export const refreshToken = refreshToken => {
 	const config = {
-		endpoint: '/v1/auth/refresh',
+		endpoint: '/v1/auth/refresh-token',
 		method: 'POST',
 		body: {
 			refreshToken: refreshToken
 		}
 	};
-	ourFetchAuth(config);
+	return ourFetchAuth(config);
 };
