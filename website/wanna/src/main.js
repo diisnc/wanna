@@ -19,36 +19,31 @@ import 'jquery/dist/jquery.min.js';
 //import 'bulma/css/bulma.css';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
 
 //require('../dist/static/css/index.css')
 
-Vue.config.productionTip = false
 
-Vue.use(MdButton)
-Vue.use(MdContent)
-Vue.use(MdTabs)
-Vue.use(VueMaterial)
-Vue.use(BootstrapVue)
-Vue.use(Vuetify)
-Vue.use(VueSession)
-Vue.use(VueRouter)
-Vue.use(Popover)
+Vue.use(MdButton);
+Vue.use(MdContent);
+Vue.use(MdTabs);
+Vue.use(VueMaterial);
+Vue.use(BootstrapVue);
+Vue.use(VueSession);
+Vue.use(VueRouter);
+Vue.use(Vuetify);
 //Vue.use(Carousel3d);
 //Vue.component('apexchart', VueApexCharts)
 
+Vue.config.productionTip = false;
 
-export default new Vuetify({ })
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  vuetify: new Vuetify(),
   components: { App },
   template: '<App/>'
 })

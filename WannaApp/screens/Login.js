@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Input, Button } from 'react-native-elements';
-import { login, checkAuthTest } from '../modules/auth/auth.service';
+import { loginService, checkAuthTest } from '../modules/auth/auth.service';
 
 import { globalStyle, defaultNavigator } from './style';
 
@@ -36,10 +36,16 @@ class Login extends Component {
 						title="Log in"
 					/>
 					<Button
-						onPress={this.goToRegister}
+						onPress={() => this.props.navigation.navigate('Register')}
 						buttonStyle={[globalStyle.btn, styles.authBtn]}
 						titleStyle={globalStyle.btnText}
 						title={'Create account'}
+					/>
+					<Button
+						onPress={() => this.props.navigation.navigate('Main')}
+						buttonStyle={[globalStyle.btn, styles.authBtn]}
+						titleStyle={globalStyle.btnText}
+						title={'Mudar'}
 					/>
 				</View>
 			</View>
@@ -47,7 +53,7 @@ class Login extends Component {
 	}
 	goToRegister() {
 		this.props.navigator.push({
-			screen: 'testapp.Register',
+			screen: 'Register',
 			title: 'Register',
 			passProps: {},
 			animated: true,
@@ -94,7 +100,7 @@ function mapStateToProps(store, ownProps) {
 function mapDispatchToProps(dispatch) {
 	return {
 		login: (email, password) => {
-			dispatch(login(email, password));
+			dispatch(loginService(email, password));
 		},
 		checkAuthTest: () => {
 			dispatch(checkAuthTest());

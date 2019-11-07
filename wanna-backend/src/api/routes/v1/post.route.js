@@ -11,7 +11,7 @@ const upload = multer({ dest: __dirname + '/images' });
 /**
  * Load post when API with postId route parameter is hit
  */
-router.param('postId', controller.load);
+//router.param('postId', controller.load);
 
 router.route('/feed').get(controller.feed);
 

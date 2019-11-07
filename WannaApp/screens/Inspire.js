@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
+import { feed } from '../modules/post/post.api';
 
 const { height, width } = Dimensions.get('window');
 
@@ -581,7 +582,7 @@ class Inspire extends Component {
 	}
 
 	// Get Data to Build Feed and Transform it to Json Object
-	getFeedDataFromApiAsync() {
+	async getFeedDataFromApiAsync() {
 		/*
         return fetch('https://facebook.github.io/react-native/movies.json')// ONLINE GET
             .then(response => response.json())
@@ -594,7 +595,8 @@ class Inspire extends Component {
             });
         */
 
-		const newState = require('./json/responseFeed');
+		// const newState = require('./json/responseFeed');
+		const newState = await feed();
 		this.setState({ feedData: newState, numPosts: newState.length });
 
 		return;

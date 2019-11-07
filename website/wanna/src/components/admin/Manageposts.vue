@@ -1,32 +1,13 @@
 <template>  
-  <div>
-    <!--  NAVBAR DO VITOR
-    <NavbarToOffcanvasAdmin v-if="['calendario'].indexOf($route.name) < 0" ></NavbarToOffcanvasAdmin>
-    -->
+  <layout-basic>
+    <div>
+    <!--  NAVBAR DO VITOR -->
+    
+
     <div class="container-full">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        
-        <div style="width: 25%; float:left">
-            <div class="wrapper">
-              <form>
-                <hr/>
-                <div class="group">
-                  <input type="text" v-model="team_name" required="required"/><span class="highlight"></span><span class="bar"></span>
-                  <label>Insert New Team</label>
-                </div>
 
-                <br/>
-
-                <div class="btn-box">
-                  <button type="button" color="primary" class="btn btn-submit" v-on:click="postTeam()">Submit</button>
-                </div>
-
-              </form>
-            </div>
-          </div>
-
-          <div style="width: 75%; float:right;" id="events">
-            <h3 style="text-align: left; padding-top: 3.5px;"> Reported Posts </h3>
+            <h3 style="text-align: left; padding-top: 3.5px; color: gray;"> Reported Posts </h3>
             <hr id="hr"/>
             <div class="container" style="padding-top:3%">
               <div class="row">
@@ -155,14 +136,13 @@
               </div>
             </div>
           </div>
-        
     </div> 
-  </div>
+    </layout-basic>
 </template>
 
 <script>
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn } from 'mdbvue';
-// import NavbarToOffcanvasAdmin from '../components/NavBarToOffcanvasAdmin'    NAVBAR DO VITOR
+import LayoutBasic from "../layouts/BottomBar.vue"
 export default {
   name: 'Manageposts',
   data () {
@@ -205,7 +185,7 @@ export default {
   },
 */
   components: {
-   // NavbarToOffcanvasAdmin,
+    LayoutBasic,
     mdbModal,
     mdbModalHeader,
     mdbModalTitle,
@@ -219,7 +199,7 @@ export default {
 <style scoped>
 
 .container-full { 
-  background-color: black;
+  background-image: url("../../assets/login-back.png");
   margin: 0 auto;
   height: 100%;
   width: 100%;
@@ -230,9 +210,8 @@ export default {
 }
 
 #hr { display: block; height: 1px;
-    border: 0; border-top: 1px solid #ccc;
+    border: 0; border-top: 1px solid white;
     margin: 1em 0; padding: 0; }
-
 
  /* Style buttons */
 .btn {

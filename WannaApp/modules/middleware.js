@@ -1,10 +1,11 @@
-import { logout, refreshToken } from './auth/auth.service';
-import { api } from './api';
+import { logout, refreshTokenService } from './auth/auth.service';
+import { api, setToken, setStore } from './api';
 
-const saveAuthToken = store => next => action => {
-	if (action.type === 'LOGIN_SUCCESS') {
+export const saveAuthToken = store => next => action => {
+	if (action.type === 'SET_LOGIN_SUCCESS') {
 		// after a successful login, update the token in the API
-		api.setToken(action.payload.authToken);
+		setToken(action.authToken);
+		// api.currentAuthToken = action.authToken;
 	}
 	// continue processing this action
 	return next(action);
@@ -15,11 +16,12 @@ let buffer = [];
 export const jwt = store => next => action => {
 	buffer.push(action);
 	if (action.type === 'INVALID_TOKEN') {
+		console.log('Passou pelo middleware token inválido');
 		let theStore = store.getState();
 		if (theStore.auth && theStore.auth.authToken && theStore.auth.refreshToken) {
 			if (!theStore.auth.pendingRefreshingToken) {
 				store.dispatch({ type: 'REFRESHING_TOKEN' });
-				store.dispatch(refreshToken(theStore.auth.refreshToken)).then(() => {
+				store.dispatch(refreshTokenService(theStore.auth.refreshToken)).then(() => {
 					// this will fire even if the refresh token is still valid or not.
 					// if the refresh token is not valid (and therefore not able to retrieve
 					// a new auth token), the REFRESH_EXPIRED action is fired from errors.api.

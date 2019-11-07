@@ -1,18 +1,12 @@
 <template>
   <layout-basic>
 
-    <div id="app">
+    <div id="app" class="page">
       <h1>olá mundo</h1>
-       <h1>olá mundo</h1>
-        <h1>olá mundo</h1>
-         <h1>olá mundo</h1>
-      <button>olaa</button>
-      <b-button block variant="primary">{{this.route}}</b-button>
 
 
-                
 
-
+      
     </div>
   </layout-basic>
 </template>
@@ -27,14 +21,11 @@ export default {
   },
   data () {
     return {
-      route: this.$router.currentRoute.name,
-
-
-      
+      route: this.$router.currentRoute.name
     }
   },
   mounted: function() {
-    console.log(this.$router);
+    //console.log(this.$router);
   },
 }
 </script>

@@ -1,24 +1,35 @@
 import { handleTokenErrors } from './errors/error.service';
+import { store } from "../App";
 
-const config = { url: 'http://192.168.1.11:8000' };
+const config = { url: 'http://192.168.1.5:8000' };
 
-let currentAuthToken = null;
+var currentAuthToken;
 
 export function setToken(token) {
-	currentAuthToken = token;
+	this.currentAuthToken = token;
 }
 
-export const ourFetch = (route, methodA, bodyA) => {
-	return fetch(`${config.url}${route}`, {
-		method: methodA,
-		body: JSON.stringify({ bodyA }),
-		headers: { 'Content-Type': 'application/json' }
-	})
-		.then(response => response.text())
-		.then(handleTokenErrors)
-		.catch(error => {
-			throw error;
-		});
+export const ourFetchAuth = async action => {
+	method = action.method;
+	endpoint = action.endpoint;
+
+	let body = JSON.stringify(action.body);
+
+	const headers = {
+		'Content-Type': 'application/json'
+	};
+
+	console.log(endpoint);
+	console.log(method);
+	console.log(body);
+	console.log(headers);
+
+	return await fetch(`${config.url}${endpoint}`, {
+		method,
+		body,
+		headers,
+		credentials: 'same-origin'
+	});
 };
 
 function getQueryString(params) {
@@ -28,7 +39,7 @@ function getQueryString(params) {
 		.join('&');
 }
 
-export const ourFetchWithToken = store => next => action => {
+export const ourFetchWithToken = async action => {
 	method = action.method;
 	endpoint = action.endpoint;
 
@@ -41,24 +52,38 @@ export const ourFetchWithToken = store => next => action => {
 	//const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 	const headers = {
 		'Content-Type': 'application/json',
-		Authorization: 'Bearer ${this.currentAuthToken}'
+		Authorization: `Bearer ${this.currentAuthToken}`
 	};
 
-	console.log(endpoint);
-	console.log(method);
-	console.log(body);
-	console.log(querystring);
-	console.log(headers);
+	console.log(endpoint + ' ' + method);
+	//console.log(method);
+	console.log(headers.Authorization);
+	// console.log(body);
+	// console.log(querystring);
+	// console.log(headers);
 
-	return fetch(`${config.url}${endpoint}${querystring}`, {
+	let response = await fetch(`${config.url}${endpoint}${querystring}`, {
 		method,
 		body,
 		headers,
 		credentials: 'same-origin'
-	})
-		.then(response => response.text())
-		.then(handleTokenErrors)
-		.catch(error => {
-			throw error;
-		});
+	});
+
+	// console.log(response);
+	let data = await response.json();
+	// console.log(data);
+	// console.log('data que retorna do feed: ' + data);
+	if (response.status == 200 || response.status == 304) {
+		console.log('Tamanho do que retornou do backend: ' + data.length);
+		return data;
+	} else {
+		console.log('erro');
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
+		// console.log('Está a despachar o erro: ' + error.errors);
+		store.dispatch({ type: 'INVALID_TOKEN' });
+		// return data;
+		console.log('Error1 ' + error);
+		// dispatch(AuthReducer.setLoginError(error));
+	}
 };

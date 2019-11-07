@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import AuthApi from './auth.api';
+import { login, refreshToken } from './auth.api';
 import { asyncError, generalError } from '../errors/error.service';
 import * as AuthReducer from './auth.reducer';
 import App from '../../app';
@@ -12,29 +12,32 @@ const _saveItem = async (item, selectedValue) => {
 	}
 };
 
-export const refreshToken = refreshToken => dispatch => {
-	return AuthApi.refreshToken(refreshToken)
-		.then(response => {
-			if (response.success) {
-				dispatch(AuthReducer.saveAppToken(response.authToken));
-				_saveItem('authToken', response.authToken)
-					.then(resp => {
-						console.log('Refresh finished');
-					})
-					.catch(error => {
-						dispatch(asyncError(error));
-					});
-			}
-		})
-		.catch(error => {
-			dispatch(generalError(error));
-		});
+export const refreshTokenService = refreshTokenArg => async dispatch => {
+	//ver os try depois e catch dispatch general error
+	let response = await refreshToken(refreshTokenArg);
+	console.log('Resposta do refresh token: ' + response);
+	let data = await response.text();
+	console.log('data do tokenservice: ' + data);
+	if (response.status == 200) {
+		dispatch(AuthReducer.saveAppToken(response.authToken));
+		_saveItem('authToken', response.authToken)
+			.then(resp => {
+				console.log('Refresh finished');
+			})
+			.catch(error => {
+				dispatch(asyncError(error));
+			});
+	} else dispatch({ type: 'REFRESH_EXPIRED' });
+	/*
+	.catch(error => {
+		dispatch(generalError(error));
+	});
+	*/
 };
 
 // used on app startup
 export const checkAuthStatus = () => async dispatch => {
 	try {
-		console.log('será que está a pssar por aqui?');
 		const authToken = await AsyncStorage.getItem('authToken');
 		const refreshToken = await AsyncStorage.getItem('refreshToken');
 
@@ -42,10 +45,9 @@ export const checkAuthStatus = () => async dispatch => {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken));
 		} else dispatch(AuthReducer.setNoLogin());
 
-		console.log('oi?');
-		return authToken;
+		// return authToken;
 	} catch (error) {
-		console.log('erro crlhhh');
+		console.log('erro crlhhh ' + error);
 		dispatch(asyncError(error));
 	}
 };
@@ -76,34 +78,33 @@ export const register = (first, last, email, password) => dispatch => {
 		});
 };
 
-export const login = (email, password) => dispatch => {
+export const loginService = (email = 'stoj97@gmail.com', password = '123456') => async dispatch => {
 	dispatch(AuthReducer.setAuthPending());
-	return AuthApi.login(email, password)
-		.then(response => {
-			console.log('Resposta: ' + response);
-			if (response.success) {
-				dispatch(AuthReducer.setLoginSuccess(response.authToken, response.refreshToken));
-				_saveItem('authToken', response.authToken)
+	let response = await login(email, password);
+	let data = await response.json();
+	if (response.status == 200) {
+		dispatch(AuthReducer.setLoginSuccess(data.tokens.accessToken, data.tokens.refreshToken));
+		_saveItem('authToken', data.tokens.accessToken)
+			.then(resp => {
+				_saveItem('refreshToken', data.tokens.refreshToken)
 					.then(resp => {
-						_saveItem('refreshToken', response.refreshToken)
-							.then(resp => {
-								App.startAppLoggedIn();
-							})
-							.catch(error => {
-								dispatch(asyncError(error));
-							});
+						App.startAppLoggedIn();
 					})
 					.catch(error => {
 						dispatch(asyncError(error));
 					});
-			} else {
-				dispatch(AuthReducer.setLoginError(response.message));
-			}
-		})
-		.catch(error => {
-			console.log(error);
-			//dispatch(generalError(error));
-		});
+			})
+			.catch(error => {
+				dispatch(asyncError(error));
+			});
+	} else {
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
+		// console.log('Está a despachar o erro: ' + error.errors);
+		console.log('Error1 ' + error);
+		dispatch(AuthReducer.setLoginError(error));
+	}
+	//dispatch(generalError(error));
 };
 
 //test function on the login and logged in areas to show the JWT is working

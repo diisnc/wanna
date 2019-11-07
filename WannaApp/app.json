@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "airbnb-ui-youtube",
+    "name": "wanna",
     "description": "This project is really great.",
-    "slug": "airbnb-ui-youtube",
+    "slug": "wanna",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": ["ios", "android"],

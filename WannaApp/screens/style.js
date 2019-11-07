@@ -18,7 +18,7 @@ export const defaultTabs = {
 
 export const globalStyle = StyleSheet.create({
 	btn: {
-		backgroundColor: 'rgba(0,0,0,0)',
+		backgroundColor: '#000000',
 		borderRadius: 2,
 		borderColor: '#fff',
 		borderWidth: 1,
