@@ -221,7 +221,7 @@
     background: black;
     mask-size: cover;
     cursor: pointer;
-    margin:20px !important;
+    margin:20px;
   }
 
   .icon:hover,
