@@ -140,7 +140,7 @@
     height: 60px;
     overflow: hidden;
     background: #FFF;
-    border: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
   }
   .left-side-bar {
     margin-left:8%;
