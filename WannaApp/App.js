@@ -20,6 +20,7 @@ import error from './modules/errors/error.reducer';
 import * as Permissions from 'expo-permissions';
 import { follow } from './modules/profile/profile.api';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import NavigatorService from './modules/navigator';
 
 const rootReducer = combineReducers({
 	auth,
@@ -84,12 +85,18 @@ class ConnectedComponent extends React.Component {
 		console.log('estado do login: ' + loggedIn);
 		// Vítor
 
-		if (loggedIn == false) {
-			return <Navigator />;
-		}
+		//if (loggedIn == false) {
+		return (
+			<Navigator
+				ref={navigatorRef => {
+					NavigatorService.setTopLevelNavigator(navigatorRef);
+				}}
+			/>
+		);
+		//}
 
 		// if (loggedIn) { return <Main /> }
-		return <Main />;
+		// return <Main />;
 	}
 
 	// aux for gallery permissions

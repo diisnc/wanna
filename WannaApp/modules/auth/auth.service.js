@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import { login, refreshToken } from './auth.api';
 import { asyncError, generalError } from '../errors/error.service';
 import * as AuthReducer from './auth.reducer';
-import App from '../../app';
+import NavigationService from '../navigator';
 
 const _saveItem = async (item, selectedValue) => {
 	try {
@@ -43,6 +43,7 @@ export const checkAuthStatus = () => async dispatch => {
 
 		if (authToken != null && refreshToken != null) {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken));
+			NavigationService.navigate('Main');
 		} else dispatch(AuthReducer.setNoLogin());
 
 		// return authToken;
@@ -53,10 +54,11 @@ export const checkAuthStatus = () => async dispatch => {
 };
 
 export const logout = () => async dispatch => {
+	console.log('Fez o logout');
 	dispatch(AuthReducer.setLogout());
 	try {
 		await AsyncStorage.removeItem('authToken');
-		App.startApp();
+		NavigationService.navigate('Login');
 	} catch (error) {
 		dispatch(asyncError(error));
 	}
@@ -84,19 +86,9 @@ export const loginService = (email = 'stoj97@gmail.com', password = '123456') =>
 	let data = await response.json();
 	if (response.status == 200) {
 		dispatch(AuthReducer.setLoginSuccess(data.tokens.accessToken, data.tokens.refreshToken));
-		_saveItem('authToken', data.tokens.accessToken)
-			.then(resp => {
-				_saveItem('refreshToken', data.tokens.refreshToken)
-					.then(resp => {
-						App.startAppLoggedIn();
-					})
-					.catch(error => {
-						dispatch(asyncError(error));
-					});
-			})
-			.catch(error => {
-				dispatch(asyncError(error));
-			});
+		await _saveItem('authToken', data.tokens.accessToken);
+		await _saveItem('refreshToken', data.tokens.refreshToken);
+		NavigationService.navigate('Main');
 	} else {
 		data = JSON.stringify(data);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');

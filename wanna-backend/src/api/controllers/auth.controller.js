@@ -104,7 +104,7 @@ exports.refresh = async (req, res, next) => {
 		console.log(user);
 		req.user = user;
 
-		authResponse;
+		authResponse();
 		return next();
 	} catch (e) {
 		return next(e);
