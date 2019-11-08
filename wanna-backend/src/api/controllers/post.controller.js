@@ -97,7 +97,7 @@ exports.feed = async (req, res, next) => {
 
 /**
  *
- * Creates a UserPost
+ * Creates a UserPost which represents Like/Dislike
  * @public
  */
 
@@ -107,6 +107,7 @@ exports.createUserPost = async (req, res, next) => {
 			likeTimeStamp: new Date(),
 			user_id: req.user.username,
 			post_id: req.body.idPost,
+			type: req.body.type,
 		});
 		return res.status(httpStatus.CREATED).json(userPost);
 	} catch (e) {
@@ -114,15 +115,34 @@ exports.createUserPost = async (req, res, next) => {
 	}
 };
 
+/**
+ * 
+ * Creates a comment 
+ */
+
 exports.createComment = async (req, res, next) => {
 	try {
 		const comment = await Comment.create({
-			commentData: req.body.commentData,
+			commentText: req.body.commentData,
 			idUser: req.user.username,
 			idPost: req.body.idPost,
 		});
 		return res.status(httpStatus.CREATED).json(comment);
 	} catch (e) {
+		next(e);
+	}
+};
+
+
+/*
+* Returns a post information
+*/
+
+exports.get = async (req, res, next) => {
+	try{
+		list = await Post.getPostInfo(req.params.postId);
+		res.json(list);
+	}catch(e){
 		next(e);
 	}
 };

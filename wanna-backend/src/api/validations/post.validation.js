@@ -1,6 +1,7 @@
 const { body } = require('express-validator');
 
 module.exports = {
+
 	// POST /v1/post/createPost
 	createPost: [
 		body('description', 'Description is invalid').exists(),
@@ -12,7 +13,10 @@ module.exports = {
 	],
 
 	//POST /v1/post/createUserPost
-	createUserPost: [body('idPost', 'Post id is required').exists()],
+	createUserPost: [
+		body('idPost', 'Post id is required').exists(),
+		body('type', 'Type is required').exists(),
+	],
 
 	//POST /v1/post/comment
 	createComment: [

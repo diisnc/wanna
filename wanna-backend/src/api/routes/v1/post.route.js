@@ -31,10 +31,11 @@ router
 	.route('/comment')
 	.post(validate(rules.createComment), controller.createComment);
 
-/*
+
 router
 	.route('/:postId')
-	.get(controller.get)
+	.get(controller.get);
+/*
 	.patch(validate(rules.updatePost), controller.update)
 	.delete(controller.remove);
 

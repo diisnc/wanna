@@ -103,6 +103,43 @@ module.exports = (sequelize, DataTypes) => {
 
 		return result;
 	};
+	
+	/**
+	 * Returns post information and basic owner information
+	 *
+	 */
+	
+	Post.getPostInfo = async function getPostInfo(idPost){
+		userinfo = await this.sequelize.query(
+			'SELECT "Users"."avatarType", "Users"."firstName", "Users"."lastName", "Users"."avatarData" FROM "Users" JOIN "Posts" ON "Users"."username" = "Posts"."idUser" WHERE "Posts"."id" = (:idPost)',
+			{
+				replacements: {idPost: idPost},
+				type: this.sequelize.QueryTypes.SELECT,
+			} 
+		);
+		postinfo = await this.sequelize.query(
+			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES FROM "Posts"  JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost) GROUP BY "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type"',
+			{
+				replacements: {idPost: idPost},
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		photos = await this.sequelize.query(
+			'SELECT "Photos"."photoType", "Photos"."photoData" FROM "Photos" WHERE "idPost" = (:idPost)',
+			{
+				replacements: {idPost: idPost},
+				type: this.sequelize.QueryTypes.SELECT,
+			}
+		);
+
+		
+		return userinfo.concat(postinfo.concat(photos));
+	};
+
+	/*
+	* Deletes a post
+	*/
+
 
 	/** Object methods */
 	const objectMethods = {
