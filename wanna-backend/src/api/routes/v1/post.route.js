@@ -31,13 +31,17 @@ router
 	.route('/comment')
 	.post(validate(rules.createComment), controller.createComment);
 
+router
+	.route('/deleteComment/:id')
+	.delete(controller.removeComment);
 
 router
 	.route('/:postId')
-	.get(controller.get);
+	.get(controller.get)
+	.delete(controller.remove);
+
 /*
 	.patch(validate(rules.updatePost), controller.update)
-	.delete(controller.remove);
 
 */
 

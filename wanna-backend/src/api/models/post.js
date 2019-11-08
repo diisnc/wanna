@@ -47,7 +47,9 @@ module.exports = (sequelize, DataTypes) => {
 		Post.belongsToMany(models.User, {
 			through: 'UserPost',
 			as: 'users',
-			foreignKey: 'post_id',
+			foreignKey:{
+				name: 'post_id',
+			},
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
@@ -139,6 +141,7 @@ module.exports = (sequelize, DataTypes) => {
 	/*
 	* Deletes a post
 	*/
+
 
 
 	/** Object methods */
