@@ -5,7 +5,7 @@
         <div class="row">
           <b-col v-for="product in products" sm="6">
             <div class="card">
-              <div class="card-img">
+              <div class="card-img-box">
                 <img class="card-img-blur" :src="product.image">
                 <img class="card-img-top" :src="product.image" @dblclick="giveliketouch()">
               </div>
@@ -135,10 +135,11 @@ export default {
     border: 0px !important;
   }
   
-  .card-img{
-    position:relative;
+  .card-img-box{
+    position: relative;
     top:0;
     left:0;
+    max-height: 1000px !important;
   }
   
   .card-img-blur {
