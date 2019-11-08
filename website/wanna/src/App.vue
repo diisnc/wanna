@@ -12,11 +12,13 @@ export default {
 </script>
 
 <style>
-  body {
+  .body {
+    background-color: #FFF !important;
     padding-top: 0px !important;
   }
 
   html {
+    background-color: #FFF !important;
     min-height: 100%;
   }
 

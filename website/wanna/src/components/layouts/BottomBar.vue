@@ -4,6 +4,9 @@
 
     <div v-if="isMobile()">
       <mobile>
+        <div class="mobile-top-bar">
+          <h1 class="phone-title">inspire</h1>
+        </div>
         <slot/>
 
         <div class="phone-bar">
@@ -56,6 +59,7 @@
             <button v-else @click="profileClick" class="icon icon-profile"/>
           </div>
         </div>
+        <div style="height:65px;"></div>
         <slot/>
       </desktop>
     </div>
@@ -125,6 +129,19 @@
 </script>
 
 <style scoped>
+  .phone-top-bar{
+    position:fixed;
+    width: 100%;
+    text-align: left !important;
+  }
+
+  .phone-title{
+    margin:20px 15px -10px 15px !important;
+    font-family: 'Run';
+    text-align: left !important;
+    background-color: #FFF !important;
+  }
+
   .phone-bar {
     position: fixed;
     z-index: 100;
@@ -133,6 +150,7 @@
     overflow: hidden;
     background: #FFFFFF;
   }
+
   .desktop-bar {
     position: fixed;
     z-index: 100;
