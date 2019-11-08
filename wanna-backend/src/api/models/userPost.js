@@ -16,12 +16,15 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER(),
 			primaryKey: true,
 			references: { model: 'User', key: 'id' },
+			onDelete: 'cascade',
 		},
 		post_id: {
 			type: DataTypes.INTEGER(),
 			primaryKey: true,
 			references: { model: 'Post', key: 'id' },
+			onDelete: 'cascade',
 		},
 	});
+	
 	return UserPost;
 };

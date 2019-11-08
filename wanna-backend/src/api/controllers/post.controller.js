@@ -134,6 +134,25 @@ exports.createComment = async (req, res, next) => {
 };
 
 
+/**
+ * Deletes a comment
+ */
+
+exports.removeComment = async (req, res, next) => {
+	try {
+		await Comment.destroy(
+			{
+				where:{
+					id: req.params.id
+				}
+			}
+		);
+		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+	} catch (e) {
+		next(e);
+	}
+};
+
 /*
 * Returns a post information
 */
@@ -146,3 +165,25 @@ exports.get = async (req, res, next) => {
 		next(e);
 	}
 };
+
+/**
+ * 
+ * Deletes a post (** NOT WORKING YET)
+ * 
+ */
+
+exports.remove = async (req, res, next) => {
+	try {
+		await Post.destroy(
+			{
+				where:{
+					id: req.params.postId
+				}
+			}
+		);
+		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+	} catch (e) {
+		next(e);
+	}
+};
+

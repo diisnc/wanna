@@ -103,7 +103,9 @@ module.exports = (sequelize, DataTypes) => {
 		User.belongsToMany(models.Post, {
 			through: 'UserPost',
 			as: 'posts',
-			foreignKey: 'user_id',
+			foreignKey:{
+				name: 'user_id',
+			},
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
