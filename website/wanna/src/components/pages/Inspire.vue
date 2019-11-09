@@ -5,9 +5,13 @@
         <div class="row">
           <b-col v-for="product in products" sm="8">
             <div class="card">
+              <div class="card-op-area">
+                <a :href="product.user"><img class="img-user" :src="product.user_img"></a>
+                <a :href="product.user" class="txt-username"><b>{{product.user}}</b></a>
+              </div>
               <div class="card-img-caixa">
-                <img class="card-img card-img-blur" :src="product.image">
-                <img class="card-img card-img-front" :src="product.image" @dblclick="giveliketouch()">
+                <img class="card-img card-img-blur" :src="product.img">
+                <img class="card-img card-img-front" :src="product.img" @dblclick="giveliketouch()">
               </div>
               <div class="reaction-area">
                 <div class="reaction-left-area">
@@ -82,27 +86,35 @@ export default {
       post_id: 2123,
       products: [
         {
+          user: 'joao_castro_12',
+          user_img: 'https://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg',
           name: 'Botas fixes',
           description: "Estas botas são mesmo fixes. Acho que as devias comprar ;)",
-          image: "https://onpointfresh.com/wp-content/uploads/2016/11/street-style-men-boots-1.jpg",
+          img: "https://onpointfresh.com/wp-content/uploads/2016/11/street-style-men-boots-1.jpg",
           likes: 123
         },
         {
+          user: 'joanavintageoutlet',
+          user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Lacy shirt',
           description: "Esta camisa vintage vai assentar que nem uma luva no teu armário.",
-          image: "https://i.imgur.com/hs5b0fc.png",
+          img: "https://i.imgur.com/hs5b0fc.png",
           likes: 2321
         },
         {
+          user: 'beavila_shoestore',
+          user_img: 'https://i.imgur.com/B7aj5H7.png',
           name: 'Botins festivos',
           description: "Preparada para a época de festivais? No teu outfit não podem faltar estes botins.",
-          image: "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
+          img: "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
           likes: 1489
         },
         {
+          user: 'tiagorodri',
+          user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Calças desporto',
           description: "Estas calças são mesmo fixes e confortáveis. As melhores do mercado.",
-          image: "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg",
+          img: "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg",
           likes: 431
         }
       ],
@@ -185,6 +197,22 @@ export default {
 </script>
 
 <style>
+  .card-op-area{
+    text-align: left;
+    margin: 5px 0px 15px 10px;
+    cursor: pointer;
+  }
+  .img-user{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50px !important;
+    object-fit: cover;
+  }
+  .txt-username{
+    margin-left: 10px;
+    font-size: 15px;
+    color: #333 !important;
+  }
   .card{
     border-radius:20px !important;
     border: 0px !important;

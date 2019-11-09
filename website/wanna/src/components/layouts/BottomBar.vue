@@ -25,7 +25,7 @@
     </div>
     <div v-else>
       <desktop>
-        <div class="desktop-bar"><a href="">
+        <div class="desktop-bar"><a href="inspire">
           <div class="left-side-bar">
             <img v-if="window.width>800" src="img/brand/full_logo.png" width="150" height="40" alt="Wanna" style="margin: auto; transition: width 1s">
             <img v-else src="img/brand/logo.png" width="50" height="50" alt="Wanna" style="margin: auto; transition: width 1s; ">
