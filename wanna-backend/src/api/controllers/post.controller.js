@@ -174,13 +174,18 @@ exports.get = async (req, res, next) => {
 
 exports.remove = async (req, res, next) => {
 	try {
+		
+		await UserPost.destroy({
+			where:{
+				post_id: req.params.postId
+			}
+		})
 		await Post.destroy(
 			{
 				where:{
 					id: req.params.postId
 				}
-			}
-		);
+		});
 		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
 	} catch (e) {
 		next(e);

@@ -56,13 +56,13 @@ module.exports = (sequelize, DataTypes) => {
 		Post.hasMany(models.Photo, {
 			foreignKey: 'idPost',
 			sourceKey: 'id',
-			onDelete: 'SET NULL',
+			onDelete: 'SET_NULL',
 			onUpdate: 'CASCADE',
 		});
 		Post.hasMany(models.Comment, {
 			foreignKey: 'idPost',
 			sourceKey: 'id',
-			onDelete: 'SET NULL',
+			onDelete: 'SET_NULL',
 			onUpdate: 'CASCADE',
 		});
 		Post.belongsTo(models.User, {
