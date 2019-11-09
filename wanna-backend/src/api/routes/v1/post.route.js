@@ -35,9 +35,10 @@ router
 	
 
 router
-	.route('/:postId')
+	.route('/:idPost')
 	.get(controller.get)
-	.delete(controller.remove);
+	.delete(controller.remove)
+	.post(controller.markUnavailable);
 
 /*
 	.patch(validate(rules.updatePost), controller.update)

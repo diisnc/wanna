@@ -89,8 +89,8 @@
 
 - **Descrição:** Marcar post como indisponível
 - **Método:** POST
-- **Rota:** v1/post/markUnavailable
-- **Estado:** &#9746;
+- **Rota:** v1/post/:idPost
+- **Estado:** :heavy_check_mark:
 
 ## Perfis
 

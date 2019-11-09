@@ -159,7 +159,7 @@ exports.removeComment = async (req, res, next) => {
 
 exports.get = async (req, res, next) => {
 	try{
-		list = await Post.getPostInfo(req.params.postId);
+		list = await Post.getPostInfo(req.params.idPost);
 		res.json(list);
 	}catch(e){
 		next(e);
@@ -174,16 +174,15 @@ exports.get = async (req, res, next) => {
 
 exports.remove = async (req, res, next) => {
 	try {
-		
 		await UserPost.destroy({
 			where:{
-				post_id: req.params.postId
+				post_id: req.params.idPost
 			}
 		})
 		await Post.destroy(
 			{
 				where:{
-					id: req.params.postId
+					id: req.params.idPost
 				}
 		});
 		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
@@ -192,3 +191,18 @@ exports.remove = async (req, res, next) => {
 	}
 };
 
+/***
+ * marks a post as unavailable
+ */
+
+ exports.markUnavailable = async (req, res, next) =>{
+		try{
+			await Post.update(
+				{ isAvailable: 'false' },
+				{ where: { id: req.params.idPost } }
+			);
+			res.status(httpStatus.NO_CONTENT).json({ result: 'updated' });
+		}catch(e){
+			next(e);
+		}
+ }
