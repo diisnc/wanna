@@ -27,7 +27,7 @@ const authResponse = async (req, res, next) => {
 			user: user.transform(),
 		});
 	} catch (e) {
-		next(e);
+		console.log('erro ' + e);
 	}
 };
 
@@ -101,10 +101,8 @@ exports.refresh = async (req, res, next) => {
 		if (!user) {
 			return res.status(httpStatus.UNAUTHORIZED).json('Invalid Token');
 		}
-		console.log(user);
 		req.user = user;
 
-		authResponse();
 		return next();
 	} catch (e) {
 		return next(e);

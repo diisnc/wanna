@@ -59,8 +59,15 @@ exports.feed = async (req, res, next) => {
 
 		const result1 = [];
 
-		for (var i = 0; i < list.length;) {
-			var currentID = list[i].id;
+		// devolver listas em múltiplos de 3
+		length = list.length;
+		console.log(length);
+		while (length % 3 != 0) {
+			length -= 1;
+			console.log(length);
+		}
+
+		for (var i = 0; i < length; ) {
 			const post = {
 				id: list[i].id,
 				idUser: list[i].idUser,
@@ -73,18 +80,7 @@ exports.feed = async (req, res, next) => {
 
 			i += 1;
 
-			var index = 2;
-			while (
-				(parseInt(list[i].id, 10) == currentID) &
-				(i < list.length)
-			) {
-				post['photoType' + index] = list[i].photoType;
-				post['photoData' + index] = list[i].photoData;
-				i += 1;
-				index += 1;
-
-				if (i >= list.length) break;
-			}
+			if (i > length) break;
 
 			result1.push(post);
 		}
@@ -116,8 +112,8 @@ exports.createUserPost = async (req, res, next) => {
 };
 
 /**
- * 
- * Creates a comment 
+ *
+ * Creates a comment
  */
 
 exports.createComment = async (req, res, next) => {
@@ -167,9 +163,9 @@ exports.get = async (req, res, next) => {
 };
 
 /**
- * 
+ *
  * Deletes a post (** NOT WORKING YET)
- * 
+ *
  */
 
 exports.remove = async (req, res, next) => {

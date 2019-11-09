@@ -97,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 	Post.feed = async function feed() {
 		result = await this.sequelize.query(
-			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description", "Posts"."isAvailable", "Posts"."price", "Photos"."photoType", "Photos"."photoData" FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost" ORDER BY "Posts"."createdAt"',
+			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description", "Posts"."isAvailable", "Posts"."price", "Photos"."photoType", "Photos"."photoData" FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost" AND "Photos"."id" IN (SELECT MAX("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost") ORDER BY "Posts"."createdAt"',
 			{
 				type: this.sequelize.QueryTypes.SELECT,
 			},
@@ -105,19 +105,19 @@ module.exports = (sequelize, DataTypes) => {
 
 		return result;
 	};
-	
+
 	/**
 	 * Returns post information and basic owner information
 	 *
 	 */
-	
+
 	Post.getPostInfo = async function getPostInfo(idPost){
 		userinfo = await this.sequelize.query(
 			'SELECT "Users"."avatarType", "Users"."firstName", "Users"."lastName", "Users"."avatarData" FROM "Users" JOIN "Posts" ON "Users"."username" = "Posts"."idUser" WHERE "Posts"."id" = (:idPost)',
 			{
 				replacements: {idPost: idPost},
 				type: this.sequelize.QueryTypes.SELECT,
-			} 
+			}
 		);
 		postinfo = await this.sequelize.query(
 			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES FROM "Posts"  JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost) GROUP BY "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type"',
@@ -134,7 +134,7 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		);
 
-		
+
 		return userinfo.concat(postinfo.concat(photos));
 	};
 

@@ -1,7 +1,7 @@
 import { handleTokenErrors } from './errors/error.service';
 import { store } from "../App";
 
-const config = { url: 'http://192.168.1.5:8000' };
+const config = { url: 'http://192.168.1.8:8000' };
 
 var currentAuthToken;
 
