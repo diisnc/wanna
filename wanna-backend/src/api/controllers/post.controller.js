@@ -143,7 +143,7 @@ exports.removeComment = async (req, res, next) => {
 		await Comment.destroy(
 			{
 				where:{
-					id: req.params.id
+					id: req.body.idComment
 				}
 			}
 		);

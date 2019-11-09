@@ -29,11 +29,10 @@ router
 
 router
 	.route('/comment')
-	.post(validate(rules.createComment), controller.createComment);
+	.post(validate(rules.createComment), controller.createComment)
+	.delete(validate(rules.deleteComment), controller.removeComment);
 
-router
-	.route('/deleteComment/:id')
-	.delete(controller.removeComment);
+	
 
 router
 	.route('/:postId')

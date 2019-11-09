@@ -12,7 +12,7 @@
 - **Descrição:** Ver post qualquer
 - **Método:** GET
 - **Rota:** v1/post/:idPost
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
@@ -24,8 +24,8 @@
 ---
 
 - **Descrição:** Apagar Artigo
-- **Método:** POST
-- **Rota:** v1/post/deletePost
+- **Método:** DELETE
+- **Rota:** v1/post/:idPost
 - **Estado:** &#9746;
 
 ---
@@ -81,9 +81,9 @@
 ---
 
 - **Descrição:** Apagar comentário em post
-- **Método:** POST
-- **Rota:** v1/post/deleteComment
-- **Estado:** &#9746;
+- **Método:** DELETE
+- **Rota:** v1/post/comment
+- **Estado:** :heavy_check_mark:
 
 ---
 
