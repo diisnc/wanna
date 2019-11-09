@@ -35,11 +35,23 @@
               </div>
             </div>
           </b-col>
-          <b-col sm="3">
-            <div v-if="!isMobile() && this.showbanner==1 && this.window.width>575" class="card card-download-app">
+          <b-col sm="2" v-if="!isMobile() && this.showbanner==1 && this.window.width>575">
+            <div class="card card-download-app">
               <b-button class="search-bar btn-mini" @click="hidebanner()"><i class="fas fa-times"></i></b-button>
               <div style="padding:10px">
-                <img src="img/banners/dinheiro.png" width="auto" height="auto" alt="Wanna" style="transition: width 1s">
+                <b-carousel
+                  id="carousel-1"
+                  controls
+                  :interval="20000"
+                  v-model="slide"
+                  style="text-shadow: 1px 1px 2px #333;"
+                  @sliding-start="onSlideStart"
+                  @sliding-end="onSlideEnd"
+                >
+                  <b-carousel-slide img-src="img/banners/wishlist.png"></b-carousel-slide>
+                  <b-carousel-slide img-src="img/banners/dinheiro.png"></b-carousel-slide>
+                  <b-carousel-slide img-src="img/banners/ambiente.png"></b-carousel-slide>
+                </b-carousel>
                 <a href="" class="btn btn-primary btn-download"><b>Download app</b></a>
               </div>
             </div>
@@ -188,6 +200,13 @@ export default {
     font-size: 14px !important;
     letter-spacing: 3px;
     text-decoration: none !important;
+    transition: 0.3s;
+  }
+  .btn-download:hover,
+  .btn-download:focus{
+    box-shadow: 0 0.2em 1em -0.3em rgba(100,49,252,0.9);
+    transform: translateY(-0.2em);
+    transition: 0.3s;
   }
   .btn-mini{
     position: absolute;
@@ -197,6 +216,7 @@ export default {
     height: 35px !important;
     background-color:rgba(0,0,0,0.08) !important;
     border-radius: 30px;
+    z-index: 999 !important;
   }
   
   .card-img-caixa{
@@ -253,27 +273,34 @@ export default {
     margin: 10px !important;
     width: 25px !important;
     height: 22px !important;
+    transition: 0.3s !important;
   }
 
   .icon-like-empty {
     mask: url(https://svgur.com/i/G0S.svg);
+    transition: 0.3s !important;
   }
   .icon-like-empty:hover{
     background-color: #F40056 !important;
+    transition: 0.3s !important;
   }
   .icon-like-full {
     background-color: #F40056 !important;
     mask: url(https://svgur.com/i/FzP.svg);
+    transition: 0.3s !important;
   }
   .icon-dislike-empty {
     mask: url(https://svgur.com/i/Fzt.svg);
+    transition: 0.3s !important;
   }
   .icon-dislike-empty:hover{
     background-color: #4A53FC !important;
+    transition: 0.3s !important;
   }
   .icon-dislike-full {
     background-color: #4A53FC !important;
     mask: url(https://svgur.com/i/G0c.svg);
+    transition: 0.3s !important;
   }
 
 </style>

@@ -240,6 +240,7 @@
     mask-size: cover;
     cursor: pointer;
     margin:20px;
+    transition: 0.3s;
   }
 
   .icon:hover,
@@ -256,7 +257,8 @@
     background-color: #EEE;
     border: 0px;
     color: #000;
-    transition: width 1s !important;
+    transition: 0.1s !important;
+
   }
 
  
