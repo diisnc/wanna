@@ -86,16 +86,16 @@ export default {
           likes: 123
         },
         {
-          name: 'Calças desporto',
-          description: "Estas calças são mesmo fixes e confortáveis. As melhores do mercado.",
-          image: "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg",
-          likes: 431
+          name: 'Lacy shirt',
+          description: "Esta camisa vintage vai assentar que nem uma luva no teu armário.",
+          image: "https://i.imgur.com/hs5b0fc.png",
+          likes: 2321
         },
         {
-          name: 'Calças desporto',
-          description: "Estas calças são mesmo fixes e confortáveis. As melhores do mercado.",
-          image: "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg",
-          likes: 431
+          name: 'Botins festivos',
+          description: "Preparada para a época de festivais? No teu outfit não podem faltar estes botins.",
+          image: "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
+          likes: 1489
         },
         {
           name: 'Calças desporto',
