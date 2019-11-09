@@ -22,9 +22,10 @@
 
                 </div>
                 <div class="reaction-right-area">
-                  <button @click="" class="icon icon-reaction icon-like-empty">comment</button>
-                  <button @click="" class="icon icon-reaction icon-like-empty">savepost</button>
-                  <button @click="" class="icon icon-reaction icon-like-empty">buy</button>
+                  <button @click="" class="icon icon-reaction icon-message-empty"> ‏‏‎ </button>
+                  <button v-if="getsave(post_id) === 0" @click="savepost(post_id)" class="icon icon-reaction icon-save-empty"> ‏‏‎ </button>
+                  <button v-if="getsave(post_id) === 1" @click="unsavepost(post_id)" class="icon icon-reaction icon-save-full"> ‏‏‎ </button>
+                  <button @click="" class="icon icon-reaction icon-buy-empty"> ‏‏‎ </button>
                   
                 </div>
               </div>
@@ -76,6 +77,7 @@ export default {
       route: this.$router.currentRoute.name,
       like: 0,
       dislike: 0,
+      saved: 0,
       likes: 342,
       post_id: 2123,
       products: [
@@ -127,6 +129,9 @@ export default {
     getdislike(post_id){
       return this.dislike;
     },
+    getsave(post_id){
+      return this.saved;
+    },
     givelike(post_id){
       if(this.like==0){
         this.like=1;
@@ -154,6 +159,12 @@ export default {
     remvdislike(post_id){
       this.dislike=0;
       this.likes=this.likes+1;
+    },
+    savepost(post_id){
+      this.saved=1;
+    },
+    unsavepost(post_id){
+      this.saved=0;
     },
     isMobile() {
       if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -186,9 +197,9 @@ export default {
     text-align: center !important;
     width: 330px;
     height: 530px;
-    -webkit-box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
-    -moz-box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
-    box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.25);
+    -moz-box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.25);
+    box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.25);
   }
   .btn-download{
     margin-top: 5px;
@@ -266,8 +277,8 @@ export default {
   }
   .icon-reaction {
     display: inline-block !important;
-    background-color: #000 !important;
-    background: #000 !important;
+    background-color: #333 !important;
+    background: #333 !important;
     mask-size: cover;
     cursor: pointer;
     margin: 10px !important;
@@ -300,6 +311,46 @@ export default {
   .icon-dislike-full {
     background-color: #4A53FC !important;
     mask: url(https://svgur.com/i/G0c.svg);
+    transition: 0.3s !important;
+  }
+
+  .icon-message-empty {
+    mask: url(https://svgur.com/i/G2U.svg);
+    transition: 0.3s !important;
+    width: 23px !important;
+    height: 23px !important;
+  }
+  .icon-message-empty:hover{
+    background-color: #4A53FC !important;
+    transition: 0.3s !important;
+  }
+
+  .icon-save-empty {
+    mask: url(https://svgur.com/i/G1w.svg);
+    transition: 0.3s !important;
+    width: 21px !important;
+    height: 23px !important;
+  }
+  .icon-save-empty:hover{
+    background-color: #4A53FC !important;
+    transition: 0.3s !important;
+  }
+  .icon-save-full{
+    mask: url(https://svgur.com/i/G28.svg);
+    background-color: #333 !important;
+    width: 21px !important;
+    height: 23px !important;
+    transition: 0.3s !important;
+  }
+
+  .icon-buy-empty {
+    mask: url(https://svgur.com/i/G1D.svg);
+    transition: 0.3s !important;
+    width: 22px !important;
+    height: 24px !important;
+  }
+  .icon-buy-empty:hover{
+    background-color: #4A53FC !important;
     transition: 0.3s !important;
   }
 

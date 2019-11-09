@@ -158,7 +158,7 @@
     height: 60px;
     overflow: hidden;
     background: #FFF;
-    border-bottom: 1px solid #DDD;
+    border-bottom: 1px solid #E9E9E9;
   }
   .left-side-bar {
     margin-left:8%;
