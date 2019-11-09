@@ -25,13 +25,13 @@
     </div>
     <div v-else>
       <desktop>
-        <div class="desktop-bar">
+        <div class="desktop-bar"><a href="">
           <div class="left-side-bar">
             <img v-if="window.width>800" src="img/brand/full_logo.png" width="150" height="40" alt="Wanna" style="margin: auto; transition: width 1s">
             <img v-else src="img/brand/logo.png" width="50" height="50" alt="Wanna" style="margin: auto; transition: width 1s; ">
-          </div>
+          </div></a>
 
-          <div v-if="window.width>700" class="center-side-bar">
+          <div v-if="window.width>800" class="center-side-bar">
             <b-form-group class="search-bar">
               <b-input-group style="transition: width 1s">
                 <b-form-input class="search-bar" type="text" placeholder="Pesquisar pessoas..."></b-form-input>
@@ -162,7 +162,7 @@
   }
   .left-side-bar {
     margin-left:8%;
-    width:15%;
+    width:26%;
     position: relative;
     display: inline-flex;
     float: left;
@@ -172,7 +172,7 @@
   .right-side-bar{
     margin-right:8%;
     min-width:200px;
-    width:15%;
+    width:20.5%;
     position: relative;
     display: inline-flex;
     float: right;

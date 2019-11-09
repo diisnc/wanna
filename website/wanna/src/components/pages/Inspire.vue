@@ -3,11 +3,11 @@
     <div id="app">
       <div class="container">
         <div class="row">
-          <b-col v-for="product in products" sm="6">
+          <b-col v-for="product in products" sm="8">
             <div class="card">
-              <div class="card-img-box">
-                <img class="card-img-blur" :src="product.image">
-                <img class="card-img-top" :src="product.image" @dblclick="giveliketouch()">
+              <div class="card-img-caixa">
+                <img class="card-img card-img-blur" :src="product.image">
+                <img class="card-img card-img-front" :src="product.image" @dblclick="giveliketouch()">
               </div>
               <div class="reaction-area">
                 <div class="reaction-left-area">
@@ -32,6 +32,15 @@
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
                 <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </b-col>
+          <b-col sm="3">
+            <div v-if="!isMobile() && this.showbanner==1 && this.window.width>575" class="card card-download-app">
+              <b-button class="search-bar btn-mini" @click="hidebanner()"><i class="fas fa-times"></i></b-button>
+              <div style="padding:10px">
+                <img src="img/banners/dinheiro.png" width="auto" height="auto" alt="Wanna" style="transition: width 1s">
+                <a href="" class="btn btn-primary btn-download"><b>Download app</b></a>
               </div>
             </div>
           </b-col>
@@ -82,12 +91,21 @@ export default {
           image: "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg",
           likes: 431
         }
-      ]
+      ],
+      showbanner: 1,
+      window: {
+        width: 0,
+        height: 0
+      }
     }
+  },
+  created: function() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
   },
   mounted: function() {
     //console.log(this.$router);
-    console.log(this.products);
+    //console.log(this.products);
   },
   methods: {
     //todos estes métodos são apenas para teste. Trocar depois pelo acesso à BD.
@@ -124,6 +142,20 @@ export default {
     remvdislike(post_id){
       this.dislike=0;
       this.likes=this.likes+1;
+    },
+    isMobile() {
+      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+      } else{
+        return false
+      }
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    },
+    hidebanner(){
+      this.showbanner=0;
     }
   }
 }
@@ -134,12 +166,43 @@ export default {
     border-radius:20px !important;
     border: 0px !important;
   }
+  .card-download-app{
+    background-color: #FFF !important;
+    top: 0px !important;
+    position: fixed !important;
+    margin-top: 90px;
+    text-align: center !important;
+    width: 330px;
+    height: 530px;
+    -webkit-box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+    box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+  }
+  .btn-download{
+    margin-top: 5px;
+    border-radius:30px !important;
+    color: #FFF !important;
+    background: rgb(100,49,252);
+    background: linear-gradient(90deg, rgba(100,49,252,1) 0%, rgba(58,104,252,1) 100%);
+    text-transform: uppercase;
+    font-size: 14px !important;
+    letter-spacing: 3px;
+    text-decoration: none !important;
+  }
+  .btn-mini{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width:35px !important;
+    height: 35px !important;
+    background-color:rgba(0,0,0,0.08) !important;
+    border-radius: 30px;
+  }
   
-  .card-img-box{
+  .card-img-caixa{
     position: relative;
     top:0;
     left:0;
-    max-height: 1000px !important;
   }
   
   .card-img-blur {
@@ -151,11 +214,11 @@ export default {
     opacity: 0.7;
   }
 
-  .card-img-top {
+  .card-img-front {
     position: absolute;
     top:0px;
     left:0px;
-    width: 100%;
+    width: 100% !important;
     border-radius: 20px !important;
   }
 
@@ -183,8 +246,8 @@ export default {
   }
   .icon-reaction {
     display: inline-block !important;
-    background-color: #808080 !important;
-    background: #808080 !important;
+    background-color: #000 !important;
+    background: #000 !important;
     mask-size: cover;
     cursor: pointer;
     margin: 10px !important;
