@@ -17,7 +17,7 @@ router.route('/logout').post(controller.logout);
 // * @apiParam  {String}  refreshToken  Refresh token required when user logged in
 router
 	.route('/refresh-token')
-	.post(validate(rules.refresh), controller.refresh);
+	.post(validate(rules.refresh), controller.refresh, controller.oAuth);
 
 router
 	.route('/reset-password')
