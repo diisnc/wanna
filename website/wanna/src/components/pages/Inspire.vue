@@ -5,19 +5,13 @@
         <div class="row">
           <b-col v-for="product in products" sm="8">
             <div class="card">
-              <div class="reaction-area">
-                <div class="card-op-area">
-                  <a :href="product.user"><img class="img-user" :src="product.user_img"></a>
-                  <a :href="product.user" class="txt-username"><b>{{product.user}}</b></a>
-                  <a class="txt-username">•</a>
-                  <a class="txt-username txt-tmstmp">{{moment(product.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
+              <div class="card-op-area">
+                <a :href="product.user"><img class="img-user" :src="product.user_img"></a>
+                <a :href="product.user" class="txt-username"><b>{{product.user}}</b></a>
+                <a class="txt-username"> • </a>
+                <a class="txt-username txt-tmstmp">{{moment(product.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
                 
-                </div>
-                <div class="card-options-area">
-                  <b-button class="search-bar btn-mini bg-trans" @click=" "><i class="fas fa-ellipsis-h"></i></b-button>
-                </div>
               </div>
-              
               <div class="card-img-caixa">
                 <img class="card-img card-img-blur" :src="product.img">
                 <img class="card-img card-img-front" :src="product.img" @dblclick="giveliketouch()">
@@ -49,7 +43,7 @@
               </div>
             </div>
           </b-col>
-          <b-col sm="2" v-if="!isMobile() && this.showbanner==1 && this.window.width>800">
+          <b-col sm="2" v-if="!isMobile() && this.showbanner==1 && this.window.width>575">
             <div class="card card-download-app">
               <b-button class="search-bar btn-mini" @click="hidebanner()"><i class="fas fa-times"></i></b-button>
               <div style="padding:10px">
@@ -212,15 +206,8 @@ export default {
 <style>
   .card-op-area{
     text-align: left;
-    width:80% !important;
     margin: 5px 0px 15px 10px;
-    display: inline-block;
-  }
-  .card-options-area{
-    text-align: right;
-    width:17% !important;
-    margin: 5px 10px 15px 0px;
-    display: inline-block;
+    cursor: pointer;
   }
   .img-user{
     width: 40px !important;
@@ -404,9 +391,6 @@ export default {
   .icon-buy-empty:hover{
     background-color: #4A53FC !important;
     transition: 0.3s !important;
-  }
-  .bg-trans{
-    background-color: rgba(0,0,0,0) !important;
   }
 
 </style>
