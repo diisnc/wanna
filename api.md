@@ -60,9 +60,14 @@
 
 - **Descrição:** Dar like/dislike
 - **Método:** POST
-- **Rota:** v1/post/createUserPost
-- **Estado:** &#9746;
--- mudar a rota e verificar os tipos
+- **Rota:** v1/post/vote
+- **Estado:** :heavy_check_mark:
+
+---
+- **Descrição:** Remover like/dislike
+- **Método:** DELETE
+- **Rota:** v1/post/vote
+- **Estado:** :heavy_check_mark:
 
 ---
 

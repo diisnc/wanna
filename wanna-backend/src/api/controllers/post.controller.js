@@ -112,6 +112,27 @@ exports.createUserPost = async (req, res, next) => {
 };
 
 /**
+ * 
+ * Removes a UserPost
+ */
+
+ exports.removeVote = async function removeVote (req, res, next){
+	try{
+		await UserPost.destroy(
+			{
+				where:{
+					post_id: req.body.idPost,
+					user_id: req.user.username,
+				}
+			}
+		);
+		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+	}catch(e){
+		next(e);
+	}
+ };
+
+/**
  *
  * Creates a comment
  */
