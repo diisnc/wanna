@@ -24,8 +24,9 @@ router
 	);
 
 router
-	.route('/createUserPost')
-	.post(validate(rules.createUserPost), controller.createUserPost);
+	.route('/vote')
+	.post(validate(rules.createUserPost), controller.createUserPost)
+	.delete(validate(rules.removeVote), controller.removeVote);
 
 router
 	.route('/comment')

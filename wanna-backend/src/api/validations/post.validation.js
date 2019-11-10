@@ -12,10 +12,16 @@ module.exports = {
 		body('size', 'Size is required').exists(),
 	],
 
-	//POST /v1/post/createUserPost
+	//POST /v1/post/vote
 	createUserPost: [
 		body('idPost', 'Post id is required').exists(),
 		body('type', 'Type is required').exists(),
+	],
+
+	//DELETE /v1/post/vote
+
+	removeVote: [
+		body('idPost', 'Posto id is required').exists(),
 	],
 
 	//POST /v1/post/comment
