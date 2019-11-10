@@ -67,9 +67,9 @@
 ---
 
 - **Descrição:** Obter comentários de um post
-- **Método:** POST
-- **Rota:** v1/post/getComments
-- **Estado:** &#9746;
+- **Método:** GET
+- **Rota:** v1/post/comment
+- **Estado:** :heavy_check_mark:
 
 ---
 

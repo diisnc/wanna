@@ -201,4 +201,18 @@ exports.remove = async (req, res, next) => {
 		}catch(e){
 			next(e);
 		}
- }
+ };
+
+ /**
+  * 
+  *  Returns post comments 
+  */
+
+exports.getPostComments = async (req, res, next) => {
+	try{
+		list = await Post.getComments(req.body.idPost);
+		res.json(list);
+	}catch(e){
+		next(e);
+	}
+};

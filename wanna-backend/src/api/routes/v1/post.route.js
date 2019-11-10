@@ -29,6 +29,7 @@ router
 
 router
 	.route('/comment')
+	.get(validate(rules.getComments),controller.getPostComments)
 	.post(validate(rules.createComment), controller.createComment)
 	.delete(validate(rules.deleteComment), controller.removeComment);
 

@@ -25,5 +25,8 @@ module.exports = {
 	],
     deleteComment:[
 		body('idComment', 'Comment id is required').exists(),
+	],
+	getComments:[
+		body('idPost', 'Post id is required').exists(),
 	],	
 };
