@@ -17,11 +17,12 @@ class Register extends Component {
 	render() {
 		const { handleSubmit } = this.props;
 		const submitForm = e => {
-			this.props.register(e.first, e.last, e.email, e.password);
+			this.props.register(e.user, e.first, e.last, e.email, e.password);
 		};
 
 		return (
 			<View>
+				<Field name="user" placeholder="Username" component={renderInput} />
 				<Field name="first" placeholder="First name" component={renderInput} />
 				<Field name="last" placeholder="Last name" component={renderInput} />
 				<Field name="email" placeholder="Email" component={renderInput} />
@@ -84,8 +85,8 @@ function mapStateToProps(store, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
 	return {
-		register: (first, last, email, password) => {
-			dispatch(register(first, last, email, password));
+		register: (username, first, last, email, password) => {
+			dispatch(register(username, first, last, email, password));
 		}
 	};
 }

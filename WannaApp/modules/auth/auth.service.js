@@ -3,7 +3,6 @@ import { login, refreshToken } from './auth.api';
 import { asyncError, generalError } from '../errors/error.service';
 import * as AuthReducer from './auth.reducer';
 import NavigationService from '../navigator';
-import { ourFetchWithToken, setToken, setStore } from '../api';
 
 const _saveItem = async (item, selectedValue) => {
 	try {
@@ -16,9 +15,9 @@ const _saveItem = async (item, selectedValue) => {
 export const refreshTokenService = refreshTokenArg => async dispatch => {
 	//ver os try depois e catch dispatch general error
 	let response = await refreshToken(refreshTokenArg);
-	console.log('Resposta do refresh token: ' + response);
+	// console.log('Resposta do refresh token: ' + response);
 	let data = await response.json();
-	console.log('data do tokenservice: ' + data);
+	// console.log('data do tokenservice: ' + data);
 	if (response.status == 200) {
 		dispatch(AuthReducer.saveAppToken(data.tokens.accessToken));
 		await _saveItem('refreshToken', data.tokens.refreshToken);
@@ -68,20 +67,25 @@ export const logout = () => async dispatch => {
 	}
 };
 
-export const register = (first, last, email, password) => dispatch => {
+export const register = (username, first, last, email, password) => async dispatch => {
 	dispatch(AuthReducer.setAuthPending());
-	return AuthApi.register(first, last, email, password)
-		.then(response => {
-			console.log(response);
-			if (response.success) {
-				dispatch(AuthReducer.setRegisterSuccess());
-			} else {
-				dispatch(AuthReducer.setRegisterError(response.message));
-			}
-		})
+	let response = await register(username, first, last, email, password);
+	let data = await response.json();
+	if (response.status == 200) {
+		dispatch(AuthReducer.setRegisterSuccess());
+		NavigationService.navigate('Login');
+	} else {
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
+		// console.log('Está a despachar o erro: ' + error.errors);
+		console.log('Error1 ' + error);
+		dispatch(AuthReducer.setRegisterError(error));
+	}
+	/*
 		.catch(error => {
 			dispatch(generalError(error));
 		});
+	*/
 };
 
 export const loginService = (email = 'stoj97@gmail.com', password = '123456') => async dispatch => {
@@ -101,24 +105,4 @@ export const loginService = (email = 'stoj97@gmail.com', password = '123456') =>
 		dispatch(AuthReducer.setLoginError(error));
 	}
 	//dispatch(generalError(error));
-};
-
-//test function on the login and logged in areas to show the JWT is working
-export const checkAuthTest = () => async dispatch => {
-	try {
-		const token = await AsyncStorage.getItem('authToken');
-		return AuthApi.checkAuthTest(token)
-			.then(response => {
-				if (response.success) {
-					console.log('Success: ', response.message);
-				} else {
-					console.log('Error: ', response);
-				}
-			})
-			.catch(error => {
-				dispatch(generalError(error));
-			});
-	} catch (error) {
-		dispatch(asyncError(error));
-	}
 };
