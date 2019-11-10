@@ -11,6 +11,7 @@ import {
 	Dimensions
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
 
@@ -45,29 +46,65 @@ class Inspire extends Component {
         */
 	}
 
+	componentDidUpdate(prevProps) {
+		console.log('mudou');
+		const hasAChanged = this.props.loggedIn !== prevProps.loggedIn;
+		const hasBChanged = this.props.tokenValid !== prevProps.tokenValid;
+		if (
+			(hasAChanged || hasBChanged) &&
+			this.props.tokenValid == true &&
+			this.props.loggedIn == true
+		) {
+			console.log('vai pintar');
+			this.getFeedDataFromApiAsync();
+		}
+	}
+
 	render() {
-		return (
-			/*
+		const loggedIn = this.props.loggedIn;
+		const token = this.props.tokenValid;
+		console.log('login ' + loggedIn);
+		console.log('token valid ' + token);
+
+		if (loggedIn == true && token == true) {
+			//this.getFeedDataFromApiAsync();
+			return (
+				/*
             Fazer View Englobadora da página
             onde o primeiro elemento é o header
             de pesquisa e o segundo elemento
             é o feed que contém as imagens.
             */
-			// Safe Box for Iphone
-			<SafeAreaView style={{ flex: 1 }}>
-				{/* Full Page Box */}
-				<View
-					style={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'stretch'
-					}}>
-					{this.buildHeader()}
-					{this.buildFeed()}
-				</View>
-			</SafeAreaView>
-		);
+				// Safe Box for Iphone
+				<SafeAreaView style={{ flex: 1 }}>
+					{/* Full Page Box */}
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'column',
+							justifyContent: 'flex-start',
+							alignItems: 'stretch'
+						}}>
+						{this.buildHeader()}
+						{this.buildFeed()}
+					</View>
+				</SafeAreaView>
+			);
+		} else
+			return (
+				<SafeAreaView style={{ flex: 1 }}>
+					{/* Full Page Box */}
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'column',
+							justifyContent: 'flex-start',
+							alignItems: 'stretch'
+						}}>
+						{<Text>Autenticação Falhada</Text>}
+					</View>
+				</SafeAreaView>
+			);
 	}
 
 	// Builds header of the page
@@ -594,7 +631,7 @@ class Inspire extends Component {
                 console.error(error);
             });
         */
-
+		console.log('feed data');
 		// const newState = require('./json/responseFeed');
 		const newState = await feed();
 		this.setState({ feedData: newState, numPosts: newState.length });
@@ -602,7 +639,19 @@ class Inspire extends Component {
 		return;
 	}
 }
-export default Inspire;
+
+function mapStateToProps(store) {
+	return { loggedIn: store.auth.loggedIn, tokenValid: store.auth.tokenIsValid };
+}
+
+function mapDispatchToProps(dispatch) {
+	return {};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Inspire);
 
 const styles = StyleSheet.create({
 	container: {
