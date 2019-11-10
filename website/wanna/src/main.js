@@ -9,6 +9,8 @@ import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 import Popover  from 'vue-js-popover'
 import VueMaterial from 'vue-material'
+import moment from 'moment'
+
 //import mdbDatatable from 'mdbvue';
 //import VueApexCharts from 'vue-apexcharts'
 //import Carousel3d from 'vue-carousel-3d';
@@ -34,6 +36,7 @@ Vue.use(BootstrapVue);
 Vue.use(VueSession);
 Vue.use(VueRouter);
 Vue.use(Vuetify);
+Vue.prototype.moment = moment
 //Vue.use(Carousel3d);
 //Vue.component('apexchart', VueApexCharts)
 
@@ -44,6 +47,8 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+  	App
+  },
   template: '<App/>'
 })

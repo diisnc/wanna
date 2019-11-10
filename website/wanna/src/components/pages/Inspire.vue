@@ -8,6 +8,9 @@
               <div class="card-op-area">
                 <a :href="product.user"><img class="img-user" :src="product.user_img"></a>
                 <a :href="product.user" class="txt-username"><b>{{product.user}}</b></a>
+                <a class="txt-username"> • </a>
+                <a class="txt-username txt-tmstmp">{{moment(product.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
+                
               </div>
               <div class="card-img-caixa">
                 <img class="card-img card-img-blur" :src="product.img">
@@ -86,6 +89,7 @@ export default {
       post_id: 2123,
       products: [
         {
+          timestamp: '2019-11-10T16:15:22',
           user: 'joao_castro_12',
           user_img: 'https://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg',
           name: 'Botas fixes',
@@ -94,6 +98,7 @@ export default {
           likes: 123
         },
         {
+          timestamp: '2019-11-10T10:09:42',
           user: 'joanavintageoutlet',
           user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Lacy shirt',
@@ -102,6 +107,7 @@ export default {
           likes: 2321
         },
         {
+          timestamp: '2019-11-9T19:15:42',
           user: 'beavila_shoestore',
           user_img: 'https://i.imgur.com/B7aj5H7.png',
           name: 'Botins festivos',
@@ -110,6 +116,7 @@ export default {
           likes: 1489
         },
         {
+          timestamp: '2019-11-5T21:55:12',
           user: 'tiagorodri',
           user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Calças desporto',
@@ -212,6 +219,10 @@ export default {
     margin-left: 10px;
     font-size: 15px;
     color: #333 !important;
+  }
+  .txt-tmstmp{
+    color: #666 !important;
+    cursor: default;
   }
   .card{
     border-radius:20px !important;
@@ -354,7 +365,7 @@ export default {
   }
 
   .icon-save-empty {
-    mask: url(https://svgur.com/i/G1w.svg);
+    mask: url(https://svgur.com/i/G1_.svg);
     transition: 0.3s !important;
     width: 21px !important;
     height: 23px !important;
