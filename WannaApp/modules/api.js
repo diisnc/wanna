@@ -40,6 +40,7 @@ function getQueryString(params) {
 }
 
 export const ourFetchWithToken = async action => {
+	console.log('fetching');
 	method = action.method;
 	endpoint = action.endpoint;
 

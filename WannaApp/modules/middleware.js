@@ -2,8 +2,9 @@ import { logout, refreshTokenService } from './auth/auth.service';
 import { api, setToken, setStore } from './api';
 
 export const saveAuthToken = store => next => action => {
-	if (action.type === 'SET_LOGIN_SUCCESS') {
+	if (action.type === 'SET_LOGIN_SUCCESS' || action.type === 'SAVE_APP_TOKEN') {
 		// after a successful login, update the token in the API
+		console.log('fez set ao token da api pelo handle da action: ' + action.type);
 		setToken(action.authToken);
 		// api.currentAuthToken = action.authToken;
 	}
@@ -15,6 +16,7 @@ let buffer = [];
 
 export const jwt = store => next => action => {
 	buffer.push(action);
+
 	if (action.type === 'INVALID_TOKEN') {
 		console.log('Passou pelo middleware token inválido');
 		let theStore = store.getState();
@@ -22,26 +24,7 @@ export const jwt = store => next => action => {
 			if (!theStore.auth.pendingRefreshingToken) {
 				store.dispatch({ type: 'REFRESHING_TOKEN' });
 				store.dispatch(refreshTokenService(theStore.auth.refreshToken)).then(() => {
-					// this will fire even if the refresh token is still valid or not.
-					// if the refresh token is not valid (and therefore not able to retrieve
-					// a new auth token), the REFRESH_EXPIRED action is fired from errors.api.
 					store.dispatch({ type: 'TOKEN_REFRESHED' });
-
-					//get the action before the last INVALID_TOKEN (the one which got denied because of token expiration)
-					let pos = buffer.map(e => e.type).indexOf('INVALID_TOKEN') - 1;
-
-					// count back from the invalid token dispatch, and fire off the last dispatch again which was
-					// a function. These are to be dispatched, and have the dispatch function passed through to them.
-					for (var i = pos; i > -1; i -= 1) {
-						if (typeof buffer[i] === 'function') {
-							store.dispatch({
-								type: 'RESEND',
-								action: buffer[i](store.dispatch)
-							});
-							break;
-						}
-					}
-					buffer = [];
 				});
 			}
 		}

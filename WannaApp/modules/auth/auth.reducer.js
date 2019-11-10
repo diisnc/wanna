@@ -53,7 +53,7 @@ let initialState = {
 	regError: false,
 	authToken: null,
 	refreshToken: null,
-	tokenIsValid: null,
+	tokenIsValid: false,
 	pendingRefreshingToken: null
 };
 
@@ -73,6 +73,7 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				authPending: false,
+				tokenIsValid: true,
 				loggedIn: true,
 				loginError: false,
 				authToken: action.authToken,

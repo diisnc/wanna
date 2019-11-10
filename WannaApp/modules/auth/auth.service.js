@@ -3,6 +3,7 @@ import { login, refreshToken } from './auth.api';
 import { asyncError, generalError } from '../errors/error.service';
 import * as AuthReducer from './auth.reducer';
 import NavigationService from '../navigator';
+import { ourFetchWithToken, setToken, setStore } from '../api';
 
 const _saveItem = async (item, selectedValue) => {
 	try {
@@ -16,12 +17,12 @@ export const refreshTokenService = refreshTokenArg => async dispatch => {
 	//ver os try depois e catch dispatch general error
 	let response = await refreshToken(refreshTokenArg);
 	console.log('Resposta do refresh token: ' + response);
-	let data = await response.text();
+	let data = await response.json();
 	console.log('data do tokenservice: ' + data);
 	if (response.status == 200) {
-		dispatch(AuthReducer.saveAppToken(response.accessToken));
-		_saveItem('refreshToken', response.tokens.refreshToken);
-		_saveItem('authToken', response.tokens.accessToken)
+		dispatch(AuthReducer.saveAppToken(data.tokens.accessToken));
+		await _saveItem('refreshToken', data.tokens.refreshToken);
+		_saveItem('authToken', data.tokens.accessToken)
 			.then(resp => {
 				console.log('Refresh finished');
 			})
@@ -41,6 +42,8 @@ export const checkAuthStatus = () => async dispatch => {
 	try {
 		const authToken = await AsyncStorage.getItem('authToken');
 		const refreshToken = await AsyncStorage.getItem('refreshToken');
+		// token expirado para testes
+		// const authToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNlcmdpb3RqIiwiZW1haWwiOiJzdG9qOTdAZ21haWwuY29tIiwiaWF0IjoxNTczMzM1MTA0LCJleHAiOjE1NzMzMzg3MDR9.J68gM1wCqxAhgFJTuP1sIkgr7__8eWN_RFtjlgBIcrg';
 
 		if (authToken != null && refreshToken != null) {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken));
