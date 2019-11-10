@@ -113,14 +113,18 @@ module.exports = (sequelize, DataTypes) => {
 
 	Post.getPostInfo = async function getPostInfo(idPost){
 		userinfo = await this.sequelize.query(
-			'SELECT "Users"."avatarType", "Users"."firstName", "Users"."lastName", "Users"."avatarData" FROM "Users" JOIN "Posts" ON "Users"."username" = "Posts"."idUser" WHERE "Posts"."id" = (:idPost)',
+			'SELECT "Users"."avatarType", "Users"."firstName", "Users"."lastName", "Users"."avatarData"'+
+		    'FROM "Users" JOIN "Posts" ON "Users"."username" = "Posts"."idUser"'+
+			'WHERE "Posts"."id" = (:idPost)',
 			{
 				replacements: {idPost: idPost},
 				type: this.sequelize.QueryTypes.SELECT,
 			}
 		);
 		postinfo = await this.sequelize.query(
-			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES FROM "Posts"  JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost) GROUP BY "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type"',
+			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES'+
+			'FROM "Posts"  JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost)'+
+			'GROUP BY "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type"',
 			{
 				replacements: {idPost: idPost},
 				type: this.sequelize.QueryTypes.SELECT,
@@ -139,9 +143,26 @@ module.exports = (sequelize, DataTypes) => {
 	};
 
 	/*
-	* Deletes a post
+	*
+	* Returns all post comments and some information from the user that made the comment
 	*/
 
+	Post.getComments = async function getComments(idPost){
+
+		comments = await this.sequelize.query(
+			'SELECT "Comments"."commentText", "Comments"."id", "Comments"."idUser", "Users"."avatarType","Users"."avatarData"'+ 
+			'FROM "Comments"'+
+			'JOIN "Posts" ON "Posts"."id" = "Comments"."idPost"'+
+			'JOIN "Users" ON "Users"."username" = "Comments"."idUser"'+
+			'WHERE "Posts"."id" = (:idPost)'+
+			'ORDER BY "Comments"."createdAt"',
+			{
+				replacements: {idPost: idPost},
+				type: this.sequelize.QueryTypes.SELECT,
+			}
+		);
+		return comments;
+	};
 
 
 	/** Object methods */
