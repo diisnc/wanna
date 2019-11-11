@@ -40,26 +40,37 @@ export default {
   }
 
   .popover {
-    margin-top: 18px !important;
-    border: 0px !important;
     border-radius: 20px !important;
+    border: 0px !important;
+    margin-top: 18px !important;
     opacity: inherit !important;
-    -webkit-box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.25) !important;
+    -webkit-box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.4) !important;
+    box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.4) !important;
     display: block !important;
     visibility: visible !important;
   }
-
   .popover-body {
     padding: 0px !important;
-    border: 0px !important;
-    border-radius: 10px !important;
     display: block !important;
   }
 
   .list-group-item {
+    border-color: #EEE !important;
     cursor: pointer !important;
-    border: 0px !important;
     display: block !important;
+    border-right: 0px !important;
+    border-left: 0px !important;
+    color: #000 !important;
+  }
+  .list-group-item:first-child{
+    border-top: 0px !important;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+  }
+  .list-group-item:last-child{
+    border-bottom: 0px !important;
+    border-bottom-left-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
   }
 
   .page{
