@@ -10,7 +10,7 @@
           <div class="right-side-bar">
             
             <button v-if="this.$router.currentRoute.name=='Manageposts'" class="icon icon-home icon-active"/>
-            <button v-else @click="postsClick" v-else class="icon icon-home"/>
+            <button v-else @click="postsClick" class="icon icon-home"/>
 
             <button v-if="this.$router.currentRoute.name=='Manageusers'" class="icon icon-profile icon-active"/>
             <button v-else @click="usersClick" class="icon icon-profile"/>
@@ -145,32 +145,6 @@
     mask: url(https://image.flaticon.com/icons/svg/711/711168.svg);
     width:30px;
     height: 28px;
-  }
-
-  .icon-mobile-feed {
-    mask: url(https://svgur.com/i/FdS.svg);
-    width:18px;
-    height: 20.5px;
-  }
-  .icon-mobile-wishlist {
-    mask: url(https://svgur.com/i/FcM.svg);
-    width:23px;
-    height: 20.5px;
-  }
-  .icon-mobile-add {
-    mask: url(https://i.imgur.com/dTGhAxa.png);
-    width:40px;
-    height: 40px;
-  }
-  .icon-mobile-outfit {
-    mask: url(https://svgur.com/i/FdG.svg);
-    width:27px;
-    height: 20.5px;
-  }
-  .icon-mobile-profile {
-    mask: url(https://svgur.com/i/FcB.svg);
-    width:21px;
-    height: 20px;
   }
   
   .icon {
