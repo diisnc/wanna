@@ -1,8 +1,6 @@
 <template>  
   <layout-basic>
     <div>
-    <!--  NAVBAR DO VITOR -->
-    
 
     <div class="container-full">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -100,7 +98,7 @@
 
 <script>
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn } from 'mdbvue';
-import LayoutBasic from "../layouts/BottomBar.vue"
+import LayoutBasic from "../layouts/BottomBarAdmin.vue"
 export default {
   name: 'Manageusers',
   data () {
