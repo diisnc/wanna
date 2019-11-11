@@ -9,14 +9,13 @@
               <div class="row">
                 <div class="col-12 col-sm-8 col-lg-5" style="min-width: 80%; margin:auto;">
                   <ul class="list-group">
-                  <li class="nav-header disabled" style="padding-top: 2%"><a> Publicações Denunciadas </a></li>
-                  <hr>
+                  <li class="nav-header disabled"><a> Publicações Denunciadas </a></li>
                     
                    <!-- <li v-for="team in $store.state.teams.teams" :key="team.team_id" class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
                       <center>{{team.team_id}}</center>
                       <center>{{team.name}}</center>
                     -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       <center> 1253 </center>
                       <center> 4,5 </center>
                       <center> 9002021 </center>
@@ -205,6 +204,17 @@ export default {
   overflow: hidden;
   height: 100vh;
   padding-top: 5%;
+}
+
+.list-group{
+  border-radius: 25px;
+  color: gray;
+  text-align: center;
+}
+
+.nav-header{
+  padding-top: 1.5%;
+  padding-bottom: 1%;
 }
 
  /* Style buttons */
