@@ -14,7 +14,11 @@
                 
                 </div>
                 <div class="card-options-area">
-                  <b-button class="search-bar btn-mini bg-trans" @click=" "><i class="fas fa-ellipsis-h"></i></b-button>
+                  <b-button class="search-bar btn-mini bg-trans" @click="show_modal_post_options(product.id)"><i class="fas fa-ellipsis-h"></i></b-button>
+
+                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id"name="post_options" width="400px">
+                    hello, world!
+                  </modal>
                 </div>
               </div>
               
@@ -95,6 +99,7 @@ export default {
       post_id: 2123,
       products: [
         {
+          id: 0,
           timestamp: '2019-11-10T16:15:22',
           user: 'joao_castro_12',
           user_img: 'https://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg',
@@ -104,6 +109,7 @@ export default {
           likes: 123
         },
         {
+          id: 1,
           timestamp: '2019-11-10T10:09:42',
           user: 'joanavintageoutlet',
           user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
@@ -113,6 +119,7 @@ export default {
           likes: 2321
         },
         {
+          id: 2,
           timestamp: '2019-11-9T19:15:42',
           user: 'beavila_shoestore',
           user_img: 'https://i.imgur.com/B7aj5H7.png',
@@ -122,6 +129,7 @@ export default {
           likes: 1489
         },
         {
+          id: 3,
           timestamp: '2019-11-5T21:55:12',
           user: 'tiagorodri',
           user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
@@ -135,7 +143,8 @@ export default {
       window: {
         width: 0,
         height: 0
-      }
+      },
+      shownmodal: null
     }
   },
   created: function() {
@@ -204,12 +213,19 @@ export default {
     },
     hidebanner(){
       this.showbanner=0;
+    },
+    show_modal_post_options(productid){
+      this.shownmodal = productid;
+      this.$modal.show('post_options');
     }
   }
 }
 </script>
 
 <style>
+  .v--modal-overlay {
+    background-color: red;
+  }
   .card-op-area{
     text-align: left;
     width:80% !important;
@@ -398,7 +414,7 @@ export default {
   }
 
   .icon-buy-empty {
-    mask: url(https://svgur.com/i/G1D.svg);
+    mask: url(https://svgur.com/i/G4_.svg);
     transition: 0.3s !important;
     width: 22px !important;
     height: 24px !important;

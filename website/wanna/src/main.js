@@ -10,6 +10,7 @@ import BootstrapVue from 'bootstrap-vue'
 import Popover  from 'vue-js-popover'
 import VueMaterial from 'vue-material'
 import moment from 'moment'
+import vmodal from 'vue-js-modal'
 
 //import mdbDatatable from 'mdbvue';
 //import VueApexCharts from 'vue-apexcharts'
@@ -19,10 +20,10 @@ import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
 import 'vuetify/dist/vuetify.min.css'
 import 'jquery/dist/jquery.min.js';
 //import 'bulma/css/bulma.css';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 //require('../dist/static/css/index.css')
@@ -32,11 +33,12 @@ Vue.use(MdButton);
 Vue.use(MdContent);
 Vue.use(MdTabs);
 Vue.use(VueMaterial);
-Vue.use(BootstrapVue);
 Vue.use(VueSession);
 Vue.use(VueRouter);
 Vue.use(Vuetify);
+Vue.use(vmodal);
 Vue.prototype.moment = moment
+Vue.use(BootstrapVue);
 //Vue.use(Carousel3d);
 //Vue.component('apexchart', VueApexCharts)
 
