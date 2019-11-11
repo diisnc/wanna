@@ -20,6 +20,7 @@
                     -->
                     <li class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
                       <center> 1253 </center>
+                      <center> 4,5 </center>
                       <center> 9002021 </center>
 
 
