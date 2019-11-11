@@ -1,8 +1,6 @@
 <template>  
   <layout-basic>
     <div>
-    <!--  NAVBAR DO VITOR -->
-    
 
     <div class="container-full">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -143,7 +141,7 @@
 
 <script>
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn } from 'mdbvue';
-import LayoutBasic from "../layouts/BottomBar.vue"
+import LayoutBasic from "../layouts/BottomBarAdmin.vue"
 export default {
   name: 'Manageposts',
   data () {
@@ -208,10 +206,6 @@ export default {
   height: 100vh;
   padding-top: 5%;
 }
-
-#hr { display: block; height: 1px;
-    border: 0; border-top: 1px solid white;
-    margin: 1em 0; padding: 0; }
 
  /* Style buttons */
 .btn {
