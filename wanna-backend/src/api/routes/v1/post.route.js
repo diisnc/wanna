@@ -18,7 +18,6 @@ router.route('/feed').get(controller.feed);
 router
 	.route('/createPost')
 	.post(
-		upload.any('imageData'),
 		validate(rules.createPost),
 		controller.create,
 	);
@@ -34,7 +33,7 @@ router
 	.post(validate(rules.createComment), controller.createComment)
 	.delete(validate(rules.deleteComment), controller.removeComment);
 
-	
+
 
 router
 	.route('/:idPost')

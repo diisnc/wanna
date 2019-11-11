@@ -1,4 +1,5 @@
 import { ourFetchWithToken } from '../api';
+import { isAvailable } from 'expo/build/AR';
 
 export const feed = () => {
 	const config = {
@@ -63,12 +64,25 @@ export const markPost = (idPost, type) => {
 	return ourFetchWithToken(config);
 };
 
-export const createPost = post => {
+export const createPost = (
+	genre,
+	clothe,
+	color,
+	size,
+	price,
+	images,
+	description = 'Muito leite'
+) => {
 	const config = {
 		endpoint: '/v1/post/createPost',
 		method: 'POST',
 		body: {
-			username: usernameToUnFollow
+			description: description,
+			price: price,
+			category: clothe,
+			color: color,
+			imageData: images,
+			size: size
 		}
 	};
 	return ourFetchWithToken(config);

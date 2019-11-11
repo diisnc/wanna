@@ -9,12 +9,16 @@ import {
 	ScrollView,
 	Image,
 	TouchableHighlight,
-	Button
+	Button,
+	ImageEditor
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
+import { createPost } from '../modules/post/post.api';
+import { connect } from 'react-redux';
 import CheckBox from 'react-native-check-box';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import { AppLoading } from 'expo';
 
@@ -56,12 +60,9 @@ class Add extends Component {
 	}
 
 	render() {
-
 		// loading screen
 		if (this.state.loading) {
-			return (
-			  <AppLoading/>
-			);
+			return <AppLoading />;
 		}
 
 		return (
@@ -116,10 +117,11 @@ class Add extends Component {
 
 	// Build space to pick image
 	buildForm() {
+		// {this.buildPickedImagesScroll()}
 		return (
 			<ScrollView scrollEventThrottle={16}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-					{this.buildPickedImagesScroll()}
+
 					{this.buildImagePicker()}
 					{this.buildFilterForm()}
 				</View>
@@ -131,11 +133,10 @@ class Add extends Component {
 	buildPickedImagesScroll() {
 		if (this.state.pickedImagesUri.length > 0) {
 			return (
-				<ScrollView 
-					scrollEventThrottle={16} 
+				<ScrollView
+					scrollEventThrottle={16}
 					horizontal={true}
-					style={{ height: 100, backgroundColor: 'green', margin: 10 }}
-				>
+					style={{ height: 100, backgroundColor: 'green', margin: 10 }}>
 					{this.buildImages()}
 				</ScrollView>
 			);
@@ -148,10 +149,10 @@ class Add extends Component {
 		const items = [];
 
 		for (let index = 0; index < this.state.pickedImagesUri.length; index++) {
-			let imageUri = this.state.pickedImagesUri[index]
+			let imageUri = this.state.pickedImagesUri[index];
 
 			items.push(
-				<View key={index} style={{width: 100, backgroundColor: "yellow", margin: 5}}>
+				<View key={index} style={{ width: 100, backgroundColor: 'yellow', margin: 5 }}>
 					<Image
 						key={index}
 						source={{
@@ -165,10 +166,9 @@ class Add extends Component {
 						}}
 					/>
 					<TouchableHighlight
-						underlayColor = "#ffa456"
-						onPress = {() => this.deleteImage(index)}
-						style = {{ backgroundColor: '#fff', height: '20%'}}
-					>
+						underlayColor="#ffa456"
+						onPress={() => this.deleteImage(index)}
+						style={{ backgroundColor: '#fff', height: '20%' }}>
 						<Text>Remover</Text>
 					</TouchableHighlight>
 				</View>
@@ -177,7 +177,7 @@ class Add extends Component {
 
 		return items;
 	}
-	
+
 	// Build space to pick image
 	buildImagePicker() {
 		return (
@@ -313,7 +313,7 @@ class Add extends Component {
 					<TextInputMask
 						type={'money'}
 						options={{
-							unit: "€"
+							unit: '€'
 						}}
 						keyboardType={'numeric'}
 						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
@@ -321,21 +321,23 @@ class Add extends Component {
 						placeholder="Inserir preço"
 						placeholderTextColor="grey"
 						value={this.state.price}
-						onChangeText={text => this.setState({price: text})}
+						onChangeText={text => this.setState({ price: text })}
 					/>
 					{/* incluir portes? */}
 					<CheckBox
-						style={{flex: 1, padding: 10}}
-						leftText={"Portes Grátis"}
+						style={{ flex: 1, padding: 10 }}
+						leftText={'Portes Grátis'}
 						isChecked={this.state.offerPostage}
-						onClick={() => {this.setState({offerPostage: !this.state.offerPostage})}}
+						onClick={() => {
+							this.setState({ offerPostage: !this.state.offerPostage });
+						}}
 					/>
 					{/* preço portes */}
 					{!this.state.offerPostage ? (
 						<TextInputMask
 							type={'money'}
 							options={{
-								unit: "€"
+								unit: '€'
 							}}
 							keyboardType={'numeric'}
 							style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
@@ -343,29 +345,17 @@ class Add extends Component {
 							placeholder="Inserir portes"
 							placeholderTextColor="grey"
 							value={this.state.postagePrice}
-							onChangeText={text => this.setState({postagePrice: text})}
+							onChangeText={text => this.setState({ postagePrice: text })}
 						/>
 					) : null}
 					{/* create post */}
 					{this.state.completed ? (
-						<Button
-							title="Criar"
-							onPress={console.log(
-								'Submit: ' +
-									this.state.selectedGenre +
-									', ' +
-									this.state.selectedClothe +
-									', ' +
-									this.state.selectedColor +
-									', ' +
-									this.state.selectedSize +
-									', ' +
-									this.state.selectedMinPrice +
-									', ' +
-									this.state.selectedMaxPrice
-							)}
-						/>
+						<Button title="Criar" onPress={() => this.createPhotoAsync()} />
 					) : null}
+
+					<View style={styles.errorMessage}>
+						<Text>{this.props.errorMessage}</Text>
+					</View>
 				</View>
 			</ScrollView>
 		);
@@ -377,9 +367,9 @@ class Add extends Component {
 			/* add image to rui list */
 		}
 		let pickedImagesUriCopy = [...this.state.pickedImagesUri];
-		pickedImagesUriCopy.push(pickerResult.uri);
+		pickedImagesUriCopy.push(pickerResult);
 		this.setState({ pickedImagesUri: pickedImagesUriCopy });
-		//console.log(pickedImagesUri)
+		// console.log(this.state.pickedImagesUri);
 	}
 
 	//onValueChange of the switch this function will be called
@@ -438,7 +428,13 @@ class Add extends Component {
 			base64: true
 		});
 
-		this.handleImagePicked(pickerResult);
+		const manipResult = await ImageManipulator.manipulateAsync(
+			pickerResult.uri,
+			[{ resize: { width: 300, height: 300 } }],
+			{ format: 'jpeg', base64: true }
+		);
+
+		this.handleImagePicked(manipResult.base64);
 	};
 
 	// access photo folder and pick
@@ -446,14 +442,15 @@ class Add extends Component {
 		let pickerResult = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
 			aspect: [16, 9],
-			base64: true
+			base64: true,
+			quality: 0.1
 		});
 
 		this.handleImagePicked(pickerResult);
 	};
 
 	deleteImage(index) {
-		console.log("apagar imagem selecionada, no index: " + index);
+		console.log('apagar imagem selecionada, no index: ' + index);
 		// copia das imagens colocadas
 		var pickedImagesUriCopy = [...this.state.pickedImagesUri];
 		// remover elemento
@@ -483,8 +480,33 @@ class Add extends Component {
 
 		return;
 	}
+
+	async createPhotoAsync() {
+		await createPost(
+			this.state.selectedGenre,
+			this.state.selectedClothe,
+			this.state.selectedColor,
+			this.state.selectedSize,
+			this.state.price,
+			this.state.pickedImagesUri,
+			null
+		);
+
+		return;
+	}
 }
-export default Add;
+function mapStateToProps(store, ownProps) {
+	return {
+		errorMessage: store.error.errorMessage
+	};
+}
+function mapDispatchToProps(dispatch) {
+	return {};
+}
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Add);
 
 const styles = StyleSheet.create({
 	container: {

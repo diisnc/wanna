@@ -20,7 +20,13 @@ export const refreshTokenService = refreshTokenArg => async dispatch => {
 	// console.log('data do tokenservice: ' + data);
 	if (response.status == 200) {
 		dispatch(AuthReducer.saveAppToken(data.tokens.accessToken));
-		await _saveItem('refreshToken', data.tokens.refreshToken);
+		_saveItem('refreshToken', data.tokens.refreshToken)
+			.then(resp => {
+				console.log('Refresh finished');
+			})
+			.catch(error => {
+				dispatch(asyncError(error));
+			});
 		_saveItem('authToken', data.tokens.accessToken)
 			.then(resp => {
 				console.log('Refresh finished');

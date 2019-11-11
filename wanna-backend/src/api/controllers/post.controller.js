@@ -21,29 +21,16 @@ exports.create = async (req, res, next) => {
 			size: req.body.size,
 		});
 
-		for (var i = 0; i < req.files.length; i++) {
-			var imageData = fs.readFileSync(req.files[i].path);
-
+		for (var i = 0; i < req.body.imageData.length; i++) {
 			const photo = await Photo.create({
-				photoData: imageData,
-				photoType: req.files[i].mimetype,
+				photoData: req.body.imageData[i],
+				photoType: 'image/jpeg',
 			});
 
 			photo.setPost(post);
-
-			fs.unlink(req.files[i].path, err => {
-				if (err) {
-					console.log('failed to delete local image:' + err);
-				} else {
-					console.log('successfully deleted local image');
-				}
-			});
 		}
 
-		return res.status(httpStatus.CREATED).json({
-			post: post.transform(),
-			photo: 'Fotos adicionadas: ' + req.files.length,
-		});
+		return res.status(httpStatus.OK);
 	} catch (e) {
 		next(e);
 	}
@@ -112,7 +99,7 @@ exports.createUserPost = async (req, res, next) => {
 };
 
 /**
- * 
+ *
  * Removes a UserPost
  */
 
@@ -225,8 +212,8 @@ exports.remove = async (req, res, next) => {
  };
 
  /**
-  * 
-  *  Returns post comments 
+  *
+  *  Returns post comments
   */
 
 exports.getPostComments = async (req, res, next) => {
