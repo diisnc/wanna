@@ -14,10 +14,16 @@
                 
                 </div>
                 <div class="card-options-area">
-                  <b-button class="search-bar btn-mini bg-trans" @click="show_modal_post_options(product.id)"><i class="fas fa-ellipsis-h"></i></b-button>
+                  <b-button class="search-bar btn-mini bg-trans"
+                    @mouseover="setmodal(product.id)"
+                    @click="showmodal(product.id)">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </b-button>
 
-                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id"name="post_options" width="400px">
-                    hello, world!
+                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id"name="post_options" width="400px" height="auto">
+                    <b-list-group-item class="post-list" href="">Copiar ligação</b-list-group-item>
+                    <b-list-group-item class="post-list" href="">Reportar</b-list-group-item>
+
                   </modal>
                 </div>
               </div>
@@ -110,7 +116,7 @@ export default {
         },
         {
           id: 1,
-          timestamp: '2019-11-10T10:09:42',
+          timestamp: '2019-11-06T10:09:42',
           user: 'joanavintageoutlet',
           user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Lacy shirt',
@@ -120,7 +126,7 @@ export default {
         },
         {
           id: 2,
-          timestamp: '2019-11-9T19:15:42',
+          timestamp: '2019-11-02T19:15:42',
           user: 'beavila_shoestore',
           user_img: 'https://i.imgur.com/B7aj5H7.png',
           name: 'Botins festivos',
@@ -130,7 +136,7 @@ export default {
         },
         {
           id: 3,
-          timestamp: '2019-11-5T21:55:12',
+          timestamp: '2019-10-20T21:55:12',
           user: 'tiagorodri',
           user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Calças desporto',
@@ -214,17 +220,23 @@ export default {
     hidebanner(){
       this.showbanner=0;
     },
-    show_modal_post_options(productid){
-      this.shownmodal = productid;
+    showmodal(productid){
       this.$modal.show('post_options');
+    },
+    setmodal(productid){
+      this.shownmodal= productid;
     }
   }
 }
 </script>
 
 <style>
-  .v--modal-overlay {
-    background-color: red;
+  .post-list{
+    text-align: center !important;
+  }
+  .v--modal-box {
+    border-radius: 20px !important; 
+    padding: 0px !important;
   }
   .card-op-area{
     text-align: left;
@@ -295,7 +307,7 @@ export default {
     height: 35px !important;
     background-color:rgba(0,0,0,0.08) !important;
     border-radius: 35px !important;
-    z-index: 999 !important;
+    z-index: 99 !important;
     margin: 0px !important;
     padding: 0px !important;
   }

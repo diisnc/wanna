@@ -37,7 +37,7 @@ Vue.use(VueSession);
 Vue.use(VueRouter);
 Vue.use(Vuetify);
 Vue.use(vmodal);
-Vue.prototype.moment = moment
+Vue.prototype.moment = moment;
 Vue.use(BootstrapVue);
 //Vue.use(Carousel3d);
 //Vue.component('apexchart', VueApexCharts)
