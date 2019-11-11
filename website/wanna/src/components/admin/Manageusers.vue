@@ -7,16 +7,15 @@
 
             <div class="container" style="padding-top:3%">
               <div class="row">
-                <div class="col-12 col-sm-8 col-lg-5" style="min-width: 70%; margin:auto;">
+                <div class="col-12 col-sm-8 col-lg-5" style="min-width: 80%; margin:auto;">
                   <ul class="list-group">
-                  <li class="nav-header disabled" style="padding-top: 2%"><a> Utilizadores Bloqueados </a></li>
-                  <hr>
+                  <li class="nav-header disabled"><a> Utilizadores Bloqueados </a></li>
                     
                    <!-- <li v-for="team in $store.state.teams.teams" :key="team.team_id" class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
                       <center>{{team.team_id}}</center>
                       <center>{{team.name}}</center>
                     -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center" style="color: gray; text-align: center;">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       <center> 1253 </center>
                       <center> 4,5 </center>
 
@@ -164,9 +163,15 @@ export default {
   padding-top: 5%;
 }
 
-#hr { display: block; height: 1px;
-    border: 0; border-top: 1px solid white;
-    margin: 1em 0; padding: 0; }
+.list-group{
+  border-radius: 25px;
+  color: gray;
+  text-align: center;
+}
+.nav-header{
+  padding-top: 1.5%;
+  padding-bottom: 1%;
+}
 
  /* Style buttons */
 .btn {
