@@ -10,6 +10,8 @@ import {
 	Button,
 	TouchableOpacity
 } from 'react-native';
+import { createFilter } from '../modules/filter/filter.api';
+import { connect } from 'react-redux';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
@@ -117,7 +119,7 @@ class NewFilter extends Component {
 		}
 
 		// get data from servers and save in state
-		this.getWishlistDataFromApiAsync();
+		// this.getWishlistDataFromApiAsync();
 	}
 
 	render() {
@@ -332,50 +334,43 @@ class NewFilter extends Component {
 						/>
 					</View>
 					{this.state.completed ? (
-						<Button
-							title="Adicionar"
-							onPress={console.log(
-								'Submit: ' +
-									this.state.selectedGenre +
-									', ' +
-									this.state.selectedClothe +
-									', ' +
-									this.state.selectedColor +
-									', ' +
-									this.state.selectedSize +
-									', ' +
-									this.state.selectedMinPrice +
-									', ' +
-									this.state.selectedMaxPrice
-							)}
-						/>
+						<Button title="Adicionar" onPress={() => createFilter()} />
 					) : null}
+
+					<View style={styles.errorMessage}>
+						<Text>{this.props.errorMessage}</Text>
+					</View>
 				</View>
 			</ScrollView>
 		);
 	}
 
 	// Get Data to Build Feed and Transform it to Json Object
-	getWishlistDataFromApiAsync() {
-		/*
-        return fetch('https://facebook.github.io/react-native/movies.json')// ONLINE GET
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({wishlistData: responseJson, numPosts: Object.keys(responseJson).length});
-                //console.log(responseJson);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        */
-
-		const newState = require('./json/responseFeed');
-		this.setState({ wishlistData: newState, numPosts: newState.length });
+	async createFilterAsync() {
+		await createFilter(
+			this.state.selectedGenre,
+			this.state.selectedClothe,
+			this.state.selectedColor,
+			this.state.selectedSize,
+			this.state.selectedMinPrice,
+			this.state.selectedMaxPrice
+		);
 
 		return;
 	}
 }
-export default NewFilter;
+function mapStateToProps(store, ownProps) {
+	return {
+		errorMessage: store.error.errorMessage
+	};
+}
+function mapDispatchToProps(dispatch) {
+	return {};
+}
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(NewFilter);
 
 const styles = StyleSheet.create({
 	container: {
