@@ -14,6 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
+import { AppLoading } from 'expo';
 
 const { height, width } = Dimensions.get('window');
 
@@ -31,6 +32,7 @@ class Inspire extends Component {
 
 		// get data from servers and save in state
 		this.getFeedDataFromApiAsync();
+		console.log('passou pelo componentdidmount');
 
 		/*
         var localFeedData = require('./json/responseFeed');
@@ -68,6 +70,7 @@ class Inspire extends Component {
 
 		if (loggedIn == true && token == true) {
 			//this.getFeedDataFromApiAsync();
+			// loading screen
 			return (
 				/*
             Fazer View Englobadora da página
@@ -101,6 +104,7 @@ class Inspire extends Component {
 							justifyContent: 'flex-start',
 							alignItems: 'stretch'
 						}}>
+						{this.buildHeader()}
 						{<Text>Autenticação Falhada</Text>}
 					</View>
 				</SafeAreaView>
@@ -267,7 +271,7 @@ class Inspire extends Component {
 							}}
 							style={{
 								width: 'auto',
-								height: '80%',
+								height: 50,
 								aspectRatio: 1,
 								overflow: 'hidden'
 							}}
@@ -349,7 +353,7 @@ class Inspire extends Component {
         printPrice1 = "price= " + JSON.stringify(this.state.feedData[post].price);
         printPhotoType11 = "photoType1= " + JSON.stringify(this.state.feedData[post].photoType1);
         */
-		objJsonB641 = new Buffer(this.state.feedData[post].photoData1).toString('base64');
+		objJsonB641 = new Buffer(this.state.feedData[post].photoData1);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(this.state.feedData[post + 1].id);
 		/*
@@ -359,7 +363,7 @@ class Inspire extends Component {
         printPrice2 = "price= " + JSON.stringify(this.state.feedData[post+1].price);
         printPhotoType12 = "photoType1= " + JSON.stringify(this.state.feedData[post+1].photoType1);
         */
-		objJsonB642 = new Buffer(this.state.feedData[post + 1].photoData1).toString('base64');
+		objJsonB642 = new Buffer(this.state.feedData[post + 1].photoData1);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(this.state.feedData[post + 2].id);
 		/*
@@ -369,7 +373,7 @@ class Inspire extends Component {
         printPrice3 = "price= " + JSON.stringify(this.state.feedData[post+2].price);
         printPhotoType13 = "photoType1= " + JSON.stringify(this.state.feedData[post+2].photoType1);
         */
-		objJsonB643 = new Buffer(this.state.feedData[post + 2].photoData1).toString('base64');
+		objJsonB643 = new Buffer(this.state.feedData[post + 2].photoData1);
 
 		// build javascript
 		items.push(
@@ -634,9 +638,11 @@ class Inspire extends Component {
 		console.log('feed data');
 		// const newState = require('./json/responseFeed');
 		const newState = await feed();
+		// console.log(newState);
 		if (newState != null) {
 			this.setState({ feedData: newState, numPosts: newState.length });
 		}
+		// this.setState({ loading: false });
 
 		return;
 	}

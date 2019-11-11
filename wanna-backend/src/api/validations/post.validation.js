@@ -6,10 +6,11 @@ module.exports = {
 	createPost: [
 		body('description', 'Description is invalid').exists(),
 		body('price', 'Price is required').exists(),
-		body('isAvailable', 'Status is required').exists(),
+		body('isAvailable'),
 		body('category', 'Category is required').exists(),
 		body('color', 'Color is required').exists(),
 		body('size', 'Size is required').exists(),
+		body('imageData', 'Image is required').exists(),
 	],
 
 	//POST /v1/post/vote
@@ -34,5 +35,5 @@ module.exports = {
 	],
 	getComments:[
 		body('idPost', 'Post id is required').exists(),
-	],	
+	],
 };

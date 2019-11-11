@@ -33,11 +33,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		isAvailable: {
+			allowNull: true,
 			defaultValue: true,
 			type: DataTypes.BOOLEAN,
 		},
 		status: {
-			defaultValue: true,
+			allowNull: true,
 			type: DataTypes.INTEGER(),
 			defaultValue: 0,
 		},
@@ -150,7 +151,7 @@ module.exports = (sequelize, DataTypes) => {
 	Post.getComments = async function getComments(idPost){
 
 		comments = await this.sequelize.query(
-			'SELECT "Comments"."commentText", "Comments"."id", "Comments"."idUser", "Users"."avatarType","Users"."avatarData"'+ 
+			'SELECT "Comments"."commentText", "Comments"."id", "Comments"."idUser", "Users"."avatarType","Users"."avatarData"'+
 			'FROM "Comments"'+
 			'JOIN "Posts" ON "Posts"."id" = "Comments"."idPost"'+
 			'JOIN "Users" ON "Users"."username" = "Comments"."idUser"'+

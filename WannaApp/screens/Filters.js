@@ -103,6 +103,12 @@ class Filters extends Component {
 						alignItems: 'center',
 						backgroundColor: 'blue'
 					}}>
+					<MaterialIcons.Button
+						name="arrow-back"
+						size={40}
+						style={{ flex: 1 }}
+						onPress={() => this.props.navigation.navigate('Wanted')}
+					/>
 					<Text style={{ flex: 3, textAlign: 'center' }}>NEW FILTER</Text>
 					<MaterialCommunityIcons.Button
 						name="plus"
