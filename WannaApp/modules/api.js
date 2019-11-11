@@ -1,7 +1,7 @@
 import { handleTokenErrors } from './errors/error.service';
 import { store } from "../App";
 
-const config = { url: 'http://192.168.1.8:8000' };
+const config = { url: 'http://192.168.43.178:8000' };
 
 var currentAuthToken;
 
@@ -81,10 +81,10 @@ export const ourFetchWithToken = async action => {
 		console.log('erro');
 		data = JSON.stringify(data);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
+		store.dispatch(showError(error));
 		// console.log('Está a despachar o erro: ' + error.errors);
 		store.dispatch({ type: 'INVALID_TOKEN' });
 		// return data;
 		console.log('Error1 ' + error);
-		// dispatch(AuthReducer.setLoginError(error));
 	}
 };

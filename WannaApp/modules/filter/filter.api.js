@@ -8,12 +8,23 @@ export const getFilters = () => {
 	return ourFetchWithToken(config);
 };
 
-export const createFilter = filter => {
+export const createFilter = (
+	selectedGenre,
+	selectedClothe,
+	selectedColor,
+	selectedSize,
+	selectedMinPrice,
+	selectedMaxPrice
+) => {
 	const config = {
 		endpoint: '/v1/filter/createFilter',
 		method: 'POST',
 		body: {
-			username: usernameToUnFollow
+			category: selectedClothe,
+			priceMin: selectedMinPrice,
+			priceMax: selectedMaxPrice,
+			size: selectedSize,
+			color: selectedColor
 		}
 	};
 	return ourFetchWithToken(config);

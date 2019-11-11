@@ -8,10 +8,11 @@ import NewFilter from './NewFilter';
 import React, { Component } from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-const main = createBottomTabNavigator(
+const MainTab = createBottomTabNavigator(
 	{
 		Inspire: {
 			screen: Inspire,
@@ -28,24 +29,6 @@ const main = createBottomTabNavigator(
 				tabBarLabel: 'WANTED',
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={24} />
-				)
-			}
-		},
-		Filters: {
-			screen: Filters,
-			navigationOptions: {
-				tabBarLabel: 'FILTERS',
-				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="filter-outline" color={tintColor} size={24} />
-				)
-			}
-		},
-		NewFilter: {
-			screen: NewFilter,
-			navigationOptions: {
-				tabBarLabel: 'NEW FILTER',
-				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="plus-box-outline" color={tintColor} size={24} />
 				)
 			}
 		},
@@ -96,6 +79,49 @@ const main = createBottomTabNavigator(
 	}
 );
 
+MainTab.navigationOptions = {
+	// Hide the header from root stack
+	header: null
+};
+
+const subMain = createStackNavigator({
+	NewFilter: {
+		screen: NewFilter,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	Filters: {
+		screen: Filters,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	}
+});
+
+subMain.navigationOptions = {
+	// Hide the header from root stack
+	header: null
+};
+
+const MainStack = createStackNavigator(
+	{
+		Main: MainTab,
+		SubMain: subMain
+	},
+	{
+		initialRouteName: 'Main'
+	},
+	{
+		headerMode: 'none',
+		navigationOptions: {
+			header: null,
+		}
+	}
+);
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -105,4 +131,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default createAppContainer(main);
+export default createAppContainer(MainStack);
