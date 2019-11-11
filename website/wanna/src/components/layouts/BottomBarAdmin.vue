@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-
+    <!-- EDITAR NO FIM -->
     <div v-if="isMobile()">
       <mobile>
         <div class="mobile-top-bar">
@@ -23,40 +23,23 @@
 
       </mobile>
     </div>
+    
+    
     <div v-else>
       <desktop>
-        <div class="desktop-bar"><a href="inspire">
+        <div class="desktop-bar">
           <div class="left-side-bar">
             <img v-if="window.width>800" src="img/brand/full_logo.png" width="150" height="40" alt="Wanna" style="margin: auto; transition: width 1s">
             <img v-else src="img/brand/logo.png" width="50" height="50" alt="Wanna" style="margin: auto; transition: width 1s; ">
-          </div></a>
-
-          <div v-if="window.width>800" class="center-side-bar">
-            <b-form-group class="search-bar">
-              <b-input-group style="transition: width 1s">
-                <b-form-input class="search-bar" type="text" placeholder="Pesquisar pessoas..."></b-form-input>
-                <b-input-group-append>
-                  <b-button class="search-bar"><i class="fa fa-search"></i></b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
           </div>
 
           <div class="right-side-bar">
             
-            <button v-if="this.$router.currentRoute.name=='Inspire'" class="icon icon-home icon-active"/>
-            <button v-else @click="inspireClick" v-else class="icon icon-home"/>
+            <button v-if="this.$router.currentRoute.name=='Manageposts'" class="icon icon-home icon-active"/>
+            <button v-else @click="postsClick" v-else class="icon icon-home"/>
 
-            <button id="notif" class="icon icon-notifs"/>
-            <b-popover target="notif" placement=bottom triggers="focus">
-              <b-list-group-item href="#some-link">{{window.width}}</b-list-group-item>
-              <b-list-group-item href="#">Notification 2</b-list-group-item>
-              <b-list-group-item href="#">Notification 3</b-list-group-item>
-              <b-list-group-item href="#foobar">Notification 4</b-list-group-item>
-            </b-popover>
-
-            <button v-if="this.$router.currentRoute.name=='Profile'" class="icon icon-profile icon-active"/>
-            <button v-else @click="profileClick" class="icon icon-profile"/>
+            <button v-if="this.$router.currentRoute.name=='Manageusers'" class="icon icon-profile icon-active"/>
+            <button v-else @click="usersClick" class="icon icon-profile"/>
           </div>
         </div>
         <div style="height:0px;"></div>
@@ -88,11 +71,11 @@
           return false
         }
       },
-      profileClick() {
-        this.$router.push('/profile');
+      usersClick() {
+        this.$router.push('/manageusers');
       },
-      inspireClick() {
-        this.$router.push('/inspire');
+      postsClick() {
+        this.$router.push('/manageposts');
       },
       handleResize() {
         this.window.width = window.innerWidth;
@@ -176,18 +159,6 @@
     position: relative;
     display: inline-flex;
     float: right;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .center-side-bar {
-    margin-left: 3%;
-    margin-right: 3%;
-    min-width: 100px;
-    max-width: 250px;
-    width:25%;
-    position: relative;
-    display: inline-flex;
-    float: center;
     top: 50%;
     transform: translateY(-50%);
   }
