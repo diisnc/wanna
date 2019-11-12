@@ -14,7 +14,7 @@ module.exports = {
 	],
 
 	//POST /v1/post/vote
-	createUserPost: [
+	createVote: [
 		body('idPost', 'Post id is required').exists(),
 		body('type', 'Type is required').exists(),
 	],
@@ -30,10 +30,16 @@ module.exports = {
 		body('commentData', 'Comment data is required').exists(),
 		body('idPost', 'Post id is required').exists(),
 	],
+	//DELETE /v1/post/comment
     deleteComment:[
 		body('idComment', 'Comment id is required').exists(),
 	],
+	//GET /v1/post/comment
 	getComments:[
 		body('idPost', 'Post id is required').exists(),
+	],
+	//POST /v1/post/savedposts AND //DELETE /v1/post/savedposts 
+	savedPosts:[
+		body('idPost', 'Posts id is required').exists(),
 	],
 };

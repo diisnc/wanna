@@ -24,7 +24,7 @@ router
 
 router
 	.route('/vote')
-	.post(validate(rules.createUserPost), controller.createUserPost)
+	.post(validate(rules.createVote), controller.createVote)
 	.delete(validate(rules.removeVote), controller.removeVote);
 
 router
@@ -33,7 +33,12 @@ router
 	.post(validate(rules.createComment), controller.createComment)
 	.delete(validate(rules.deleteComment), controller.removeComment);
 
-
+router
+	.route('/savedpost')
+	.get(controller.getSavedPosts)
+	.post(validate(rules.savedPosts),controller.savePost)
+	.delete(validate(rules.savedPosts),controller.unsavePost);
+	
 
 router
 	.route('/:idPost')

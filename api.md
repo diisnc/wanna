@@ -37,17 +37,24 @@
 
 ---
 
-- **Descrição:** Guardar artigo
-- **Método:** POST
-- **Rota:** v1/post/save/:idPost
+- **Descrição:** Ver lista de artigo dos guardados
+- **Método:** GET
+- **Rota:** v1/post/savedpost
 - **Estado:** &#9746;
 
 ---
 
-- **Descrição:** Remover artigo dos guardados
+- **Descrição:** Guardar artigo
 - **Método:** POST
-- **Rota:** v1/post/unsave/:idPost
-- **Estado:** &#9746;
+- **Rota:** v1/post/savedpost
+- **Estado:** :heavy_check_mark:
+
+---
+
+- **Descrição:** Remover artigo dos guardados
+- **Método:** DELETE
+- **Rota:** v1/post/savedpost
+- **Estado:** :heavy_check_mark:
 
 ---
 

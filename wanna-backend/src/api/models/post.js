@@ -46,6 +46,15 @@ module.exports = (sequelize, DataTypes) => {
 
 	Post.associate = function(models) {
 		Post.belongsToMany(models.User, {
+			through: 'SavedPost',
+			as: 'usersavedposts',
+			foreignKey:{
+				name: 'post_id',
+			},
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
+		Post.belongsToMany(models.User, {
 			through: 'UserPost',
 			as: 'users',
 			foreignKey:{
