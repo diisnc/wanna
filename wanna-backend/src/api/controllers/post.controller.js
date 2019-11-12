@@ -28,10 +28,10 @@ exports.create = async (req, res, next) => {
 				photoType: 'image/jpeg',
 			});
 
-			photo.setPost(post);
+			await photo.setPost(post);
+			
 		}
-
-		return res.status(httpStatus.OK);
+		return res.status(200).json(post);
 	} catch (e) {
 		next(e);
 	}
@@ -107,7 +107,8 @@ exports.createVote = async (req, res, next) => {
 				{type: req.body.type},
 				{
 					where:{user_id: req.user.username, post_id: req.body.idPost},
-					returning: true
+					returning: true,
+					plain: true
 				}
 			);
 			return res.status(200).json(userPost);
