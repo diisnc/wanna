@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	});
 
-	User.associate = function(models) {
+	User.associate = function (models) {
 		User.belongsToMany(models.Post, {
 			through: 'SavedPost',
 			as: 'savedposts',
@@ -222,8 +222,6 @@ module.exports = (sequelize, DataTypes) => {
 	 * @returns {Promise<*>}
 	 */
 	User.getFollowings = async function getFollowings(username) {
-		followings = [];
-
 		result = await this.sequelize.query(
 			'SELECT "followed_id" FROM "FollowRelationships" where "follower_id" = :username',
 			{
@@ -231,10 +229,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
-		result.map(element => {
-			followings.push(element);
-		});
-		return followings;
+		return result;
 	};
 
 	/**
@@ -242,8 +237,6 @@ module.exports = (sequelize, DataTypes) => {
 	 * @returns {Promise<*>}
 	 */
 	User.getFollowers = async function getFollowers(username) {
-		followers = [];
-
 		result = await this.sequelize.query(
 			'SELECT "follower_id" FROM "FollowRelationships" where "followed_id" = :username',
 			{
@@ -251,10 +244,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
-		result.map(element => {
-			followers.push(element);
-		});
-		return followers;
+		return result;
 	};
 
 	User.oAuthLogin = async function oAuthLogin({

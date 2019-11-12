@@ -1,4 +1,4 @@
-const { followRelationship } = require('../models');
+const { FollowRelationship } = require('../models');
 const { User } = require('../models');
 const { Post } = require('../models');
 const httpStatus = require('http-status');
@@ -23,6 +23,7 @@ exports.profileInfo = async (req, res, next) => {
 exports.getFollowers = async (req, res, next) => {
 	try {
 		list = await User.getFollowers(req.user.username);
+		list = list.map(e => e.follower_id).join(',');
 		res.json(list);
 	} catch (e) {
 		next(e);
@@ -36,6 +37,7 @@ exports.getFollowers = async (req, res, next) => {
 exports.getFollowings = async (req, res, next) => {
 	try {
 		list = await User.getFollowings(req.user.username);
+		list = list.map(e => e.followed_id).join(',');
 		res.json(list);
 	} catch (e) {
 		next(e);
@@ -48,7 +50,7 @@ exports.getFollowings = async (req, res, next) => {
  */
 exports.follow = async (req, res, next) => {
 	try {
-		const followPost = await followRelationship.create({
+		const followPost = await FollowRelationship.create({
 			followed_id: req.params.userID,
 			follower_id: req.user.username,
 		});
@@ -64,7 +66,7 @@ exports.follow = async (req, res, next) => {
  * @public
  */
 exports.unfollow = async (req, res, next) => {
-	followPost = await followRelationship
+	followPost = await FollowRelationship
 		.destroy({
 			where: {
 				followed_id: req.params.userID,
