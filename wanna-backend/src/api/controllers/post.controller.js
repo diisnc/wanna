@@ -2,6 +2,7 @@ const { Post } = require('../models');
 const { Photo } = require('../models');
 const { UserPost } = require('../models');
 const { Comment } = require('../models');
+const { SavedPost } = require('../models');
 var fs = require('fs');
 const httpStatus = require('http-status');
 
@@ -84,7 +85,7 @@ exports.feed = async (req, res, next) => {
  * @public
  */
 
-exports.createUserPost = async (req, res, next) => {
+exports.createVote = async (req, res, next) => {
 	try {
 		const userPost = await UserPost.create({
 			likeTimeStamp: new Date(),
@@ -224,3 +225,55 @@ exports.getPostComments = async (req, res, next) => {
 		next(e);
 	}
 };
+
+
+/**
+ * 
+ *  Adds a post in saved posts list
+ */
+
+exports.savePost = async (req, res, next) => {
+	try {
+		
+		const result = await SavedPost.create({
+			user_id: req.user.username,
+			post_id: req.body.idPost,
+		});
+		return res.status(httpStatus.CREATED).json(result);
+		
+	} catch (e) {
+		next(e);
+	}
+};
+
+/**
+ * 
+ *  Removes a post from saved posts list
+ */
+
+ exports.unsavePost = async (req, res, next) => {
+	try{
+		await SavedPost.destroy(
+			{
+				where:{
+					post_id: req.body.idPost,
+					user_id: req.user.username,
+				}
+			}
+		);
+		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+	}catch(e){
+		next(e);
+	}
+ };
+
+ exports.getSavedPosts = async (req, res, next) => {
+	 try{
+		 
+	 }catch(e){
+		 next(e);
+	 }
+ };
+
+
+
