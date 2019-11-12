@@ -1,5 +1,6 @@
 const { followRelationship } = require('../models');
 const { User } = require('../models');
+const {Post } = require('../models');
 const httpStatus = require('http-status');
 
 /**
@@ -59,4 +60,22 @@ exports.unfollow = async (req, res, next) => {
 };
 
 // Lista de posts dele
+
+
 // Lista de posts guardados
+
+/**
+ * 
+ * Returns the list of saved posts *
+ * 
+ * needs rework if post images are required.
+ * 
+ */
+exports.getSavedPosts = async (req, res, next) => {
+	try{
+	   list = await Post.getSavedPosts(req.user.username);
+	   res.json(list);
+   }catch(e){
+		next(e);
+	}
+};

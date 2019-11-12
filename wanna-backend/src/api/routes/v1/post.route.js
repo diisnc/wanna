@@ -35,7 +35,6 @@ router
 
 router
 	.route('/savedpost')
-	.get(controller.getSavedPosts)
 	.post(validate(rules.savedPosts),controller.savePost)
 	.delete(validate(rules.savedPosts),controller.unsavePost);
 	

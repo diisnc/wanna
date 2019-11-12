@@ -174,6 +174,26 @@ module.exports = (sequelize, DataTypes) => {
 		return comments;
 	};
 
+	/**
+	 * 
+	 * Returns every post saved by a User
+	 */
+
+	 Post.getSavedPosts = async function getSavedPosts(idUser){
+
+		list = await this.sequelize.query(
+			'SELECT "SavedPosts"."user_id" AS User,"Posts"."idUser" AS PostOwner,"Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size"'+
+			'FROM "Posts"  JOIN "SavedPosts" ON "SavedPosts"."post_id" = "Posts"."id" WHERE "SavedPosts"."user_id" = (:idUser)'+
+			'ORDER BY "SavedPosts"."createdAt"',
+			{
+				replacements: {idUser: idUser},
+				type: this.sequelize.QueryTypes.SELECT,
+			}
+		);
+		return list;
+	};
+	
+
 
 	/** Object methods */
 	const objectMethods = {
