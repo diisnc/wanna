@@ -11,4 +11,8 @@ router
 	.route('/unfollow/:userID')
 	.post(validate(rules.follow), controller.unfollow);
 
+router
+	.route('/savedposts')
+	.get(controller.getSavedPosts);
+
 module.exports = router;

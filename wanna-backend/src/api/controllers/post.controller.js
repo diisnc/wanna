@@ -267,13 +267,5 @@ exports.savePost = async (req, res, next) => {
 	}
  };
 
- exports.getSavedPosts = async (req, res, next) => {
-	 try{
-		 
-	 }catch(e){
-		 next(e);
-	 }
- };
-
 
 

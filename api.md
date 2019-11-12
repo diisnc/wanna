@@ -27,19 +27,13 @@
 - **Método:** DELETE
 - **Rota:** v1/post/:idPost
 - **Estado:** &#9746;
+- ** é preciso testar se o CASCADE está a funcionar adequadamente
 
 ---
 
 - **Descrição:** Editar Artigo
 - **Método:** PATCH
 - **Rota:** v1/post/editPost
-- **Estado:** &#9746;
-
----
-
-- **Descrição:** Ver lista de artigo dos guardados
-- **Método:** GET
-- **Rota:** v1/post/savedpost
 - **Estado:** &#9746;
 
 ---
@@ -120,10 +114,10 @@
 
 ---
 
-- **Descrição:** Ver posts guardados
+- **Descrição:** Ver lista de artigos guardados
 - **Método:** GET
-- **Rota:** v1/profile/wishlist
-- **Estado:** &#9746;
+- **Rota:** v1/profile/savedposts
+- **Estado:** :heavy_check_mark:
 
 ---
 
