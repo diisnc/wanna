@@ -87,13 +87,32 @@ exports.feed = async (req, res, next) => {
 
 exports.createVote = async (req, res, next) => {
 	try {
-		const userPost = await UserPost.create({
-			likeTimeStamp: new Date(),
-			user_id: req.user.username,
-			post_id: req.body.idPost,
-			type: req.body.type,
+		var user = null;
+		user = await UserPost.findOne({
+			where:{
+				user_id: req.user.username,
+				post_id: req.body.idPost
+			}
 		});
-		return res.status(httpStatus.CREATED).json(userPost);
+		if(!user){
+			var userPost = await UserPost.create({
+				likeTimeStamp: new Date(),
+				user_id: req.user.username,
+				post_id: req.body.idPost,
+				type: req.body.type,
+			});
+			return res.status(httpStatus.CREATED).json(userPost);
+		}else{
+			var userPost = await UserPost.update(
+				{type: req.body.type},
+				{
+					where:{user_id: req.user.username, post_id: req.body.idPost},
+					returning: true
+				}
+			);
+			return res.status(200).json(userPost);
+		}
+		
 	} catch (e) {
 		next(e);
 	}

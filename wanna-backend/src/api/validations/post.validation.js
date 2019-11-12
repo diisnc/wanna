@@ -16,7 +16,7 @@ module.exports = {
 	//POST /v1/post/vote
 	createVote: [
 		body('idPost', 'Post id is required').exists(),
-		body('type', 'Type is required').exists(),
+		body('type', 'Type is required').exists().isInt().isIn(['0','1'])
 	],
 
 	//DELETE /v1/post/vote
