@@ -104,21 +104,19 @@ exports.createVote = async (req, res, next) => {
  * Removes a UserPost
  */
 
- exports.removeVote = async function removeVote (req, res, next){
-	try{
-		await UserPost.destroy(
-			{
-				where:{
-					post_id: req.body.idPost,
-					user_id: req.user.username,
-				}
-			}
-		);
+exports.removeVote = async function removeVote(req, res, next) {
+	try {
+		await UserPost.destroy({
+			where: {
+				post_id: req.body.idPost,
+				user_id: req.user.username,
+			},
+		});
 		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
-	}catch(e){
+	} catch (e) {
 		next(e);
 	}
- };
+};
 
 /**
  *
@@ -138,20 +136,17 @@ exports.createComment = async (req, res, next) => {
 	}
 };
 
-
 /**
  * Deletes a comment
  */
 
 exports.removeComment = async (req, res, next) => {
 	try {
-		await Comment.destroy(
-			{
-				where:{
-					id: req.body.idComment
-				}
-			}
-		);
+		await Comment.destroy({
+			where: {
+				id: req.body.idComment,
+			},
+		});
 		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
 	} catch (e) {
 		next(e);
@@ -159,14 +154,14 @@ exports.removeComment = async (req, res, next) => {
 };
 
 /*
-* Returns a post information
-*/
+ * Returns a post information
+ */
 
 exports.get = async (req, res, next) => {
-	try{
+	try {
 		list = await Post.getPostInfo(req.params.idPost);
 		res.json(list);
-	}catch(e){
+	} catch (e) {
 		next(e);
 	}
 };
@@ -180,15 +175,14 @@ exports.get = async (req, res, next) => {
 exports.remove = async (req, res, next) => {
 	try {
 		await UserPost.destroy({
-			where:{
-				post_id: req.params.idPost
-			}
-		})
-		await Post.destroy(
-			{
-				where:{
-					id: req.params.idPost
-				}
+			where: {
+				post_id: req.params.idPost,
+			},
+		});
+		await Post.destroy({
+			where: {
+				id: req.params.idPost,
+			},
 		});
 		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
 	} catch (e) {
@@ -200,72 +194,64 @@ exports.remove = async (req, res, next) => {
  * marks a post as unavailable
  */
 
- exports.markUnavailable = async (req, res, next) =>{
-		try{
-			await Post.update(
-				{ isAvailable: 'false' },
-				{ where: { id: req.params.idPost } }
-			);
-			res.status(httpStatus.NO_CONTENT).json({ result: 'updated' });
-		}catch(e){
-			next(e);
-		}
- };
-
- /**
-  *
-  *  Returns post comments
-  */
-
-exports.getPostComments = async (req, res, next) => {
-	try{
-		list = await Post.getComments(req.body.idPost);
-		res.json(list);
-	}catch(e){
-		next(e);
-	}
-};
-
-
-/**
- * 
- *  Adds a post in saved posts list
- */
-
-exports.savePost = async (req, res, next) => {
+exports.markUnavailable = async (req, res, next) => {
 	try {
-		
-		const result = await SavedPost.create({
-			user_id: req.user.username,
-			post_id: req.body.idPost,
-		});
-		return res.status(httpStatus.CREATED).json(result);
-		
+		await Post.update(
+			{ isAvailable: 'false' },
+			{ where: { id: req.params.idPost } },
+		);
+		res.status(httpStatus.NO_CONTENT).json({ result: 'updated' });
 	} catch (e) {
 		next(e);
 	}
 };
 
 /**
- * 
+ *
+ *  Returns post comments
+ */
+
+exports.getPostComments = async (req, res, next) => {
+	try {
+		list = await Post.getComments(req.body.idPost);
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};
+
+/**
+ *
+ *  Adds a post in saved posts list
+ */
+
+exports.savePost = async (req, res, next) => {
+	try {
+		const result = await SavedPost.create({
+			user_id: req.user.username,
+			post_id: req.body.idPost,
+		});
+		return res.status(httpStatus.CREATED).json(result);
+	} catch (e) {
+		next(e);
+	}
+};
+
+/**
+ *
  *  Removes a post from saved posts list
  */
 
- exports.unsavePost = async (req, res, next) => {
-	try{
-		await SavedPost.destroy(
-			{
-				where:{
-					post_id: req.body.idPost,
-					user_id: req.user.username,
-				}
-			}
-		);
+exports.unsavePost = async (req, res, next) => {
+	try {
+		await SavedPost.destroy({
+			where: {
+				post_id: req.body.idPost,
+				user_id: req.user.username,
+			},
+		});
 		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
-	}catch(e){
+	} catch (e) {
 		next(e);
 	}
- };
-
-
-
+};
