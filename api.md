@@ -124,14 +124,14 @@
 - **Descrição:** Pessoas que o seguem
 - **Método:** GET
 - **Rota:** v1/profile/followers
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
 - **Descrição:** Pessoas que segue
 - **Método:** GET
 - **Rota:** v1/profile/followings
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
