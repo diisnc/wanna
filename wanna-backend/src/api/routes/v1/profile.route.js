@@ -7,6 +7,8 @@ router.route('/').get(controller.profileInfo);
 
 router.route('/follow/:userID').post(validate(rules.follow), controller.follow);
 
+router.route('/savedposts').get(controller.getSavedPosts);
+
 router
 	.route('/unfollow/:userID')
 	.post(validate(rules.follow), controller.unfollow);
