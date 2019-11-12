@@ -13,7 +13,7 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.js --only API && pm2 logs",
     "dev": "yarn migrate && yarn docs && pm2 start ecosystem.config.js --only API --env develop",
-    "local": "pm2 start ecosystem.config.js --only API_LOCAL && pm2 logs",
+    "local": "pm2 kill && pm2 start ecosystem.config.js --only API_LOCAL --no-daemon && pm2 logs",
     "lint": "eslint . --ext .js --ignore-path .gitignore --ignore-pattern internals/scripts",
     "lint:fix": "pretty-quick --staged && yarn lint -- --fix",
     "lint:watch": "yarn lint -- --watch",

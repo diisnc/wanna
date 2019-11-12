@@ -1,6 +1,6 @@
 const { followRelationship } = require('../models');
 const { User } = require('../models');
-const {Post } = require('../models');
+const { Post } = require('../models');
 const httpStatus = require('http-status');
 
 /**
@@ -10,6 +10,32 @@ const httpStatus = require('http-status');
 exports.profileInfo = async (req, res, next) => {
 	try {
 		list = await User.getProfileInfo(req.user.username);
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};
+
+/**
+ * Returns Get followers list
+ * @public
+ */
+exports.getFollowers = async (req, res, next) => {
+	try {
+		list = await User.getFollowers(req.user.username);
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};
+
+/**
+ * Returns Get followings list
+ * @public
+ */
+exports.getFollowings = async (req, res, next) => {
+	try {
+		list = await User.getFollowings(req.user.username);
 		res.json(list);
 	} catch (e) {
 		next(e);
@@ -61,21 +87,20 @@ exports.unfollow = async (req, res, next) => {
 
 // Lista de posts dele
 
-
 // Lista de posts guardados
 
 /**
- * 
+ *
  * Returns the list of saved posts *
- * 
+ *
  * needs rework if post images are required.
- * 
+ *
  */
 exports.getSavedPosts = async (req, res, next) => {
-	try{
-	   list = await Post.getSavedPosts(req.user.username);
-	   res.json(list);
-   }catch(e){
+	try {
+		list = await Post.getSavedPosts(req.user.username);
+		res.json(list);
+	} catch (e) {
 		next(e);
 	}
 };
