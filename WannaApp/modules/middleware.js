@@ -12,13 +12,8 @@ export const saveAuthToken = store => next => action => {
 	return next(action);
 };
 
-let buffer = [];
-
 export const jwt = store => next => action => {
-	buffer.push(action);
-
-	if (action.type === 'INVALID_TOKEN') {
-		console.log('Passou pelo middleware token inválido');
+	if (action.type === 'EXPIRED_TOKEN' || action.type === 'INVALID_TOKEN') {
 		let theStore = store.getState();
 		if (theStore.auth && theStore.auth.authToken && theStore.auth.refreshToken) {
 			if (!theStore.auth.pendingRefreshingToken) {

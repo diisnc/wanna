@@ -111,6 +111,11 @@ export default function (state = initialState, action) {
 				...state,
 				tokenIsValid: false
 			};
+		case 'EXPIRED_TOKEN':
+			return {
+				...state,
+				tokenIsValid: false
+			};
 		case 'REFRESHING_TOKEN':
 			return {
 				...state,

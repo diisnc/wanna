@@ -58,11 +58,7 @@ export const ourFetchWithToken = async action => {
 	};
 
 	console.log(endpoint + ' ' + method);
-	//console.log(method);
 	console.log(headers.Authorization);
-	// console.log(body);
-	// console.log(querystring);
-	// console.log(headers);
 
 	let response = await fetch(`${config.url}${endpoint}${querystring}`, {
 		method,
@@ -82,12 +78,20 @@ export const ourFetchWithToken = async action => {
 		console.log('erro');
 		data = JSON.stringify(data);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
-		console.log('Error1 ' + error);
-		console.log('Error2 ' + data);
-		// store.dispatch(showError(error));
-		// console.log('Está a despachar o erro: ' + error.errors);
-		store.dispatch({ type: 'INVALID_TOKEN' });
-		// return data;
-		console.log('Error1 ' + error);
+
+		if (error.message === 'Token is expired') {
+			return store.dispatch({ type: 'EXPIRED_TOKEN' });
+		}
+
+		if (error.message === 'Invalid token') {
+			return store.dispatch({ type: 'INVALID_TOKEN' });
+		}
+
+		if (response == 'TypeError: Network request failed') {
+			return store.dispatch(connectionError('Network request failed'));
+		}
+
+		store.dispatch(showError(error));
+		return error;
 	}
 };
