@@ -8,17 +8,22 @@ import {
 	Platform,
 	ScrollView,
 	Image,
-	Switch
+	Switch,
+	FlatList,
+	ToastAndroid,
+	TouchableHighlight
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 class Combine extends Component {
 	state = {
-		wishlistData: [],
-		numPosts: 0,
-		selectedFilters: [],
-		switchValues: [false, false]
+		upperClothes: [],
+		numUpperClothes: 0,
+		selectedUpperClothe: null, 
+		lowerClothes: [],
+		numLowerClothes: 0,
+		selectedLowerClothe: null
 	};
 
 	//onValueChange of the switch this function will be called
@@ -76,8 +81,8 @@ class Combine extends Component {
 						alignItems: 'stretch'
 					}}>
 					{this.buildHeader()}
-					{/* this.buildWishlist() */}
 					{this.buildCombination()}
+					{this.checkout()}
 				</View>
 			</SafeAreaView>
 		);
@@ -116,17 +121,13 @@ class Combine extends Component {
 	}
 
 	// Builds list of filters
-	buildFilterList() {
+	buildCombination() {
 		return (
-			<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
+			<View style={{ flex: 8, backgroundColor: 'black', margin: 10 }}>
 				{/* Upper clothes selector */}
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-					this.buildUpperClothesSlider();
-				</View>
+				{this.buildUpperClothesSlider()}
 				{/* Lower clothes selector */}
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-					this.buildLowerClothesSlider();
-				</View>
+				{this.buildLowerClothesSlider()}
 			</View>
 		);
 	}
@@ -134,73 +135,184 @@ class Combine extends Component {
 	// Build Upper Clothes selection slider and zoom
 	buildUpperClothesSlider() {
 		return(
-			<ScrollView scrollEventThrottle={16}>
-				{/* um filtro */}
-				<View
-					key={'filter1'}
-					style={{
-						height: 80,
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'center',
-						backgroundColor: 'green'
-					}}>
-					<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
-						Cima1
-					</Text>
-				</View>
-				{/* um filtro */}
-				<View
-					key={'filter2'}
-					style={{
-						height: 100,
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'center',
-						backgroundColor: 'yellow'
-					}}>
-					<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
-						Cima2
-					</Text>
-				</View>
-			</ScrollView>
+			<View
+				style={{flex: 1, backgroundColor: "green", margin: 10}}
+			>
+				{/* upper selector */}
+				<FlatList
+					horizontal
+					data={this.state.upperClothes}
+					renderItem={({ index }) => (
+						this.buildUpperImages(index, this.state.selectedUpperClothe)
+					)}
+					keyExtractor={item => item.id.toString()}
+					onEndReached={this.onEndReachedUpper.bind(this)}
+				/>
+			</View>
 		);
 	}
 
-	//Build Lower Clothes selection slider and zoom
+	// Build Lower Clothes selection slider and zoom
 	buildLowerClothesSlider() {
-		return (
-			<ScrollView scrollEventThrottle={16}>
-				{/* um filtro */}
-				<View
-					key={'filter1'}
-					style={{
-						height: 80,
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'center',
-						backgroundColor: 'green'
-					}}>
-					<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
-						Baixo1
-					</Text>
-				</View>
-				{/* um filtro */}
-				<View
-					key={'filter2'}
-					style={{
-						height: 100,
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'center',
-						backgroundColor: 'yellow'
-					}}>
-					<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
-						Baixo2
-					</Text>
-				</View>
-			</ScrollView>
+		return(
+			<View
+				style={{flex: 1, backgroundColor: "green", margin: 10}}
+			>
+				{/* upper selector */}
+				<FlatList
+					horizontal
+					data={this.state.lowerClothes}
+					renderItem={({ index }) => (
+						this.buildLowerImages(index, this.state.selectedLowerClothe)
+					)}
+					keyExtractor={item => item.id.toString()}
+					onEndReached={this.onEndReachedLower.bind(this)}
+				/>
+			</View>
 		);
+	}
+
+	// Build Checkout
+	checkout() {
+
+		var lowerIndex = this.state.selectedLowerClothe;
+		if (lowerIndex != null) {
+			var lowerPrice = parseInt(this.state.lowerClothes[lowerIndex].price);
+		}
+		else {
+			var lowerPrice = 0;
+		}
+		
+		
+		var upperIndex = this.state.selectedUpperClothe;
+		if (upperIndex != null) {
+			var upperPrice = parseInt(this.state.upperClothes[upperIndex].price);
+		}
+		else {
+			var upperPrice = 0;
+		}
+
+		var sum = lowerPrice + upperPrice;
+		
+
+		return(
+			<View
+				style={{flex: 1, backgroundColor: "green", margin: 10}}
+			>
+				{/* upper selector */}
+				<Text>{sum} €</Text>
+			</View>
+		);
+	}
+
+	// Build images on upper scroll view
+	buildUpperImages (post, selectedUpper) {
+		id = 'id= ' + JSON.stringify(this.state.upperClothes[post].id);
+		objJsonB64 = new Buffer(this.state.upperClothes[post].photoData1).toString('base64');
+		
+		return (
+			<TouchableHighlight onPress={() => this.onPressUpperClothe(post)}>
+				<View
+					key={id}
+					style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
+				>
+					<Image
+						source={{
+							uri:
+								'data:' +
+								this.state.upperClothes[post].photoType1 +
+								';base64,' +
+								objJsonB64 +
+								''
+						}}
+						style={{
+							width: 'auto',
+							height: '90%',
+							aspectRatio: 1,
+							overflow: 'hidden'
+						}}
+					/>
+					{selectedUpper == post ? (
+						<Text style={{flex: 1}}>Selecionada</Text>
+					) : null}
+				</View>
+			</TouchableHighlight>
+		);
+	}
+
+	// Build images on upper scroll view
+	buildLowerImages (post, selectedLower) {
+		id = 'id= ' + JSON.stringify(this.state.lowerClothes[post].id);
+		objJsonB64 = new Buffer(this.state.lowerClothes[post].photoData1).toString('base64');
+		
+		return (
+			<TouchableHighlight onPress={() => this.onPressLowerClothe(post)}>
+				<View
+					key={id}
+					style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
+				>
+					<Image
+						source={{
+							uri:
+								'data:' +
+								this.state.lowerClothes[post].photoType1 +
+								';base64,' +
+								objJsonB64 +
+								''
+						}}
+						style={{
+							width: 'auto',
+							height: '90%',
+							aspectRatio: 1,
+							overflow: 'hidden'
+						}}
+					/>
+					{selectedLower == post ? (
+						<Text>Selecionada</Text>
+					) : null}
+				</View>
+			</TouchableHighlight>
+		);
+	}
+
+	// Save selected upper clothe
+	onPressUpperClothe(index) {		
+
+		// if no clothes have been selected yet
+		if(this.state.selectedUpperClothe == null) {
+			this.setState({ selectedUpperClothe: index })
+			ToastAndroid.show('Upper clothe added to cart', ToastAndroid.SHORT);
+		}
+		// if the same clothe is selected, we remove the selection
+		else if (this.state.selectedUpperClothe == index) {
+			this.setState({ selectedUpperClothe: null })
+			ToastAndroid.show('Upper clothe removed from cart', ToastAndroid.SHORT);
+		}
+		// if a different clothe is chosen, replace the previous
+		else {
+			this.setState({ selectedUpperClothe: index })
+			ToastAndroid.show('Upper clothe replaced on cart', ToastAndroid.SHORT);
+		}
+	}
+
+	// Save selected upper clothe
+	onPressLowerClothe(index) {		
+
+		// if no clothes have been selected yet
+		if(this.state.selectedLowerClothe == null) {
+			this.setState({ selectedLowerClothe: index })
+			ToastAndroid.show('Lower clothe added to cart', ToastAndroid.SHORT);
+		}
+		// if the same clothe is selected, we remove the selection
+		else if (this.state.selectedLowerClothe == index) {
+			this.setState({ selectedLowerClothe: null })
+			ToastAndroid.show('Lower clothe removed from cart', ToastAndroid.SHORT);
+		}
+		// if a different clothe is chosen, replace the previous
+		else {
+			this.setState({ selectedLowerClothe: index })
+			ToastAndroid.show('Lower clothe replaced on cart', ToastAndroid.SHORT);
+		}
 	}
 
 	// Get Data to Build Feed and Transform it to Json Object
@@ -218,9 +330,24 @@ class Combine extends Component {
         */
 
 		const newState = require('./json/responseFeed');
-		this.setState({ wishlistData: newState, numPosts: newState.length });
+		this.setState({
+			upperClothes: newState, lowerClothes: newState,
+			numUpperClothes: newState.length, numLowerClothes: newState.length
+		});
 
 		return;
+	}
+
+	// Get extra content to Upper Clothes
+	async onEndReachedUpper() {
+		// inserir métodos de fetch assincronos
+		// adicionar objetos ao estado upper clothes
+	}
+
+	// Get extra content to Lower Clothes
+	async onEndReachedLower() {
+		// inserir métodos de fetch assincronos
+		// adicionar objetos ao estado lower clothes
 	}
 }
 export default Combine;
