@@ -2,7 +2,7 @@ import { handleTokenErrors } from './errors/error.service';
 import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 
-const config = { url: 'http://192.168.43.239:8000' };
+const config = { url: 'http://192.168.43.178:8000' };
 
 var currentAuthToken;
 
@@ -49,7 +49,7 @@ export const ourFetchAuth = async action => {
 		'Content-Type': 'application/json'
 	};
 
-	response = auxFetch(action.method, action.endpoint, null, action.body, headers);
+	response = await auxFetch(action.method, action.endpoint, null, action.body, headers);
 	if (response == null) {
 		store.dispatch(connectionError('Network request failed'));
 		return;
@@ -78,7 +78,7 @@ export const ourFetchWithToken = async action => {
 	};
 
 	response = await auxFetch(action.method, action.endpoint, querystring, action.body, headers);
-	let data = response.json();
+	let data = await response.json();
 
 	if (response == null) {
 		store.dispatch(connectionError('Network request failed'));
@@ -89,18 +89,17 @@ export const ourFetchWithToken = async action => {
 		console.log('Tamanho do que retornou do backend: ' + data.length);
 		return data;
 	} else {
-		console.log('erro');
-		data = JSON.stringify(data);
-		console.log(data);
-		let error = data.replace(/[\[\]"\{\}]+/g, '');
-
-		if (data.message === 'Token is expired') {
+		if (data == 'Token is expired') {
 			return store.dispatch({ type: 'EXPIRED_TOKEN' });
 		}
 
-		if (data.message === 'Invalid token') {
+		if (data == 'Invalid token') {
 			return store.dispatch({ type: 'INVALID_TOKEN' });
 		}
+
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
+
 		store.dispatch(showError(error));
 		return error;
 	}

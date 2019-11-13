@@ -209,7 +209,7 @@ class Inspire extends Component {
         printPrice1 = "price= " + JSON.stringify(this.state.feedData[post].price);
         printPhotoType11 = "photoType1= " + JSON.stringify(this.state.feedData[post].photoType1);
         */
-		objJsonB641 = new Buffer(this.state.feedData[post].photoData1).toString('base64');
+		objJsonB641 = new Buffer(this.state.feedData[post].photoData1);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(this.state.feedData[post + 1].id);
 		/*
@@ -219,7 +219,7 @@ class Inspire extends Component {
         printPrice2 = "price= " + JSON.stringify(this.state.feedData[post+1].price);
         printPhotoType12 = "photoType1= " + JSON.stringify(this.state.feedData[post+1].photoType1);
         */
-		objJsonB642 = new Buffer(this.state.feedData[post + 1].photoData1).toString('base64');
+		objJsonB642 = new Buffer(this.state.feedData[post + 1].photoData1);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(this.state.feedData[post + 2].id);
 		/*
@@ -229,7 +229,7 @@ class Inspire extends Component {
         printPrice3 = "price= " + JSON.stringify(this.state.feedData[post+2].price);
         printPhotoType13 = "photoType1= " + JSON.stringify(this.state.feedData[post+2].photoType1);
         */
-		objJsonB643 = new Buffer(this.state.feedData[post + 2].photoData1).toString('base64');
+		objJsonB643 = new Buffer(this.state.feedData[post + 2].photoData1);
 
 		// build javascript
 		items.push(
@@ -491,7 +491,7 @@ class Inspire extends Component {
         printPrice1 = "price= " + JSON.stringify(this.state.feedData[post].price);
         printPhotoType11 = "photoType1= " + JSON.stringify(this.state.feedData[post].photoType1);
         */
-		objJsonB641 = new Buffer(this.state.feedData[post].photoData1).toString('base64');
+		objJsonB641 = new Buffer(this.state.feedData[post].photoData1);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(this.state.feedData[post + 1].id);
 		/*
@@ -501,7 +501,7 @@ class Inspire extends Component {
         printPrice2 = "price= " + JSON.stringify(this.state.feedData[post+1].price);
         printPhotoType12 = "photoType1= " + JSON.stringify(this.state.feedData[post+1].photoType1);
         */
-		objJsonB642 = new Buffer(this.state.feedData[post + 1].photoData1).toString('base64');
+		objJsonB642 = new Buffer(this.state.feedData[post + 1].photoData1);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(this.state.feedData[post + 2].id);
 		/*
@@ -511,7 +511,7 @@ class Inspire extends Component {
         printPrice3 = "price= " + JSON.stringify(this.state.feedData[post+2].price);
         printPhotoType13 = "photoType1= " + JSON.stringify(this.state.feedData[post+2].photoType1);
         */
-		objJsonB643 = new Buffer(this.state.feedData[post + 2].photoData1).toString('base64');
+		objJsonB643 = new Buffer(this.state.feedData[post + 2].photoData1);
 
 		// build javascript
 		items.push(

@@ -24,10 +24,10 @@ const formValidation = (err, req, res, next) => {
  * Catch invalid token error
  */
 const invalidToken = (err, req, res, next) => {
-	if (err.name !== 'UnauthorizedError') return next(err);
-	const message =
-		err.message === 'jwt expired' ? 'Token has been expired' : 'Invalid token';
-	return res.status(httpStatus.UNAUTHORIZED).json({ message });
+	if (err.message == 'Token is expired' || err.message == 'Invalid token') {
+		return res.status(httpStatus.UNAUTHORIZED).json(err.message);
+	}
+	return next(err);
 };
 
 /**

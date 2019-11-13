@@ -442,11 +442,16 @@ class Add extends Component {
 		let pickerResult = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
 			aspect: [16, 9],
-			base64: true,
-			quality: 0.1
+			base64: true
 		});
 
-		this.handleImagePicked(pickerResult);
+		const manipResult = await ImageManipulator.manipulateAsync(
+			pickerResult.uri,
+			[{ resize: { width: 300, height: 300 } }],
+			{ format: 'jpeg', base64: true }
+		);
+
+		this.handleImagePicked(manipResult.base64);
 	};
 
 	deleteImage(index) {

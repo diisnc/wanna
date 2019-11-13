@@ -37,7 +37,7 @@ exports.createFakePhotos = async (db, sequelize, nr) => {
 		for (var j = 0; j < nrImages; j++) {
 			await doRequest().then(function(value) {
 				const photo = {
-					photoData: value,
+					photoData: new Buffer(value).toString('base64'),
 					photoType: 'image/jpeg',
 					idPost: i + 1,
 				};
