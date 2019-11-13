@@ -17,6 +17,10 @@ export default {
     padding-top: 0px !important;
   }
 
+  .md-theme-default :not(input):not(textarea)::selection {
+    background-color: rgba(100,49,252,1) !important;
+  }
+
   html {
     background-color: #FFF !important;
     min-height: 100%;
