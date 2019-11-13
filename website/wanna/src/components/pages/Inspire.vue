@@ -29,8 +29,26 @@
               </div>
               
               <div class="card-img-caixa">
-                <img class="card-img card-img-blur" :src="product.img">
-                <img class="card-img card-img-front" :src="product.img" @dblclick="giveliketouch()">
+
+                <img v-if="product.imgs.length==1" class="card-img card-img-blur" :src="product.imgs[0]">
+                <img v-if="product.imgs.length==1" class="card-img card-img-front" :src="product.imgs[0]" @dblclick="giveliketouch()">
+
+                
+                <b-carousel v-if="product.imgs.length>1" id="carousel1"
+                  style="text-shadow: 1px 1px 2px #333;"
+                  controls
+                  indicators
+                  background="#ababab"
+                  :interval="40000"
+                  v-model="slide"
+                  @sliding-start="onSlideStart"
+                  @sliding-end="onSlideEnd"
+      >
+
+                  <b-carousel-slide v-for="image in product.imgs" :img-src="image">
+                  </b-carousel-slide>
+
+                </b-carousel>
               </div>
               <div class="reaction-area">
                 <div class="reaction-left-area">
@@ -64,7 +82,7 @@
               <b-button class="search-bar btn-mini" @click="hidebanner()"><i class="fas fa-times"></i></b-button>
               <div style="padding:10px">
                 <b-carousel
-                  id="carousel-1"
+                  id="carousel-2"
                   controls
                   :interval="20000"
                   v-model="slide"
@@ -111,7 +129,9 @@ export default {
           user_img: 'https://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg',
           name: 'Botas fixes',
           description: "Estas botas são mesmo fixes. Acho que as devias comprar ;)",
-          img: "https://onpointfresh.com/wp-content/uploads/2016/11/street-style-men-boots-1.jpg",
+          imgs: [
+            "https://onpointfresh.com/wp-content/uploads/2016/11/street-style-men-boots-1.jpg"
+          ],
           likes: 123
         },
         {
@@ -121,7 +141,10 @@ export default {
           user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Lacy shirt',
           description: "Esta camisa vintage vai assentar que nem uma luva no teu armário.",
-          img: "https://i.imgur.com/hs5b0fc.png",
+          imgs: [
+            "https://i.imgur.com/hs5b0fc.png",
+            "https://i.imgur.com/uSbOYV8.png"
+          ],
           likes: 2321
         },
         {
@@ -131,7 +154,9 @@ export default {
           user_img: 'https://i.imgur.com/B7aj5H7.png',
           name: 'Botins festivos',
           description: "Preparada para a época de festivais? No teu outfit não podem faltar estes botins.",
-          img: "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
+          imgs: [
+            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg"
+          ],
           likes: 1489
         },
         {
@@ -141,7 +166,9 @@ export default {
           user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Calças desporto',
           description: "Estas calças são mesmo fixes e confortáveis. As melhores do mercado.",
-          img: "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg",
+          imgs: [
+            "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg"
+          ],
           likes: 431
         }
       ],
@@ -231,6 +258,28 @@ export default {
 </script>
 
 <style>
+
+  .carousel-indicators li {
+    width: 5px !important;
+    height: 5px !important;
+    border-radius: 5px !important;
+
+  }
+  .carousel#carousel1 {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.25);
+
+  }
+  .carousel-caption {
+    left:0px !important;
+    right:0px !important;
+    z-index: 0 !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    bottom: 0px !important;
+  }
+
   .post-list{
     text-align: center !important;
   }
@@ -246,7 +295,7 @@ export default {
   }
   .card-options-area{
     text-align: right;
-    width:17% !important;
+    width:auto !important;
     margin: 5px 10px 15px 0px;
     display: inline-block;
   }
@@ -320,11 +369,11 @@ export default {
   
   .card-img-blur {
     position: relative;
-    top:10px;
+    top:5px;
     left:0;
     border-radius: 20px !important;
     filter: blur(13px);
-    opacity: 0.7;
+    opacity: 0.6;
   }
 
   .card-img-front {
