@@ -1,8 +1,8 @@
 import { handleTokenErrors } from './errors/error.service';
-import { showError } from './errors/error.reducer';
+import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 
-const config = { url: 'http://192.168.1.8:8000' };
+const config = { url: 'http://192.168.43.239:8000' };
 
 var currentAuthToken;
 
@@ -10,27 +10,51 @@ export function setToken(token) {
 	this.currentAuthToken = token;
 }
 
+async function auxFetch(method, endpoint, querystring, bodyA, headers) {
+	let body;
+	if (bodyA != null) {
+		body = JSON.stringify(bodyA);
+	}
+
+	console.log(endpoint + ' ' + method);
+	console.log(headers.Authorization);
+
+	let string;
+	if (querystring == null) {
+		string = `${config.url}${endpoint}`;
+	} else string = `${config.url}${endpoint}${querystring}`;
+
+	let response;
+	try {
+		response = await fetch(string, {
+			method,
+			body,
+			headers,
+			credentials: 'same-origin'
+		}).catch(err => {
+			if (err == 'TypeError: Network request failed') {
+				throw new Error();
+			}
+		});
+	} catch (e) {
+		console.log('ERRO NA LIGAÇÃO.');
+		return null;
+	}
+
+	return response;
+}
+
 export const ourFetchAuth = async action => {
-	method = action.method;
-	endpoint = action.endpoint;
-
-	let body = JSON.stringify(action.body);
-
 	const headers = {
 		'Content-Type': 'application/json'
 	};
 
-	console.log(endpoint);
-	console.log(method);
-	console.log(body);
-	console.log(headers);
-
-	return await fetch(`${config.url}${endpoint}`, {
-		method,
-		body,
-		headers,
-		credentials: 'same-origin'
-	});
+	response = auxFetch(action.method, action.endpoint, null, action.body, headers);
+	if (response == null) {
+		store.dispatch(connectionError('Network request failed'));
+		return;
+	}
+	return response;
 };
 
 function getQueryString(params) {
@@ -42,10 +66,6 @@ function getQueryString(params) {
 
 export const ourFetchWithToken = async action => {
 	console.log('fetching');
-	method = action.method;
-	endpoint = action.endpoint;
-
-	let body = JSON.stringify(action.body);
 
 	let querystring = '';
 	if (action.query) {
@@ -57,40 +77,30 @@ export const ourFetchWithToken = async action => {
 		Authorization: `Bearer ${this.currentAuthToken}`
 	};
 
-	console.log(endpoint + ' ' + method);
-	console.log(headers.Authorization);
+	response = await auxFetch(action.method, action.endpoint, querystring, action.body, headers);
+	let data = response.json();
 
-	let response = await fetch(`${config.url}${endpoint}${querystring}`, {
-		method,
-		body,
-		headers,
-		credentials: 'same-origin'
-	});
+	if (response == null) {
+		store.dispatch(connectionError('Network request failed'));
+		return;
+	}
 
-	// console.log(response);
-	let data = await response.json();
-	// console.log(data);
-	// console.log('data que retorna do feed: ' + data);
 	if (response.status == 200 || response.status == 304) {
 		console.log('Tamanho do que retornou do backend: ' + data.length);
 		return data;
 	} else {
 		console.log('erro');
 		data = JSON.stringify(data);
+		console.log(data);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
 
-		if (error.message === 'Token is expired') {
+		if (data.message === 'Token is expired') {
 			return store.dispatch({ type: 'EXPIRED_TOKEN' });
 		}
 
-		if (error.message === 'Invalid token') {
+		if (data.message === 'Invalid token') {
 			return store.dispatch({ type: 'INVALID_TOKEN' });
 		}
-
-		if (response == 'TypeError: Network request failed') {
-			return store.dispatch(connectionError('Network request failed'));
-		}
-
 		store.dispatch(showError(error));
 		return error;
 	}

@@ -14,7 +14,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
-import { AppLoading } from 'expo';
 
 const { height, width } = Dimensions.get('window');
 
