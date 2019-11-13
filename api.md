@@ -27,6 +27,7 @@
 - **Método:** DELETE
 - **Rota:** v1/post/:idPost
 - **Estado:** &#9746;
+- ** é preciso testar se o CASCADE está a funcionar adequadamente
 
 ---
 
@@ -39,15 +40,15 @@
 
 - **Descrição:** Guardar artigo
 - **Método:** POST
-- **Rota:** v1/post/save/:idPost
-- **Estado:** &#9746;
+- **Rota:** v1/post/savedpost
+- **Estado:** :heavy_check_mark:
 
 ---
 
 - **Descrição:** Remover artigo dos guardados
-- **Método:** POST
-- **Rota:** v1/post/unsave/:idPost
-- **Estado:** &#9746;
+- **Método:** DELETE
+- **Rota:** v1/post/savedpost
+- **Estado:** :heavy_check_mark:
 
 ---
 
@@ -113,24 +114,24 @@
 
 ---
 
-- **Descrição:** Ver posts guardados
+- **Descrição:** Ver lista de artigos guardados
 - **Método:** GET
-- **Rota:** v1/profile/wishlist
-- **Estado:** &#9746;
+- **Rota:** v1/profile/savedposts
+- **Estado:** :heavy_check_mark:
 
 ---
 
 - **Descrição:** Pessoas que o seguem
 - **Método:** GET
 - **Rota:** v1/profile/followers
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
 - **Descrição:** Pessoas que segue
 - **Método:** GET
 - **Rota:** v1/profile/followings
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 

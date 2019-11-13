@@ -1,31 +1,5 @@
 <template>
   <div id="app">
-
-    <!-- EDITAR NO FIM -->
-    <div v-if="isMobile()">
-      <mobile>
-        <div class="mobile-top-bar">
-          <h1 class="phone-title">inspire</h1>
-        </div>
-        <slot/>
-
-        <div class="phone-bar">
-          <md-bottom-bar md-type="fixed">
-            <div style="margin: 0 auto; width: 100%;">
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-feed"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-wishlist"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-add"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-outfit"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-profile"></i></md-bottom-bar-item>
-            </div>
-          </md-bottom-bar>
-        </div>
-
-      </mobile>
-    </div>
-    
-    
-    <div v-else>
       <desktop>
         <div class="desktop-bar">
           <div class="left-side-bar">
@@ -36,7 +10,7 @@
           <div class="right-side-bar">
             
             <button v-if="this.$router.currentRoute.name=='Manageposts'" class="icon icon-home icon-active"/>
-            <button v-else @click="postsClick" v-else class="icon icon-home"/>
+            <button v-else @click="postsClick" class="icon icon-home"/>
 
             <button v-if="this.$router.currentRoute.name=='Manageusers'" class="icon icon-profile icon-active"/>
             <button v-else @click="usersClick" class="icon icon-profile"/>
@@ -46,7 +20,6 @@
         <slot/>
       </desktop>
     </div>
-  </div>
 </template>
 
 <script>
@@ -164,45 +137,14 @@
   }
 
   .icon-home {
-    mask: url(https://svgur.com/i/FZX.svg);
-    width:22px;
-    height: 24.5px;
+    mask: url(https://image.flaticon.com/icons/svg/833/833281.svg);
+    width:30px;
+    height: 28px;
   }
   .icon-profile {
-    mask: url(https://svgur.com/i/FYW.svg);
-    width:25px;
-    height: 24px;
-  }
-  .icon-notifs {
-    mask: url(https://svgur.com/i/FYn.svg);
-    width:21px;
-    height: 25.5px;
-  }
-
-  .icon-mobile-feed {
-    mask: url(https://svgur.com/i/FdS.svg);
-    width:18px;
-    height: 20.5px;
-  }
-  .icon-mobile-wishlist {
-    mask: url(https://svgur.com/i/FcM.svg);
-    width:23px;
-    height: 20.5px;
-  }
-  .icon-mobile-add {
-    mask: url(https://i.imgur.com/dTGhAxa.png);
-    width:40px;
-    height: 40px;
-  }
-  .icon-mobile-outfit {
-    mask: url(https://svgur.com/i/FdG.svg);
-    width:27px;
-    height: 20.5px;
-  }
-  .icon-mobile-profile {
-    mask: url(https://svgur.com/i/FcB.svg);
-    width:21px;
-    height: 20px;
+    mask: url(https://image.flaticon.com/icons/svg/711/711168.svg);
+    width:30px;
+    height: 28px;
   }
   
   .icon {
@@ -219,19 +161,7 @@
   .icon:active,
   .icon-active {
     background-color: #4A53FC;
-  }
-
-  .search-bar{
-    width:100%;
-    margin:auto;
-    border-radius:40px;
-    background-color: #EEE;
-    border: 0px;
-    color: #000;
-    transition: 0.1s !important;
-
-  }
-
+  } 
  
 </style>
 

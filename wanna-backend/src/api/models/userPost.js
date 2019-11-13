@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		user_id: {
-			type: DataTypes.INTEGER(),
+			type: DataTypes.STRING,
 			primaryKey: true,
-			references: { model: 'User', key: 'id' },
+			references: { model: 'User', key: 'username' },
 		},
 		post_id: {
 			type: DataTypes.INTEGER(),

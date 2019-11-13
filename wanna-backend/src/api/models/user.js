@@ -99,11 +99,20 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	});
 
-	User.associate = function(models) {
+	User.associate = function (models) {
+		User.belongsToMany(models.Post, {
+			through: 'SavedPost',
+			as: 'savedposts',
+			foreignKey: {
+				name: 'user_id',
+			},
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
 		User.belongsToMany(models.Post, {
 			through: 'UserPost',
 			as: 'posts',
-			foreignKey:{
+			foreignKey: {
 				name: 'user_id',
 			},
 			onDelete: 'SET NULL',
@@ -197,11 +206,41 @@ module.exports = (sequelize, DataTypes) => {
 	 * Return user profiles
 	 * @returns {Promise<*>}
 	 */
-	 User.getUsernames = async function getUsernames(usernameString) {
+	User.getUsernames = async function getUsernames(usernameString) {
 		result = await this.sequelize.query(
 			'SELECT "username" FROM "Users" WHERE "Users"."username" LIKE :usernameLike',
 			{
-				replacements: { usernameLike: "%"+usernameString+"%" },
+				replacements: { usernameLike: "%" + usernameString + "%" },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	};
+
+	/**
+	 * Return list of followings
+	 * @returns {Promise<*>}
+	 */
+	User.getFollowings = async function getFollowings(username) {
+		result = await this.sequelize.query(
+			'SELECT "followed_id" FROM "FollowRelationships" where "follower_id" = :username',
+			{
+				replacements: { username: username },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	};
+
+	/**
+	 * Return list of followers
+	 * @returns {Promise<*>}
+	 */
+	User.getFollowers = async function getFollowers(username) {
+		result = await this.sequelize.query(
+			'SELECT "follower_id" FROM "FollowRelationships" where "followed_id" = :username',
+			{
+				replacements: { username: username },
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);

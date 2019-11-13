@@ -36,16 +36,24 @@ function hasPermissions(userRole, allowedRole) {
 module.exports = (role = 'guest') => (req, res, next) => {
 	// Se a chamada à função for com 0 argumentos, o role = guest em vez de null
 	passport.authenticate('jwt', { session: false }, (error, user) => {
+		// ensure token is present
+		if (!req.headers.authorization) {
+			return next(new ApiError(noPermissions));
+		}
 		let token = req.headers.authorization.split(' ')[1];
 		// Use to ensure token is valid and debug non-working bearer
 		try {
 			jwt.verify(token, process.env.SECRET_STRING);
 		} catch (e) {
-			return next(new ApiError(expiredToken));
+			if (e.message === 'jwt must be provided') {
+				return next(new ApiError(invalidToken));
+			}
+			if (e.message === 'jwt expired') {
+				return next(new ApiError(expiredToken));
+			}
 		}
-
 		if (error) {
-			return next(new ApiError(invalidToken));
+			return next(new ApiError(noPermissions));
 		}
 		if (role !== 'guest') {
 			if (!user.isActive) {
