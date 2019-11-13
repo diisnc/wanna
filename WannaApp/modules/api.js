@@ -2,7 +2,7 @@ import { handleTokenErrors } from './errors/error.service';
 import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 
-const config = { url: 'http://192.168.43.178:8000' };
+const config = { url: 'http://192.168.1.12:8000' };
 
 var currentAuthToken;
 
@@ -17,7 +17,7 @@ async function auxFetch(method, endpoint, querystring, bodyA, headers) {
 	}
 
 	console.log(endpoint + ' ' + method);
-	console.log(headers.Authorization);
+	// console.log(headers.Authorization);
 
 	let string;
 	if (querystring == null) {

@@ -31,7 +31,7 @@ class Inspire extends Component {
 
 		// get data from servers and save in state
 		this.getFeedDataFromApiAsync();
-		console.log('passou pelo componentdidmount');
+		// console.log('passou pelo componentdidmount');
 
 		/*
         var localFeedData = require('./json/responseFeed');
@@ -48,7 +48,7 @@ class Inspire extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		console.log('mudou');
+		// console.log('mudou');
 		const hasAChanged = this.props.loggedIn !== prevProps.loggedIn;
 		const hasBChanged = this.props.tokenValid !== prevProps.tokenValid;
 		if (
@@ -56,7 +56,7 @@ class Inspire extends Component {
 			this.props.tokenValid == true &&
 			this.props.loggedIn == true
 		) {
-			console.log('vai pintar');
+			// console.log('vai pintar');
 			this.getFeedDataFromApiAsync();
 		}
 	}
