@@ -33,8 +33,8 @@
 
 - **Descrição:** Editar Artigo
 - **Método:** PATCH
-- **Rota:** v1/post/editPost
-- **Estado:** &#9746;
+- **Rota:** v1/post/:idPost
+- **Estado:** :heavy_check_mark:
 
 ---
 

@@ -43,11 +43,8 @@ router
 	.route('/:idPost')
 	.get(controller.get)
 	.delete(controller.remove)
-	.post(controller.markUnavailable);
+	.post(controller.markUnavailable)
+	.patch(validate(rules.updatePost), controller.update);
 
-/*
-	.patch(validate(rules.updatePost), controller.update)
-
-*/
 
 module.exports = router;

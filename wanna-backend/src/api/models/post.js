@@ -122,8 +122,9 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 
 	Post.getPostInfo = async function getPostInfo(idPost){
+		
 		userinfo = await this.sequelize.query(
-			'SELECT "Users"."avatarType", "Users"."firstName", "Users"."lastName", "Users"."avatarData"'+
+			'SELECT "Users"."avatarType", "Users"."firstName", "Users"."lastName", "Users"."avatarData" '+
 		    'FROM "Users" JOIN "Posts" ON "Users"."username" = "Posts"."idUser"'+
 			'WHERE "Posts"."id" = (:idPost)',
 			{
@@ -132,8 +133,8 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		);
 		postinfo = await this.sequelize.query(
-			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES'+
-			'FROM "Posts"  JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost)'+
+			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES '+
+			'FROM "Posts"  JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost) '+
 			'GROUP BY "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type"',
 			{
 				replacements: {idPost: idPost},
@@ -148,8 +149,8 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		);
 
-
 		return userinfo.concat(postinfo.concat(photos));
+		
 	};
 
 	/*

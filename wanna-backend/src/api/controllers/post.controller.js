@@ -210,6 +210,28 @@ exports.remove = async (req, res, next) => {
 	}
 };
 
+/**
+ * 
+ * Edits a post with the given values
+ */
+
+ exports.update = async (req,res,next) => {
+	try{
+		const entries = Object.entries(req.body)
+		const data = {};
+		for(i=0; i<entries.length; i++){
+			if(entries[i][1] != 'null'){
+				data[entries[i][0]] = entries[i][1]; 
+			}
+		}
+		await Post.update(data,
+			{where:{id: req.params.idPost}},
+		);
+		res.status(httpStatus.OK).json({ result: 'update' });
+	}catch(e){
+		next(e);
+	}
+ };
 /***
  * marks a post as unavailable
  */

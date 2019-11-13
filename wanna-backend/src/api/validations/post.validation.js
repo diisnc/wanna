@@ -13,6 +13,15 @@ module.exports = {
 		body('imageData', 'Image is required').exists(),
 	],
 
+	//PATCH /v1/post/:idPost
+	updatePost: [
+		body('description', 'Description is invalid').exists(),
+		body('price', 'Price is required').exists(),
+		body('category', 'Category is required').exists(),
+		body('color', 'Color is required').exists(),
+		body('size', 'Size is required').exists(),
+	],
+
 	//POST /v1/post/vote
 	createVote: [
 		body('idPost', 'Post id is required').exists(),
