@@ -202,11 +202,10 @@
 - **Método:** POST
 - **Rota:** v1/filter/searchByFilter
 - **Estado:** :heavy_check_mark:
--- falta receber o ID
 
 ---
 
-- **Descrição:** Obbter um determinado filtro
+- **Descrição:** Obter um determinado filtro
 - **Método:** GET
 - **Rota:** v1/filter/:idFilter
 - **Estado:** :heavy_check_mark:
