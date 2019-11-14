@@ -194,7 +194,37 @@ module.exports = (sequelize, DataTypes) => {
 		return list;
 	};
 	
-
+	Post.getFilteredPosts = async function getFilteredPosts(body){
+		var sql = "";
+		for (var i = 0; i < body.length; i++) {
+			sql=sql.concat(' SELECT * FROM "Posts" WHERE ');
+			if(body.categories[i]){
+				sql=sql.concat(' "category" = \''+body.categories[i]+'\' AND ');
+			}
+			if(body.colors[i]){
+				sql=sql.concat(' "color" = \''+body.colors[i]+'\' AND ');
+			}
+			if(body.sizes[i]){
+				sql=sql.concat(' "size" = \''+body.sizes[i]+'\' AND ');
+			}
+			if(body.pricesMin[i]){
+				sql=sql.concat(' "price" >= '+body.pricesMin[i]+' AND ');
+			}
+			if(body.pricesMax[i]){
+				sql=sql.concat(' "price" <= '+body.pricesMax[i]+' AND ');
+			}
+			sql=sql.concat(' 1 = 1 ');
+			if(i < body.length -1){
+				sql=sql.concat(' UNION ');
+			}
+		}
+		if(sql){
+			list = await this.sequelize.query(sql);
+			return list;
+		}else{
+			return "";
+		}
+	}
 
 	/** Object methods */
 	const objectMethods = {
