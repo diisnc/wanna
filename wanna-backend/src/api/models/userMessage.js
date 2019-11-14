@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
 	});
 	UserMessage.associate = function(models) {
 		UserMessage.belongsTo(models.User, {
-			foreignKey: 'sender',
+			foreignKey: 'idSender',
 			targetKey: 'username',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
-		UserMessage.belongsTo(models.User, {
-			foreignKey: 'receiver',
-			targetKey: 'username',
+		UserMessage.belongsTo(models.Post, {
+			foreignKey: 'idPost',
+			targetKey: 'id',
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
