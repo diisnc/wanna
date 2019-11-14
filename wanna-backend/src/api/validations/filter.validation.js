@@ -10,5 +10,12 @@ module.exports = {
 		body('isActive'),
 	],
 
-	searchByFilter: [body('idFilter', 'Filter id is required').exists()],
+	searchByFilter: [
+		body('categories'),
+		body('pricesMin'),
+		body('pricesMax'),
+		body('sizes'),
+		body('colors'),
+		body('length'),
+	],
 };
