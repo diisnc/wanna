@@ -45,7 +45,7 @@
           <div class="right-side-bar">
             
             <button v-if="this.$router.currentRoute.name=='Inspire'" class="icon icon-home icon-active"/>
-            <button v-else @click="inspireClick" v-else class="icon icon-home"/>
+            <button v-else @click="inspireClick" class="icon icon-home"/>
 
             <button id="notif" class="icon icon-notifs"/>
             <b-popover target="notif" placement=bottom triggers="focus">

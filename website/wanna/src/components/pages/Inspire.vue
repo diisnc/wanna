@@ -91,8 +91,16 @@
                     <p class="card-text">{{product.description}}</p>
                   </div>
                 </b-collapse>
-                
               </div>
+              <!-- ADICIONAR COMENTÁRIO -->
+              <div class="comment-area">
+                <div class="my-comment">
+                  <a :href="current_user_name"><img class="img-user" :src="current_user_pic"></a>
+                  <b-form-textarea class="comment-input" v-model="text" rows="1" max-rows="4" v-bind:id="'comment_'+product.id" placeholder="Escreve um comentário..." ></b-form-textarea>
+                  <button @click="" class="btn icon icon-send"/>
+                </div>
+              </div>
+
             </div>
           </b-col>
           
@@ -141,6 +149,8 @@ export default {
       saved: 0,
       likes: 342,
       post_id: 2123,
+      current_user_name: 'vitorecarpe',
+      current_user_pic: 'https://i.imgur.com/KMlWJNv.jpg',
       products: [
         {
           id: 1,
@@ -190,7 +200,9 @@ export default {
           sex: 'Mulher',
           manufacturer: 'PROF',
           imgs: [
-            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg"
+            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
+            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_6408-768x1152.jpg",
+            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9318-690x455.jpg"
           ],
           likes: 1489
         },
@@ -331,6 +343,12 @@ export default {
     margin: 0px 0px 15px 10px;
     display: inline-block;
   }
+  .my-comment{
+    text-align: left;
+    width:auto !important;
+    margin: 0px 0px 15px 10px;
+    display: flex !important;
+  }
   .card-options-area{
     text-align: right;
     width:auto !important;
@@ -340,6 +358,7 @@ export default {
   }
   .img-user{
     width: 40px !important;
+    min-width: 40px !important;
     height: 40px !important;
     border-radius: 50px !important;
     object-fit: cover;
@@ -425,7 +444,8 @@ export default {
   }
   .reactions-area,
   .description-area,
-  .user-area{
+  .user-area,
+  .comment-area{
     margin-top: 5px !important;
     width:100%;
     text-align:left;
@@ -519,6 +539,21 @@ export default {
   .icon-buy-empty:hover{
     background-color: #4A53FC !important;
     transition: 0.3s !important;
+  }
+  .icon-send {
+    mask: url(https://svgur.com/i/G92.svg);
+    transition: 0.3s !important;
+    width: 23px !important;
+    height: 25px !important;
+    margin: 7px !important;
+  }
+  .comment-input{
+    margin: 0px 10px 0px 15px;
+    border-radius:20px !important;
+    background-color: #EEE !important;
+    border: 0px !important;
+    color: #000 !important;
+    transition: 0.1s !important;
   }
   .bg-trans{
     background-color: rgba(0,0,0,0) !important;
