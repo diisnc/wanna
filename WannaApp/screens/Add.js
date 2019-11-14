@@ -33,7 +33,7 @@ class Add extends Component {
 		loading: true,
 		wishlistData: [],
 		numPosts: 0,
-		pickedImagesUri: [],
+		pickedImagesBase64: [],
 		/* form */
 		optionsGenre: ['Masculino', 'Feminino'],
 		optionsClothes: [],
@@ -117,11 +117,10 @@ class Add extends Component {
 
 	// Build space to pick image
 	buildForm() {
-		// {this.buildPickedImagesScroll()}
 		return (
 			<ScrollView scrollEventThrottle={16}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-
+					{this.buildPickedImagesScroll()}
 					{this.buildImagePicker()}
 					{this.buildFilterForm()}
 				</View>
@@ -131,7 +130,7 @@ class Add extends Component {
 
 	// Builds lateral scroll for picked images
 	buildPickedImagesScroll() {
-		if (this.state.pickedImagesUri.length > 0) {
+		if (this.state.pickedImagesBase64.length > 0) {
 			return (
 				<ScrollView
 					scrollEventThrottle={16}
@@ -148,15 +147,15 @@ class Add extends Component {
 	buildImages() {
 		const items = [];
 
-		for (let index = 0; index < this.state.pickedImagesUri.length; index++) {
-			let imageUri = this.state.pickedImagesUri[index];
+		for (let index = 0; index < this.state.pickedImagesBase64.length; index++) {
+			let imageUri = this.state.pickedImagesBase64[index];
 
 			items.push(
 				<View key={index} style={{ width: 100, backgroundColor: 'yellow', margin: 5 }}>
 					<Image
 						key={index}
 						source={{
-							uri: imageUri
+							uri: "data:image/jpeg;base64," + imageUri
 						}}
 						style={{
 							width: 'auto',
@@ -366,10 +365,10 @@ class Add extends Component {
 		{
 			/* add image to rui list */
 		}
-		let pickedImagesUriCopy = [...this.state.pickedImagesUri];
-		pickedImagesUriCopy.push(pickerResult);
-		this.setState({ pickedImagesUri: pickedImagesUriCopy });
-		// console.log(this.state.pickedImagesUri);
+		let pickedImagesBase64Copy = [...this.state.pickedImagesBase64];
+		pickedImagesBase64Copy.push(pickerResult);
+		this.setState({ pickedImagesBase64: pickedImagesBase64Copy });
+		// console.log(this.state.pickedImagesBase64);
 	}
 
 	//onValueChange of the switch this function will be called
@@ -457,13 +456,13 @@ class Add extends Component {
 	deleteImage(index) {
 		console.log('apagar imagem selecionada, no index: ' + index);
 		// copia das imagens colocadas
-		var pickedImagesUriCopy = [...this.state.pickedImagesUri];
+		var pickedImagesBase64Copy = [...this.state.pickedImagesBase64];
 		// remover elemento
 		if (index > -1) {
-			pickedImagesUriCopy.splice(index, 1);
+			pickedImagesBase64Copy.splice(index, 1);
 		}
 		// novo estado
-		this.setState({ pickedImagesUri: pickedImagesUriCopy });
+		this.setState({ pickedImagesBase64: pickedImagesBase64Copy });
 	}
 
 	// Get Data to Build Feed and Transform it to Json Object
@@ -493,7 +492,7 @@ class Add extends Component {
 			this.state.selectedColor,
 			this.state.selectedSize,
 			this.state.price,
-			this.state.pickedImagesUri,
+			this.state.pickedImagesBase64,
 			null
 		);
 

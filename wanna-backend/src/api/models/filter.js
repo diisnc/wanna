@@ -40,5 +40,16 @@ module.exports = (sequelize, DataTypes) => {
 		return result;
 	};
 
+	Filter.getFilterInfo = async function getFilterInfo(idFilter){
+		filterInfo = await this.sequelize.query(
+			'SELECT * FROM "Filters" WHERE "Filters"."id" = (:idFilter)',
+			{
+				replacements: {idFilter: idFilter},
+				type: this.sequelize.QueryTypes.SELECT,
+			}
+		);
+		return filterInfo;
+	};
+
 	return Filter;
 };

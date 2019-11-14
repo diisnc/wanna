@@ -188,17 +188,12 @@ exports.get = async (req, res, next) => {
 
 /**
  *
- * Deletes a post (** NOT WORKING YET)
+ * Deletes a post 
  *
  */
 
 exports.remove = async (req, res, next) => {
 	try {
-		await UserPost.destroy({
-			where: {
-				post_id: req.params.idPost,
-			},
-		});
 		await Post.destroy({
 			where: {
 				id: req.params.idPost,

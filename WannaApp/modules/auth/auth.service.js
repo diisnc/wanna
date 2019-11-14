@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { login, refreshToken } from './auth.api';
+import { login, refreshToken, register } from './auth.api';
 import { asyncError, generalError } from '../errors/error.service';
 import * as AuthReducer from './auth.reducer';
 import NavigationService from '../navigator';
@@ -22,14 +22,14 @@ export const refreshTokenService = refreshTokenArg => async dispatch => {
 		dispatch(AuthReducer.saveAppToken(data.tokens.accessToken));
 		_saveItem('refreshToken', data.tokens.refreshToken)
 			.then(resp => {
-				console.log('Refresh finished');
+				console.log('Refresh token refreshed');
 			})
 			.catch(error => {
 				dispatch(asyncError(error));
 			});
 		_saveItem('authToken', data.tokens.accessToken)
 			.then(resp => {
-				console.log('Refresh finished');
+				console.log('Access token refreshed');
 			})
 			.catch(error => {
 				dispatch(asyncError(error));
@@ -48,7 +48,7 @@ export const checkAuthStatus = () => async dispatch => {
 		const authToken = await AsyncStorage.getItem('authToken');
 		const refreshToken = await AsyncStorage.getItem('refreshToken');
 		// token expirado para testes
-		// const authToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNlcmdpb3RqIiwiZW1haWwiOiJzdG9qOTdAZ21haWwuY29tIiwiaWF0IjoxNTczMzM1MTA0LCJleHAiOjE1NzMzMzg3MDR9.J68gM1wCqxAhgFJTuP1sIkgr7__8eWN_RFtjlgBIcrg';
+		// const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNlcmdpb3RqIiwiZW1haWwiOiJzdG9qOTdAZ21haWwuY29tIiwiaWF0IjoxNTczMzM1MTA0LCJleHAiOjE1NzMzMzg3MDR9.J68gM1wCqxAhgFJTuP1sIkgr7__8eWN_RFtjlgBIcrg';
 
 		if (authToken != null && refreshToken != null) {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken));
@@ -73,7 +73,7 @@ export const logout = () => async dispatch => {
 	}
 };
 
-export const register = (username, first, last, email, password) => async dispatch => {
+export const registerService = (username, first, last, email, password) => async dispatch => {
 	dispatch(AuthReducer.setAuthPending());
 	let response = await register(username, first, last, email, password);
 	let data = await response.json();

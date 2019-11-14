@@ -35,17 +35,14 @@ const authResponse = async (req, res, next) => {
  * Returns jwt token if registration was successful
  * @public
  */
-exports.register = [
-	async (req, res, next) => {
-		try {
-			req.user = await User.create(req.body);
-			return next();
-		} catch (e) {
-			return next(e);
-		}
-	},
-	authResponse,
-];
+exports.register = async (req, res, next) => {
+	try {
+		req.user = await User.create(req.body);
+		res.sendStatus(200);
+	} catch (e) {
+		return next(e);
+	}
+};
 
 /**
  * Returns jwt token if valid username and password is provided
@@ -99,7 +96,9 @@ exports.refresh = async (req, res, next) => {
 	try {
 		const user = await User.getByRefreshToken(req.body.refreshToken);
 		if (!user) {
-			return res.status(httpStatus.UNAUTHORIZED).json('Invalid Token');
+			return res
+				.status(httpStatus.UNAUTHORIZED)
+				.json('Invalid Refresh Token');
 		}
 		req.user = user;
 

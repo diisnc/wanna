@@ -201,15 +201,22 @@
 - **Descrição:** Pesquisar por filtro
 - **Método:** POST
 - **Rota:** v1/filter/searchByFilter
-- **Estado:** &#9746;
--- falta receber o ID
+- **Estado:** :heavy_check_mark:
+
+---
+
+- **Descrição:** Obter um determinado filtro
+- **Método:** GET
+- **Rota:** v1/filter/:idFilter
+- **Estado:** :heavy_check_mark:
 
 ---
 
 - **Descrição:** Apagar filtro
-- **Método:** POST
-- **Rota:** v1/filter/deleteFilter
-- **Estado:** &#9746;
+- **Método:** DELETE
+- **Rota:** v1/filter/:idFilter
+- **Estado:** :heavy_check_mark:
+
 
 Fazer compra
 Dar review em compra

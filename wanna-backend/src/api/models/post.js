@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey:{
 				name: 'post_id',
 			},
-			onDelete: 'SET NULL',
+			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE',
 		});
 		Post.belongsToMany(models.User, {
@@ -60,19 +60,28 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey:{
 				name: 'post_id',
 			},
-			onDelete: 'SET NULL',
+			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE',
 		});
 		Post.hasMany(models.Photo, {
 			foreignKey: 'idPost',
 			sourceKey: 'id',
-			onDelete: 'SET_NULL',
+			onDelete: 'CASCADE',
+			hooks: 'true',
 			onUpdate: 'CASCADE',
 		});
 		Post.hasMany(models.Comment, {
 			foreignKey: 'idPost',
 			sourceKey: 'id',
-			onDelete: 'SET_NULL',
+			onDelete: 'CASCADE',
+			hooks: 'true',
+			onUpdate: 'CASCADE',
+		});
+		Post.hasMany(models.UserMessage,{
+			foreignKey: 'idPost',
+			sourceKey: 'id',
+			onDelete: 'CASCADE',
+			hooks: 'true',
 			onUpdate: 'CASCADE',
 		});
 		Post.belongsTo(models.User, {
@@ -194,7 +203,37 @@ module.exports = (sequelize, DataTypes) => {
 		return list;
 	};
 	
-
+	Post.getFilteredPosts = async function getFilteredPosts(body){
+		var sql = "";
+		for (var i = 0; i < body.length; i++) {
+			sql=sql.concat(' SELECT * FROM "Posts" WHERE ');
+			if(body.categories[i]){
+				sql=sql.concat(' "category" = \''+body.categories[i]+'\' AND ');
+			}
+			if(body.colors[i]){
+				sql=sql.concat(' "color" = \''+body.colors[i]+'\' AND ');
+			}
+			if(body.sizes[i]){
+				sql=sql.concat(' "size" = \''+body.sizes[i]+'\' AND ');
+			}
+			if(body.pricesMin[i]){
+				sql=sql.concat(' "price" >= '+body.pricesMin[i]+' AND ');
+			}
+			if(body.pricesMax[i]){
+				sql=sql.concat(' "price" <= '+body.pricesMax[i]+' AND ');
+			}
+			sql=sql.concat(' 1 = 1 ');
+			if(i < body.length -1){
+				sql=sql.concat(' UNION ');
+			}
+		}
+		if(sql){
+			list = await this.sequelize.query(sql);
+			return list;
+		}else{
+			return "";
+		}
+	}
 
 	/** Object methods */
 	const objectMethods = {

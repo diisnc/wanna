@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 		Photo.belongsTo(models.Post, {
 			foreignKey: 'idPost',
 			targetKey: 'id',
-			onDelete: 'SET NULL',
+			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE',
 		});
 	};
