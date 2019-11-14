@@ -1,10 +1,32 @@
 const { Filter } = require('../models');
+const { Post } = require('../models');
 const httpStatus = require('http-status');
+
+exports.get = async (req, res, next) => {
+	try {
+		list = await Filter.getFilterInfo(req.params.idFilter);
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};
+
+exports.delete = async (req, res, next) => {
+	try {
+		await Filter.destroy({
+			where: {
+				id: req.params.idFilter,
+			},
+		});
+		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+	} catch (e) {
+		next(e);
+	}
+};
 
 exports.getFilters = async (req, res, next) => {
 	try {
 		list = await Filter.getFilters();
-
 		res.json(result1);
 	} catch (e) {
 		next(e);
@@ -30,7 +52,8 @@ exports.createFilter = async (req, res, next) => {
 
 exports.searchByFilter = async (req, res, next) => {
 	try {
-		return res.status(httpStatus.CREATED).json();
+		list = await Post.getFilteredPosts(req.body);
+		res.json(list);
 	} catch (e) {
 		next(e);
 	}
