@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey:{
 				name: 'post_id',
 			},
-			onDelete: 'SET NULL',
+			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE',
 		});
 		Post.belongsToMany(models.User, {
@@ -60,25 +60,28 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey:{
 				name: 'post_id',
 			},
-			onDelete: 'SET NULL',
+			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE',
 		});
 		Post.hasMany(models.Photo, {
 			foreignKey: 'idPost',
 			sourceKey: 'id',
-			onDelete: 'SET_NULL',
+			onDelete: 'CASCADE',
+			hooks: 'true',
 			onUpdate: 'CASCADE',
 		});
 		Post.hasMany(models.Comment, {
 			foreignKey: 'idPost',
 			sourceKey: 'id',
-			onDelete: 'SET_NULL',
+			onDelete: 'CASCADE',
+			hooks: 'true',
 			onUpdate: 'CASCADE',
 		});
 		Post.hasMany(models.UserMessage,{
 			foreignKey: 'idPost',
 			sourceKey: 'id',
-			onDelete: 'SET_NULL',
+			onDelete: 'CASCADE',
+			hooks: 'true',
 			onUpdate: 'CASCADE',
 		});
 		Post.belongsTo(models.User, {
