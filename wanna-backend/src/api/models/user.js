@@ -182,18 +182,31 @@ module.exports = (sequelize, DataTypes) => {
 	};
 
 	/**
-	 * Return profile
+	 * Return profile info
+	 * 
+	 * and the last photo of each post
 	 * @returns {Promise<*>}
 	 */
-	User.getProfileInfo = async function getProfileInfo(usernameLog) {
-		result = await this.sequelize.query(
-			'SELECT "firstName", "lastName", "email" FROM "Users" WHERE "Users"."username" = (:username)',
+	User.getProfileInfo = async function getProfileInfo(username) {
+		profileInfo = await this.sequelize.query(
+			'SELECT "avatarData","avatarType","firstName", "lastName", "username", "email", "rating" FROM "Users" WHERE "Users"."username" = (:username)',
 			{
-				replacements: { username: usernameLog },
+				replacements: { username: username },
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
-		return result;
+		postsinfo = await this.sequelize.query(
+			'SELECT "Posts"."id" AS PostID, "Posts"."idUser", "Posts"."isAvailable", "Photos"."photoType", "Photos"."photoData", "Photos"."id" AS PhotoId '+
+			'FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost" '+
+			'AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost") '+
+			'WHERE "Posts"."idUser" = (:username) '+
+			'ORDER BY "Posts"."createdAt"',
+			{
+				replacements: { username: username },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return profileInfo.concat(postsinfo);
 	};
 
 	/**

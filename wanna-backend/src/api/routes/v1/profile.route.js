@@ -5,6 +5,8 @@ const validate = require('../../validations/handler');
 
 router.route('/').get(controller.profileInfo);
 
+router.route('/:idUser').get(controller.userProfileInfo)
+
 router.route('/follow/:userID').post(validate(rules.follow), controller.follow);
 
 router.route('/savedposts').get(controller.getSavedPosts);
