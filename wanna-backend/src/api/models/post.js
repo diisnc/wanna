@@ -114,8 +114,7 @@ module.exports = (sequelize, DataTypes) => {
 	 * Return feed
 	 * @returns {Promise<*>}
 	 */
-	Post.feed = async function feed(body) {
-		console.log(body.idUser)
+	Post.feed = async function feed(pageArg, usernameArg) {
 		result = await this.sequelize.query(
 			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description",'+
 			' "Posts"."isAvailable", "Posts"."price", "Photos"."photoType", '+
@@ -128,7 +127,7 @@ module.exports = (sequelize, DataTypes) => {
 			' OFFSET :page1 ROWS'+
 			' FETCH NEXT :page2 ROWS ONLY',
 			{
-				replacements: {idUser: body.idUser, page1: 5*body.page, page2: 5*body.page+5},
+				replacements: {idUser: usernameArg, page1: 5*pageArg, page2: 5*pageArg+5},
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
@@ -142,7 +141,7 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 
 	Post.getPostInfo = async function getPostInfo(idPost){
-		
+
 		userinfo = await this.sequelize.query(
 			'SELECT "Users"."avatarType", "Users"."firstName", "Users"."lastName", "Users"."avatarData" '+
 		    'FROM "Users" JOIN "Posts" ON "Users"."username" = "Posts"."idUser"'+
@@ -170,7 +169,7 @@ module.exports = (sequelize, DataTypes) => {
 		);
 
 		return userinfo.concat(postinfo.concat(photos));
-		
+
 	};
 
 	/*
@@ -196,7 +195,7 @@ module.exports = (sequelize, DataTypes) => {
 	};
 
 	/**
-	 * 
+	 *
 	 * Returns every post saved by a User
 	 */
 
@@ -213,7 +212,7 @@ module.exports = (sequelize, DataTypes) => {
 		);
 		return list;
 	};
-	
+
 	Post.getFilteredPosts = async function getFilteredPosts(body){
 		var sql = "";
 		for (var i = 0; i < body.length; i++) {

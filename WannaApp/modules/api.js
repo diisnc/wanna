@@ -2,7 +2,7 @@ import { handleTokenErrors } from './errors/error.service';
 import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 
-const config = { url: 'infernoo.duckdns.org:8000' };
+const config = { url: 'http://192.168.1.14:8000' };
 
 var currentAuthToken;
 
@@ -24,6 +24,7 @@ async function auxFetch(method, endpoint, querystring, bodyA, headers) {
 		string = `${config.url}${endpoint}`;
 	} else string = `${config.url}${endpoint}${querystring}`;
 
+	console.log('QS ' + string);
 	let response;
 	try {
 		response = await fetch(string, {
@@ -78,12 +79,13 @@ export const ourFetchWithToken = async action => {
 	};
 
 	response = await auxFetch(action.method, action.endpoint, querystring, action.body, headers);
-	let data = await response.json();
 
 	if (response == null) {
 		store.dispatch(connectionError('Network request failed'));
 		return;
 	}
+
+	let data = await response.json();
 
 	if (response.status == 200 || response.status == 304) {
 		console.log('Tamanho do que retornou do backend: ' + data.length);

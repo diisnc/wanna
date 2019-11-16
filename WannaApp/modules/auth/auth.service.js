@@ -76,11 +76,11 @@ export const logout = () => async dispatch => {
 export const registerService = (username, first, last, email, password) => async dispatch => {
 	dispatch(AuthReducer.setAuthPending());
 	let response = await register(username, first, last, email, password);
-	let data = await response.json();
 	if (response.status == 200) {
 		dispatch(AuthReducer.setRegisterSuccess());
 		NavigationService.navigate('Login');
 	} else {
+		let data = await response.json();
 		data = JSON.stringify(data);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
 		// console.log('Está a despachar o erro: ' + error.errors);

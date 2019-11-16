@@ -38,7 +38,7 @@ const authResponse = async (req, res, next) => {
 exports.register = async (req, res, next) => {
 	try {
 		req.user = await User.create(req.body);
-		res.sendStatus(200);
+		res.status(httpStatus.OK).send();
 	} catch (e) {
 		return next(e);
 	}

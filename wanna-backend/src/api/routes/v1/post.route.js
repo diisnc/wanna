@@ -14,7 +14,7 @@ const upload = multer({ dest: __dirname + '/images' });
 //router.param('postId', controller.load);
 
 router
-	.route('/feed/')
+	.route('/feed')
 	.get(validate(rules.feed),controller.feed);
 
 router
@@ -36,7 +36,7 @@ router
 	.route('/savedpost')
 	.post(validate(rules.savedPosts),controller.savePost)
 	.delete(validate(rules.savedPosts),controller.unsavePost);
-	
+
 router
 	.route('/:idPost')
 	.get(controller.get)

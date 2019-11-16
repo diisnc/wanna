@@ -636,7 +636,7 @@ class Inspire extends Component {
         */
 		console.log('feed data');
 		// const newState = require('./json/responseFeed');
-		const newState = await feed();
+		const newState = await feed(1);
 		// console.log(newState);
 		if (newState != null) {
 			this.setState({ feedData: newState, numPosts: newState.length });

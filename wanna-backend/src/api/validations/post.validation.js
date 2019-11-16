@@ -1,10 +1,10 @@
-const { body } = require('express-validator');
+const { body, param, query } = require('express-validator');
 
 module.exports = {
-
 	feed: [
-		body('idUser','User id is required').exists(),
-		body('page', 'Page is required').exists().toInt()
+		query('page', 'Page is required')
+			.exists()
+			.toInt(),
 	],
 
 	// POST /v1/post/createPost
@@ -52,7 +52,7 @@ module.exports = {
 	getComments:[
 		body('idPost', 'Post id is required').exists(),
 	],
-	//POST /v1/post/savedposts AND //DELETE /v1/post/savedposts 
+	//POST /v1/post/savedposts AND //DELETE /v1/post/savedposts
 	savedPosts:[
 		body('idPost', 'Posts id is required').exists(),
 	],

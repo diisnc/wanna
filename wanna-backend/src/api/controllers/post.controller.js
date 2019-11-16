@@ -29,7 +29,7 @@ exports.create = async (req, res, next) => {
 			});
 
 			await photo.setPost(post);
-			
+
 		}
 		return res.status(200).json(post);
 	} catch (e) {
@@ -43,10 +43,9 @@ exports.create = async (req, res, next) => {
  */
 exports.feed = async (req, res, next) => {
 	try {
-		list = await Post.feed(req.body);
-		return res.status(httpStatus.OK).json(list);
-		/*const result1 = [];
-
+		list = await Post.feed(req.query.page, req.user.username);
+		const result1 = [];
+		console.log(list.length);
 		// devolver listas em múltiplos de 3
 		length = list.length;
 		console.log(length);
@@ -71,7 +70,9 @@ exports.feed = async (req, res, next) => {
 			if (i > length) break;
 
 			result1.push(post);
-		}*/
+		}
+
+		return res.status(httpStatus.OK).json(result1);
 	} catch (e) {
 		next(e);
 	}
@@ -111,7 +112,7 @@ exports.createVote = async (req, res, next) => {
 			);
 			return res.status(200).json(userPost);
 		}
-		
+
 	} catch (e) {
 		next(e);
 	}
@@ -186,7 +187,7 @@ exports.get = async (req, res, next) => {
 
 /**
  *
- * Deletes a post 
+ * Deletes a post
  *
  */
 
@@ -204,7 +205,7 @@ exports.remove = async (req, res, next) => {
 };
 
 /**
- * 
+ *
  * Edits a post with the given values
  */
 
@@ -214,7 +215,7 @@ exports.remove = async (req, res, next) => {
 		const data = {};
 		for(i=0; i<entries.length; i++){
 			if(entries[i][1] != 'null'){
-				data[entries[i][0]] = entries[i][1]; 
+				data[entries[i][0]] = entries[i][1];
 			}
 		}
 		await Post.update(data,

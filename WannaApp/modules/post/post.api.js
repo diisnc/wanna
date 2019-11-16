@@ -1,10 +1,13 @@
 import { ourFetchWithToken } from '../api';
 import { isAvailable } from 'expo/build/AR';
 
-export const feed = () => {
+export const feed = nrPage => {
 	const config = {
 		endpoint: '/v1/post/feed',
-		method: 'GET'
+		method: 'GET',
+		query: {
+			page: nrPage
+		}
 	};
 	return ourFetchWithToken(config);
 };
