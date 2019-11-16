@@ -10,7 +10,7 @@ export function setToken(token) {
 	this.currentAuthToken = token;
 }
 
-async function auxFetch(method, endpoint, querystring, bodyA, headers) {
+async function auxFetch(method, endpoint, querystring, paramsA, bodyA, headers) {
 	let body;
 	if (bodyA != null) {
 		body = JSON.stringify(bodyA);
@@ -21,10 +21,17 @@ async function auxFetch(method, endpoint, querystring, bodyA, headers) {
 		console.log(headers.Authorization);
 	}
 
+	let params = '';
+	for (var key in paramsA) {
+		params += paramsA[key];
+	}
+
 	let string;
-	if (querystring == null) {
-		string = `${config.url}${endpoint}`;
-	} else string = `${config.url}${endpoint}${querystring}`;
+	if (querystring != '' && querystring != null) {
+		string = `${config.url}${endpoint}${querystring}`;
+	} else if (params != '' && params != null) {
+		string = `${config.url}${endpoint}${params}`;
+	} else string = `${config.url}${endpoint}`;
 
 	console.log('QS ' + string);
 	let response;
@@ -52,7 +59,7 @@ export const ourFetchAuth = async action => {
 		'Content-Type': 'application/json'
 	};
 
-	response = await auxFetch(action.method, action.endpoint, null, action.body, headers);
+	response = await auxFetch(action.method, action.endpoint, null, null, action.body, headers);
 	if (response == null) {
 		store.dispatch(connectionError('Network request failed'));
 		return;
@@ -80,7 +87,14 @@ export const ourFetchWithToken = async action => {
 		Authorization: `Bearer ${this.currentAuthToken}`
 	};
 
-	response = await auxFetch(action.method, action.endpoint, querystring, action.body, headers);
+	response = await auxFetch(
+		action.method,
+		action.endpoint,
+		querystring,
+		action.params,
+		action.body,
+		headers
+	);
 
 	if (response == null) {
 		store.dispatch(connectionError('Network request failed'));

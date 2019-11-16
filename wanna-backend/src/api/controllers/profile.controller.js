@@ -16,7 +16,7 @@ exports.profileInfo = async (req, res, next) => {
 			firstName: list[0].firstName,
 			lastName: list[0].lastName,
 			rating: list[0].rating,
-			avatarData: list[0].id,
+			avatarData: list[0].avatarData,
 		};
 
 		object['info'] = info;
@@ -125,7 +125,7 @@ exports.userProfileInfo = async function(req, res, next) {
 			firstName: list[0].firstName,
 			lastName: list[0].lastName,
 			rating: list[0].rating,
-			avatarData: list[0].id,
+			avatarData: list[0].avatarData,
 		};
 
 		object['info'] = info;

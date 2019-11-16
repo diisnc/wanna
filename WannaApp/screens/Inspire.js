@@ -8,7 +8,9 @@ import {
 	Platform,
 	ScrollView,
 	Image,
-	Dimensions
+	Dimensions,
+	FlatList,
+	TouchableOpacity
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -88,7 +90,7 @@ class Inspire extends Component {
 							alignItems: 'stretch'
 						}}>
 						{this.buildHeader()}
-						{this.buildFeed()}
+						{this.buildInstaFixe()}
 					</View>
 				</SafeAreaView>
 			);
@@ -143,6 +145,62 @@ class Inspire extends Component {
 						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
 					/>
 				</View>
+			</View>
+		);
+	}
+
+	buildInstaFixe() {
+		return (
+			<View style={styles.container}>
+				{this.state.loading == true ? (
+					<Loading />
+				) : (
+					<FlatList
+						data={this.state.feedData}
+						keyExtractor={(item, index) => index.toString()}
+						style={styles.list}
+						renderItem={({ item, index }) => {
+							return (
+								<View key={index} style={styles.item}>
+									<View style={styles.subItem}>
+										{/* <Text>{item.posted}</Text> */}
+										<Text>{item.posted}</Text>
+										<TouchableOpacity
+											onPress={() => {
+												this.props.navigation.navigate('OtherProfile', {
+													userID: item.idUser
+												});
+												// console.log(item.authorId) // working Good, we sure params has value now.
+											}}>
+											<Text>{item.idUser}</Text>
+										</TouchableOpacity>
+									</View>
+									<View style={styles.imageView}>
+										<Image
+											source={{
+												uri:
+													'data:' +
+													item.photoType1 +
+													';base64,' +
+													new Buffer(item.photoData1)
+											}}
+											style={styles.image}
+										/>
+									</View>
+									<View>
+										<Text>Descrição</Text>
+										<TouchableOpacity
+											onPress={() =>
+												this.props.navigation.navigate('Comments')
+											}>
+											<Text> {'View Comments...'}</Text>
+										</TouchableOpacity>
+									</View>
+								</View>
+							);
+						}}
+					/>
+				)}
 			</View>
 		);
 	}
@@ -202,6 +260,7 @@ class Inspire extends Component {
 
 		// format data post 1
 		printId1 = 'id= ' + JSON.stringify(this.state.feedData[post].id);
+		printIdUser1 = 'idUser= ' + JSON.stringify(this.state.feedData[post].idUser);
 		/*
         printIdUser1 = "idUser= " + JSON.stringify(this.state.feedData[post].idUser);
         printDescription1 = "description= " + JSON.stringify(this.state.feedData[post].description);
@@ -252,6 +311,13 @@ class Inspire extends Component {
 						key={'tile' + post}
 						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
 						<Text key={'id' + post}>{printId1}</Text>
+						<Text
+							key={'idUser' + post}
+							onPress={() =>
+								this.props.navigation.navigate('Profile', { name: 'João' })
+							}>
+							{printIdUser1}
+						</Text>
 						{/*
                         <Text key={"idUser" + post}>{printIdUser1}</Text>
                         <Text key={"description" + post}>{printDescription1}</Text>
@@ -621,22 +687,10 @@ class Inspire extends Component {
 		return items;
 	}
 
-	// Get Data to Build Feed and Transform it to Json Object
 	async getFeedDataFromApiAsync() {
-		/*
-        return fetch('https://facebook.github.io/react-native/movies.json')// ONLINE GET
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({feedData: responseJson, numPosts: Object.keys(responseJson).length});
-                //console.log(responseJson);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        */
 		console.log('feed data');
 		// const newState = require('./json/responseFeed');
-		const newState = await feed(1);
+		const newState = await feed(0);
 		// console.log(newState);
 		if (newState != null) {
 			this.setState({ feedData: newState, numPosts: newState.length });
@@ -663,7 +717,36 @@ export default connect(
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		justifyContent: 'center',
 		alignItems: 'center',
-		justifyContent: 'center'
+		backgroundColor: '#ddd'
+	},
+	item: {
+		flex: 1,
+		width: width,
+		overflow: 'hidden',
+		marginBottom: 5,
+		justifyContent: 'space-between',
+		borderBottomWidth: 1,
+		borderBottomColor: '#999'
+	},
+	subItem: {
+		padding: 5,
+		width: width,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
+	imageView: {
+		width: '100%',
+		height: height * 0.4
+	},
+	image: {
+		resizeMode: 'cover',
+		width: '100%',
+		height: 275
+	},
+	list: {
+		flex: 1,
+		color: '#eee'
 	}
 });

@@ -8,7 +8,9 @@ import {
 	SafeAreaView,
 	TouchableHighlight,
 	ScrollView,
-	Platform
+	Platform,
+	Dimensions,
+	FlatList
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
@@ -16,22 +18,25 @@ import { Button } from 'react-native-elements';
 import { globalStyle, defaultNavigator } from './style';
 import { logout } from '../modules/auth/auth.service';
 import { connect } from 'react-redux';
-import { getMyProfile } from '../modules/profile/profile.api';
+import { getMyProfile, getUserProfile } from '../modules/profile/profile.api';
+import { AppLoading } from 'expo';
+
+let { width, height } = Dimensions.get('window');
 
 class Profile extends Component {
 	state = {
+		loading: true,
 		avatarData: [],
-		numPosts: 0,
 		firstName: '',
 		lastName: '',
 		rating: 0,
-		wishlistData: [],
-		numPosts: 0
+		posts: [],
+		numPosts: 0,
+		name: 'local'
 	};
 
 	componentDidMount() {
-		this.fetchUserInfo();
-		this.getWishlistDataFromApiAsync();
+		//this.fetchUserInfo();
 		this.startHeaderHeight = 80;
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
@@ -39,25 +44,33 @@ class Profile extends Component {
 	}
 
 	fetchUserInfo = async () => {
-		const newState = await getMyProfile();
+		nameP = this.props.navigation.getParam('userID', 'local');
+		if (nameP !== undefined) {
+			await this.setState({ name: nameP });
+		}
+		let newState;
+		if (this.state.name == 'local') {
+			newState = await getMyProfile();
+		} else {
+			newState = await getUserProfile(this.state.name);
+		}
+
 		if (newState != null) {
-			this.setState({
+			await this.setState({
 				avatarData: newState.info.avatarData,
 				firstName: newState.info.firstName,
 				lastName: newState.info.lastName,
 				rating: newState.info.rating,
+				posts: newState.posts,
+				numPosts: newState.posts.length,
+				loading: false
 			});
 		}
 
+		console.log('nrposts: ' + this.state.numPosts);
+
 		return;
 	};
-
-	getWishlistDataFromApiAsync() {
-		const newState = require('./json/responseFeed');
-		this.setState({ wishlistData: newState, numPosts: newState.length });
-
-		return;
-	}
 
 	buildProfile() {
 		return (
@@ -70,10 +83,18 @@ class Profile extends Component {
 						paddingVertical: 10,
 						marginTop: 20
 					}}>
-					<Image
-						source={{ uri: null }}
-						style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
-					/>
+					{this.state.avatarData ? (
+						<Image
+							source={{
+								uri:
+									'data:' +
+									'image/jpeg' +
+									';base64,' +
+									new Buffer(this.state.avatarData).toString('base64')
+							}}
+							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
+						/>
+					) : null}
 					<View style={{ marginRight: 10 }}>
 						<Text>{this.state.firstName + ' ' + this.state.lastName}</Text>
 						<Text>{this.state.rating}</Text>
@@ -100,29 +121,48 @@ class Profile extends Component {
 	}
 
 	render() {
-		return (
-			/*
-            Fazer View Englobadora da página
-            onde o primeiro elemento é o header
-            de pesquisa e o segundo elemento
-            é o feed que contém as imagens.
-            */
-			// Safe Box for Iphone
-			<SafeAreaView style={{ flex: 1 }}>
-				{/* Full Page Box */}
-				<View
-					style={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'stretch'
-					}}>
-					{this.buildHeader()}
-					{this.buildProfile()}
-					{this.buildWishlist()}
-				</View>
-			</SafeAreaView>
-		);
+		if (this.state.loading == false) {
+			if (this.state.numPosts !== 0) {
+				return (
+					<SafeAreaView style={{ flex: 1 }}>
+						<View
+							style={{
+								flex: 1,
+								flexDirection: 'column',
+								justifyContent: 'flex-start',
+								alignItems: 'stretch'
+							}}>
+							{this.buildHeader()}
+							{this.buildProfile()}
+							{this.buildPosts()}
+						</View>
+					</SafeAreaView>
+				);
+			} else
+				return (
+					<SafeAreaView style={{ flex: 1 }}>
+						<View
+							style={{
+								flex: 1,
+								flexDirection: 'column',
+								justifyContent: 'flex-start',
+								alignItems: 'stretch'
+							}}>
+							{this.buildHeader()}
+							{this.buildProfile()}
+							<View>
+								<Text>No images</Text>
+							</View>
+						</View>
+					</SafeAreaView>
+				);
+		} else
+			return (
+				<AppLoading
+					startAsync={this.fetchUserInfo}
+					onFinish={() => this.setState({ loading: false })}
+				/>
+			);
 	}
 
 	// Builds header of the page
@@ -156,131 +196,33 @@ class Profile extends Component {
 			</View>
 		);
 	}
-
-	// Builds feed of the page
-	buildWishlist() {
+	renderItem = (postInfo, index) => {
+		console.log(postInfo.photoData);
 		return (
-			<ScrollView scrollEventThrottle={16}>
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-					{this.buildFeedTile()}
-				</View>
-			</ScrollView>
-		);
-	}
-
-	// Build 2 tile grid
-	buildFeedTile() {
-		const items = [];
-
-		//console.log(this.state.wishlistData)
-
-		for (let post = 0; post < this.state.wishlistData.length; post += 2) {
-			items.push(this.genRow(post));
-		}
-
-		return items;
-	}
-
-	// 3 tyle javascript generation
-	genRow(post) {
-		const items = [];
-
-		// format data post 1
-		printId1 = 'id= ' + JSON.stringify(this.state.wishlistData[post].id);
-		/*
-        printIdUser1 = "idUser= " + JSON.stringify(this.state.wishlistData[post].idUser);
-        printDescription1 = "description= " + JSON.stringify(this.state.wishlistData[post].description);
-        printIsAvailable1 = "isAvailable= " + JSON.stringify(this.state.wishlistData[post].isAvailable);
-        printPrice1 = "price= " + JSON.stringify(this.state.wishlistData[post].price);
-        printPhotoType11 = "photoType1= " + JSON.stringify(this.state.wishlistData[post].photoType1);
-        */
-		objJsonB641 = new Buffer(this.state.wishlistData[post].photoData1);
-		// format data post 2
-		printId2 = 'id= ' + JSON.stringify(this.state.wishlistData[post + 1].id);
-		/*
-        printIdUser2 = "idUser= " + JSON.stringify(this.state.wishlistData[post+1].idUser);
-        printDescription2 = "description= " + JSON.stringify(this.state.wishlistData[post+1].description);
-        printIsAvailable2 = "isAvailable= " + JSON.stringify(this.state.wishlistData[post+1].isAvailable);
-        printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
-        printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
-        */
-		objJsonB642 = new Buffer(this.state.wishlistData[post + 1].photoData1);
-
-		// build javascript
-		items.push(
-			<View
-				key={'superTile' + post}
-				style={{
-					height: 200,
-					flexDirection: 'row',
-					alignItems: 'stretch',
-					backgroundColor: 'green'
-				}}>
-				<View style={{ flex: 1, backgroundColor: 'pink', margin: 10 }}>
-					<View
-						key={'tile' + post}
-						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
-						<Text key={'id' + post}>{printId1}</Text>
-						{/*
-                        <Text key={"idUser" + post}>{printIdUser1}</Text>
-                        <Text key={"description" + post}>{printDescription1}</Text>
-                        <Text key={"isAvailable" + post}>{printIsAvailable1}</Text>
-                        <Text key={"price" + post}>{printPrice1}</Text>
-                        <Text key={"photoType1" + post}>{printPhotoType11}</Text>
-                        */}
-						<Image
-							source={{
-								uri:
-									'data:' +
-									this.state.wishlistData[post].photoType1 +
-									';base64,' +
-									objJsonB641 +
-									''
-							}}
-							style={{
-								width: 'auto',
-								height: '80%',
-								aspectRatio: 1,
-								overflow: 'hidden'
-							}}
-						/>
-					</View>
-				</View>
-				<View style={{ flex: 1, backgroundColor: 'grey', margin: 10 }}>
-					<View
-						key={'tile' + post + 1}
-						style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
-						<Text key={'id' + post + 1}>{printId2}</Text>
-						{/*
-                        <Text key={"idUser" + post+1}>{printIdUser2}</Text>
-                        <Text key={"description" + post+1}>{printDescription2}</Text>
-                        <Text key={"isAvailable" + post+1}>{printIsAvailable2}</Text>
-                        <Text key={"price" + post+1}>{printPrice2}</Text>
-                        <Text key={"photoType1" + post+1}>{printPhotoType12}</Text>
-                        */}
-						<Image
-							source={{
-								uri:
-									'data:' +
-									this.state.wishlistData[post + 1].photoType1 +
-									';base64,' +
-									objJsonB642 +
-									''
-							}}
-							style={{
-								width: 'auto',
-								height: '80%',
-								aspectRatio: 1,
-								overflow: 'hidden'
-							}}
-						/>
-					</View>
-				</View>
+			<View style={styles.gridImgContainer}>
+				<Image
+					resizeMode="cover"
+					style={styles.image}
+					source={{
+						uri: 'data:' + 'image/jpeg' + ';base64,' + new Buffer(postInfo.photoData)
+					}}
+				/>
 			</View>
 		);
+	};
 
-		return items;
-	}
+	buildPosts = () => {
+		return (
+			<View style={styles.container}>
+				<FlatList
+					numColumns={3}
+					data={this.state.posts}
+					renderItem={({ item, index }) => this.renderItem(item, index)}
+					keyExtractor={item => item.id}
+				/>
+			</View>
+		);
+	};
 }
 
 function mapStateToProps(store) {
@@ -305,5 +247,20 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	gridImgContainer: {
+		padding: 1,
+		backgroundColor: '#CCC'
+	},
+	profileImage: {
+		width: width * 0.2,
+		height: width * 0.2,
+		borderRadius: width * 0.5,
+		borderWidth: 1,
+		marginRight: 10
+	},
+	image: {
+		height: width * 0.33,
+		width: width * 0.33
 	}
 });
