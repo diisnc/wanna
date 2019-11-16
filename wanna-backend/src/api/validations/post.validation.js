@@ -2,6 +2,11 @@ const { body } = require('express-validator');
 
 module.exports = {
 
+	feed: [
+		body('idUser','User id is required').exists(),
+		body('page', 'Page is required').exists().toInt()
+	],
+
 	// POST /v1/post/createPost
 	createPost: [
 		body('description', 'Description is invalid').exists(),

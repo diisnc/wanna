@@ -13,14 +13,13 @@ const upload = multer({ dest: __dirname + '/images' });
  */
 //router.param('postId', controller.load);
 
-router.route('/feed').get(controller.feed);
+router
+	.route('/feed/')
+	.get(validate(rules.feed),controller.feed);
 
 router
 	.route('/createPost')
-	.post(
-		validate(rules.createPost),
-		controller.create,
-	);
+	.post(validate(rules.createPost),controller.create);
 
 router
 	.route('/vote')
@@ -38,13 +37,11 @@ router
 	.post(validate(rules.savedPosts),controller.savePost)
 	.delete(validate(rules.savedPosts),controller.unsavePost);
 	
-
 router
 	.route('/:idPost')
 	.get(controller.get)
 	.delete(controller.remove)
 	.post(controller.markUnavailable)
 	.patch(validate(rules.updatePost), controller.update);
-
 
 module.exports = router;
