@@ -43,9 +43,9 @@ exports.create = async (req, res, next) => {
  */
 exports.feed = async (req, res, next) => {
 	try {
-		list = await Post.feed();
-
-		const result1 = [];
+		list = await Post.feed(req.body);
+		return res.status(httpStatus.OK).json(list);
+		/*const result1 = [];
 
 		// devolver listas em múltiplos de 3
 		length = list.length;
@@ -71,9 +71,7 @@ exports.feed = async (req, res, next) => {
 			if (i > length) break;
 
 			result1.push(post);
-		}
-
-		return res.status(httpStatus.OK).json(result1);
+		}*/
 	} catch (e) {
 		next(e);
 	}

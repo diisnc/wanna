@@ -114,10 +114,21 @@ module.exports = (sequelize, DataTypes) => {
 	 * Return feed
 	 * @returns {Promise<*>}
 	 */
-	Post.feed = async function feed() {
+	Post.feed = async function feed(body) {
+		console.log(body.idUser)
 		result = await this.sequelize.query(
-			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description", "Posts"."isAvailable", "Posts"."price", "Photos"."photoType", "Photos"."photoData" FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost" AND "Photos"."id" IN (SELECT MAX("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost") ORDER BY "Posts"."createdAt"',
+			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description",'+
+			' "Posts"."isAvailable", "Posts"."price", "Photos"."photoType", '+
+			' "Photos"."photoData" FROM "Posts" JOIN "Photos" ON "Posts"."id" '+
+			' = "Photos"."idPost" AND "Photos"."id" IN (SELECT MAX("Photos"."id") '+
+			' FROM "Photos" GROUP BY "Photos"."idPost") '+
+			' WHERE EXISTS (SELECT * FROM "FollowRelationships" '+
+			' WHERE "follower_id" = :idUser AND "Posts"."idUser"="followed_id") '+
+			' ORDER BY "Posts"."createdAt"'+
+			' OFFSET :page1 ROWS'+
+			' FETCH NEXT :page2 ROWS ONLY',
 			{
+				replacements: {idUser: body.idUser, page1: 5*body.page, page2: 5*body.page+5},
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);

@@ -87,9 +87,20 @@ exports.unfollow = async (req, res, next) => {
 		});
 };
 
-// Lista de posts dele
 
-// Lista de posts guardados
+
+/***
+ * Returns the personal informations of a user as well as his posts
+ */
+
+exports.userProfileInfo = async function (req, res, next){
+	try{
+		list = await User.getProfileInfo(req.params.idUser);
+		res.json(list);
+	}catch(e){
+		next(e);
+	}
+};
 
 /**
  *

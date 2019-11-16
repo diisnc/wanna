@@ -5,7 +5,7 @@
 - **Descrição:** Feed com paginate
 - **Método:** GET
 - **Rota:** v1/post/feed
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
@@ -26,8 +26,7 @@
 - **Descrição:** Apagar Artigo
 - **Método:** DELETE
 - **Rota:** v1/post/:idPost
-- **Estado:** &#9746;
-- ** é preciso testar se o CASCADE está a funcionar adequadamente
+- **Estado:** :heavy_check_mark:
 
 ---
 
@@ -138,14 +137,14 @@
 - **Descrição:** Ver perfil pessoal com fotos e infos
 - **Método:** GET
 - **Rota:** /v1/profile
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
 - **Descrição:** Ver perfil alheio com fotos e infos
 - **Método:** GET
 - **Rota:** /v1/profile/:username
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
