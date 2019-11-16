@@ -201,7 +201,6 @@ export default {
           manufacturer: 'PROF',
           imgs: [
             "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
-            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_6408-768x1152.jpg",
             "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9318-690x455.jpg"
           ],
           likes: 1489
