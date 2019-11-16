@@ -31,7 +31,7 @@ class Profile extends Component {
 
 	componentDidMount() {
 		this.fetchUserInfo();
-
+		this.getWishlistDataFromApiAsync();
 		this.startHeaderHeight = 80;
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
@@ -46,13 +46,18 @@ class Profile extends Component {
 				firstName: newState.info.firstName,
 				lastName: newState.info.lastName,
 				rating: newState.info.rating,
-				wishlistData: [],
-				numPosts: newState.posts.length
 			});
 		}
 
 		return;
 	};
+
+	getWishlistDataFromApiAsync() {
+		const newState = require('./json/responseFeed');
+		this.setState({ wishlistData: newState, numPosts: newState.length });
+
+		return;
+	}
 
 	buildProfile() {
 		return (
