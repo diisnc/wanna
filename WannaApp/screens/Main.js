@@ -5,6 +5,7 @@ import Add from './Add';
 import Profile from './Profile';
 import Filters from './Filters';
 import NewFilter from './NewFilter';
+import UserPost from './UserPost';
 import React, { Component } from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
@@ -59,6 +60,15 @@ const MainTab = createBottomTabNavigator(
 				tabBarLabel: 'PROFILE',
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons name="person-outline" color={tintColor} size={24} />
+				)
+			}
+		},
+		UserPost: {
+			screen: UserPost,
+			navigationOptions: {
+				tabBarLabel: 'USERPOST',
+				tabBarIcon: ({ tintColor }) => (
+					<MaterialIcons name="person" color={tintColor} size={24} />
 				)
 			}
 		}
