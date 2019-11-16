@@ -10,7 +10,33 @@ const httpStatus = require('http-status');
 exports.profileInfo = async (req, res, next) => {
 	try {
 		list = await User.getProfileInfo(req.user.username);
-		res.json(list);
+		object = new Object();
+
+		const info = {
+			firstName: list[0].firstName,
+			lastName: list[0].lastName,
+			rating: list[0].rating,
+			avatarData: list[0].id,
+		};
+
+		object['info'] = info;
+
+		posts = [];
+		for (var i = 1; i < list.length; ) {
+			const post = {
+				id: list[i].postid,
+				photoData: list[i].photoData,
+			};
+
+			i += 1;
+
+			if (i > list.length) break;
+
+			posts.push(post);
+		}
+		object['posts'] = posts;
+
+		return res.status(httpStatus.OK).json(object);
 	} catch (e) {
 		next(e);
 	}
@@ -66,13 +92,12 @@ exports.follow = async (req, res, next) => {
  * @public
  */
 exports.unfollow = async (req, res, next) => {
-	followPost = await FollowRelationship
-		.destroy({
-			where: {
-				followed_id: req.params.userID,
-				follower_id: req.user.username,
-			},
-		})
+	followPost = await FollowRelationship.destroy({
+		where: {
+			followed_id: req.params.userID,
+			follower_id: req.user.username,
+		},
+	})
 		.then(function(deletedRecord) {
 			if (deletedRecord === 1) {
 				res.status(200).json({ message: 'Unfollow successfully!' });
@@ -87,17 +112,41 @@ exports.unfollow = async (req, res, next) => {
 		});
 };
 
-
-
 /***
  * Returns the personal informations of a user as well as his posts
  */
 
-exports.userProfileInfo = async function (req, res, next){
-	try{
+exports.userProfileInfo = async function(req, res, next) {
+	try {
 		list = await User.getProfileInfo(req.params.idUser);
-		res.json(list);
-	}catch(e){
+		object = new Object();
+
+		const info = {
+			firstName: list[0].firstName,
+			lastName: list[0].lastName,
+			rating: list[0].rating,
+			avatarData: list[0].id,
+		};
+
+		object['info'] = info;
+
+		posts = [];
+		for (var i = 1; i < list.length; ) {
+			const post = {
+				id: list[i].postid,
+				photoData: list[i].photoData,
+			};
+
+			i += 1;
+
+			if (i > list.length) break;
+
+			posts.push(post);
+		}
+		object['posts'] = posts;
+
+		return res.status(httpStatus.OK).json(object);
+	} catch (e) {
 		next(e);
 	}
 };

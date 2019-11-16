@@ -1,4 +1,5 @@
-import { logout, refreshTokenService } from './auth/auth.service';
+import { logout } from './auth/auth.service';
+import { refreshToken } from './auth/auth.api';
 import { api, setToken, setStore } from './api';
 
 export const saveAuthToken = store => next => action => {
@@ -18,7 +19,7 @@ export const jwt = store => next => action => {
 		if (theStore.auth && theStore.auth.authToken && theStore.auth.refreshToken) {
 			if (!theStore.auth.pendingRefreshingToken) {
 				store.dispatch({ type: 'REFRESHING_TOKEN' });
-				store.dispatch(refreshTokenService(theStore.auth.refreshToken)).then(() => {
+				store.dispatch(refreshToken(theStore.auth.refreshToken)).then(() => {
 					store.dispatch({ type: 'TOKEN_REFRESHED' });
 				});
 			}

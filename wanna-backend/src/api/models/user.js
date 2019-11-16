@@ -183,7 +183,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	/**
 	 * Return profile info
-	 * 
+	 *
 	 * and the last photo of each post
 	 * @returns {Promise<*>}
 	 */
@@ -195,6 +195,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
+
 		postsinfo = await this.sequelize.query(
 			'SELECT "Posts"."id" AS PostID, "Posts"."idUser", "Posts"."isAvailable", "Photos"."photoType", "Photos"."photoData", "Photos"."id" AS PhotoId '+
 			'FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost" '+

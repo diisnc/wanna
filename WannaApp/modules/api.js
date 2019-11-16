@@ -17,7 +17,9 @@ async function auxFetch(method, endpoint, querystring, bodyA, headers) {
 	}
 
 	console.log(endpoint + ' ' + method);
-	// console.log(headers.Authorization);
+	if (headers.Authorization) {
+		console.log(headers.Authorization);
+	}
 
 	let string;
 	if (querystring == null) {

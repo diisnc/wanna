@@ -1,6 +1,18 @@
 import { ourFetchAuth } from '../api';
+import { AsyncStorage } from 'react-native';
+import { asyncError, generalError } from '../errors/error.service';
+import * as AuthReducer from './auth.reducer';
+import NavigationService from '../navigator';
 
-export const login = (email, password) => {
+const _saveItem = async (item, selectedValue) => {
+	try {
+		await AsyncStorage.setItem(item, selectedValue);
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const login = (email = 'stoj97@gmail.com', password = '123456') => async dispatch => {
 	const config = {
 		endpoint: '/v1/auth/login',
 		method: 'POST',
@@ -9,22 +21,55 @@ export const login = (email, password) => {
 			password: password
 		}
 	};
-	return ourFetchAuth(config);
+	dispatch(AuthReducer.setAuthPending());
+	let response = await ourFetchAuth(config);
+	let data = await response.json();
+	if (response.status == 200) {
+		dispatch(AuthReducer.setLoginSuccess(data.tokens.accessToken, data.tokens.refreshToken));
+		await _saveItem('authToken', data.tokens.accessToken);
+		await _saveItem('refreshToken', data.tokens.refreshToken);
+		NavigationService.navigate('Main');
+	} else {
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
+		// console.log('Está a despachar o erro: ' + error.errors);
+		console.log('Error1 ' + error);
+		dispatch(AuthReducer.setLoginError(error));
+	}
+	//dispatch(generalError(error));
 };
 
-export const register = (username, firstName, lastName, email, password) => {
+export const register = (username, first, last, email, password) => async dispatch => {
 	const config = {
 		endpoint: '/v1/auth/register',
 		method: 'POST',
 		body: {
 			username: username,
-			firstName: firstName,
-			lastName: lastName,
+			firstName: first,
+			lastName: last,
 			email: email,
 			password: password
 		}
 	};
-	return ourFetchAuth(config);
+
+	dispatch(AuthReducer.setAuthPending());
+	let response = ourFetchAuth(config);
+	if (response.status == 200) {
+		dispatch(AuthReducer.setRegisterSuccess());
+		NavigationService.navigate('Login');
+	} else {
+		let data = await response.json();
+		data = JSON.stringify(data);
+		let error = data.replace(/[\[\]"\{\}]+/g, '');
+		// console.log('Está a despachar o erro: ' + error.errors);
+		console.log('Error1 ' + error);
+		dispatch(AuthReducer.setRegisterError(error));
+	}
+	/*
+		.catch(error => {
+			dispatch(generalError(error));
+		});
+	*/
 };
 
 export const logout = refreshToken => {
@@ -38,7 +83,7 @@ export const logout = refreshToken => {
 	return ourFetchAuth(config);
 };
 
-export const refreshToken = refreshToken => {
+export const refreshToken = refreshToken => async dispatch => {
 	const config = {
 		endpoint: '/v1/auth/refresh-token',
 		method: 'POST',
@@ -46,5 +91,24 @@ export const refreshToken = refreshToken => {
 			refreshToken: refreshToken
 		}
 	};
-	return ourFetchAuth(config);
+	let response = await ourFetchAuth(config);
+	let data = await response.json();
+	// console.log('data do tokenservice: ' + data);
+	if (response.status == 200) {
+		dispatch(AuthReducer.saveAppToken(data.tokens.accessToken));
+		_saveItem('refreshToken', data.tokens.refreshToken)
+			.then(resp => {
+				console.log('Refresh token refreshed');
+			})
+			.catch(error => {
+				dispatch(asyncError(error));
+			});
+		_saveItem('authToken', data.tokens.accessToken)
+			.then(resp => {
+				console.log('Access token refreshed');
+			})
+			.catch(error => {
+				dispatch(asyncError(error));
+			});
+	} else dispatch({ type: 'REFRESH_EXPIRED' });
 };

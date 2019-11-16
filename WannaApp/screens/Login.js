@@ -3,14 +3,13 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Input, Button } from 'react-native-elements';
-import { loginService, checkAuthTest } from '../modules/auth/auth.service';
+import { login } from '../modules/auth/auth.api';
 
 import { globalStyle, defaultNavigator } from './style';
 
 class Login extends Component {
 	constructor(props) {
 		super(props);
-		this.goToRegister = this.goToRegister.bind(this);
 	}
 
 	render() {
@@ -51,17 +50,6 @@ class Login extends Component {
 			</View>
 		);
 	}
-	goToRegister() {
-		this.props.navigator.push({
-			screen: 'Register',
-			title: 'Register',
-			passProps: {},
-			animated: true,
-			backButtonHidden: false,
-			navigatorStyle: defaultNavigator,
-			navigatorButtons: {}
-		});
-	}
 }
 
 //must be rendered outside of the render method - from Redux Form docs
@@ -100,10 +88,7 @@ function mapStateToProps(store, ownProps) {
 function mapDispatchToProps(dispatch) {
 	return {
 		login: (email, password) => {
-			dispatch(loginService(email, password));
-		},
-		checkAuthTest: () => {
-			dispatch(checkAuthTest());
+			dispatch(login(email, password));
 		}
 	};
 }

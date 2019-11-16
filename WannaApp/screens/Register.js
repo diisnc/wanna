@@ -5,7 +5,7 @@ import { reduxForm, Field } from 'redux-form';
 import { Input, Button } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { registerService } from '../modules/auth/auth.service';
+import { register } from '../modules/auth/auth.api';
 
 import { globalStyle, defaultNavigator } from './style';
 
@@ -86,7 +86,7 @@ function mapStateToProps(store, ownProps) {
 function mapDispatchToProps(dispatch) {
 	return {
 		register: (username, first, last, email, password) => {
-			dispatch(registerService(username, first, last, email, password));
+			dispatch(register(username, first, last, email, password));
 		}
 	};
 }
