@@ -5,7 +5,7 @@
 - **Descrição:** Feed com paginate
 - **Método:** GET
 - **Rota:** v1/post/feed
-- **Estado:** &#9746;
+- **Estado:** :heavy_check_mark:
 
 ---
 
