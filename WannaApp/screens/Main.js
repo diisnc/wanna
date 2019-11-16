@@ -95,6 +95,13 @@ MainTab.navigationOptions = {
 };
 
 const subMain = createStackNavigator({
+	Main: {
+		screen: MainTab,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
 	NewFilter: {
 		screen: NewFilter,
 		headerMode: 'none',
@@ -104,6 +111,13 @@ const subMain = createStackNavigator({
 	},
 	Filters: {
 		screen: Filters,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	OtherProfile: {
+		screen: Profile,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null
@@ -127,7 +141,7 @@ const MainStack = createStackNavigator(
 	{
 		headerMode: 'none',
 		navigationOptions: {
-			header: null,
+			header: null
 		}
 	}
 );
