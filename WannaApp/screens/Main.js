@@ -8,18 +8,18 @@ import Filters from './Filters';
 import NewFilter from './NewFilter';
 import UserPost from './UserPost';
 import React, { Component } from 'react';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-const MainTab = createBottomTabNavigator(
+const MainTab = createMaterialTopTabNavigator(
 	{
 		Inspire: {
 			screen: Inspire,
 			navigationOptions: {
-				tabBarLabel: 'INSPIRE',
+				tabBarLabel: <Text style={{ fontSize: 10 }}>INSPIRE</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialCommunityIcons name="home-outline" color={tintColor} size={24} />
 				)
@@ -28,7 +28,7 @@ const MainTab = createBottomTabNavigator(
 		Wanted: {
 			screen: Wanted,
 			navigationOptions: {
-				tabBarLabel: 'WANTED',
+				tabBarLabel: <Text style={{ fontSize: 10 }}>WANTED</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={24} />
 				)
@@ -37,7 +37,7 @@ const MainTab = createBottomTabNavigator(
 		Add: {
 			screen: Add,
 			navigationOptions: {
-				tabBarLabel: 'ADD',
+				tabBarLabel: <Text style={{ fontSize: 10 }}>ADD</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<Image
 						source={require('../assets/logo64.png')}
@@ -49,7 +49,7 @@ const MainTab = createBottomTabNavigator(
 		Combine: {
 			screen: Combine,
 			navigationOptions: {
-				tabBarLabel: 'COMBINE',
+				tabBarLabel: <Text style={{ fontSize: 10 }}>COMBINE</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={24} />
 				)
@@ -58,7 +58,7 @@ const MainTab = createBottomTabNavigator(
 		Profile: {
 			screen: Profile,
 			navigationOptions: {
-				tabBarLabel: 'PROFILE',
+				tabBarLabel: <Text style={{ fontSize: 10 }}>PROFILE</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons name="person-outline" color={tintColor} size={24} />
 				)
@@ -67,7 +67,7 @@ const MainTab = createBottomTabNavigator(
 		UserPost: {
 			screen: UserPost,
 			navigationOptions: {
-				tabBarLabel: 'USERPOST',
+				tabBarLabel: <Text style={{ fontSize: 10 }}>USERPOST</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons name="person" color={tintColor} size={24} />
 				)
@@ -75,6 +75,8 @@ const MainTab = createBottomTabNavigator(
 		}
 	},
 	{
+		swipeEnabled: true,
+		animationEnabled: true,
 		tabBarOptions: {
 			activeTintColor: 'red',
 			inactiveTintColor: 'grey',
@@ -85,14 +87,18 @@ const MainTab = createBottomTabNavigator(
 				shadowColor: 'black',
 				shadowOpacity: 0.5,
 				elevation: 5
-			}
-		}
+			},
+			showIcon: true,
+			showLabel: true
+		},
+		tabBarPosition: 'bottom'
 	}
 );
 
 MainTab.navigationOptions = {
 	// Hide the header from root stack
-	header: null
+	header: null,
+	swipeEnabled: false
 };
 
 const subMain = createStackNavigator({
