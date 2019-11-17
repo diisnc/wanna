@@ -7,6 +7,7 @@ import EditProfile from './EditProfile';
 import Filters from './Filters';
 import NewFilter from './NewFilter';
 import UserPost from './UserPost';
+import UserPostProfile from './UserPostProfile';
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
@@ -135,6 +136,13 @@ const subMain = createStackNavigator({
 	},
 	EditProfile: {
 		screen: EditProfile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	UserPostProfile: {
+		screen: UserPostProfile,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null

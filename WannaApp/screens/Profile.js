@@ -48,7 +48,6 @@ class Profile extends Component {
 	}
 
 	fetchUserInfo = async () => {
-
 		let usernamePassed;
 		usernamePassed = this.props.navigation.getParam('userID', 'local');
 
@@ -102,11 +101,11 @@ class Profile extends Component {
 							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
 						/>
 					) : (
-							<Image
-								source={require('../assets/noImage.png')}
-								style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
-							/>
-						)}
+						<Image
+							source={require('../assets/noImage.png')}
+							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
+						/>
+					)}
 					<View style={{ marginRight: 230 }}>
 						<Text>{this.state.firstName + ' ' + this.state.lastName}</Text>
 						<Text>{this.state.rating}</Text>
@@ -134,16 +133,16 @@ class Profile extends Component {
 								{'Edit Profile'}{' '}
 							</Text>
 						) : (
-								<Text
-									style={{ textAlign: 'center', color: 'grey' }}
-									onPress={() =>
-										this.props.navigation.navigate('Follow', {
-											userID: this.state.username
-										})
-									}>
-									{'Follow'}{' '}
-								</Text>
-							)}
+							<Text
+								style={{ textAlign: 'center', color: 'grey' }}
+								onPress={() =>
+									this.props.navigation.navigate('Follow', {
+										userID: this.state.username
+									})
+								}>
+								{'Follow'}{' '}
+							</Text>
+						)}
 					</TouchableOpacity>
 				</View>
 				{/* <View style={{ borderColor: '#555', borderWidth: 1 }} /> */}
@@ -228,7 +227,7 @@ class Profile extends Component {
 		return (
 			<TouchableWithoutFeedback
 				onPress={() => {
-					this.props.navigation.navigate('UserPost', {
+					this.props.navigation.navigate('UserPostProfile', {
 						postID: postInfo.id
 					});
 				}}>

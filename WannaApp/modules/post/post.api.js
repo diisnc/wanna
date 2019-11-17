@@ -56,6 +56,17 @@ export const deleteComment = (idPost, type) => {
 	return ourFetchWithToken(config);
 };
 
+export const getPost = idPost => {
+	const config = {
+		endpoint: '/v1/post/',
+		method: 'GET',
+		params: {
+			idPost: idPost
+		}
+	};
+	return ourFetchWithToken(config);
+};
+
 export const markPost = (idPost, type) => {
 	const config = {
 		endpoint: '/v1/post/markUnavailable',
