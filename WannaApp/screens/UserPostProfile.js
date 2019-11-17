@@ -87,21 +87,24 @@ class UserPost extends Component {
 							<View style={{ flex: 1, flexDirection: 'column' }}>
 								{/* primeira linha: nome do produto */}
 								<View style={{ flex: 1 }}>
-									<Text>Nome Produto</Text>
+									<Text>{this.state.post.postInfo.category}</Text>
 								</View>
 								{/* segunda linha: marca e tamanho e cor */}
 								<View style={{ flex: 1 }}>
-									<Text>Marca, Cor, tamanho</Text>
+									<Text>
+										Marca, {this.state.post.postInfo.color},{' '}
+										{this.state.post.postInfo.size}
+									</Text>
 								</View>
 							</View>
 							{/* coluna da direita: preço*/}
 							<View style={{ flex: 1 }}>
-								<Text>Preço €</Text>
+								<Text>{this.state.post.postInfo.price} €</Text>
 							</View>
 						</View>
 						{/* terceira linha: descrição */}
 						<View style={{ flex: 1 }}>
-							<Text>Descrição</Text>
+							<Text>{this.state.post.postInfo.description}</Text>
 						</View>
 					</View>
 				</View>
