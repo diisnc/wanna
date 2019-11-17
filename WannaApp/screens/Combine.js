@@ -11,7 +11,8 @@ import {
 	Switch,
 	FlatList,
 	ToastAndroid,
-	TouchableHighlight
+	TouchableHighlight,
+	Dimensions
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
@@ -23,7 +24,8 @@ class Combine extends Component {
 		selectedUpperClothe: null, 
 		lowerClothes: [],
 		numLowerClothes: 0,
-		selectedLowerClothe: null
+		selectedLowerClothe: null,
+		width: 0
 	};
 
 	//onValueChange of the switch this function will be called
@@ -60,6 +62,9 @@ class Combine extends Component {
 
 		// get data from servers and save in state
 		this.getWishlistDataFromApiAsync();
+
+		// get width for carousel purposes
+		this.setState({ width: Dimensions.get('window').width * 0.75 });
 	}
 
 	render() {
@@ -123,7 +128,12 @@ class Combine extends Component {
 	// Builds list of filters
 	buildCombination() {
 		return (
-			<View style={{ flex: 8, backgroundColor: 'black', margin: 10 }}>
+			<View
+				style={{
+					flex: 8, backgroundColor: 'black',
+					justifyContent: 'space-around', alignItems: 'center'
+				}}
+			>
 				{/* Upper clothes selector */}
 				{this.buildUpperClothesSlider()}
 				{/* Lower clothes selector */}
@@ -136,7 +146,10 @@ class Combine extends Component {
 	buildUpperClothesSlider() {
 		return(
 			<View
-				style={{flex: 1, backgroundColor: "green", margin: 10}}
+				style={{
+					flex: 1, width: this.state.width, backgroundColor: "green", margin: 10,
+					justifyContent: 'space-around', alignItems: 'center'
+				}}
 			>
 				{/* upper selector */}
 				<FlatList
@@ -147,6 +160,10 @@ class Combine extends Component {
 					)}
 					keyExtractor={item => item.id.toString()}
 					onEndReached={this.onEndReachedUpper.bind(this)}
+					pagingEnabled
+					decelerationRate={0}
+					snapToInterval={this.state.width}
+					snapToAlignment={"center"}
 				/>
 			</View>
 		);
@@ -156,7 +173,10 @@ class Combine extends Component {
 	buildLowerClothesSlider() {
 		return(
 			<View
-				style={{flex: 1, backgroundColor: "green", margin: 10}}
+				style={{
+					flex: 1, width: this.state.width, backgroundColor: "green", margin: 10,
+					justifyContent: 'space-around', alignItems: 'center'
+				}}
 			>
 				{/* upper selector */}
 				<FlatList
@@ -167,6 +187,10 @@ class Combine extends Component {
 					)}
 					keyExtractor={item => item.id.toString()}
 					onEndReached={this.onEndReachedLower.bind(this)}
+					pagingEnabled
+					decelerationRate={0}
+					snapToInterval={this.state.width}
+					snapToAlignment={"center"}
 				/>
 			</View>
 		);
@@ -214,7 +238,13 @@ class Combine extends Component {
 			<TouchableHighlight onPress={() => this.onPressUpperClothe(post)}>
 				<View
 					key={id}
-					style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
+					style={{
+						width: this.state.width,
+						height: '100%',
+						backgroundColor: 'yellow',
+						justifyContent: 'space-around',
+						alignItems: 'center'
+					}}
 				>
 					<Image
 						source={{
@@ -226,11 +256,11 @@ class Combine extends Component {
 								''
 						}}
 						style={{
-							width: 'auto',
 							height: '90%',
 							aspectRatio: 1,
 							overflow: 'hidden'
 						}}
+						resizeMode='contain'
 					/>
 					{selectedUpper == post ? (
 						<Text style={{flex: 1}}>Selecionada</Text>
@@ -249,7 +279,13 @@ class Combine extends Component {
 			<TouchableHighlight onPress={() => this.onPressLowerClothe(post)}>
 				<View
 					key={id}
-					style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
+					style={{
+						width: this.state.width,
+						height: '100%',
+						backgroundColor: 'yellow',
+						justifyContent: 'space-around',
+						alignItems: 'center'
+					}}
 				>
 					<Image
 						source={{
@@ -261,11 +297,11 @@ class Combine extends Component {
 								''
 						}}
 						style={{
-							width: 'auto',
 							height: '90%',
 							aspectRatio: 1,
 							overflow: 'hidden'
 						}}
+						resizeMode='contain'
 					/>
 					{selectedLower == post ? (
 						<Text>Selecionada</Text>
