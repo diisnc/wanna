@@ -16,6 +16,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
+import UserPost from './UserPost';
 
 const { height, width } = Dimensions.get('window');
 
@@ -90,7 +91,7 @@ class Inspire extends Component {
 							alignItems: 'stretch'
 						}}>
 						{this.buildHeader()}
-						{this.buildInstaFixe()}
+						{this.buildInstaStyle()}
 					</View>
 				</SafeAreaView>
 			);
@@ -149,6 +150,32 @@ class Inspire extends Component {
 		);
 	}
 
+	// Insta style feed using UserPost
+	buildInstaStyle() {
+		return (
+			<View style={styles.container}>
+				{this.state.loading == true ? (
+					<Loading />
+				) : (
+					<FlatList
+						data={this.state.feedData}
+						keyExtractor={(item, index) => index.toString()}
+						style={styles.list}
+						renderItem={({ item, index }) => {
+							let imageUriString = 'data:' + item.photoType1 + ';base64,' + new Buffer(item.photoData1)
+							return (
+								<UserPost 
+									imageUri={imageUriString}
+								/>
+							);
+						}}
+					/>
+				)}
+			</View>
+		);
+	}
+
+	// Insta style do Sérgio
 	buildInstaFixe() {
 		return (
 			<View style={styles.container}>

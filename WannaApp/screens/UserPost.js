@@ -8,16 +8,26 @@ import {
 	Platform,
 	ScrollView,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	Dimensions
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 class UserPost extends Component {
+	state = {
+		width: 0
+	};
+
+	componentDidMount() {
+		// get width for carousel purposes
+		this.setState({ width: Dimensions.get('window').width * 0.75 });
+	}
+
 	render() {
 		return (
 			<View style={{
-				height: 600, 
+				flex: 1, 
 				flexDirection: 'column',
 				justifyContent: 'flex-start',
 				alignItems: 'stretch'
@@ -36,7 +46,11 @@ class UserPost extends Component {
 				</View>
 				{/* imagens do post */}
                 <View>
-						<MaterialIcons name="photo" size={400}/>
+						<Image
+							source={{uri: this.props.imageUri}}
+							style={{width: 500, height: 500}}
+							resizeMode='contain'
+						/>
 				</View>
 				{/* footer de post, dividido em 3 linhas */}
 				<View style={{ flex: 1, flexDirection: 'column' }}>
