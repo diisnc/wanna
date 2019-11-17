@@ -88,6 +88,9 @@ const MainTab = createMaterialTopTabNavigator(
 				shadowOpacity: 0.5,
 				elevation: 5
 			},
+			indicatorStyle: {
+				backgroundColor: 'red'
+			},
 			showIcon: true,
 			showLabel: true
 		},

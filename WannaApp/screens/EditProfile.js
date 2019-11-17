@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View, BackHandler, SafeAreaView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Input, Button } from 'react-native-elements';
@@ -12,14 +12,68 @@ import { globalStyle, defaultNavigator } from './style';
 class EditProfile extends Component {
 	constructor(props) {
 		super(props);
+		BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 	}
 
+	componentDidMount() {}
+
+	handleBackPress = () => {
+		this.props.navigation.navigate('OtherProfile');
+		return true;
+	};
+
 	render() {
+		return (
+			<SafeAreaView style={{ flex: 1 }}>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: 'column',
+						justifyContent: 'flex-start',
+						alignItems: 'stretch'
+					}}>
+					{this.buildHeader()}
+					{this.renderForm()}
+				</View>
+			</SafeAreaView>
+		);
+	}
+
+	// Builds header of the page
+	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
+		return (
+			// Safe Box for Android
+			<View
+				style={{
+					height: this.startHeaderHeight,
+					backgroundColor: 'white',
+					borderBottomWidth: 1,
+					borderBottomColor: '#dddddd'
+				}}>
+				<View
+					style={{
+						height: '90%',
+						flexDirection: 'row',
+						padding: 10,
+						justifyContent: 'center',
+						alignItems: 'center',
+						backgroundColor: 'blue'
+					}}>
+					<Text style={{ flex: 3, textAlign: 'center' }}>Editar Perfil</Text>
+				</View>
+			</View>
+		);
+	}
+
+	renderForm() {
 		const { handleSubmit } = this.props;
 		const submitForm = e => {
 			this.props.register(e.user, e.first, e.last, e.email, e.password);
 		};
-
 		return (
 			<View>
 				<Field name="user" placeholder="Username" component={renderInput} />
@@ -36,12 +90,6 @@ class EditProfile extends Component {
 					buttonStyle={[globalStyle.btn]}
 					titleStyle={globalStyle.btnText}
 					title={'Register'}
-				/>
-				<Button
-					onPress={() => this.props.navigation.navigate('Login')}
-					buttonStyle={[globalStyle.btn]}
-					titleStyle={globalStyle.btnText}
-					title={'Voltar'}
 				/>
 				{this.props.registered ? (
 					<Text style={styles.loggedInDesc}>Register was successfull</Text>

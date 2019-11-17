@@ -13,6 +13,7 @@ exports.profileInfo = async (req, res, next) => {
 		object = new Object();
 
 		const info = {
+			username: list[0].username,
 			firstName: list[0].firstName,
 			lastName: list[0].lastName,
 			rating: list[0].rating,
@@ -122,6 +123,7 @@ exports.userProfileInfo = async function(req, res, next) {
 		object = new Object();
 
 		const info = {
+			username: list[0].username,
 			firstName: list[0].firstName,
 			lastName: list[0].lastName,
 			rating: list[0].rating,

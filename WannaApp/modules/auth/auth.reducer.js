@@ -9,11 +9,12 @@ export const setNoLogin = () => {
 		type: 'SET_NO_LOGIN'
 	};
 };
-export const setLoginSuccess = (authToken, refreshToken) => {
+export const setLoginSuccess = (authToken, refreshToken, username) => {
 	return {
 		type: 'SET_LOGIN_SUCCESS',
 		authToken,
-		refreshToken
+		refreshToken,
+		username
 	};
 };
 export const setLoginError = loginError => {
@@ -35,7 +36,8 @@ export const setRegisterError = regError => {
 };
 export const setLogout = () => {
 	return {
-		type: 'SET_LOGOUT'
+		type: 'SET_LOGOUT',
+		username: null
 	};
 };
 export const saveAppToken = authToken => {
@@ -54,10 +56,11 @@ let initialState = {
 	authToken: null,
 	refreshToken: null,
 	tokenIsValid: false,
-	pendingRefreshingToken: null
+	pendingRefreshingToken: null,
+	loggedUsername: null
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
 	switch (action.type) {
 		case 'SET_AUTH_PENDING':
 			return {
@@ -77,7 +80,8 @@ export default function (state = initialState, action) {
 				loggedIn: true,
 				loginError: false,
 				authToken: action.authToken,
-				refreshToken: action.refreshToken
+				refreshToken: action.refreshToken,
+				loggedUsername: action.username
 			};
 		case 'SET_LOGIN_ERROR':
 			return {
@@ -104,7 +108,8 @@ export default function (state = initialState, action) {
 				...state,
 				authToken: false,
 				refreshToken: false,
-				loggedIn: false
+				loggedIn: false,
+				loggedUsername: null
 			};
 		case 'INVALID_TOKEN':
 			return {

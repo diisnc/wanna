@@ -24,6 +24,9 @@ import { getMyProfile, getUserProfile } from '../modules/profile/profile.api';
 let { width, height } = Dimensions.get('window');
 
 class Profile extends Component {
+	constructor(props) {
+		super(props);
+	}
 	state = {
 		avatarData: [],
 		firstName: '',
@@ -31,13 +34,13 @@ class Profile extends Component {
 		rating: 0,
 		posts: [],
 		numPosts: 0,
-		name: 'local',
 		loading: true,
 		username: ''
 	};
 
 	componentDidMount() {
 		this.fetchUserInfo();
+		console.log('ENTROU 1 VEZ');
 		this.startHeaderHeight = 80;
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
@@ -45,15 +48,15 @@ class Profile extends Component {
 	}
 
 	fetchUserInfo = async () => {
-		nameP = this.props.navigation.getParam('userID', 'local');
-		if (nameP !== undefined) {
-			await this.setState({ name: nameP });
-		}
+
+		let usernamePassed;
+		usernamePassed = this.props.navigation.getParam('userID', 'local');
+
 		let newState;
-		if (this.state.name == 'local') {
+		if (usernamePassed == 'local') {
 			newState = await getMyProfile();
 		} else {
-			newState = await getUserProfile(this.state.name);
+			newState = await getUserProfile(usernamePassed);
 		}
 
 		if (newState != null) {
@@ -75,6 +78,8 @@ class Profile extends Component {
 	};
 
 	buildProfile() {
+		console.log('username da pagina:' + this.state.username);
+		console.log('username logado:' + this.props.loggedUsername);
 		return (
 			<View>
 				<View
@@ -97,11 +102,11 @@ class Profile extends Component {
 							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
 						/>
 					) : (
-						<Image
-							source={require('../assets/noImage.png')}
-							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
-						/>
-					)}
+							<Image
+								source={require('../assets/noImage.png')}
+								style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
+							/>
+						)}
 					<View style={{ marginRight: 230 }}>
 						<Text>{this.state.firstName + ' ' + this.state.lastName}</Text>
 						<Text>{this.state.rating}</Text>
@@ -118,15 +123,27 @@ class Profile extends Component {
 							borderColor: 'grey',
 							borderWidth: 1.5
 						}}>
-						<Text
-							style={{ textAlign: 'center', color: 'grey' }}
-							onPress={() =>
-								this.props.navigation.navigate('EditProfile', {
-									userID: this.state.username
-								})
-							}>
-							{'Edit Profile'}{' '}
-						</Text>
+						{this.state.username == this.props.loggedUsername ? (
+							<Text
+								style={{ textAlign: 'center', color: 'grey' }}
+								onPress={() =>
+									this.props.navigation.navigate('EditProfile', {
+										userID: this.state.username
+									})
+								}>
+								{'Edit Profile'}{' '}
+							</Text>
+						) : (
+								<Text
+									style={{ textAlign: 'center', color: 'grey' }}
+									onPress={() =>
+										this.props.navigation.navigate('Follow', {
+											userID: this.state.username
+										})
+									}>
+									{'Follow'}{' '}
+								</Text>
+							)}
 					</TouchableOpacity>
 				</View>
 				{/* <View style={{ borderColor: '#555', borderWidth: 1 }} /> */}
@@ -195,12 +212,14 @@ class Profile extends Component {
 						backgroundColor: 'blue'
 					}}>
 					<Text style={{ flex: 3, textAlign: 'center' }}>Perfil</Text>
-					<MaterialCommunityIcons.Button
-						name="logout"
-						size={40}
-						style={{ flex: 1 }}
-						onPress={() => this.props.logout()}
-					/>
+					{this.state.username == this.props.loggedUsername ? (
+						<MaterialCommunityIcons.Button
+							name="logout"
+							size={40}
+							style={{ flex: 1 }}
+							onPress={() => this.props.logout()}
+						/>
+					) : null}
 				</View>
 			</View>
 		);
@@ -242,7 +261,9 @@ class Profile extends Component {
 }
 
 function mapStateToProps(store) {
-	return {};
+	return {
+		loggedUsername: store.auth.loggedUsername
+	};
 }
 
 function mapDispatchToProps(dispatch) {

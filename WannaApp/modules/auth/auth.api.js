@@ -25,9 +25,16 @@ export const login = (email = 'stoj97@gmail.com', password = '123456') => async 
 	let response = await ourFetchAuth(config);
 	let data = await response.json();
 	if (response.status == 200) {
-		dispatch(AuthReducer.setLoginSuccess(data.tokens.accessToken, data.tokens.refreshToken));
+		dispatch(
+			AuthReducer.setLoginSuccess(
+				data.tokens.accessToken,
+				data.tokens.refreshToken,
+				data.user.username
+			)
+		);
 		await _saveItem('authToken', data.tokens.accessToken);
 		await _saveItem('refreshToken', data.tokens.refreshToken);
+		await _saveItem('username', data.user.username);
 		NavigationService.navigate('Main');
 	} else {
 		data = JSON.stringify(data);
