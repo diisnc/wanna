@@ -206,7 +206,6 @@ class Profile extends Component {
 		);
 	}
 	renderItem = (postInfo, index) => {
-		console.log(postInfo.photoData);
 		return (
 			<TouchableWithoutFeedback
 				onPress={() => {

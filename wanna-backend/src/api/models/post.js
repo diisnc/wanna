@@ -119,7 +119,7 @@ module.exports = (sequelize, DataTypes) => {
 			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description",'+
 			' "Posts"."isAvailable", "Posts"."price", "Photos"."photoType", '+
 			' "Photos"."photoData" FROM "Posts" JOIN "Photos" ON "Posts"."id" '+
-			' = "Photos"."idPost" AND "Photos"."id" IN (SELECT MAX("Photos"."id") '+
+			' = "Photos"."idPost" AND "Photos"."id" IN (SELECT MIN("Photos"."id") '+
 			' FROM "Photos" GROUP BY "Photos"."idPost") '+
 			' WHERE EXISTS (SELECT * FROM "FollowRelationships" '+
 			' WHERE "follower_id" = :idUser AND "Posts"."idUser"="followed_id") '+

@@ -45,16 +45,7 @@ exports.feed = async (req, res, next) => {
 	try {
 		list = await Post.feed(req.query.page, req.user.username);
 		const result1 = [];
-		console.log(list.length);
-		// devolver listas em múltiplos de 3
-		length = list.length;
-		console.log(length);
-		while (length % 3 != 0) {
-			length -= 1;
-			console.log(length);
-		}
-
-		for (var i = 0; i < length; ) {
+		for (var i = 0; i < list.length; ) {
 			const post = {
 				id: list[i].id,
 				idUser: list[i].idUser,
@@ -67,7 +58,7 @@ exports.feed = async (req, res, next) => {
 
 			i += 1;
 
-			if (i > length) break;
+			if (i > list.length) break;
 
 			result1.push(post);
 		}
