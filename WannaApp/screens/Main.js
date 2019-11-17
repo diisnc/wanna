@@ -3,6 +3,7 @@ import Wanted from './Wanted';
 import Combine from './Combine';
 import Add from './Add';
 import Profile from './Profile';
+import EditProfile from './EditProfile';
 import Filters from './Filters';
 import NewFilter from './NewFilter';
 import UserPost from './UserPost';
@@ -118,6 +119,13 @@ const subMain = createStackNavigator({
 	},
 	OtherProfile: {
 		screen: Profile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	EditProfile: {
+		screen: EditProfile,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null

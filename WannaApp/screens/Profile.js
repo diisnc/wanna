@@ -10,7 +10,8 @@ import {
 	ScrollView,
 	Platform,
 	Dimensions,
-	FlatList
+	FlatList,
+	TouchableWithoutFeedback
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
@@ -19,24 +20,24 @@ import { globalStyle, defaultNavigator } from './style';
 import { logout } from '../modules/auth/auth.service';
 import { connect } from 'react-redux';
 import { getMyProfile, getUserProfile } from '../modules/profile/profile.api';
-import { AppLoading } from 'expo';
 
 let { width, height } = Dimensions.get('window');
 
 class Profile extends Component {
 	state = {
-		loading: true,
 		avatarData: [],
 		firstName: '',
 		lastName: '',
 		rating: 0,
 		posts: [],
 		numPosts: 0,
-		name: 'local'
+		name: 'local',
+		loading: true,
+		username: ''
 	};
 
 	componentDidMount() {
-		//this.fetchUserInfo();
+		this.fetchUserInfo();
 		this.startHeaderHeight = 80;
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
@@ -63,7 +64,8 @@ class Profile extends Component {
 				rating: newState.info.rating,
 				posts: newState.posts,
 				numPosts: newState.posts.length,
-				loading: false
+				loading: false,
+				username: newState.info.username
 			});
 		}
 
@@ -94,8 +96,13 @@ class Profile extends Component {
 							}}
 							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
 						/>
-					) : null}
-					<View style={{ marginRight: 10 }}>
+					) : (
+						<Image
+							source={require('../assets/noImage.png')}
+							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
+						/>
+					)}
+					<View style={{ marginRight: 230 }}>
 						<Text>{this.state.firstName + ' ' + this.state.lastName}</Text>
 						<Text>{this.state.rating}</Text>
 					</View>
@@ -104,13 +111,20 @@ class Profile extends Component {
 					<TouchableOpacity
 						style={{
 							marginTop: 10,
+							marginBottom: 20,
 							marginHorizontal: 40,
 							paddingVertical: 15,
 							borderRadius: 20,
 							borderColor: 'grey',
 							borderWidth: 1.5
 						}}>
-						<Text style={{ textAlign: 'center', color: 'grey' }}>
+						<Text
+							style={{ textAlign: 'center', color: 'grey' }}
+							onPress={() =>
+								this.props.navigation.navigate('EditProfile', {
+									userID: this.state.username
+								})
+							}>
 							{'Edit Profile'}{' '}
 						</Text>
 					</TouchableOpacity>
@@ -138,7 +152,7 @@ class Profile extends Component {
 						</View>
 					</SafeAreaView>
 				);
-			} else
+			} else {
 				return (
 					<SafeAreaView style={{ flex: 1 }}>
 						<View
@@ -156,13 +170,8 @@ class Profile extends Component {
 						</View>
 					</SafeAreaView>
 				);
-		} else
-			return (
-				<AppLoading
-					startAsync={this.fetchUserInfo}
-					onFinish={() => this.setState({ loading: false })}
-				/>
-			);
+			}
+		} else return null;
 	}
 
 	// Builds header of the page
@@ -199,21 +208,29 @@ class Profile extends Component {
 	renderItem = (postInfo, index) => {
 		console.log(postInfo.photoData);
 		return (
-			<View style={styles.gridImgContainer}>
-				<Image
-					resizeMode="cover"
-					style={styles.image}
-					source={{
-						uri: 'data:' + 'image/jpeg' + ';base64,' + new Buffer(postInfo.photoData)
-					}}
-				/>
-			</View>
+			<TouchableWithoutFeedback
+				onPress={() => {
+					this.props.navigation.navigate('UserPost', {
+						postID: postInfo.id
+					});
+				}}>
+				<View style={styles.gridImgContainer}>
+					<Image
+						resizeMode="cover"
+						style={styles.image}
+						source={{
+							uri:
+								'data:' + 'image/jpeg' + ';base64,' + new Buffer(postInfo.photoData)
+						}}
+					/>
+				</View>
+			</TouchableWithoutFeedback>
 		);
 	};
 
 	buildPosts = () => {
 		return (
-			<View style={styles.container}>
+			<View style={styles.containerImages}>
 				<FlatList
 					numColumns={3}
 					data={this.state.posts}
@@ -246,6 +263,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	containerImages: {
+		alignItems: 'stretch',
 		justifyContent: 'center'
 	},
 	gridImgContainer: {
