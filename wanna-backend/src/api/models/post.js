@@ -157,9 +157,7 @@ module.exports = (sequelize, DataTypes) => {
 		object['userInfo'] = userInfo[0];
 
 		postInfo = await this.sequelize.query(
-			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES '+
-			'FROM "Posts"  JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost) '+
-			'GROUP BY "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "UserPosts"."type"',
+			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size" FROM "Posts" WHERE "Posts"."id" = (:idPost)',
 			{
 				replacements: {idPost: idPost},
 				type: this.sequelize.QueryTypes.SELECT,
@@ -167,6 +165,18 @@ module.exports = (sequelize, DataTypes) => {
 		);
 
 		object['postInfo'] = postInfo[0];
+
+		votes = await this.sequelize.query(
+			'SELECT "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES '+
+			'FROM "Posts" JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost) '+
+			'GROUP BY "UserPosts"."type"',
+			{
+				replacements: {idPost: idPost},
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		
+		object['votes'] = votes;
 
 		photos = await this.sequelize.query(
 			'SELECT "Photos"."photoType", "Photos"."photoData" FROM "Photos" WHERE "idPost" = (:idPost)',
