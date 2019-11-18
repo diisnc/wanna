@@ -43,6 +43,7 @@ class Add extends Component {
 		selectedClothe: null,
 		selectedColor: null,
 		selectedSize: null,
+		insertedBrand: null,
 		price: null,
 		offerPostage: false,
 		postagePrice: null,
@@ -306,6 +307,15 @@ class Add extends Component {
 							}}
 							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
 							dropdownStyle={{ width: '60%' }}
+						/>
+					</View>
+					{/* marca */}
+					<View style={{flex: 1, padding: 10}}>
+						<TextInput
+							style={{flex: 1}}
+							placeholder="Marca"
+							onChangeText={(text) => this.setState({insertedBrand: text})}
+							value={this.state.insertedBrand}
 						/>
 					</View>
 					{/* preço */}
