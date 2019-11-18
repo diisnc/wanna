@@ -440,7 +440,7 @@ class Add extends Component {
 	pickImage = async () => {
 		let pickerResult = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
-			aspect: [16, 9],
+			aspect: [4, 3],
 			base64: true
 		});
 
