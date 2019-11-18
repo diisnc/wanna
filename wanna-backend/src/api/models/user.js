@@ -157,6 +157,12 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
+		User.hasMany(models.UserMessage, {
+			foreignKey: 'receiver',
+			sourceKey: 'username',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
 	};
 
 	/** Static methods */

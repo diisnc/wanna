@@ -88,7 +88,8 @@
     "sinon-chai": "^3.3.0",
     "umzug": "^2.2.0",
     "uuid": "^3.3.3",
-    "yarn": "^1.19.1"
+    "yarn": "^1.19.1",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "apidoc": "^0.17.7",

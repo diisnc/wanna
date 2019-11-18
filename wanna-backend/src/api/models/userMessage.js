@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: 'SET NULL',
 			onUpdate: 'CASCADE',
 		});
+		UserMessage.belongsTo(models.User, {
+			foreignKey: 'idReceiver',
+			targetKey: 'username',
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
+		});
 		UserMessage.belongsTo(models.Post, {
 			foreignKey: 'idPost',
 			targetKey: 'id',
