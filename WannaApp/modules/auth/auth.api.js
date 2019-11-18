@@ -12,7 +12,7 @@ const _saveItem = async (item, selectedValue) => {
 	}
 };
 
-export const login = (email = 'stoj97@gmail.com', password = '123456') => async dispatch => {
+export const login = (email = 'stoj97@gmail.com', password = '12345678') => async dispatch => {
 	const config = {
 		endpoint: '/v1/auth/login',
 		method: 'POST',
@@ -61,13 +61,13 @@ export const register = (username, first, last, location, email, password) => as
 	};
 
 	dispatch(AuthReducer.setAuthPending());
-	let response = ourFetchAuth(config);
+	let response = await ourFetchAuth(config);
 	if (response.status == 200) {
 		dispatch(AuthReducer.setRegisterSuccess());
 		NavigationService.navigate('Login');
 	} else {
 		let data = await response.json();
-		data = JSON.stringify(data);
+		data = JSON.stringify(data.errors);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
 		// console.log('Está a despachar o erro: ' + error.errors);
 		console.log('Error1 ' + error);

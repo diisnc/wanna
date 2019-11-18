@@ -86,8 +86,8 @@ function mapStateToProps(store, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
 	return {
-		register: (username, first, last, email, password) => {
-			dispatch(register(username, first, last, email, password));
+		register: (username, first, last, location, email, password) => {
+			dispatch(register(username, first, last, location, email, password));
 		}
 	};
 }

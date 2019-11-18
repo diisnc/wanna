@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
 import UserPost from './UserPost';
-import Wanna from './Wanna';
+import Loading from './Loading';
 
 const { height, width } = Dimensions.get('window');
 
@@ -75,7 +75,7 @@ class Inspire extends Component {
 		if (loggedIn == true && token == true) {
 			//this.getFeedDataFromApiAsync();
 			// loading screen
-			if (this.state.loading == false) return <Wanna />;
+			if (this.state.loading == false) return <Loading />;
 			else
 				return (
 					/*
