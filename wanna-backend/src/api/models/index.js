@@ -90,6 +90,6 @@ async function createFakeData(nrPosts) {
 }
 
 // passar o número de posts a criar como argumento
-createFakeData(30);
+// createFakeData(30);
 
 module.exports = db;
