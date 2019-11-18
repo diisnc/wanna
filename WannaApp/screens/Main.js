@@ -15,10 +15,89 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
+const FilterStack = createStackNavigator({
+	Wanted: {
+		screen: Wanted,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	Filters: {
+		screen: Filters,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	NewFilter: {
+		screen: NewFilter,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	}
+});
+
+const UserStack = createStackNavigator({
+	MyProfile: {
+		screen: Profile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	EditProfile: {
+		screen: EditProfile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	UserProfile: {
+		screen: Profile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	UserPostProfile: {
+		screen: UserPostProfile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	}
+});
+
+const FeedStack = createStackNavigator({
+	MyFeed: {
+		screen: Inspire,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	UserProfile: {
+		screen: Profile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	UserPostProfile: {
+		screen: UserPostProfile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	}
+});
+
 const MainTab = createMaterialTopTabNavigator(
 	{
 		Inspire: {
-			screen: Inspire,
+			screen: FeedStack,
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 10 }}>INSPIRE</Text>,
 				tabBarIcon: ({ tintColor }) => (
@@ -27,7 +106,7 @@ const MainTab = createMaterialTopTabNavigator(
 			}
 		},
 		Wanted: {
-			screen: Wanted,
+			screen: FilterStack,
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 10 }}>WANTED</Text>,
 				tabBarIcon: ({ tintColor }) => (
@@ -57,20 +136,11 @@ const MainTab = createMaterialTopTabNavigator(
 			}
 		},
 		Profile: {
-			screen: Profile,
+			screen: UserStack,
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 10 }}>PROFILE</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons name="person-outline" color={tintColor} size={24} />
-				)
-			}
-		},
-		UserPost: {
-			screen: UserPost,
-			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 10 }}>USERPOST</Text>,
-				tabBarIcon: ({ tintColor }) => (
-					<MaterialIcons name="person" color={tintColor} size={24} />
 				)
 			}
 		}
@@ -101,75 +171,8 @@ const MainTab = createMaterialTopTabNavigator(
 
 MainTab.navigationOptions = {
 	// Hide the header from root stack
-	header: null,
-	swipeEnabled: false
-};
-
-const subMain = createStackNavigator({
-	Main: {
-		screen: MainTab,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	},
-	NewFilter: {
-		screen: NewFilter,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	},
-	Filters: {
-		screen: Filters,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	},
-	OtherProfile: {
-		screen: Profile,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	},
-	EditProfile: {
-		screen: EditProfile,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	},
-	UserPostProfile: {
-		screen: UserPostProfile,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	}
-});
-
-subMain.navigationOptions = {
-	// Hide the header from root stack
 	header: null
 };
-
-const MainStack = createStackNavigator(
-	{
-		Main: MainTab,
-		SubMain: subMain
-	},
-	{
-		initialRouteName: 'Main'
-	},
-	{
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	}
-);
 
 const styles = StyleSheet.create({
 	container: {
@@ -180,4 +183,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default createAppContainer(MainStack);
+export default createAppContainer(MainTab);

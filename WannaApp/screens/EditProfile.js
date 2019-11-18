@@ -12,7 +12,7 @@ import { globalStyle, defaultNavigator } from './style';
 class EditProfile extends Component {
 	constructor(props) {
 		super(props);
-		BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+		// BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 	}
 
 	componentDidMount() {}

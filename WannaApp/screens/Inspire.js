@@ -23,7 +23,8 @@ const { height, width } = Dimensions.get('window');
 class Inspire extends Component {
 	state = {
 		feedData: [],
-		numPosts: 0
+		numPosts: 0,
+		loading: true
 	};
 
 	componentDidMount() {
@@ -154,77 +155,13 @@ class Inspire extends Component {
 	buildInstaStyle() {
 		return (
 			<View style={styles.container}>
-				{this.state.loading == true ? (
-					<Loading />
-				) : (
+				{this.state.loading == true ? null : (
 					<FlatList
 						data={this.state.feedData}
 						keyExtractor={(item, index) => index.toString()}
 						style={styles.list}
 						renderItem={({ item, index }) => {
-							let imageUriString = 'data:' + item.photoType1 + ';base64,' + new Buffer(item.photoData1)
-							return (
-								<UserPost 
-									imageUri={imageUriString}
-								/>
-							);
-						}}
-					/>
-				)}
-			</View>
-		);
-	}
-
-	// Insta style do Sérgio
-	buildInstaFixe() {
-		return (
-			<View style={styles.container}>
-				{this.state.loading == true ? (
-					<Loading />
-				) : (
-					<FlatList
-						data={this.state.feedData}
-						keyExtractor={(item, index) => index.toString()}
-						style={styles.list}
-						renderItem={({ item, index }) => {
-							return (
-								<View key={index} style={styles.item}>
-									<View style={styles.subItem}>
-										{/* <Text>{item.posted}</Text> */}
-										<Text>{item.posted}</Text>
-										<TouchableOpacity
-											onPress={() => {
-												this.props.navigation.navigate('OtherProfile', {
-													userID: item.idUser
-												});
-												// console.log(item.authorId) // working Good, we sure params has value now.
-											}}>
-											<Text>{item.idUser}</Text>
-										</TouchableOpacity>
-									</View>
-									<View style={styles.imageView}>
-										<Image
-											source={{
-												uri:
-													'data:' +
-													item.photoType1 +
-													';base64,' +
-													new Buffer(item.photoData1)
-											}}
-											style={styles.image}
-										/>
-									</View>
-									<View>
-										<Text>Descrição</Text>
-										<TouchableOpacity
-											onPress={() =>
-												this.props.navigation.navigate('Comments')
-											}>
-											<Text> {'View Comments...'}</Text>
-										</TouchableOpacity>
-									</View>
-								</View>
-							);
+							return <UserPost item={item} navigation={this.props.navigation} />;
 						}}
 					/>
 				)}
@@ -720,7 +657,7 @@ class Inspire extends Component {
 		const newState = await feed(0);
 		// console.log(newState);
 		if (newState != null) {
-			this.setState({ feedData: newState, numPosts: newState.length });
+			this.setState({ feedData: newState, numPosts: newState.length, loading: false });
 		}
 		// this.setState({ loading: false });
 
@@ -774,6 +711,7 @@ const styles = StyleSheet.create({
 	},
 	list: {
 		flex: 1,
-		color: '#eee'
+		color: '#eee',
+		backgroundColor: 'white'
 	}
 });
