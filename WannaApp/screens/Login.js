@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Input, Button } from 'react-native-elements';
@@ -12,6 +12,36 @@ class Login extends Component {
 		super(props);
 	}
 
+	// Builds header of the page
+	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
+		return (
+			// Safe Box for Android
+			<View
+				style={{
+					height: this.startHeaderHeight,
+					backgroundColor: 'white',
+					borderBottomWidth: 1,
+					borderBottomColor: '#dddddd'
+				}}>
+				<View
+					style={{
+						height: '90%',
+						flexDirection: 'row',
+						padding: 10,
+						justifyContent: 'center',
+						alignItems: 'center',
+						backgroundColor: 'blue'
+					}}>
+					<Text style={{ flex: 3, textAlign: 'center' }}>LOGIN</Text>
+				</View>
+			</View>
+		);
+	}
+
 	render() {
 		const { handleSubmit } = this.props;
 		const submitForm = e => {
@@ -20,6 +50,7 @@ class Login extends Component {
 
 		return (
 			<View>
+				{this.buildHeader()}
 				<Field name="email" component={renderEmail} />
 				<Field name="password" component={renderPassword} />
 
@@ -35,16 +66,10 @@ class Login extends Component {
 						title="Log in"
 					/>
 					<Button
-						onPress={() => this.props.navigation.navigate('Register')}
+						onPress={() => this.props.navigation.navigate('Wanna')}
 						buttonStyle={[globalStyle.btn, styles.authBtn]}
 						titleStyle={globalStyle.btnText}
-						title={'Create account'}
-					/>
-					<Button
-						onPress={() => this.props.navigation.navigate('Main')}
-						buttonStyle={[globalStyle.btn, styles.authBtn]}
-						titleStyle={globalStyle.btnText}
-						title={'Mudar'}
+						title={'Voltar'}
 					/>
 				</View>
 			</View>

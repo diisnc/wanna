@@ -9,7 +9,7 @@ faker.locale = 'pt_BR';
 
 var doRequest = function() {
 	var options = {
-		url: 'https://placeimg.com/250/250/people',
+		url: 'https://loremflickr.com/320/240/people,face/all',
 		method: 'get',
 		encoding: null,
 		timeout: 5000,
@@ -44,8 +44,9 @@ exports.createFakeUsers = async (Sequelize, nr) => {
 				password: faker.internet.password(),
 				role: 'user',
 				refreshToken: generateRefreshToken(userTemp),
-				avatarData: value,
+				avatarData: Buffer.from(value).toString('base64'),
 				avatarType: 'image/jpeg',
+				location: faker.address.city(),
 			};
 			users.push(user);
 		});

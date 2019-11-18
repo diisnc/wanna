@@ -34,8 +34,8 @@ exports.get = (req, res) => {
  */
 exports.create = async (req, res, next) => {
 	try {
-		const user = await User.create(req.body);
-		res.status(httpStatus.CREATED).json(user.transform());
+		await User.create(req.body);
+		res.send(200);
 	} catch (e) {
 		next(e);
 	}

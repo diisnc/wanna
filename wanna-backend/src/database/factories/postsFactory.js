@@ -18,6 +18,18 @@ exports.createFakePosts = async (db, sequelize, nr) => {
 	];
 	var colors = ['Preto', 'Branco', 'Vermelho', 'Azul', 'Bege', 'Rosa'];
 	var sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
+	var brands = [
+		'Adidas',
+		'Nike',
+		'Zara',
+		'Pull&Bear',
+		'Levis',
+		'Carhartt',
+		'Timberland',
+		'Tiffosi',
+		'Stradivarius',
+		'H&M',
+	];
 
 	const posts = [];
 
@@ -34,6 +46,7 @@ exports.createFakePosts = async (db, sequelize, nr) => {
 			category: categories[Math.floor(Math.random() * categories.length)],
 			color: colors[Math.floor(Math.random() * colors.length)],
 			size: sizes[Math.floor(Math.random() * sizes.length)],
+			brand: brands[Math.floor(Math.random() * brands.length)],
 			isAvailable: faker.random.boolean(),
 		};
 

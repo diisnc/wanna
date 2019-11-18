@@ -46,7 +46,7 @@ export const login = (email = 'stoj97@gmail.com', password = '123456') => async 
 	//dispatch(generalError(error));
 };
 
-export const register = (username, first, last, email, password) => async dispatch => {
+export const register = (username, first, last, location, email, password) => async dispatch => {
 	const config = {
 		endpoint: '/v1/auth/register',
 		method: 'POST',
@@ -55,7 +55,8 @@ export const register = (username, first, last, email, password) => async dispat
 			firstName: first,
 			lastName: last,
 			email: email,
-			password: password
+			password: password,
+			location: location
 		}
 	};
 

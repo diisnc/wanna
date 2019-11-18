@@ -2,7 +2,7 @@ import { handleTokenErrors } from './errors/error.service';
 import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 
-const config = { url: 'http://infernoo.duckdns.org:8000' };
+const config = { url: 'http://192.168.1.14:8000' };
 
 var currentAuthToken;
 

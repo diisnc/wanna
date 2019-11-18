@@ -17,7 +17,7 @@ class Register extends Component {
 	render() {
 		const { handleSubmit } = this.props;
 		const submitForm = e => {
-			this.props.register(e.user, e.first, e.last, e.email, e.password);
+			this.props.register(e.user, e.first, e.last, e.location, e.email, e.password);
 		};
 
 		return (
@@ -25,6 +25,7 @@ class Register extends Component {
 				<Field name="user" placeholder="Username" component={renderInput} />
 				<Field name="first" placeholder="First name" component={renderInput} />
 				<Field name="last" placeholder="Last name" component={renderInput} />
+				<Field name="location" placeholder="Your Location" component={renderInput} />
 				<Field name="email" placeholder="Email" component={renderInput} />
 				<Field name="password" placeholder="Password" component={renderPassword} />
 				<View style={styles.errorMessage}>
@@ -38,7 +39,7 @@ class Register extends Component {
 					title={'Register'}
 				/>
 				<Button
-					onPress={() => this.props.navigation.navigate('Login')}
+					onPress={() => this.props.navigation.navigate('Wanna')}
 					buttonStyle={[globalStyle.btn]}
 					titleStyle={globalStyle.btnText}
 					title={'Voltar'}

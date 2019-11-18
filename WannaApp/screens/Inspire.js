@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
 import UserPost from './UserPost';
+import Wanna from './Wanna';
 
 const { height, width } = Dimensions.get('window');
 
@@ -74,28 +75,30 @@ class Inspire extends Component {
 		if (loggedIn == true && token == true) {
 			//this.getFeedDataFromApiAsync();
 			// loading screen
-			return (
-				/*
+			if (this.state.loading == false) return <Wanna />;
+			else
+				return (
+					/*
             Fazer View Englobadora da página
             onde o primeiro elemento é o header
             de pesquisa e o segundo elemento
             é o feed que contém as imagens.
             */
-				// Safe Box for Iphone
-				<SafeAreaView style={{ flex: 1 }}>
-					{/* Full Page Box */}
-					<View
-						style={{
-							flex: 1,
-							flexDirection: 'column',
-							justifyContent: 'flex-start',
-							alignItems: 'stretch'
-						}}>
-						{this.buildHeader()}
-						{this.buildInstaStyle()}
-					</View>
-				</SafeAreaView>
-			);
+					// Safe Box for Iphone
+					<SafeAreaView style={{ flex: 1 }}>
+						{/* Full Page Box */}
+						<View
+							style={{
+								flex: 1,
+								flexDirection: 'column',
+								justifyContent: 'flex-start',
+								alignItems: 'stretch'
+							}}>
+							{this.buildHeader()}
+							{this.buildInstaStyle()}
+						</View>
+					</SafeAreaView>
+				);
 		} else
 			return (
 				<SafeAreaView style={{ flex: 1 }}>

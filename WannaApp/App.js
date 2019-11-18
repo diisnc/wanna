@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { connect } from 'react-redux';
 import Main from './screens/Main';
 import Login from './screens/Login';
+import Wanna from './screens/Wanna';
 import Register from './screens/Register';
 import { checkAuthStatus } from './modules/auth/auth.service';
 import { jwt, saveAuthToken } from './modules/middleware';
@@ -18,7 +19,6 @@ import permissions, {
 } from './modules/permissions/permissions.reducer';
 import error from './modules/errors/error.reducer';
 import * as Permissions from 'expo-permissions';
-import { follow } from './modules/profile/profile.api';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import NavigatorService from './modules/navigator';
 
@@ -43,6 +43,12 @@ class App extends Component {
 }
 
 const AppStackNav = createSwitchNavigator({
+	Wanna: {
+		screen: Wanna,
+		navigationOptions: {
+			header: null
+		}
+	},
 	Login: {
 		screen: Login,
 		navigationOptions: {

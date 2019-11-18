@@ -7,7 +7,7 @@ faker.locale = 'pt_BR';
 
 var doRequest = function() {
 	var options = {
-		url: 'http://loremflickr.com/150/150/clothes',
+		url: 'https://loremflickr.com/320/240/clothes,fashion/all',
 		method: 'get',
 		encoding: null,
 		timeout: 5000,

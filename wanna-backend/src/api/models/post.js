@@ -18,6 +18,13 @@ module.exports = (sequelize, DataTypes) => {
 				notEmpty: { msg: 'Category is required' },
 			},
 		},
+		brand: {
+			type: DataTypes.STRING,
+			defaultValue: '',
+			validate: {
+				notEmpty: { msg: 'Brand is required' },
+			},
+		},
 		color: {
 			type: DataTypes.STRING,
 			defaultValue: '',
@@ -175,7 +182,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
-		
+
 		object['votes'] = votes;
 
 		photos = await this.sequelize.query(

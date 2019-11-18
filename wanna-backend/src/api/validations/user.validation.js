@@ -14,9 +14,13 @@ module.exports = {
 	// POST /v1/users
 	createUser: [
 		body('email', 'Invalid email').isEmail(),
+		body('username', 'username is Required').exists(),
 		body('password', 'Passwords must be at least 8 chars long').isLength({
 			min: 8,
 		}),
+		body('firstName', 'firstName is Required').exists(),
+		body('lastName', 'lastName is Required').exists(),
+		body('location', 'location is Required').exists(),
 	],
 
 	// PATCH /v1/users/:userId
@@ -27,9 +31,7 @@ module.exports = {
 		}),
 		param('userId', 'User id is required').exists(),
 	],
-	
+
 	// PATCH /v1/users/:userString
-	search: [
-		param('userString', 'Username id is required').exists(),
-	],
+	search: [param('userString', 'Username id is required').exists()],
 };

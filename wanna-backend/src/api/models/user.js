@@ -40,6 +40,13 @@ module.exports = (sequelize, DataTypes) => {
 				isEmail: { msg: 'Email is not valid' },
 			},
 		},
+		location: {
+			type: DataTypes.STRING,
+			defaultValue: '',
+			validate: {
+				notEmpty: { msg: 'Location is required' },
+			},
+		},
 		password: {
 			type: DataTypes.STRING,
 			defaultValue: '',
