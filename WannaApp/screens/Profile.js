@@ -83,7 +83,7 @@ class Profile extends Component {
 			<View>
 				<View
 					style={{
-						justifyContent: 'space-between',
+						justifyContent: 'flex-start',
 						alignItems: 'center',
 						flexDirection: 'row',
 						paddingVertical: 10,
@@ -106,9 +106,13 @@ class Profile extends Component {
 							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
 						/>
 					)}
-					<View style={{ marginRight: 230 }}>
+					<View style={{ marginLeft: 10 }}>
 						<Text>{this.state.firstName + ' ' + this.state.lastName}</Text>
 						<Text>{this.state.rating}</Text>
+					</View>
+					<View style={{ marginLeft: 100 }}>
+						<Text style={{ fontWeight: 'bold', fontSize: 20 }}>500 seguidores</Text>
+						<Text style={{ fontWeight: 'bold', fontSize: 20 }}>500 a seguir</Text>
 					</View>
 				</View>
 				<View>
