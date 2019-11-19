@@ -5,7 +5,7 @@ const httpStatus = require('http-status');
 exports.get = async (req, res, next) => {
 	try {
 		list = await Filter.getFilterInfo(req.params.idFilter);
-		res.json(list);
+		return res.json(list);
 	} catch (e) {
 		next(e);
 	}
@@ -18,7 +18,7 @@ exports.delete = async (req, res, next) => {
 				id: req.params.idFilter,
 			},
 		});
-		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -27,7 +27,7 @@ exports.delete = async (req, res, next) => {
 exports.getFilters = async (req, res, next) => {
 	try {
 		list = await Filter.getFilters();
-		res.json(result1);
+		return res.json(list);
 	} catch (e) {
 		next(e);
 	}
@@ -35,7 +35,7 @@ exports.getFilters = async (req, res, next) => {
 
 exports.createFilter = async (req, res, next) => {
 	try {
-		const userFilter = await Filter.create({
+		await Filter.create({
 			category: req.body.category,
 			idUser: req.user.username,
 			priceMin: req.body.priceMin,
@@ -44,7 +44,7 @@ exports.createFilter = async (req, res, next) => {
 			color: req.body.color,
 			isActive: req.body.isActive,
 		});
-		return res.status(httpStatus.CREATED).json(userFilter);
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -53,7 +53,7 @@ exports.createFilter = async (req, res, next) => {
 exports.searchByFilter = async (req, res, next) => {
 	try {
 		list = await Post.getFilteredPosts(req.body);
-		res.json(list);
+		return res.json(list);
 	} catch (e) {
 		next(e);
 	}

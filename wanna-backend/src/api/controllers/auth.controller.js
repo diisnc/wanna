@@ -78,7 +78,7 @@ exports.logout = async (req, res) => {
 		);
 	}
 
-	res.status(httpStatus.NO_CONTENT).send();
+	return res.send(200);
 };
 
 /**

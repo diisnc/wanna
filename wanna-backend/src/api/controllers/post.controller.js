@@ -30,7 +30,6 @@ exports.create = async (req, res, next) => {
 			});
 
 			await photo.setPost(post);
-
 		}
 		return res.status(200).json(post);
 	} catch (e) {
@@ -80,31 +79,33 @@ exports.createVote = async (req, res, next) => {
 	try {
 		var user = null;
 		user = await UserPost.findOne({
-			where:{
+			where: {
 				user_id: req.user.username,
-				post_id: req.body.idPost
-			}
+				post_id: req.body.idPost,
+			},
 		});
-		if(!user){
-			var userPost = await UserPost.create({
+		if (!user) {
+			await UserPost.create({
 				likeTimeStamp: new Date(),
 				user_id: req.user.username,
 				post_id: req.body.idPost,
 				type: req.body.type,
 			});
-			return res.status(httpStatus.CREATED).json(userPost);
-		}else{
-			var userPost = await UserPost.update(
-				{type: req.body.type},
+			return res.send(200);
+		} else {
+			await UserPost.update(
+				{ type: req.body.type },
 				{
-					where:{user_id: req.user.username, post_id: req.body.idPost},
+					where: {
+						user_id: req.user.username,
+						post_id: req.body.idPost,
+					},
 					returning: true,
-					plain: true
-				}
+					plain: true,
+				},
 			);
-			return res.status(200).json(userPost);
+			return res.send(200);
 		}
-
 	} catch (e) {
 		next(e);
 	}
@@ -123,7 +124,7 @@ exports.removeVote = async function removeVote(req, res, next) {
 				user_id: req.user.username,
 			},
 		});
-		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -136,12 +137,12 @@ exports.removeVote = async function removeVote(req, res, next) {
 
 exports.createComment = async (req, res, next) => {
 	try {
-		const comment = await Comment.create({
+		await Comment.create({
 			commentText: req.body.commentData,
 			idUser: req.user.username,
 			idPost: req.body.idPost,
 		});
-		return res.status(httpStatus.CREATED).json(comment);
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -158,7 +159,7 @@ exports.removeComment = async (req, res, next) => {
 				id: req.body.idComment,
 			},
 		});
-		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -171,7 +172,7 @@ exports.removeComment = async (req, res, next) => {
 exports.get = async (req, res, next) => {
 	try {
 		list = await Post.getPostInfo(req.params.idPost);
-		res.json(list);
+		return res.json(list);
 	} catch (e) {
 		next(e);
 	}
@@ -190,7 +191,7 @@ exports.remove = async (req, res, next) => {
 				id: req.params.idPost,
 			},
 		});
-		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -201,23 +202,21 @@ exports.remove = async (req, res, next) => {
  * Edits a post with the given values
  */
 
- exports.update = async (req,res,next) => {
-	try{
-		const entries = Object.entries(req.body)
+exports.update = async (req, res, next) => {
+	try {
+		const entries = Object.entries(req.body);
 		const data = {};
-		for(i=0; i<entries.length; i++){
-			if(entries[i][1] != 'null'){
+		for (i = 0; i < entries.length; i++) {
+			if (entries[i][1] != 'null') {
 				data[entries[i][0]] = entries[i][1];
 			}
 		}
-		await Post.update(data,
-			{where:{id: req.params.idPost}},
-		);
-		res.status(httpStatus.OK).json({ result: 'update' });
-	}catch(e){
+		await Post.update(data, { where: { id: req.params.idPost } });
+		return res.send(200);
+	} catch (e) {
 		next(e);
 	}
- };
+};
 /***
  * marks a post as unavailable
  */
@@ -228,7 +227,7 @@ exports.markUnavailable = async (req, res, next) => {
 			{ isAvailable: 'false' },
 			{ where: { id: req.params.idPost } },
 		);
-		res.status(httpStatus.NO_CONTENT).json({ result: 'updated' });
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -242,7 +241,7 @@ exports.markUnavailable = async (req, res, next) => {
 exports.getPostComments = async (req, res, next) => {
 	try {
 		list = await Post.getComments(req.body.idPost);
-		res.json(list);
+		return res.json(list);
 	} catch (e) {
 		next(e);
 	}
@@ -255,11 +254,11 @@ exports.getPostComments = async (req, res, next) => {
 
 exports.savePost = async (req, res, next) => {
 	try {
-		const result = await SavedPost.create({
+		await SavedPost.create({
 			user_id: req.user.username,
 			post_id: req.body.idPost,
 		});
-		return res.status(httpStatus.CREATED).json(result);
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -278,7 +277,7 @@ exports.unsavePost = async (req, res, next) => {
 				user_id: req.user.username,
 			},
 		});
-		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}

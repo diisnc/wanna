@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
 const { User } = require('../models');
-const {UserPost} = require('../models');
+const { UserPost } = require('../models');
 const { ApiError } = require('../utils/customErrors');
 const paginate = require('../middlewares/paginationResponse');
 
@@ -83,9 +83,9 @@ exports.remove = async (req, res, next) => {
 
 	try {
 		await UserPost.destroy({
-			where:{
-				 user_id: req.params.userId
-			}
+			where: {
+				user_id: req.params.userId,
+			},
 		});
 		await user.destroy();
 		res.status(httpStatus.NO_CONTENT).json({ result: 'delete' });
@@ -98,11 +98,11 @@ exports.remove = async (req, res, next) => {
  * Returns searched Usernames
  * @public
  */
-exports.search = async (req,res,next) => {
-	try{
+exports.search = async (req, res, next) => {
+	try {
 		list = await User.getUsernames(req.params.userString);
 		res.json(list);
 	} catch (e) {
 		next(e);
 	}
-}
+};

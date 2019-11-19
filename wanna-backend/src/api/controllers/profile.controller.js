@@ -23,7 +23,6 @@ exports.profileInfo = async (req, res, next) => {
 exports.getFollowers = async (req, res, next) => {
 	try {
 		list = await User.getFollowers(req.user.username);
-		list = list.map(e => e.follower_id).join(',');
 		res.json(list);
 	} catch (e) {
 		next(e);
@@ -37,8 +36,7 @@ exports.getFollowers = async (req, res, next) => {
 exports.getFollowings = async (req, res, next) => {
 	try {
 		list = await User.getFollowings(req.user.username);
-		list = list.map(e => e.followed_id).join(',');
-		res.json(list);
+		return res.json(list);
 	} catch (e) {
 		next(e);
 	}
@@ -50,12 +48,12 @@ exports.getFollowings = async (req, res, next) => {
  */
 exports.follow = async (req, res, next) => {
 	try {
-		const followPost = await FollowRelationship.create({
+		await FollowRelationship.create({
 			followed_id: req.params.userID,
 			follower_id: req.user.username,
 		});
 
-		return res.status(httpStatus.CREATED).json(followPost);
+		return res.send(200);
 	} catch (e) {
 		next(e);
 	}
@@ -74,7 +72,7 @@ exports.unfollow = async (req, res, next) => {
 	})
 		.then(function(deletedRecord) {
 			if (deletedRecord === 1) {
-				res.status(200).json({ message: 'Unfollow successfully!' });
+				res.send(200);
 			} else {
 				res.status(404).json({
 					message: 'You do not follow this page',
