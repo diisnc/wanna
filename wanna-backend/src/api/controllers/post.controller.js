@@ -20,6 +20,7 @@ exports.create = async (req, res, next) => {
 			color: req.body.color,
 			category: req.body.category,
 			size: req.body.size,
+			brand: req.body.brand,
 		});
 
 		for (var i = 0; i < req.body.imageData.length; i++) {

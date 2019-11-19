@@ -13,8 +13,7 @@ exports.sendMessage = async (idSender, idReceiver, idPost, message) => {
             messageText: message,
             idPost: idPost,
         });
-    return res.status(httpStatus.CREATED).json(userMessage);
     } catch(e) {
-        next(e);
+       console.error(e);
     }
 }

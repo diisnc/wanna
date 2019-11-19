@@ -7,6 +7,7 @@ exports.socketHandler = async (io) =>{
     io.on('connection', socket => {
         console.log('Received a socket connection!');
 
+        
 
         //Usig rooms for private communication
 
@@ -18,11 +19,13 @@ exports.socketHandler = async (io) =>{
         });
 
         //broadcast the message to the other user in the room
-        socket.on('chat-message', function(data) {
+        socket.on('chat-message', async function(data) {
             console.log('sending room post', data.room);
             socket.broadcast.to(data.room).emit('conversation private post', {
                 message: data.message
             });
+            //console.log(data.idSender + " " + data.idReceiver + " "  + data.idPost + " " + data.message);
+            await controller.sendMessage(data.idSender, data.idReceiver, data.idPost, data.message);
         });
         
 
