@@ -49,7 +49,6 @@
             <div class="group">
               <label for="user_name" class="label">Usermame</label>
               <input id="username" v-model="username" type="text" class="input">
-
             </div>
             <div class="group">
               <label for="e_mail" class="label">Email</label>
@@ -77,48 +76,52 @@ export default {
   name: 'Auth',
   data () {
     return {
-    email: '',
-		password: '',
-    fname: '',
-    lname: '',
-		username: '',
+      register: {
+        email: '',   
+        password: '',
+        fname: '',   
+        lname: '',   
+        username: '',
+      },
+      login: {
+        email: '',    
+	    	password: '', 
+      },
 		self: null
     }
   },
   mounted () {
-	  this.self = this
+    this.self = this
   },
   methods: {
     login () {
-      this.$store.dispatch('login/getToken', {
-        email: this.email,
-        password: this.password
-      }).then((response) => {
-		//console.log('teste ' + response)
-		console.log('token ' + response)
-		if (this.email === 'admin@wanna.pt') {
-			this.self.$router.push({path: '/manageposts'})
-		} else {
-			//console.log('teste login')
-			this.self.$router.push({path: '/inspire'})
-		}
+      axios.post('.....................', this.login)
+      .then(response => {
+            let a_token = response.tokens.refreshToken;
+            let r_token = response.tokens.accessToken;
+
+            localStorage.setItem('a_token', a_token);
+            localStorage.setItem('r_token', r_token);
+
+            if (this.login.email === 'admin@wanna.pt') {
+              this.self.$router.push({path: '/manageposts'})
+            } else {
+              //console.log('teste login')
+              this.self.$router.push({path: '/inspire'})
+            } 
       }).catch((error) => {
         console.log(error)
-      })
+      });
 		},
 		onSubmit () {
-        // alert(JSON.stringify(this.form))
-        if (this.fname === '' | this.lname === '' | this.username === '' | this.email === '' | this.password === '') {
+        if (this.register.fname === '' | this.register.lname === '' | this.register.username === '' | this.register.email === '' | this.register.password === '') {
           alert('Por favor preencha todos os campos do formulário.')
         } else {
-              this.$store.dispatch('register/registerUser', {
-                fname: this.fname,
-                lname: this.lname,
-                email: this.email,
-                username: this.email,
-                password: this.password
-							})
-				}
+          axios.post('.....................', this.register)
+          .then(response => {
+            this.self.$router.push({path: ''}) // same page so the user can authenticate
+          });
+        }
     }
   }
 }
