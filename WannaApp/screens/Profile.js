@@ -111,10 +111,7 @@ class Profile extends Component {
 									marginTop: 10,
 									marginBottom: 20,
 									marginHorizontal: 40,
-									paddingVertical: 15,
-									borderRadius: 20,
-									borderColor: 'grey',
-									borderWidth: 1.5
+									paddingVertical: 15
 								}}>
 								<Text
 									style={{
@@ -137,10 +134,7 @@ class Profile extends Component {
 								marginTop: 10,
 								marginBottom: 20,
 								marginHorizontal: 40,
-								paddingVertical: 15,
-								borderRadius: 20,
-								borderColor: 'grey',
-								borderWidth: 1.5
+								paddingVertical: 15
 							}}>
 							<Text
 								style={{

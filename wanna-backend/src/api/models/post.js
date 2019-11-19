@@ -131,9 +131,9 @@ module.exports = (sequelize, DataTypes) => {
 	Post.feed = async function feed(pageArg, usernameArg) {
 		result = await this.sequelize.query(
 			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description",' +
-				' "Posts"."isAvailable", "Posts"."price", "Photos"."photoType", ' +
-				' "Photos"."photoData" FROM "Posts" JOIN "Photos" ON "Posts"."id" ' +
-				' = "Photos"."idPost" AND "Photos"."id" IN (SELECT MIN("Photos"."id") ' +
+				' "Posts"."isAvailable", "Posts"."color", "Posts"."size", "Posts"."category", "Posts"."brand", "Posts"."price", "Photos"."photoType", ' +
+				' "Photos"."photoData", "Users"."avatarData", "Users"."location" FROM "Posts" JOIN "Photos" ON "Posts"."id" ' +
+				' = "Photos"."idPost" JOIN "Users" ON "Posts"."idUser" = "Users"."username" AND "Photos"."id" IN (SELECT MIN("Photos"."id") ' +
 				' FROM "Photos" GROUP BY "Photos"."idPost") ' +
 				' WHERE EXISTS (SELECT * FROM "FollowRelationships" ' +
 				' WHERE "follower_id" = :idUser AND "Posts"."idUser"="followed_id") ' +
