@@ -1,6 +1,6 @@
 .DS_Store
 /coverage
-client/node_modules/
+node_modules/
 
 /tests/e2e/reports/
 selenium-debug.log
