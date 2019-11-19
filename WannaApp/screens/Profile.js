@@ -28,11 +28,7 @@ class Profile extends Component {
 		super(props);
 	}
 	state = {
-		avatarData: [],
-		firstName: '',
-		lastName: '',
-		rating: 0,
-		posts: [],
+		profile: null,
 		numPosts: 0,
 		loading: true,
 		username: ''
@@ -51,27 +47,21 @@ class Profile extends Component {
 		let usernamePassed;
 		usernamePassed = this.props.navigation.getParam('userID', 'local');
 
-		let newState;
+		let profile;
 		if (usernamePassed == 'local') {
-			newState = await getMyProfile();
+			profile = await getMyProfile();
 		} else {
-			newState = await getUserProfile(usernamePassed);
+			profile = await getUserProfile(usernamePassed);
 		}
 
-		if (newState != null) {
+		if (profile != null) {
 			await this.setState({
-				avatarData: newState.info.avatarData,
-				firstName: newState.info.firstName,
-				lastName: newState.info.lastName,
-				rating: newState.info.rating,
-				posts: newState.posts,
-				numPosts: newState.posts.length,
+				profile: profile,
+				numPosts: profile.posts.length,
 				loading: false,
-				username: newState.info.username
+				username: profile.info.username
 			});
 		}
-
-		console.log('nrposts: ' + this.state.numPosts);
 
 		return;
 	};
@@ -96,7 +86,9 @@ class Profile extends Component {
 									'data:' +
 									'image/jpeg' +
 									';base64,' +
-									new Buffer(this.state.avatarData).toString('base64')
+									new Buffer(this.state.profile.info.avatarData).toString(
+										'base64'
+									)
 							}}
 							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
 						/>
@@ -107,26 +99,124 @@ class Profile extends Component {
 						/>
 					)}
 					<View style={{ marginLeft: 10 }}>
-						<Text>{this.state.firstName + ' ' + this.state.lastName}</Text>
-						<Text>{this.state.rating}</Text>
+						<Text>
+							{this.state.profile.info.firstName +
+								' ' +
+								this.state.profile.info.lastName}
+						</Text>
+						<Text>{this.state.profile.info.rating}</Text>
 					</View>
 					<View style={{ marginLeft: 100 }}>
-						<Text style={{ fontWeight: 'bold', fontSize: 20 }}>500 seguidores</Text>
-						<Text style={{ fontWeight: 'bold', fontSize: 20 }}>500 a seguir</Text>
+						<View>
+							<TouchableOpacity
+								style={{
+									marginTop: 10,
+									marginBottom: 20,
+									marginHorizontal: 40,
+									paddingVertical: 15,
+									borderRadius: 20,
+									borderColor: 'grey',
+									borderWidth: 1.5
+								}}>
+								<Text
+									style={{
+										textAlign: 'center',
+										color: 'grey',
+										fontWeight: 'bold',
+										fontSize: 18
+									}}
+									onPress={() =>
+										this.props.navigation.navigate('EditProfile', {
+											userID: this.state.username
+										})
+									}>
+									{this.state.profile.nrFollowers.number} seguidores
+								</Text>
+							</TouchableOpacity>
+						</View>
+						<TouchableOpacity
+							style={{
+								marginTop: 10,
+								marginBottom: 20,
+								marginHorizontal: 40,
+								paddingVertical: 15,
+								borderRadius: 20,
+								borderColor: 'grey',
+								borderWidth: 1.5
+							}}>
+							<Text
+								style={{
+									textAlign: 'center',
+									color: 'grey',
+									fontWeight: 'bold',
+									fontSize: 18
+								}}
+								onPress={() =>
+									this.props.navigation.navigate('EditProfile', {
+										userID: this.state.username
+									})
+								}>
+								{this.state.profile.nrFollowings.number} a seguir
+							</Text>
+						</TouchableOpacity>
 					</View>
 				</View>
 				<View>
-					<TouchableOpacity
-						style={{
-							marginTop: 10,
-							marginBottom: 20,
-							marginHorizontal: 40,
-							paddingVertical: 15,
-							borderRadius: 20,
-							borderColor: 'grey',
-							borderWidth: 1.5
-						}}>
-						{this.state.username == this.props.loggedUsername ? (
+					{this.state.username == this.props.loggedUsername ? (
+						<View>
+							<TouchableOpacity
+								style={{
+									marginTop: 10,
+									marginBottom: 20,
+									marginHorizontal: 40,
+									paddingVertical: 15,
+									borderRadius: 20,
+									borderColor: 'grey',
+									borderWidth: 1.5
+								}}>
+								<Text
+									style={{ textAlign: 'center', color: 'grey' }}
+									onPress={() =>
+										this.props.navigation.navigate('EditProfile', {
+											userID: this.state.username
+										})
+									}>
+									{'Edit Profile'}{' '}
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={{
+									marginTop: 10,
+									marginBottom: 20,
+									marginHorizontal: 40,
+									paddingVertical: 15,
+									borderRadius: 20,
+									borderColor: 'grey',
+									borderWidth: 1.5
+								}}>
+								<Text
+									style={{ textAlign: 'center', color: 'grey' }}
+									onPress={() =>
+										this.props.navigation.navigate('EditProfile', {
+											userID: this.state.username
+										})
+									}>
+									{'Saved Posts'}{' '}
+								</Text>
+							</TouchableOpacity>
+						</View>
+					) : null}
+					{this.state.username != this.props.loggedUsername ? (
+						<TouchableOpacity
+							style={{
+								marginTop: 10,
+								marginBottom: 20,
+								marginHorizontal: 40,
+								paddingVertical: 15,
+								borderRadius: 20,
+								borderColor: 'grey',
+								borderWidth: 1.5
+							}}>
 							<Text
 								style={{ textAlign: 'center', color: 'grey' }}
 								onPress={() =>
@@ -134,20 +224,10 @@ class Profile extends Component {
 										userID: this.state.username
 									})
 								}>
-								{'Edit Profile'}{' '}
-							</Text>
-						) : (
-							<Text
-								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() =>
-									this.props.navigation.navigate('Follow', {
-										userID: this.state.username
-									})
-								}>
 								{'Follow'}{' '}
 							</Text>
-						)}
-					</TouchableOpacity>
+						</TouchableOpacity>
+					) : null}
 				</View>
 				{/* <View style={{ borderColor: '#555', borderWidth: 1 }} /> */}
 			</View>

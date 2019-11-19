@@ -55,6 +55,11 @@ module.exports = (role = 'guest') => (req, res, next) => {
 		if (error) {
 			return next(new ApiError(noPermissions));
 		}
+
+		if (!user) {
+			return next(new ApiError(noPermissions));
+		}
+
 		if (role !== 'guest') {
 			if (!user.isActive) {
 				return next(new ApiError(userBlocked));

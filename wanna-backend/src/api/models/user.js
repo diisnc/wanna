@@ -220,7 +220,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		);
 
-		object['nrFollowings'] = nrFollowings;
+		object['nrFollowings'] = nrFollowings[0];
 
 		nrFollowers = await this.sequelize.query(
 			'SELECT count("followed_id") AS number FROM "FollowRelationships" WHERE "followed_id" = (:username)',
@@ -230,7 +230,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		);
 
-		object['nrFollowers'] = nrFollowers;
+		object['nrFollowers'] = nrFollowers[0];
 
 		postsInfo = await this.sequelize.query(
 			'SELECT "Posts"."id" AS PostID, "Posts"."idUser", "Posts"."isAvailable", "Photos"."photoType", "Photos"."photoData", "Photos"."id" AS PhotoId ' +

@@ -20,7 +20,6 @@ import CheckBox from 'react-native-check-box';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
-import { AppLoading } from 'expo';
 
 const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
@@ -30,7 +29,6 @@ const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '5
 
 class Add extends Component {
 	state = {
-		loading: true,
 		wishlistData: [],
 		numPosts: 0,
 		pickedImagesBase64: [],
@@ -44,28 +42,14 @@ class Add extends Component {
 		selectedColor: null,
 		selectedSize: null,
 		insertedBrand: null,
+		insertedDescription: null,
 		price: null,
 		offerPostage: false,
 		postagePrice: null,
 		completed: false
 	};
 
-	componentDidMount() {
-		this.startHeaderHeight = 80;
-		if (Platform.OS == 'android') {
-			this.startHeaderHeight = 60;
-		}
-
-		// get data from servers and save in state
-		this.getWishlistDataFromApiAsync();
-	}
-
 	render() {
-		// loading screen
-		if (this.state.loading) {
-			return <AppLoading />;
-		}
-
 		return (
 			/*
             Fazer View Englobadora da página
@@ -92,6 +76,10 @@ class Add extends Component {
 
 	// Builds header of the page
 	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
 		return (
 			// Safe Box for Android
 			<View
@@ -156,7 +144,7 @@ class Add extends Component {
 					<Image
 						key={index}
 						source={{
-							uri: "data:image/jpeg;base64," + imageUri
+							uri: 'data:image/jpeg;base64,' + imageUri
 						}}
 						style={{
 							width: 'auto',
@@ -310,12 +298,21 @@ class Add extends Component {
 						/>
 					</View>
 					{/* marca */}
-					<View style={{flex: 1, padding: 10}}>
+					<View style={{ flex: 1, padding: 10 }}>
 						<TextInput
-							style={{flex: 1}}
+							style={{ flex: 1 }}
 							placeholder="Marca"
-							onChangeText={(text) => this.setState({insertedBrand: text})}
+							onChangeText={text => this.setState({ insertedBrand: text })}
 							value={this.state.insertedBrand}
+						/>
+					</View>
+					{/* descrição */}
+					<View style={{ flex: 1, padding: 10 }}>
+						<TextInput
+							style={{ flex: 1 }}
+							placeholder="Descrição"
+							onChangeText={text => this.setState({ insertedDescription: text })}
+							value={this.state.insertedDescription}
 						/>
 					</View>
 					{/* preço */}
@@ -475,35 +472,16 @@ class Add extends Component {
 		this.setState({ pickedImagesBase64: pickedImagesBase64Copy });
 	}
 
-	// Get Data to Build Feed and Transform it to Json Object
-	getWishlistDataFromApiAsync() {
-		/*
-        return fetch('https://facebook.github.io/react-native/movies.json')// ONLINE GET
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({wishlistData: responseJson, numPosts: Object.keys(responseJson).length});
-                //console.log(responseJson);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        */
-
-		const newState = require('./json/responseFeed');
-		this.setState({ wishlistData: newState, numPosts: newState.length, loading: false });
-
-		return;
-	}
-
 	async createPhotoAsync() {
 		await createPost(
 			this.state.selectedGenre,
 			this.state.selectedClothe,
 			this.state.selectedColor,
+			this.state.insertedBrand,
 			this.state.selectedSize,
 			this.state.price,
 			this.state.pickedImagesBase64,
-			null
+			this.state.insertedDescription
 		);
 
 		return;

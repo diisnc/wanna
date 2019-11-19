@@ -91,34 +91,7 @@ exports.unfollow = async (req, res, next) => {
 exports.userProfileInfo = async function(req, res, next) {
 	try {
 		list = await User.getProfileInfo(req.params.idUser);
-		object = new Object();
-
-		const info = {
-			username: list[0].username,
-			firstName: list[0].firstName,
-			lastName: list[0].lastName,
-			rating: list[0].rating,
-			avatarData: list[0].avatarData,
-		};
-
-		object['info'] = info;
-
-		posts = [];
-		for (var i = 1; i < list.length; ) {
-			const post = {
-				id: list[i].postid,
-				photoData: list[i].photoData,
-			};
-
-			i += 1;
-
-			if (i > list.length) break;
-
-			posts.push(post);
-		}
-		object['posts'] = posts;
-
-		return res.status(httpStatus.OK).json(object);
+		return res.status(httpStatus.OK).json(list);
 	} catch (e) {
 		next(e);
 	}

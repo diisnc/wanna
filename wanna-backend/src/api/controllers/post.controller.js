@@ -14,6 +14,7 @@ exports.create = async (req, res, next) => {
 	try {
 		const post = await Post.create({
 			description: req.body.description,
+			genre: req.body.genre,
 			price: req.body.price,
 			isAvailable: req.body.isAvailable,
 			idUser: req.user.username,

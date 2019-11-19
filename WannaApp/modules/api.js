@@ -1,6 +1,7 @@
 import { handleTokenErrors } from './errors/error.service';
 import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
+import { logout } from './auth/auth.service';
 
 const config = { url: 'http://192.168.1.14:8000' };
 
@@ -107,6 +108,10 @@ export const ourFetchWithToken = async action => {
 		console.log('Tamanho do que retornou do backend: ' + data.length);
 		return data;
 	} else {
+		if (response.status == 403 || response.status == 401) {
+			store.dispatch(logout());
+		}
+
 		if (data == 'Token is expired') {
 			return store.dispatch({ type: 'EXPIRED_TOKEN' });
 		}
@@ -119,6 +124,6 @@ export const ourFetchWithToken = async action => {
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
 
 		store.dispatch(showError(error));
-		return error;
+		return null;
 	}
 };

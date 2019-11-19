@@ -12,7 +12,7 @@ const _saveItem = async (item, selectedValue) => {
 	}
 };
 
-export const login = (email = 'stoj97@gmail.com', password = '12345678') => async dispatch => {
+export const login = () => async dispatch => {
 	const config = {
 		endpoint: '/v1/auth/login',
 		method: 'POST',
