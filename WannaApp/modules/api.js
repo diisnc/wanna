@@ -1,6 +1,7 @@
 import { handleTokenErrors } from './errors/error.service';
 import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
+import { logout } from './auth/auth.service';
 
 const config = { url: 'http://192.168.1.14:8000' };
 
@@ -115,10 +116,14 @@ export const ourFetchWithToken = async action => {
 			return store.dispatch({ type: 'INVALID_TOKEN' });
 		}
 
+		if (response.status == 403 || response.status == 401) {
+			store.dispatch(logout());
+		}
+
 		data = JSON.stringify(data);
 		let error = data.replace(/[\[\]"\{\}]+/g, '');
 
 		store.dispatch(showError(error));
-		return error;
+		return null;
 	}
 };

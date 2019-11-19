@@ -6,7 +6,7 @@ import Profile from './Profile';
 import EditProfile from './EditProfile';
 import Filters from './Filters';
 import NewFilter from './NewFilter';
-import UserPost from './UserPost';
+import FollowList from './FollowList';
 import UserPostProfile from './UserPostProfile';
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
@@ -63,6 +63,13 @@ const UserStack = createStackNavigator({
 	},
 	UserPostProfile: {
 		screen: UserPostProfile,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	FollowList: {
+		screen: FollowList,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null

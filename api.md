@@ -4,7 +4,7 @@
 
 - **Descrição:** Feed com paginate
 - **Método:** GET
-- **Rota:** v1/post/feed
+- **Rota:** v1/post/feed?page=
 - **Estado:** :heavy_check_mark:
 
 ---
@@ -143,7 +143,7 @@
 
 - **Descrição:** Ver perfil alheio com fotos e infos
 - **Método:** GET
-- **Rota:** /v1/profile/:username
+- **Rota:** /v1/profile/?username=
 - **Estado:** :heavy_check_mark:
 
 ---

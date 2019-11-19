@@ -78,23 +78,17 @@ export const markPost = (idPost, type) => {
 	return ourFetchWithToken(config);
 };
 
-export const createPost = (
-	genre,
-	clothe,
-	color,
-	size,
-	price,
-	images,
-	description = 'Muito leite'
-) => {
+export const createPost = (genre, clothe, color, brand, size, price, images, description) => {
 	const config = {
 		endpoint: '/v1/post/createPost',
 		method: 'POST',
 		body: {
+			genre: genre,
 			description: description,
 			price: price,
 			category: clothe,
 			color: color,
+			brand: brand,
 			imageData: images,
 			size: size
 		}

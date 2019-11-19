@@ -58,7 +58,7 @@ export const getUserProfile = userID => {
 	const config = {
 		endpoint: '/v1/profile/',
 		method: 'GET',
-		params: {
+		query: {
 			username: userID
 		}
 	};

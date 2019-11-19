@@ -36,20 +36,6 @@ class Inspire extends Component {
 
 		// get data from servers and save in state
 		this.getFeedDataFromApiAsync();
-		// console.log('passou pelo componentdidmount');
-
-		/*
-        var localFeedData = require('./json/responseFeed');
-        for(let i = 0; i < localFeedData.length; i++ ) {
-            console.log("id= " + JSON.stringify(localFeedData[i].id));
-            console.log("idUser= " + JSON.stringify(localFeedData[i].idUser));
-            console.log("description= " + JSON.stringify(localFeedData[i].description));
-            console.log("isAvailable= " + JSON.stringify(localFeedData[i].isAvailable));
-            console.log("price= " + JSON.stringify(localFeedData[i].price));
-            console.log("photoType1= " + JSON.stringify(localFeedData[i].photoType1));
-            //console.log("photoData1= " + JSON.stringify(localFeedData[i].photoData1));
-        }
-        */
 	}
 
 	componentDidUpdate(prevProps) {
@@ -73,32 +59,28 @@ class Inspire extends Component {
 		console.log('token valid ' + token);
 
 		if (loggedIn == true && token == true) {
-			//this.getFeedDataFromApiAsync();
-			// loading screen
-			if (this.state.loading == false) return <Loading />;
-			else
-				return (
-					/*
+			return (
+				/*
             Fazer View Englobadora da página
             onde o primeiro elemento é o header
             de pesquisa e o segundo elemento
             é o feed que contém as imagens.
             */
-					// Safe Box for Iphone
-					<SafeAreaView style={{ flex: 1 }}>
-						{/* Full Page Box */}
-						<View
-							style={{
-								flex: 1,
-								flexDirection: 'column',
-								justifyContent: 'flex-start',
-								alignItems: 'stretch'
-							}}>
-							{this.buildHeader()}
-							{this.buildInstaStyle()}
-						</View>
-					</SafeAreaView>
-				);
+				// Safe Box for Iphone
+				<SafeAreaView style={{ flex: 1 }}>
+					{/* Full Page Box */}
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'column',
+							justifyContent: 'flex-start',
+							alignItems: 'stretch'
+						}}>
+						{this.buildHeader()}
+						{this.buildInstaStyle()}
+					</View>
+				</SafeAreaView>
+			);
 		} else
 			return (
 				<SafeAreaView style={{ flex: 1 }}>
@@ -156,20 +138,23 @@ class Inspire extends Component {
 
 	// Insta style feed using UserPost
 	buildInstaStyle() {
-		return (
-			<View style={styles.container}>
-				{this.state.loading == true ? null : (
-					<FlatList
-						data={this.state.feedData}
-						keyExtractor={(item, index) => index.toString()}
-						style={styles.list}
-						renderItem={({ item, index }) => {
-							return <UserPost item={item} navigation={this.props.navigation} />;
-						}}
-					/>
-				)}
-			</View>
-		);
+		if (this.state.loading == true) return <Loading />;
+		else {
+			return (
+				<View style={styles.container}>
+					{this.state.loading == true ? null : (
+						<FlatList
+							data={this.state.feedData}
+							keyExtractor={(item, index) => index.toString()}
+							style={styles.list}
+							renderItem={({ item, index }) => {
+								return <UserPost item={item} navigation={this.props.navigation} />;
+							}}
+						/>
+					)}
+				</View>
+			);
+		}
 	}
 
 	// Builds feed of the page
