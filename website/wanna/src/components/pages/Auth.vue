@@ -19,7 +19,7 @@
             </div>
             <div class="group">
               <input id="check" type="checkbox" class="check" checked>
-              <label for="check"><span class="icon"></span> Ficar ligado</label>
+              <label for="check"><span class="icon"></span> Keep me Signed in</label>
             </div>
             <div class="group">
               <input type="submit" class="button" v-on:click="login" value="Sign In">
@@ -27,11 +27,11 @@
             <div>
               <br/>
               <button class="loginBtn loginBtn--facebook">
-              Login com Facebook
+              Login with Facebook
               </button>
 
               <button class="loginBtn loginBtn--google">
-              Login com Google
+              Login with Google
               </button>
             </div>
           </div>
@@ -39,25 +39,21 @@
 					
 					<div class="sign-up-htm">
             <div class="group">
-              <label for="first_name" class="label">Primeiro Nome</label>
-              <input id="firstname" v-model="fname" type="text" class="input">
+              <label for="user" class="label">Name</label>
+              <input id="user" v-model="name" type="text" class="input" style="padding:10px;">
             </div>
             <div class="group">
-              <label for="last_name" class="label">Último Nome</label>
-              <input id="lastname" v-model="lname" type="text" class="input">
-            </div>
-            <div class="group">
-              <label for="user_name" class="label">Usermame</label>
-              <input id="username" v-model="username" type="text" class="input">
+              <label for="pass" class="label">Usermame</label>
+              <input id="pass" v-model="username" type="text" class="input" data-type="password" style="padding:10px;">
 
             </div>
             <div class="group">
-              <label for="e_mail" class="label">Email</label>
-              <input id="email" v-model="password" type="password" class="input">
+              <label for="pass" class="label">Password</label>
+              <input id="pass" v-model="password" type="password" class="input" data-type="password" style="padding:10px;">
             </div>
             <div class="group">
-              <label for="pass_" class="label">Password</label>
-              <input id="pass" v-model="email" type="email" class="input"  data-type="password">
+              <label for="pass" class="label">Email Address</label>
+              <input id="pass" v-model="email" type="email" class="input" style="padding:10px;">
 
             </div>
             <div class="group">
@@ -79,12 +75,11 @@ export default {
     return {
     email: '',
 		password: '',
-    fname: '',
-    lname: '',
+		name: '',
 		username: '',
 		self: null
     }
-  },
+  } /*,
   mounted () {
 	  this.self = this
   },
@@ -96,11 +91,11 @@ export default {
       }).then((response) => {
 		//console.log('teste ' + response)
 		console.log('token ' + response)
-		if (this.email === 'admin@wanna.pt') {
-			this.self.$router.push({path: '/manageposts'})
+		if (this.email === 'admin@betess.pt') {
+			this.self.$router.push({path: '/admin'})
 		} else {
-			//console.log('teste login')
-			this.self.$router.push({path: '/inspire'})
+			console.log('teste login')
+			this.self.$router.push({path: '/user'})
 		}
       }).catch((error) => {
         console.log(error)
@@ -108,12 +103,11 @@ export default {
 		},
 		onSubmit () {
         // alert(JSON.stringify(this.form))
-        if (this.fname === '' | this.lname === '' | this.username === '' | this.email === '' | this.password === '') {
+        if (this.name === '' | this.email === '' | this.password === '' | this.username === '') {
           alert('Por favor preencha todos os campos do formulário.')
         } else {
               this.$store.dispatch('register/registerUser', {
-                fname: this.fname,
-                lname: this.lname,
+                name: this.name,
                 email: this.email,
                 username: this.email,
                 password: this.password
@@ -121,6 +115,7 @@ export default {
 				}
     }
   }
+} */
 }
 </script>
 
@@ -170,7 +165,7 @@ a{color:inherit;text-decoration:none}
 	width:100%;
 	height:100%;
 	position:absolute;
-	padding:50px 70px 50px 70px;
+	padding:90px 70px 50px 70px;
 } 
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
@@ -235,22 +230,13 @@ a{color:inherit;text-decoration:none}
   background-color: #55b8f2f1;
 }
 
-.login-form .sign-up-htm .group .input,
-.login-form .group .button{
-	border:none;
-	padding:5px 20px;
-	border-radius:25px;
-	background:rgba(255,255,255,.1);
-}
-
-.login-form .sign-in-htm .group .input,
+.login-form .group .input,
 .login-form .group .button{
 	border:none;
 	padding:15px 20px;
 	border-radius:25px;
 	background:rgba(255,255,255,.1);
 }
-
 .login-form .group input[data-type="password"]{
 	text-security:circle;
 	-webkit-text-security:circle;
