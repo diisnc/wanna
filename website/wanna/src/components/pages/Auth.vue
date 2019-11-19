@@ -22,7 +22,7 @@
               <label for="check"><span class="icon"></span> Ficar ligado</label>
             </div>
             <div class="group">
-              <input type="submit" class="button" v-on:click="login" value="Sign In">
+              <input type="submit" class="button" v-on:click="mylogin" value="Sign In">
             </div>
             <div>
               <br/>
@@ -50,7 +50,7 @@
               </div>
             </div>
               
-            <div style="width: 50%; float: right padding-left: 10px;">
+            <div style="width: 50%; float: right; padding-left: 10px;">
               <div class="group">
                 <label for="last_name" class="label">Último Nome</label>
                 <input id="lastname" v-model="lname" type="text" class="input">
@@ -67,10 +67,10 @@
             </div>
             <div class="group">
                 <label for="pass_" class="label">Password</label>
-                <input id="pass" v-model="password" type="password" class="input" data-type="password" style="margin-bottom: 30px;">
+                <input id="pass__" v-model="password" type="password" class="input" data-type="password" style="margin-bottom: 30px;">
             </div>
             <div class="group">
-              <input type="submit" class="button" v-on:click="onSubmit" value="Sign Up">
+              <input type="submit" class="button" v-on:click="myregister" value="Sign Up">
             </div>
           
           </div>
@@ -86,27 +86,31 @@ export default {
   name: 'Auth',
   data () {
     return {
-      register: {
-        email: '',   
-        password: '',
-        fname: '',   
-        lname: '',   
-        username: '',
-        location: ''
-      },
-      login: {
-        email: '',    
-	    	password: '', 
-      },
-		self: null
+    email: '',      /*login & register */
+    password: '',   /*login & register */
+    fname: '',   
+    lname: '',   
+    username: '',
+    location: '',
+    self: null
     }
   },
   mounted () {
     this.self = this
   },
   methods: {
-    login () {
-      axios.post('.....................', this.login)
+    mylogin () {
+      // (method, endpoint, querystring, paramsA, bodyA, headers) 
+      axios.post('http://infernoo.duckdns.org:8000',
+                  {endpoint: 'v1/auth/login'},
+                  {method: 'put'},
+                  {body: 
+                    {
+                      email: this.email,
+                      password: this.password
+                    }
+                  }
+                )
       .then(response => {
             let a_token = response.tokens.refreshToken;
             let r_token = response.tokens.accessToken;
@@ -114,7 +118,7 @@ export default {
             localStorage.setItem('a_token', a_token);
             localStorage.setItem('r_token', r_token);
 
-            if (this.login.email === 'admin@wanna.pt') {
+            if (this.email === 'admin@wanna.pt') {
               this.self.$router.push({path: '/manageposts'})
             } else {
               //console.log('teste login')
@@ -124,11 +128,25 @@ export default {
         console.log(error)
       });
 		},
-		onSubmit () {
-        if (this.register.fname === '' | this.register.lname === '' | this.register.username === '' | this.register.email === '' | this.register.password === '') {
+		myregister () {
+        if (this.fname === '' | this.lname === '' | this.username === '' | this.email === '' | this.password === '' | this.location === '' ) {
           alert('Por favor preencha todos os campos do formulário.')
         } else {
-          axios.post('.....................', this.register)
+          // (method, endpoint, querystring, paramsA, bodyA, headers) 
+          axios.post('http://infernoo.duckdns.org:8000',
+                      {endpoint: 'v1/auth/register'},
+                      {method: 'put'},
+                      {body: 
+                        {
+                          firstName: this.fname,
+                          lastName: this.lname,
+                          username: this.username,
+                          location: this.location,
+                          email: this.email,
+                          password: this.password
+                        }
+                      }
+                    )
           .then(response => {
             this.self.$router.push({path: ''}) // same page so the user can authenticate
           });
@@ -184,7 +202,7 @@ a{color:inherit;text-decoration:none}
 	width:100%;
 	height:100%;
 	position:absolute;
-	padding:50px 40px 0px 40px;
+	padding:50px 40px 50px 40px;
 } 
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
