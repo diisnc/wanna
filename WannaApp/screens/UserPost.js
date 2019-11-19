@@ -48,7 +48,6 @@ class UserPost extends Component {
 									this.props.navigation.navigate('UserProfile', {
 										userID: this.props.item.idUser
 									});
-									// console.log(item.authorId) // working Good, we sure params has value now.
 								}}>
 								<Text>{this.props.item.idUser}</Text>
 							</TouchableOpacity>
@@ -57,18 +56,27 @@ class UserPost extends Component {
 					</View>
 					{/* imagens do post */}
 					<View>
-						<Image
-							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									new Buffer(this.props.item.photoData1)
-							}}
-							style={{ width: 500, height: 500 }}
-							resizeMode="contain"
-						/>
+						<TouchableOpacity
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {
+									postID: this.props.item.id
+								});
+							}}>
+							<Image
+								source={{
+									uri:
+										'data:' +
+										'image/jpeg' +
+										';base64,' +
+										new Buffer(this.props.item.photoData1)
+								}}
+								style={{ width: 500, height: 500 }}
+								resizeMode="contain"
+							/>
+						</TouchableOpacity>
 					</View>
+
 					{/* footer de post, dividido em 3 linhas */}
 					<View style={{ flex: 1, flexDirection: 'column' }}>
 						{/* primeira linha: likes à esquerda, comentários, guardar e comprar à direita */}

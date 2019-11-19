@@ -12,7 +12,7 @@ const _saveItem = async (item, selectedValue) => {
 	}
 };
 
-export const login = () => async dispatch => {
+export const login = (email, password) => async dispatch => {
 	const config = {
 		endpoint: '/v1/auth/login',
 		method: 'POST',

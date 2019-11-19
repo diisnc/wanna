@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 		borderRadius: 2,
 		paddingVertical: 5,
-		width: '100%'
+		width: '100%',
+		margin: 10
 	},
 	placeholder: {
 		fontSize: 12
@@ -169,7 +170,8 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		marginTop: 20,
 		borderWidth: 1,
-		borderColor: '#666666'
+		borderColor: '#666666',
+		margin: 10
 	},
 	submitButtonText: {
 		textAlign: 'center',

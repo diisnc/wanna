@@ -79,16 +79,14 @@ class Profile extends Component {
 						paddingVertical: 10,
 						marginTop: 20
 					}}>
-					{this.state.avatarData ? (
+					{this.state.profile.info.avatarData ? (
 						<Image
 							source={{
 								uri:
 									'data:' +
 									'image/jpeg' +
 									';base64,' +
-									new Buffer(this.state.profile.info.avatarData).toString(
-										'base64'
-									)
+									new Buffer(this.state.profile.info.avatarData)
 							}}
 							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
 						/>
@@ -106,7 +104,7 @@ class Profile extends Component {
 						</Text>
 						<Text>{this.state.profile.info.rating}</Text>
 					</View>
-					<View style={{ marginLeft: 100 }}>
+					<View style={{ marginLeft: 50 }}>
 						<View>
 							<TouchableOpacity
 								style={{
@@ -126,8 +124,8 @@ class Profile extends Component {
 										fontSize: 18
 									}}
 									onPress={() =>
-										this.props.navigation.navigate('EditProfile', {
-											userID: this.state.username
+										this.props.navigation.navigate('FollowList', {
+											type: 'Followers'
 										})
 									}>
 									{this.state.profile.nrFollowers.number} seguidores
@@ -152,8 +150,8 @@ class Profile extends Component {
 									fontSize: 18
 								}}
 								onPress={() =>
-									this.props.navigation.navigate('EditProfile', {
-										userID: this.state.username
+									this.props.navigation.navigate('FollowList', {
+										type: 'Followings'
 									})
 								}>
 								{this.state.profile.nrFollowings.number} a seguir
@@ -334,7 +332,7 @@ class Profile extends Component {
 			<View style={styles.containerImages}>
 				<FlatList
 					numColumns={3}
-					data={this.state.posts}
+					data={this.state.profile.posts}
 					renderItem={({ item, index }) => this.renderItem(item, index)}
 					keyExtractor={item => item.id}
 				/>

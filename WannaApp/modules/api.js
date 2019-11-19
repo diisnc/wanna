@@ -108,16 +108,16 @@ export const ourFetchWithToken = async action => {
 		console.log('Tamanho do que retornou do backend: ' + data.length);
 		return data;
 	} else {
-		if (response.status == 403 || response.status == 401) {
-			store.dispatch(logout());
-		}
-
 		if (data == 'Token is expired') {
 			return store.dispatch({ type: 'EXPIRED_TOKEN' });
 		}
 
 		if (data == 'Invalid token') {
 			return store.dispatch({ type: 'INVALID_TOKEN' });
+		}
+
+		if (response.status == 403 || response.status == 401) {
+			store.dispatch(logout());
 		}
 
 		data = JSON.stringify(data);

@@ -9,7 +9,9 @@ const httpStatus = require('http-status');
  */
 exports.profileInfo = async (req, res, next) => {
 	try {
-		list = await User.getProfileInfo(req.user.username);
+		if (req.query.username) {
+			list = await User.getProfileInfo(req.query.username);
+		} else list = await User.getProfileInfo(req.user.username);
 		return res.status(httpStatus.OK).json(list);
 	} catch (e) {
 		next(e);
@@ -22,8 +24,10 @@ exports.profileInfo = async (req, res, next) => {
  */
 exports.getFollowers = async (req, res, next) => {
 	try {
+		console.log('aqui');
 		list = await User.getFollowers(req.user.username);
-		res.json(list);
+		console.log('aqui2');
+		return res.json(list);
 	} catch (e) {
 		next(e);
 	}
@@ -82,19 +86,6 @@ exports.unfollow = async (req, res, next) => {
 		.catch(function(error) {
 			res.status(500).json('Erro na operação ' + error);
 		});
-};
-
-/***
- * Returns the personal informations of a user as well as his posts
- */
-
-exports.userProfileInfo = async function(req, res, next) {
-	try {
-		list = await User.getProfileInfo(req.params.idUser);
-		return res.status(httpStatus.OK).json(list);
-	} catch (e) {
-		next(e);
-	}
 };
 
 /**
