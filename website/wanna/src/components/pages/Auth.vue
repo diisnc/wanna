@@ -38,35 +38,42 @@
           
 					
 					<div class="sign-up-htm">
-            <div class="group">
-              <label for="first_name" class="label">Primeiro Nome</label>
-              <input id="firstname" v-model="fname" type="text" class="input">
+            <div style="width: 50%; float: left; padding-right: 10px;">     
+
+              <div class="group">
+                <label for="first_name" class="label">Primeiro Nome</label>
+                <input id="firstname" v-model="fname" type="text" class="input">
+              </div>
+              <div class="group">
+                <label for="user_name" class="label">Usermame</label>
+                <input id="username" v-model="username" type="text" class="input">
+              </div>
             </div>
-            <div class="group">
-              <label for="last_name" class="label">Último Nome</label>
-              <input id="lastname" v-model="lname" type="text" class="input">
-            </div>
-            <div class="group">
-              <label for="user_name" class="label">Usermame</label>
-              <input id="username" v-model="username" type="text" class="input">
-            </div>
+              
+            <div style="width: 50%; float: right padding-left: 10px;">
+              <div class="group">
+                <label for="last_name" class="label">Último Nome</label>
+                <input id="lastname" v-model="lname" type="text" class="input">
+              </div>
+              <div class="group">
+                <label for="local" class="label">Localização</label>
+                <input id="location" v-model="location" type="text" class="input">
+              </div>
+            </div> 
+                
             <div class="group">
               <label for="e_mail" class="label">Email</label>
-              <input id="email" v-model="password" type="password" class="input">
+              <input id="email" v-model="email" type="email" class="input">
             </div>
             <div class="group">
-              <label for="local" class="label">Localização</label>
-              <input id="location" v-model="location" type="text" class="input">
-            </div>
-            <div class="group">
-              <label for="pass_" class="label">Password</label>
-              <input id="pass" v-model="email" type="email" class="input"  data-type="password">
+                <label for="pass_" class="label">Password</label>
+                <input id="pass" v-model="password" type="password" class="input" data-type="password" style="margin-bottom: 30px;">
             </div>
             <div class="group">
               <input type="submit" class="button" v-on:click="onSubmit" value="Sign Up">
             </div>
+          
           </div>
-        
 				
 				</div>
       </div>
@@ -169,7 +176,7 @@ a{color:inherit;text-decoration:none}
 	min-height:100%; 
 	position:relative;
   /* CHANGE THIS BACKGROUND */
-	background:url("../../assets/logo.png") no-repeat center;
+	background:url("../../assets/black-back.jpg") no-repeat center;
 	/* background-color: blue; */
   box-shadow:0 12px 15px 0 rgba(0, 0, 0, 0.068),0 17px 50px 0 rgba(0, 0, 0, 0.075);
 } 
@@ -177,7 +184,7 @@ a{color:inherit;text-decoration:none}
 	width:100%;
 	height:100%;
 	position:absolute;
-	padding:50px 70px 50px 70px;
+	padding:50px 40px 0px 40px;
 } 
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
@@ -225,6 +232,7 @@ a{color:inherit;text-decoration:none}
 }
 .login-form .group{
 	margin-bottom:15px;
+  margin-top: 10px;
 }
 .login-form .group .label,
 .login-form .group .input,
