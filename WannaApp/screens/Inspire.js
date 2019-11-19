@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
 	View,
 	Text,
@@ -10,7 +10,8 @@ import {
 	Image,
 	Dimensions,
 	FlatList,
-	TouchableOpacity
+	TouchableOpacity,
+	StatusBar
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -68,6 +69,7 @@ class Inspire extends Component {
             */
 				// Safe Box for Iphone
 				<SafeAreaView style={{ flex: 1 }}>
+					<StatusBar barStyle="dark-content" backgroundColor="white" />
 					{/* Full Page Box */}
 					<View
 						style={{
@@ -129,7 +131,7 @@ class Inspire extends Component {
 						underlineColorAndroid="transparent"
 						placeholder="Try Camisola"
 						placeholderTextColor="grey"
-						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
+						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white', height: 30 }}
 					/>
 				</View>
 			</View>
