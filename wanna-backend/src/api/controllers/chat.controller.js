@@ -5,9 +5,10 @@ const httpStatus = require('http-status');
 const { UserMessage } = require('../models'); 
 
 
+
 exports.sendMessage = async (idSender, idReceiver, idPost, message) => {
     try{
-        const userMessage = await UserMessage.create({
+        await UserMessage.create({
             idSender: idSender,
             idReceiver: idReceiver,
             messageText: message,
@@ -15,5 +16,14 @@ exports.sendMessage = async (idSender, idReceiver, idPost, message) => {
         });
     } catch(e) {
        console.error(e);
+    }
+}
+
+exports.getMessages = async (idUser, idPost) => {
+    try{
+        const result = await UserMessage.getMessages(idUser, idPost);
+        return result;
+    }catch(e){
+        console.error(e);
     }
 }
