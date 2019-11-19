@@ -55,9 +55,12 @@
               <input id="email" v-model="password" type="password" class="input">
             </div>
             <div class="group">
+              <label for="local" class="label">Localização</label>
+              <input id="location" v-model="location" type="text" class="input">
+            </div>
+            <div class="group">
               <label for="pass_" class="label">Password</label>
               <input id="pass" v-model="email" type="email" class="input"  data-type="password">
-
             </div>
             <div class="group">
               <input type="submit" class="button" v-on:click="onSubmit" value="Sign Up">
@@ -82,6 +85,7 @@ export default {
         fname: '',   
         lname: '',   
         username: '',
+        location: ''
       },
       login: {
         email: '',    

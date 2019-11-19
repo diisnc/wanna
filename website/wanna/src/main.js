@@ -28,7 +28,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 //require('../dist/static/css/index.css')
-windows.axios = axios
+window.axios = axios
 
 Vue.use(MdButton);
 Vue.use(MdContent);
