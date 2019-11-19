@@ -7,6 +7,7 @@ import EditProfile from './EditProfile';
 import Filters from './Filters';
 import NewFilter from './NewFilter';
 import FollowList from './FollowList';
+import Chat from './Chat';
 import UserPostProfile from './UserPostProfile';
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
@@ -148,6 +149,15 @@ const MainTab = createMaterialTopTabNavigator(
 				tabBarLabel: <Text style={{ fontSize: 10 }}>PROFILE</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons name="person-outline" color={tintColor} size={24} />
+				)
+			}
+		},
+		Chat: {
+			screen: Chat,
+			navigationOptions: {
+				tabBarLabel: <Text style={{ fontSize: 10 }}>CHAT</Text>,
+				tabBarIcon: ({ tintColor }) => (
+					<MaterialIcons name="chat" color={tintColor} size={24} />
 				)
 			}
 		}

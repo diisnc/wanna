@@ -13,6 +13,7 @@
     "react-native-check-box": "^2.1.7",
     "react-native-dropdown-menu": "^2.0.0",
     "react-native-elements": "^1.0.0-beta5",
+    "react-native-gesture-handler": "~1.2.1",
     "react-native-image-picker": "^1.1.0",
     "react-native-image-zoom-viewer": "^2.2.26",
     "react-native-linear-gradient": "2.4.0",
@@ -31,7 +32,7 @@
     "redux-logger": "^3.0.0",
     "redux-refresh-token": "^0.1.0",
     "redux-thunk": "^2.2.0",
-    "react-native-gesture-handler": "~1.2.1"
+    "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
