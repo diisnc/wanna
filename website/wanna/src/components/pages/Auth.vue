@@ -10,12 +10,12 @@
           <div class="sign-in-htm">
             <div class="group">
               <label for="user" class="label">Email</label>
-              <input id="user" v-model="email" type="email" class="input" required>
+              <input id="user" v-model="email" type="email" class="input">
 
             </div>
             <div class="group">
               <label for="pass" class="label">Password</label>
-              <input id="pass" v-model="password" type="password" class="input" required data-type="password">
+              <input id="pass" v-model="password" type="password" class="input" data-type="password">
             </div>
             <div class="group">
               <input id="check" type="checkbox" class="check" checked>
@@ -42,32 +42,32 @@
 
               <div class="group">
                 <label for="first_name" class="label">Primeiro Nome</label>
-                <input id="firstname" v-model="fname" type="text" class="input" required>
+                <input id="firstname" v-model="fname" type="text" class="input">
               </div>
               <div class="group">
                 <label for="user_name" class="label">Usermame</label>
-                <input id="username" v-model="username" type="text" class="input" required>
+                <input id="username" v-model="username" type="text" class="input">
               </div>
             </div>
               
             <div style="width: 50%; float: right; padding-left: 10px;">
               <div class="group">
                 <label for="last_name" class="label">Último Nome</label>
-                <input id="lastname" v-model="lname" type="text" class="input" required>
+                <input id="lastname" v-model="lname" type="text" class="input">
               </div>
               <div class="group">
                 <label for="local" class="label">Localização</label>
-                <input id="location" v-model="location" type="text" class="input" required>
+                <input id="location" v-model="location" type="text" class="input">
               </div>
             </div> 
                 
             <div class="group">
               <label for="e_mail" class="label">Email</label>
-              <input id="email" v-model="email" type="email" class="input" required>
+              <input id="email" v-model="email" type="email" class="input">
             </div>
             <div class="group">
                 <label for="pass_" class="label">Password</label>
-                <input id="pass__" v-model="password" type="password" class ="input" required data-type="password" style="margin-bottom: 30px;">
+                <input id="pass__" v-model="password" type="password" class ="input" data-type="password" style="margin-bottom: 30px;">
             </div>
             <div class="group">
               <input type="submit" class="button" v-on:click="myregister()" value="Sign Up">
@@ -83,6 +83,7 @@
 
 <script>
 import axios from "axios";
+import VueAxios from 'vue-axios';
 export default {
   name: 'Auth',
   data () {
@@ -105,18 +106,26 @@ export default {
         email: this.email,
         password: this.password})
       .then(response => {
-        let a_token = response.data.tokens.refreshToken;
-        let r_token = response.data.tokens.accessToken;
+       
+        if (response.status == 200) {
+          let a_token = response.data.tokens.refreshToken;
+          let r_token = response.data.tokens.accessToken;
 
-        localStorage.setItem('a_token', a_token);
-        localStorage.setItem('r_token', r_token);
-        
-        if (this.email === 'admin@wanna.pt') {
-          this.self.$router.push({path: '/manageposts'})
+          localStorage.setItem('a_token', a_token);
+          localStorage.setItem('r_token', r_token);
+          
+          if (this.email === 'admin@wanna.pt') {
+            this.self.$router.push({path: '/manageposts'})
+          } else {
+            // mudar esta rota para nome de utilizador
+            this.self.$router.push({path: '/inspire'})
+          }
         } else {
-          // mudar esta rota para nome de utilizador
-          this.self.$router.push({path: '/inspire'})
-        }})
+            response.data = JSON.stringify(response.data);
+            let error = response.data.replace(/[\[\]"\{\}]+/g, '');
+            console.log('Error1 ' + error);
+        }
+      })
       .catch((error) => {
         console.log(error)
       });
@@ -128,9 +137,14 @@ export default {
         username: this.username,
         location: this.location,
         email: this.email,
-        password: this.password})
-      .then(response => {this.self.$router.push({path: ''})})
-      .catch(error => {console.log(error)});
+        password: this.password
+      })
+      .then(response => {
+        this.$router.go()
+      })
+      .catch(error => {
+        console.log(error.response)
+      });
     }
   }
 }

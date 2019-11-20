@@ -16,7 +16,7 @@ export default new Router({
   mode: 'history', /* To remove hash symbol */
   routes: [
     {
-      path: '',
+      path: '/',
       name: 'Auth',
       component: Auth
       /* meta: { guest: true } */

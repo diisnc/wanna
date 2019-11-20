@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
 import Vuetify from 'vuetify'
 import VueSession from 'vue-session'
 import VueRouter from 'vue-router'
@@ -12,6 +11,9 @@ import Popover  from 'vue-js-popover'
 import VueMaterial from 'vue-material'
 import moment from 'moment'
 import vmodal from 'vue-js-modal'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 
 //import mdbDatatable from 'mdbvue';
 //import VueApexCharts from 'vue-apexcharts'
@@ -40,6 +42,7 @@ Vue.use(Vuetify);
 Vue.use(vmodal);
 Vue.prototype.moment = moment;
 Vue.use(BootstrapVue);
+Vue.use(VueAxios, axios)
 //Vue.use(Carousel3d);
 //Vue.component('apexchart', VueApexCharts)
 
