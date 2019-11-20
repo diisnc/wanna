@@ -15,12 +15,16 @@ class Wanna extends Component {
 
 	componentDidMount() {
 		console.log('ligação socket');
-		this.socket = io("http://192.168.1.14:8000");
-		this.socket.on("chat message", msg => {
+		this.socket = io("http://192.168.43.239:8000/socket.io/socket.io.js");
+		this.socket.on("chat-message", msg => {
+			console.log(msg);
 			this.setState({
 				chatMessages: [...this.state.chatMessages, msg]
 			});
 		});
+
+		this.submitSubscribe();
+		this.submitChatMessage();
 	}
 	render() {
 		const chatMessages = this.state.chatMessages.map(chatMessage => (
@@ -31,7 +35,6 @@ class Wanna extends Component {
 			<View style={styles.container}>
 				{chatMessages}
 				<TextInput
-					style={{ height: 40, borderWidth: 2, top: 600 }}
 					autoCorrect={false}
 					value={this.state.chatMessage}
 					onSubmitEditing={() => this.submitChatMessage()}
@@ -42,8 +45,18 @@ class Wanna extends Component {
 			</View>
 		);
 	}
+	submitSubscribe(){
+		this.socket.emit('subscribe', 'tarraxo31');
+	}
 	submitChatMessage() {
-		this.socket.emit('chat message', this.state.chatMessage);
+		const data = {
+				room: 'tarraxo31',
+				message: 'Olá',
+				idSender: 'tarraxo',
+				idReceiver: 'tarraxo',
+				idPost: '31'
+		};
+		this.socket.emit('chat-message', data);
 		this.setState({ chatMessage: '' });
 	}
 }
@@ -52,7 +65,6 @@ export default Wanna;
 
 const styles = StyleSheet.create({
 	container: {
-	  height: 400,
 	  flex: 1,
 	  backgroundColor: '#F5FCFF',
 	},
