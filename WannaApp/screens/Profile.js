@@ -304,7 +304,7 @@ class Profile extends Component {
 			<TouchableWithoutFeedback
 				onPress={() => {
 					this.props.navigation.navigate('UserPostProfile', {
-						postID: postInfo.id
+						postID: postInfo.postid
 					});
 				}}>
 				<View style={styles.gridImgContainer}>
