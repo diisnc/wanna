@@ -10,19 +10,19 @@
           <div class="sign-in-htm">
             <div class="group">
               <label for="user" class="label">Email</label>
-              <input id="user" v-model="email" type="email" class="input">
+              <input id="user" v-model="email" type="email" class="input" required>
 
             </div>
             <div class="group">
               <label for="pass" class="label">Password</label>
-              <input id="pass" v-model="password" type="password" class="input" data-type="password">
+              <input id="pass" v-model="password" type="password" class="input" required data-type="password">
             </div>
             <div class="group">
               <input id="check" type="checkbox" class="check" checked>
               <label for="check"><span class="icon"></span> Ficar ligado</label>
             </div>
             <div class="group">
-              <input type="submit" class="button" v-on:click="mylogin" value="Sign In">
+              <input type="submit" class="button" v-on:click="mylogin()" value="Sign In">
             </div>
             <div>
               <br/>
@@ -42,39 +42,39 @@
 
               <div class="group">
                 <label for="first_name" class="label">Primeiro Nome</label>
-                <input id="firstname" v-model="fname" type="text" class="input">
+                <input id="firstname" v-model="fname" type="text" class="input" required>
               </div>
               <div class="group">
                 <label for="user_name" class="label">Usermame</label>
-                <input id="username" v-model="username" type="text" class="input">
+                <input id="username" v-model="username" type="text" class="input" required>
               </div>
             </div>
               
             <div style="width: 50%; float: right; padding-left: 10px;">
               <div class="group">
                 <label for="last_name" class="label">Último Nome</label>
-                <input id="lastname" v-model="lname" type="text" class="input">
+                <input id="lastname" v-model="lname" type="text" class="input" required>
               </div>
               <div class="group">
                 <label for="local" class="label">Localização</label>
-                <input id="location" v-model="location" type="text" class="input">
+                <input id="location" v-model="location" type="text" class="input" required>
               </div>
             </div> 
                 
             <div class="group">
               <label for="e_mail" class="label">Email</label>
-              <input id="email" v-model="email" type="email" class="input">
+              <input id="email" v-model="email" type="email" class="input" required>
             </div>
             <div class="group">
                 <label for="pass_" class="label">Password</label>
-                <input id="pass__" v-model="password" type="password" class="input" data-type="password" style="margin-bottom: 30px;">
+                <input id="pass__" v-model="password" type="password" class ="input" required data-type="password" style="margin-bottom: 30px;">
             </div>
             <div class="group">
-              <input type="submit" class="button" v-on:click="myregister" value="Sign Up">
+              <input type="submit" class="button" v-on:click="myregister()" value="Sign Up">
             </div>
           
           </div>
-				
+
 				</div>
       </div>
     </div>
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: 'Auth',
   data () {
@@ -100,57 +101,36 @@ export default {
   },
   methods: {
     mylogin () {
-      // (method, endpoint, querystring, paramsA, bodyA, headers) 
-      axios.post('http://infernoo.duckdns.org:8000',
-                  {endpoint: 'v1/auth/login'},
-                  {method: 'put'},
-                  {body: 
-                    {
-                      email: this.email,
-                      password: this.password
-                    }
-                  }
-                )
+      axios.post('http://infernoo.duckdns.org:8000/v1/auth/login', {
+        email: this.email,
+        password: this.password})
       .then(response => {
-            let a_token = response.tokens.refreshToken;
-            let r_token = response.tokens.accessToken;
+        let a_token = response.data.tokens.refreshToken;
+        let r_token = response.data.tokens.accessToken;
 
-            localStorage.setItem('a_token', a_token);
-            localStorage.setItem('r_token', r_token);
-
-            if (this.email === 'admin@wanna.pt') {
-              this.self.$router.push({path: '/manageposts'})
-            } else {
-              //console.log('teste login')
-              this.self.$router.push({path: '/inspire'})
-            } 
-      }).catch((error) => {
+        localStorage.setItem('a_token', a_token);
+        localStorage.setItem('r_token', r_token);
+        
+        if (this.email === 'admin@wanna.pt') {
+          this.self.$router.push({path: '/manageposts'})
+        } else {
+          // mudar esta rota para nome de utilizador
+          this.self.$router.push({path: '/inspire'})
+        }})
+      .catch((error) => {
         console.log(error)
       });
 		},
 		myregister () {
-        if (this.fname === '' | this.lname === '' | this.username === '' | this.email === '' | this.password === '' | this.location === '' ) {
-          alert('Por favor preencha todos os campos do formulário.')
-        } else {
-          // (method, endpoint, querystring, paramsA, bodyA, headers) 
-          axios.post('http://infernoo.duckdns.org:8000',
-                      {endpoint: 'v1/auth/register'},
-                      {method: 'put'},
-                      {body: 
-                        {
-                          firstName: this.fname,
-                          lastName: this.lname,
-                          username: this.username,
-                          location: this.location,
-                          email: this.email,
-                          password: this.password
-                        }
-                      }
-                    )
-          .then(response => {
-            this.self.$router.push({path: ''}) // same page so the user can authenticate
-          });
-        }
+      axios.post('http://infernoo.duckdns.org:8000/v1/auth/register', {
+        firstName: this.fname,
+        lastName: this.lname,
+        username: this.username,
+        location: this.location,
+        email: this.email,
+        password: this.password})
+      .then(response => {this.self.$router.push({path: ''})})
+      .catch(error => {console.log(error)});
     }
   }
 }
