@@ -3,9 +3,13 @@ const { port, env } = require('./config/vars');
 const app = require('./config/express');
 const socket = require('./socket.js')
 
-const server = app.listen(port, () => console.info(`Server started on port ${port} (${env})`));
-
+const server = require('http').Server(app);
 const io = require('socket.io')(server);
+
+app.listen(port, () => console.info(`Server started on port ${port} (${env})`));
+
+server.listen(8001);
+
 
 socket.socketHandler(io);
 

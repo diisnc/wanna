@@ -26,14 +26,9 @@ class Wanna extends Component {
 	componentDidMount() {
 		console.log('ligação socket');
 		const connectionConfig = {
-			jsonp: false,
-			reconnection: true,
-			reconnectionDelay: 100,
-			reconnectionAttempts: 100000,
 			transports: ['websocket']
 		};
-		socket = SocketIOClient('https://ff198987.ngrok.io', connectionConfig);
-		socket.connect();
+		socket = SocketIOClient('https://cbf2d5ca.ngrok.io', connectionConfig);
 		socket.on('chat-message', msg => {
 			console.log(msg);
 			this.setState({
@@ -41,8 +36,7 @@ class Wanna extends Component {
 			});
 		});
 
-		// this.submitSubscribe();
-		// this.submitChatMessage();
+		this.submitSubscribe();
 	}
 	render() {
 		const chatMessages = this.state.chatMessages.map(chatMessage => (
@@ -63,8 +57,8 @@ class Wanna extends Component {
 				/>
 
 				<View style={styles.inputContainer}>
-					<TouchableOpacity style={styles.saveButton} onPress={this.submitSubscribe}>
-						<Text style={styles.saveButtonText}>Save</Text>
+					<TouchableOpacity style={styles.saveButton} onPress={this.submitChatMessage}>
+						<Text style={styles.saveButtonText}>Send Message</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -79,12 +73,12 @@ class Wanna extends Component {
 		const data = {
 			room: 'tarraxo31',
 			message: 'Olá',
-			idSender: 'tarraxo',
+			idSender: 'sergiotj',
 			idReceiver: 'tarraxo',
 			idPost: '31'
 		};
-		//this.socket.emit('chat-message', data);
-		this.setState({ chatMessage: '' });
+		socket.emit('chat-message', data);
+		// this.setState({ chatMessage: '' });
 	}
 }
 
