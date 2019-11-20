@@ -38,15 +38,12 @@ class Tyle1 extends Component {
 	// COLOCAR PROPS AQUI E DEPOIS CHAMAR ISTO NO WANTED
 	render() {
 
-		// loading screen
-		if (this.state.loading == true) return <Loading />;
-		// complete page
-		else {
+		if (this.props.item != null) {
 
-			var primeiro = this.state.wishlistData[0][0];
-			var segundo = this.state.wishlistData[0][1];
-			var terceiro = this.state.wishlistData[0][2];
-			var postsPrinted = 0;
+			var primeiro = this.props.item[0];
+			var segundo = this.props.item[1];
+			var terceiro = this.props.item[2];
+			var postsPrinted = this.props.nrPosts;
 
 			// format data post 1
 			printId1 = 'id= ' + JSON.stringify(primeiro.id);
@@ -82,96 +79,41 @@ class Tyle1 extends Component {
 
 			// build javascript
 			return(
-				<View style={{ flex: 1, backgroundColor: 'pink', margin: 10 }}>
+				<View
+					key={'superTile' + postsPrinted}
+					style={{
+						height: tileHeight,
+						flexDirection: 'row',
+						alignItems: 'stretch',
+						backgroundColor: 'blue'
+				}}>
 					<View
-						key={'superTile' + postsPrinted}
 						style={{
-							height: tileHeight,
-							flexDirection: 'row',
-							alignItems: 'stretch',
-							backgroundColor: 'blue'
+							flex: 1,
+							backgroundColor: 'grey',
+							margin: 10,
+							flexDirection: 'column'
 					}}>
 						<View
-							style={{
-								flex: 1,
-								backgroundColor: 'grey',
-								margin: 10,
-								flexDirection: 'column'
-						}}>
-							<View
-								key={'tile' + postsPrinted}
-								style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
-							>
-								<Text >{printId1}</Text>
-								{/*
-								<Text
-									onPress={() =>
-										this.props.navigation.navigate('Profile', { name: 'João' })
-									}>
-									{printIdUser1}
-								</Text>
-								*/}
-								
-								{/*
-								<Text key={"idUser" + tyleNr}>{printIdUser1}</Text>
-								<Text key={"description" + tyleNr}>{printDescription1}</Text>
-								<Text key={"isAvailable" + tyleNr}>{printIsAvailable1}</Text>
-								<Text key={"price" + tyleNr}>{printPrice1}</Text>
-								<Text key={"photoType1" + tyleNr}>{printPhotoType11}</Text>
-								*/}
-								<Image
-									source={{
-										uri:
-											'data:' +
-											'image/jpeg' +
-											';base64,' +
-											objJsonB641 +
-											''
-									}}
-									style={{
-										flex: 1
-									}}
-									resizeMode="contain"
-								/>
-							</View>
-							<View
-								key={'tile' + postsPrinted + 1}
-								style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
-								<Text>{printId2}</Text>
-								{/*
-								<Text key={"idUser" + tyleNr+1}>{printIdUser2}</Text>
-								<Text key={"description" + tyleNr+1}>{printDescription2}</Text>
-								<Text key={"isAvailable" + tyleNr+1}>{printIsAvailable2}</Text>
-								<Text key={"price" + tyleNr+1}>{printPrice2}</Text>
-								<Text key={"photoType1" + tyleNr+1}>{printPhotoType12}</Text>
-								*/}
-								<Image
-									source={{
-										uri:
-											'data:' +
-											'image/jpeg' +
-											';base64,' +
-											objJsonB642 +
-											''
-									}}
-									style={{
-										flex: 1
-									}}
-									resizeMode="contain"
-								/>
-							</View>
-						</View>
-						<View
-							key={'tile' + postsPrinted + 2}
-							style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}
+							key={'tile' + postsPrinted}
+							style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
 						>
-							<Text>{printId3}</Text>
+							<Text >{printId1}</Text>
 							{/*
-							<Text key={"idUser" + tyleNr+2}>{printIdUser3}</Text>
-							<Text key={"description" + tyleNr+2}>{printDescription3}</Text>
-							<Text key={"isAvailable" + tyleNr+2}>{printIsAvailable3}</Text>
-							<Text key={"price" + tyleNr+2}>{printPrice3}</Text>
-							<Text key={"photoType1" + tyleNr+2}>{printPhotoType13}</Text>
+							<Text
+								onPress={() =>
+									this.props.navigation.navigate('Profile', { name: 'João' })
+								}>
+								{printIdUser1}
+							</Text>
+							*/}
+							
+							{/*
+							<Text key={"idUser" + tyleNr}>{printIdUser1}</Text>
+							<Text key={"description" + tyleNr}>{printDescription1}</Text>
+							<Text key={"isAvailable" + tyleNr}>{printIsAvailable1}</Text>
+							<Text key={"price" + tyleNr}>{printPrice1}</Text>
+							<Text key={"photoType1" + tyleNr}>{printPhotoType11}</Text>
 							*/}
 							<Image
 								source={{
@@ -179,7 +121,33 @@ class Tyle1 extends Component {
 										'data:' +
 										'image/jpeg' +
 										';base64,' +
-										objJsonB643 +
+										objJsonB641 +
+										''
+								}}
+								style={{
+									flex: 1
+								}}
+								resizeMode="contain"
+							/>
+						</View>
+						<View
+							key={'tile' + postsPrinted + 1}
+							style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
+							<Text>{printId2}</Text>
+							{/*
+							<Text key={"idUser" + tyleNr+1}>{printIdUser2}</Text>
+							<Text key={"description" + tyleNr+1}>{printDescription2}</Text>
+							<Text key={"isAvailable" + tyleNr+1}>{printIsAvailable2}</Text>
+							<Text key={"price" + tyleNr+1}>{printPrice2}</Text>
+							<Text key={"photoType1" + tyleNr+1}>{printPhotoType12}</Text>
+							*/}
+							<Image
+								source={{
+									uri:
+										'data:' +
+										'image/jpeg' +
+										';base64,' +
+										objJsonB642 +
 										''
 								}}
 								style={{
@@ -189,9 +157,36 @@ class Tyle1 extends Component {
 							/>
 						</View>
 					</View>
+					<View
+						key={'tile' + postsPrinted + 2}
+						style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}
+					>
+						<Text>{printId3}</Text>
+						{/*
+						<Text key={"idUser" + tyleNr+2}>{printIdUser3}</Text>
+						<Text key={"description" + tyleNr+2}>{printDescription3}</Text>
+						<Text key={"isAvailable" + tyleNr+2}>{printIsAvailable3}</Text>
+						<Text key={"price" + tyleNr+2}>{printPrice3}</Text>
+						<Text key={"photoType1" + tyleNr+2}>{printPhotoType13}</Text>
+						*/}
+						<Image
+							source={{
+								uri:
+									'data:' +
+									'image/jpeg' +
+									';base64,' +
+									objJsonB643 +
+									''
+							}}
+							style={{
+								flex: 1
+							}}
+							resizeMode="contain"
+						/>
+					</View>
 				</View>
 			)
-		}
+		} else return null;
 	}
 
 	// Get Data to Build Feed and Transform it to Json Object
