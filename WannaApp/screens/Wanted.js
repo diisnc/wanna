@@ -8,7 +8,9 @@ import {
 	Platform,
 	ScrollView,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	ToastAndroid,
+	Animated
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
@@ -16,7 +18,8 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 class Wanted extends Component {
 	state = {
 		wishlistData: [],
-		numPosts: 0
+		numPosts: 0,
+		loadingMoreData: false,
 	};
 
 	componentDidMount() {
@@ -89,7 +92,19 @@ class Wanted extends Component {
 	// Builds feed of the page
 	buildFeed() {
 		return (
-			<ScrollView scrollEventThrottle={16}>
+			<ScrollView 
+				scrollEventThrottle={16}
+				onScroll={Animated.event(
+					[{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+					{
+						listener: event => {
+							if (this.isCloseToBottom(event.nativeEvent)) {
+								this.loadMoreData()
+							}
+					  	}
+					}
+				)}
+			>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
 					{this.buildFeedTile()}
 				</View>
@@ -570,105 +585,33 @@ class Wanted extends Component {
 		)
 	}
 
-	// 3 tyle javascript generation
-	genRow(post) {
-		const items = [];
+	// to check if user scrolled till the end of the scroll view
+	isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+		const paddingToBottom = 20
+		return layoutMeasurement.height + contentOffset.y >=
+			contentSize.height - paddingToBottom
+	}
 
-		// format data post 1
-		printId1 = 'id= ' + JSON.stringify(this.state.wishlistData[post].id);
-		/*
-        printIdUser1 = "idUser= " + JSON.stringify(this.state.wishlistData[post].idUser);
-        printDescription1 = "description= " + JSON.stringify(this.state.wishlistData[post].description);
-        printIsAvailable1 = "isAvailable= " + JSON.stringify(this.state.wishlistData[post].isAvailable);
-        printPrice1 = "price= " + JSON.stringify(this.state.wishlistData[post].price);
-        printPhotoType11 = "photoType1= " + JSON.stringify(this.state.wishlistData[post].photoType1);
-        */
-		objJsonB641 = new Buffer(this.state.wishlistData[post].photoData1).toString('base64');
-		// format data post 2
-		printId2 = 'id= ' + JSON.stringify(this.state.wishlistData[post + 1].id);
-		/*
-        printIdUser2 = "idUser= " + JSON.stringify(this.state.wishlistData[post+1].idUser);
-        printDescription2 = "description= " + JSON.stringify(this.state.wishlistData[post+1].description);
-        printIsAvailable2 = "isAvailable= " + JSON.stringify(this.state.wishlistData[post+1].isAvailable);
-        printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
-        printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
-        */
-		objJsonB642 = new Buffer(this.state.wishlistData[post + 1].photoData1).toString('base64');
+	loadMoreData = () => {
+		const {loadMore} = this.state.loadingMoreData
+		if (loadMore) {
+			return
+		}
+		this.setState({loadingMoreData: true})
 
-		// build javascript
-		items.push(
-			<View
-				key={'superTile' + post}
-				style={{
-					height: 200,
-					flexDirection: 'row',
-					alignItems: 'stretch',
-					backgroundColor: 'green'
-				}}>
-				<View style={{ flex: 1, backgroundColor: 'pink', margin: 10 }}>
-					<View
-						key={'tile' + post}
-						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
-						<Text key={'id' + post}>{printId1}</Text>
-						{/*
-                        <Text key={"idUser" + post}>{printIdUser1}</Text>
-                        <Text key={"description" + post}>{printDescription1}</Text>
-                        <Text key={"isAvailable" + post}>{printIsAvailable1}</Text>
-                        <Text key={"price" + post}>{printPrice1}</Text>
-                        <Text key={"photoType1" + post}>{printPhotoType11}</Text>
-                        */}
-						<Image
-							source={{
-								uri:
-									'data:' +
-									this.state.wishlistData[post].photoType1 +
-									';base64,' +
-									objJsonB641 +
-									''
-							}}
-							style={{
-								width: 'auto',
-								height: '80%',
-								aspectRatio: 1,
-								overflow: 'hidden'
-							}}
-						/>
-					</View>
-				</View>
-				<View style={{ flex: 1, backgroundColor: 'grey', margin: 10 }}>
-					<View
-						key={'tile' + post + 1}
-						style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
-						<Text key={'id' + post + 1}>{printId2}</Text>
-						{/*
-                        <Text key={"idUser" + post+1}>{printIdUser2}</Text>
-                        <Text key={"description" + post+1}>{printDescription2}</Text>
-                        <Text key={"isAvailable" + post+1}>{printIsAvailable2}</Text>
-                        <Text key={"price" + post+1}>{printPrice2}</Text>
-                        <Text key={"photoType1" + post+1}>{printPhotoType12}</Text>
-                        */}
-						<Image
-							source={{
-								uri:
-									'data:' +
-									this.state.wishlistData[post + 1].photoType1 +
-									';base64,' +
-									objJsonB642 +
-									''
-							}}
-							style={{
-								width: 'auto',
-								height: '80%',
-								aspectRatio: 1,
-								overflow: 'hidden'
-							}}
-						/>
-					</View>
-				</View>
-			</View>
-		);
+		/*loading - set loadMore = false when done*/
+		ToastAndroid.show('A carregar...', ToastAndroid.SHORT);
 
-		return items;
+		// nove pedido
+		const newPosts = require('./json/responseFeed');
+
+		// add to current state
+		var newState = [...this.state.wishlistData, ...newPosts];
+		this.setState({
+			wishlistData: newState,
+			numPosts: newState.length,
+			loadingMoreData: false
+		})
 	}
 
 	// Get Data to Build Feed and Transform it to Json Object
