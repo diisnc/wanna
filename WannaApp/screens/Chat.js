@@ -3,118 +3,347 @@ import {
 	View,
 	StyleSheet,
 	Image,
-	Button,
-	TextInput,
 	Keyboard,
-	TouchableOpacity,
-	Text
+	Text,
+	FlatList,
+	Platform,
+	TextInput,
+	TouchableHighlight,
+	SafeAreaView
 } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { globalStyle, defaultNavigator } from './style';
 import SocketIOClient from 'socket.io-client/dist/socket.io';
+import { connect } from 'react-redux';
+import { newMessages } from '../modules/chat/chat.reducer';
 
+const isAndroid = Platform.OS == 'android';
 let socket;
-class Wanna extends Component {
+class Chat extends Component {
 	state = {
-		chatMessage: '',
-		chatMessages: []
+		messages: [],
+		username: null,
+		avatarContact: null,
+		contact: null,
+		text: '',
+		room: ''
 	};
 
 	constructor(props) {
 		super(props);
-	}
-
-	componentDidMount() {
-		console.log('ligação socket');
 		const connectionConfig = {
 			transports: ['websocket']
 		};
 		socket = SocketIOClient('https://cbf2d5ca.ngrok.io', connectionConfig);
-		socket.on('chat-message', msg => {
-			console.log(msg.message);
-			var copyChatMessages = [...this.state.chatMessages];
-			copyChatMessages.push(msg.message);
-			this.setState({
-				chatMessages: copyChatMessages
-			});
+		socket.on('message', msg => {
+			this.onReceivedMessage(msg);
+			this.props.newMessagesArrived(msg);
 		});
-
-		this.submitSubscribe();
 	}
+
+	_keyboardDidShow = e => {
+		let keyboardHeight = e.endCoordinates.height;
+		this.setState({
+			minInputToolbarHeight: keyboardHeight + 5
+		});
+	};
+
+	_keyboardDidHide = () => {
+		this.setState({
+			minInputToolbarHeight: 45
+		});
+	};
+
+	componentWillMount() {
+		if (Platform.OS === 'android') {
+			this.keyboardDidShowListener = Keyboard.addListener(
+				'keyboardDidShow',
+				this._keyboardDidShow
+			);
+			this.keyboardDidHideListener = Keyboard.addListener(
+				'keyboardDidHide',
+				this._keyboardDidHide
+			);
+		}
+	}
+
+	componentDidMount() {
+		// exemplo tarraxo31
+		const room = this.state.text.contact + this.state.idPost;
+
+		socket.emit('subscribe', room);
+
+		Keyboard.addListener(isAndroid ? 'keyboardDidShow' : 'keyboardWillShow', e =>
+			this.setState({ viewPadding: e.endCoordinates.height - 40 })
+		);
+
+		Keyboard.addListener(isAndroid ? 'keyboardDidHide' : 'keyboardWillHide', () =>
+			this.setState({ viewPadding: viewPadding })
+		);
+	}
+
+	componentWillUnmount() {
+		if (Platform.OS === 'android') {
+			this.keyboardDidShowListener.remove();
+			this.keyboardDidHideListener.remove();
+		}
+	}
+
 	render() {
-
 		return (
-			<View style={styles.container}>
-				<View style={{flex: 1, alignItems: "stretch", backgroundColor: "red" }}>
-					{this.printMessages()}
+			/*
+            Fazer View Englobadora da página
+            onde o primeiro elemento é o header
+            de pesquisa e o segundo elemento
+            é o feed que contém as imagens.
+            */
+			// Safe Box for Iphone
+			<SafeAreaView style={{ flex: 1 }}>
+				{/* Full Page Box */}
+				<View
+					style={{
+						flex: 1,
+						flexDirection: 'column',
+						justifyContent: 'flex-start',
+						alignItems: 'stretch'
+					}}>
+					{this.buildHeader()}
+					{/* this.buildWishlist() */}
+					{this.renderConversation()}
 				</View>
-				<TextInput
-					style={styles.textInput}
-					placeholder="Your message"
-					maxLength={20}
-					onBlur={Keyboard.dismiss}
-					onChangeText={chatMessage => {
-						this.setState({ chatMessage });
-					}}
-				/>
+			</SafeAreaView>
+		);
+	}
 
-				<View style={styles.inputContainer}>
-					<TouchableOpacity style={styles.saveButton} onPress={this.submitChatMessage}>
-						<Text style={styles.saveButtonText}>Send Message</Text>
-					</TouchableOpacity>
+	// Builds header of the page
+	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
+		return (
+			// Safe Box for Android
+			<View
+				style={{
+					height: this.startHeaderHeight,
+					backgroundColor: 'white',
+					borderBottomWidth: 1,
+					borderBottomColor: '#dddddd'
+				}}>
+				<View
+					style={{
+						height: '90%',
+						flexDirection: 'row',
+						padding: 10,
+						justifyContent: 'center',
+						alignItems: 'center',
+						backgroundColor: 'blue'
+					}}>
+					<Text style={{ flex: 3, textAlign: 'center' }}>
+						Conversa com o {this.props.contact}
+					</Text>
 				</View>
 			</View>
 		);
 	}
 
-	printMessages() {
-		const items = [];
-		var messages = [...this.state.chatMessages];
-
-		messages.map((message) =>
-			items.push(
-				<Text>{message}</Text>
-			)
-		)
-
-		return items;
+	renderConversation() {
+		return (
+			<View style={styles.container}>
+				<FlatList
+					style={styles.list}
+					data={this.state.messages}
+					ref={ref => (this.flatList = ref)}
+					onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
+					onLayout={() => this.flatList.scrollToEnd({ animated: true })}
+					renderItem={({ item, index }) => (
+						<View
+							style={[
+								{
+									display: 'flex',
+									alignItems:
+										item.username === 'android' ? 'flex-end' : 'flex-start'
+								}
+							]}>
+							<View
+								style={[
+									styles.listItemContainer,
+									{
+										flexDirection:
+											item.username === 'android' ? 'row-reverse' : 'row'
+									}
+								]}>
+								<Image
+									style={styles.imageStyles}
+									source={{ uri: item.user.avatar }}
+								/>
+								<Text style={styles.listItem}>{item.text}</Text>
+							</View>
+							<View style={styles.marginBottom} />
+						</View>
+					)}
+				/>
+				<View style={{ flexDirection: 'row' }}>
+					<TextInput
+						style={styles.textInput}
+						onChangeText={this.changeTextHandler}
+						onSubmitEditing={this.sendMessage}
+						value={this.state.text}
+						placeholder="Type a message"
+						returnKeyType="done"
+						returnKeyLabel="done"
+						underlineColorAndroid="transparent"
+					/>
+					<TouchableHighlight
+						style={styles.inputButton}
+						underlayColor="#fff"
+						onPress={this.sendMessage}>
+						<Text>Send</Text>
+					</TouchableHighlight>
+				</View>
+			</View>
+		);
 	}
 
-	submitSubscribe() {
-		console.log('enviou');
-		const result = socket.emit('subscribe', 'tarraxo31');
-		console.log('Resultado: ' + result);
-	}
-	submitChatMessage() {
-		const data = {
-			room: 'tarraxo31',
-			message: 'Olá',
-			idSender: 'sergiotj',
-			idReceiver: 'tarraxo',
-			idPost: '31'
-		};
-		socket.emit('chat-message', data);
-		// this.setState({ chatMessage: '' });
-	}
+	/**
+	 * Save the input values change to state
+	 */
+	changeTextHandler = text => {
+		this.setState({ text: text });
+	};
+
+	onReceivedMessage = messagesA => {
+		let messageArr = [];
+		messagesA.map(item => {
+			let messageModel = {
+				writer: this.state.contact,
+				text: item.message,
+				date: new Date()
+			};
+
+			messageArr.push(messageModel);
+		});
+
+		messageArr.reverse();
+
+		this.setState({ messages: this.state.messages.concat(messageArr) });
+	};
+
+	sendMessage = () => {
+		let notEmpty = this.state.text.trim().length > 0;
+
+		if (notEmpty) {
+			let messageToSend = {
+				room: this.state.room,
+				message: this.state.text,
+				idSender: this.state.username,
+				idReceiver: this.state.contact,
+				idPost: '31'
+			};
+
+			let messageToSave = {
+				writer: this.state.username,
+				text: this.state.text,
+				date: new Date()
+			};
+
+			socket.emit('chat-message', messageToSend);
+
+			this.setState({ messages: messages.concat(messageToSave), text: '' });
+		}
+	};
 }
 
-export default Wanna;
+function mapStateToProps(store, ownProps) {
+	console.log(store.chat);
+	return {
+		username: store.auth.username,
+		avatarContact: store.chat.avatarContact,
+		contact: store.chat.contact,
+		room: store.chat.room
+	};
+}
+function mapDispatchToProps(dispatch) {
+	return {
+		newMessages: msg => {
+			dispatch(newMessages(msg));
+		}
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Chat);
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#F5FCFF'
+		justifyContent: 'center',
+		alignItems: 'flex-start',
+		backgroundColor: '#F5FCFF',
+		padding: 10,
+		paddingTop: 20
 	},
-	saveButton: {
-		borderWidth: 1,
-		borderColor: '#007BFF',
-		backgroundColor: '#007BFF',
-		padding: 15,
-		margin: 5
+	buttonStyle: {
+		color: 'red',
+		backgroundColor: 'green'
 	},
-	saveButtonText: {
-		color: '#FFFFFF',
-		fontSize: 20,
-		textAlign: 'center'
+	list: {
+		width: '100%'
+	},
+	listItem: {
+		width: 'auto',
+		maxWidth: '80%',
+		paddingTop: 2,
+		paddingBottom: 2,
+		fontSize: 14
+	},
+	marginBottom: {
+		height: 5,
+		backgroundColor: 'transparent'
+	},
+	listItemContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		paddingTop: 10,
+		paddingBottom: 10,
+		paddingLeft: 10,
+		paddingRight: 10,
+		borderRadius: 10,
+		backgroundColor: '#fff',
+		elevation: 1
+	},
+	imageStyles: {
+		width: 35,
+		height: 35,
+		borderRadius: 35,
+		marginLeft: 10,
+		marginRight: 10
+	},
+	textInput: {
+		height: 50,
+		paddingRight: 10,
+		paddingLeft: 10,
+		paddingTop: 15,
+		paddingBottom: 15,
+		borderColor: 'transparent',
+		width: '85%',
+		backgroundColor: '#fff',
+		borderRadius: 10,
+		elevation: 1
+	},
+	inputButton: {
+		display: 'flex',
+		height: 50,
+		justifyContent: 'center',
+		borderRadius: 10,
+		alignSelf: 'center',
+		paddingLeft: 5,
+		paddingRight: 5,
+		marginLeft: 10,
+		backgroundColor: '#fff',
+		elevation: 1
 	}
 });

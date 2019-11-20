@@ -13,7 +13,7 @@ import {
 	TouchableOpacity,
 	StatusBar
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
@@ -58,31 +58,41 @@ class Inspire extends Component {
 		const token = this.props.tokenValid;
 		console.log('login ' + loggedIn);
 		console.log('token valid ' + token);
-
 		if (loggedIn == true && token == true) {
-			return (
-				/*
-            Fazer View Englobadora da página
-            onde o primeiro elemento é o header
-            de pesquisa e o segundo elemento
-            é o feed que contém as imagens.
-            */
-				// Safe Box for Iphone
-				<SafeAreaView style={{ flex: 1 }}>
-					<StatusBar barStyle="dark-content" backgroundColor="white" />
-					{/* Full Page Box */}
-					<View
-						style={{
-							flex: 1,
-							flexDirection: 'column',
-							justifyContent: 'flex-start',
-							alignItems: 'stretch'
-						}}>
-						{this.buildHeader()}
-						{this.buildInstaStyle()}
-					</View>
-				</SafeAreaView>
-			);
+			if (this.state.numPosts != 0) {
+				return (
+					<SafeAreaView style={{ flex: 1 }}>
+						<StatusBar barStyle="dark-content" backgroundColor="white" />
+						{/* Full Page Box */}
+						<View
+							style={{
+								flex: 1,
+								flexDirection: 'column',
+								justifyContent: 'flex-start',
+								alignItems: 'stretch'
+							}}>
+							{this.buildHeader()}
+							{this.buildInstaStyle()}
+						</View>
+					</SafeAreaView>
+				);
+			} else
+				return (
+					<SafeAreaView style={{ flex: 1 }}>
+						<StatusBar barStyle="dark-content" backgroundColor="white" />
+						{/* Full Page Box */}
+						<View
+							style={{
+								flex: 1,
+								flexDirection: 'column',
+								justifyContent: 'flex-start',
+								alignItems: 'stretch'
+							}}>
+							{this.buildHeader()}
+							<Loading />
+						</View>
+					</SafeAreaView>
+				);
 		} else
 			return (
 				<SafeAreaView style={{ flex: 1 }}>

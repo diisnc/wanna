@@ -1,6 +1,7 @@
 import { logout } from './auth/auth.service';
 import { refreshToken } from './auth/auth.api';
 import { api, setToken, setStore } from './api';
+import NavigationService from './navigator';
 
 export const saveAuthToken = store => next => action => {
 	if (action.type === 'SET_LOGIN_SUCCESS' || action.type === 'SAVE_APP_TOKEN') {
@@ -26,6 +27,16 @@ export const jwt = store => next => action => {
 		}
 	} else if (action.type === 'REFRESH_EXPIRED') {
 		store.dispatch(logout());
+	} else {
+		return next(action);
+	}
+};
+
+export const nav = store => next => action => {
+	if (action.type === 'ENTERED_CHAT') {
+		console.log('apanhou o dispatch');
+		NavigationService.navigate('Chat');
+		return next(action);
 	} else {
 		return next(action);
 	}

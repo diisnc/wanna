@@ -9,7 +9,7 @@ import Login from './screens/Login';
 import Wanna from './screens/Wanna';
 import Register from './screens/Register';
 import { checkAuthStatus } from './modules/auth/auth.service';
-import { jwt, saveAuthToken } from './modules/middleware';
+import { jwt, saveAuthToken, nav } from './modules/middleware';
 import logger from 'redux-logger';
 import { reducer as formReducer } from 'redux-form';
 import auth from './modules/auth/auth.reducer';
@@ -18,11 +18,13 @@ import permissions, {
 	setCameraFolderPermission
 } from './modules/permissions/permissions.reducer';
 import error from './modules/errors/error.reducer';
+import chat from './modules/chat/chat.reducer';
 import * as Permissions from 'expo-permissions';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import NavigatorService from './modules/navigator';
 
 const rootReducer = combineReducers({
+	chat,
 	auth,
 	permissions,
 	error,
@@ -30,7 +32,7 @@ const rootReducer = combineReducers({
 });
 
 // export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, thunk, logger));
-export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, thunk));
+export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, nav, thunk));
 
 class App extends Component {
 	render() {
@@ -74,11 +76,11 @@ const Navigator = createAppContainer(AppStackNav);
 class ConnectedComponent extends React.Component {
 	constructor(props) {
 		super(props);
+		this.props.checkAuthStatus();
 		// this.checkAuth = this.checkAuth.bind(this);
 	}
 
 	async componentDidMount() {
-		this.props.checkAuthStatus();
 		// follow();
 		this.cameraAccess();
 		this.cameraRollAccess();

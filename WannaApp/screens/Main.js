@@ -7,6 +7,7 @@ import EditProfile from './EditProfile';
 import Filters from './Filters';
 import NewFilter from './NewFilter';
 import FollowList from './FollowList';
+import ConversationsList from './ConversationsList';
 import Chat from './Chat';
 import UserPostProfile from './UserPostProfile';
 import React, { Component } from 'react';
@@ -102,6 +103,23 @@ const FeedStack = createStackNavigator({
 	}
 });
 
+const ChatStack = createStackNavigator({
+	ConversationsList: {
+		screen: ConversationsList,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	Chat: {
+		screen: Chat,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	}
+});
+
 const MainTab = createMaterialTopTabNavigator(
 	{
 		Inspire: {
@@ -152,8 +170,8 @@ const MainTab = createMaterialTopTabNavigator(
 				)
 			}
 		},
-		Chat: {
-			screen: Chat,
+		ConversationsList: {
+			screen: ChatStack,
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 10 }}>CHAT</Text>,
 				tabBarIcon: ({ tintColor }) => (

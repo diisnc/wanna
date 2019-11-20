@@ -20,6 +20,7 @@ import { globalStyle, defaultNavigator } from './style';
 import { logout } from '../modules/auth/auth.service';
 import { connect } from 'react-redux';
 import { getMyProfile, getUserProfile } from '../modules/profile/profile.api';
+import Loading from './Loading';
 
 let { width, height } = Dimensions.get('window');
 
@@ -263,7 +264,7 @@ class Profile extends Component {
 					</SafeAreaView>
 				);
 			}
-		} else return null;
+		} else return <Loading/>;
 	}
 
 	// Builds header of the page
