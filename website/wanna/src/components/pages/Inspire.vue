@@ -24,7 +24,6 @@
                   <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id"name="post_options" width="400px" height="auto">
                     <b-list-group-item class="post-list" href="">Copiar ligação</b-list-group-item>
                     <b-list-group-item class="post-list" href="">Reportar</b-list-group-item>
-
                   </modal>
                 </div>
               </div>
@@ -62,7 +61,6 @@
 
                 </div>
                 <div class="reaction-right-area">
-                  <button @click="" class="icon icon-reaction icon-message-empty"> ‏‏‎ </button>
                   <button v-if="getsave(post_id) === 0" @click="savepost(post_id)" class="icon icon-reaction icon-save-empty"> ‏‏‎ </button>
                   <button v-if="getsave(post_id) === 1" @click="unsavepost(post_id)" class="icon icon-reaction icon-save-full"> ‏‏‎ </button>
                   <button @click="" class="icon icon-reaction icon-buy-empty"> ‏‏‎ </button>
@@ -92,13 +90,32 @@
                   </div>
                 </b-collapse>
               </div>
-              <!-- ADICIONAR COMENTÁRIO -->
+              <!-- COMENTÁRIOS -->
               <div class="comment-area">
+
                 <div class="my-comment">
-                  <a :href="current_user_name"><img class="img-user" :src="current_user_pic"></a>
+                  <a :href="product.comments[0].user"><img class="img-user" :src="product.comments[0].user_img"></a>
+                  <div class="comment">
+                    <a :href="product.comments[0].user" class="txt-username"><b>{{product.comments[0].user}}</b></a>
+                    <a class="txt-username">{{product.comments[0].text}}</a>
+                    <a class="txt-username">•</a>
+                  <a class="txt-username txt-tmstmp">{{moment(product.comments[0].timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
+                  </div>
+                </div>
+
+                <div class="my-comment">
+                  <a :href="current_user_name"><img class="img-user" :src="current_user_img"></a>
                   <b-form-textarea class="comment-input" v-model="text" rows="1" max-rows="4" v-bind:id="'comment_'+product.id" placeholder="Escreve um comentário..." ></b-form-textarea>
                   <button @click="" class="btn icon icon-send"/>
                 </div>
+                <div class="my-comment">
+                  <a>ver todos os comentários...</a>
+                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id"name="post_options" width="400px" height="auto">
+                    <b-list-group-item class="post-list" href="">Copiar ligação</b-list-group-item>
+                    <b-list-group-item class="post-list" href="">Reportar</b-list-group-item>
+                  </modal>
+                </div>
+                
               </div>
 
             </div>
@@ -150,7 +167,7 @@ export default {
       likes: 342,
       post_id: 2123,
       current_user_name: 'vitorecarpe',
-      current_user_pic: 'https://i.imgur.com/KMlWJNv.jpg',
+      current_user_img: 'https://i.imgur.com/KMlWJNv.jpg',
       products: [
         {
           id: 1,
@@ -168,6 +185,26 @@ export default {
             "https://onpointfresh.com/wp-content/uploads/2016/11/street-style-men-boots-1.jpg"
           ],
           likes: 123,
+          comments: [
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao Tiago e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            }
+          ]
         },
         {
           id: 2,
@@ -185,7 +222,22 @@ export default {
             "https://i.imgur.com/hs5b0fc.png",
             "https://i.imgur.com/uSbOYV8.png"
           ],
-          likes: 2321
+          likes: 2321,
+          comments: [
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-07T10:29:23',
+              text: 'Muito bonitas as camisolas Joana!'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-06T16:18:22',
+              text: 'Meh...'
+            }
+            
+          ]
         },
         {
           id: 3,
@@ -203,7 +255,27 @@ export default {
             "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
             "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9318-690x455.jpg"
           ],
-          likes: 1489
+          likes: 1489,
+          comments: [
+          {
+              user: 'tatianamendess',
+              user_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBPBZloSuY-6XVhbBX7xROuv2n8OZGLmFQwFtSqFBxX87mWyRN&s',
+              timestamp: '2019-11-03T16:23:22',
+              text: 'Mal posso esperar por as levar ao Alive!'
+            },
+            {
+              user: 'rita_cunhaa',
+              user_img: 'https://making-the-web.com/sites/default/files/clipart/157025/happy-person-picture-157025-4275865.jpg',
+              timestamp: '2019-11-02T19:28:22',
+              text: 'Que giras!!!'
+            },
+            {
+              user: 'rosa_almeida__',
+              user_img: 'https://portalovertube.com/wp-content/uploads/2019/02/Amy.jpg',
+              timestamp: '2019-11-02T119:18:52',
+              text: 'Se fossem mais altas...'
+            },
+          ]
         },
         {
           id: 4,
@@ -220,7 +292,15 @@ export default {
           imgs: [
             "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg"
           ],
-          likes: 431
+          likes: 431,
+          comments: [
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-10-22T16:18:22',
+              text: 'Se tivesse o fato de treino completo até comprava.'
+            }
+          ]
         }
       ],
       showbanner: 1,
@@ -309,9 +389,14 @@ export default {
 </script>
 
 <style>
-
-
-
+  .comment{
+    width:100%;
+    margin-left: 15px;
+    padding: 10px;
+    border-radius:20px !important;
+    background-color: #EEE !important;
+    color: #000 !important;
+  }
   .toggle-description{
     padding: 0px 10px 0px 10px;
   }
@@ -500,17 +585,6 @@ export default {
     transition: 0.3s !important;
   }
 
-  .icon-message-empty {
-    mask: url(https://svgur.com/i/G2U.svg);
-    transition: 0.3s !important;
-    width: 23px !important;
-    height: 23px !important;
-  }
-  .icon-message-empty:hover{
-    background-color: #4A53FC !important;
-    transition: 0.3s !important;
-  }
-
   .icon-save-empty {
     mask: url(https://svgur.com/i/G1_.svg);
     transition: 0.3s !important;
@@ -548,7 +622,7 @@ export default {
   }
   .comment-input{
     margin: 0px 10px 0px 15px;
-    border-radius:20px !important;
+    border-radius: 20px !important;
     background-color: #EEE !important;
     border: 0px !important;
     color: #000 !important;

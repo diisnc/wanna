@@ -14,6 +14,7 @@ exports.create = async (req, res, next) => {
 	try {
 		const post = await Post.create({
 			description: req.body.description,
+			genre: req.body.genre,
 			price: req.body.price,
 			isAvailable: req.body.isAvailable,
 			idUser: req.user.username,
@@ -44,26 +45,7 @@ exports.create = async (req, res, next) => {
 exports.feed = async (req, res, next) => {
 	try {
 		list = await Post.feed(req.query.page, req.user.username);
-		const result1 = [];
-		for (var i = 0; i < list.length; ) {
-			const post = {
-				id: list[i].id,
-				idUser: list[i].idUser,
-				description: list[i].description,
-				isAvailable: list[i].isAvailable,
-				price: list[i].price,
-				photoType1: list[i].photoType,
-				photoData1: list[i].photoData,
-			};
-
-			i += 1;
-
-			if (i > list.length) break;
-
-			result1.push(post);
-		}
-
-		return res.status(httpStatus.OK).json(result1);
+		return res.status(httpStatus.OK).json(list);
 	} catch (e) {
 		next(e);
 	}

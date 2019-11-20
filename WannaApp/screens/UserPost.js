@@ -39,7 +39,17 @@ class UserPost extends Component {
 					<View style={{ flex: 1, flexDirection: 'row' }}>
 						{/* primeira coluna: foto do perfil */}
 						<View>
-							<MaterialIcons name="person" size={40} />
+							<Image
+								source={{
+									uri:
+										'data:' +
+										'image/jpeg' +
+										';base64,' +
+										new Buffer(this.props.item.avatarData)
+								}}
+								style={{ width: 40, height: 40, borderRadius: 60 }}
+								resizeMode="contain"
+							/>
 						</View>
 						{/* segunda coluna: nome de perfil e localização */}
 						<View style={{ flex: 1, flexDirection: 'column' }}>
@@ -48,27 +58,35 @@ class UserPost extends Component {
 									this.props.navigation.navigate('UserProfile', {
 										userID: this.props.item.idUser
 									});
-									// console.log(item.authorId) // working Good, we sure params has value now.
 								}}>
 								<Text>{this.props.item.idUser}</Text>
 							</TouchableOpacity>
-							<Text>Localização</Text>
+							<Text>{this.props.item.location}</Text>
 						</View>
 					</View>
 					{/* imagens do post */}
 					<View>
-						<Image
-							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									new Buffer(this.props.item.photoData1)
-							}}
-							style={{ width: 500, height: 500 }}
-							resizeMode="contain"
-						/>
+						<TouchableOpacity
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {
+									postID: this.props.item.id
+								});
+							}}>
+							<Image
+								source={{
+									uri:
+										'data:' +
+										'image/jpeg' +
+										';base64,' +
+										new Buffer(this.props.item.photoData)
+								}}
+								style={{ width: 500, height: 500 }}
+								resizeMode="contain"
+							/>
+						</TouchableOpacity>
 					</View>
+
 					{/* footer de post, dividido em 3 linhas */}
 					<View style={{ flex: 1, flexDirection: 'column' }}>
 						{/* primeira linha: likes à esquerda, comentários, guardar e comprar à direita */}
@@ -83,21 +101,24 @@ class UserPost extends Component {
 							<View style={{ flex: 1, flexDirection: 'column' }}>
 								{/* primeira linha: nome do produto */}
 								<View style={{ flex: 1 }}>
-									<Text>Nome Produto</Text>
+									<Text>{this.props.item.category}</Text>
 								</View>
 								{/* segunda linha: marca e tamanho e cor */}
 								<View style={{ flex: 1 }}>
-									<Text>Marca, Cor, tamanho</Text>
+									<Text>
+										{this.props.item.brand}, {this.props.item.color},{' '}
+										{this.props.item.size}
+									</Text>
 								</View>
 							</View>
 							{/* coluna da direita: preço*/}
 							<View style={{ flex: 1 }}>
-								<Text>Preço €</Text>
+								<Text>{this.props.item.price}€</Text>
 							</View>
 						</View>
 						{/* terceira linha: descrição */}
 						<View style={{ flex: 1 }}>
-							<Text>Descrição</Text>
+							<Text>{this.props.item.description}</Text>
 						</View>
 					</View>
 				</View>

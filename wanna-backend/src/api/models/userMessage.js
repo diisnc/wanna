@@ -27,6 +27,28 @@ module.exports = (sequelize, DataTypes) => {
 			onUpdate: 'CASCADE',
 		});
 	};
+	
+
+	/**
+	 * 
+	 * Returns previous messages in chat
+	 */
+	UserMessage.getMessages = async function (idUser, idPost){
+		result = await this.sequelize.query(
+			'SELECT "UserMessages"."messageText", "UserMessages"."seenAt", "UserMessages"."createdAt" FROM "UserMessages"'+
+			' WHERE "UserMessages"."idPost" = (:idPost) AND ("UserMessages"."idSender" = (:idUser) OR "UserMessages"."idReceiver" = (:idUser))'+
+			' ORDER BY "UserMessages"."createdAt"',
+			{
+				replacements: {
+					idUser: idUser,
+					idPost: idPost,
+				},
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+
+	};
+
 	return UserMessage;
 };
 

@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
 import Vuetify from 'vuetify'
 import VueSession from 'vue-session'
 import VueRouter from 'vue-router'
@@ -27,7 +28,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 //require('../dist/static/css/index.css')
-
+window.axios = axios
 
 Vue.use(MdButton);
 Vue.use(MdContent);

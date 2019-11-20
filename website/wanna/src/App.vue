@@ -1,7 +1,5 @@
 <template>
-  <v-app>
-    <router-view/>
-  </v-app>
+  <router-view/>
 </template>
 
 
@@ -41,6 +39,13 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+  }
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
   }
 
   .popover {

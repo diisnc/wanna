@@ -13,7 +13,7 @@ import Manageusers from '@/components/admin/Manageusers'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'history', /* To remove hash symbol */
   routes: [
     {
       path: '',

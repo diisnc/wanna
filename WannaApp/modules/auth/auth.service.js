@@ -30,7 +30,7 @@ export const logout = () => async dispatch => {
 	try {
 		await AsyncStorage.removeItem('authToken');
 		await AsyncStorage.removeItem('username');
-		NavigationService.navigate('Login');
+		NavigationService.navigate('Wanna');
 	} catch (error) {
 		dispatch(asyncError(error));
 	}
