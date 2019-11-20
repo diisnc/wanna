@@ -15,12 +15,13 @@ import SocketIOClient from 'socket.io-client/dist/socket.io';
 
 let socket;
 class Wanna extends Component {
+	state = {
+		chatMessage: '',
+		chatMessages: []
+	};
+
 	constructor(props) {
 		super(props);
-		this.state = {
-			chatMessage: '',
-			chatMessages: []
-		};
 	}
 
 	componentDidMount() {
@@ -30,22 +31,23 @@ class Wanna extends Component {
 		};
 		socket = SocketIOClient('https://cbf2d5ca.ngrok.io', connectionConfig);
 		socket.on('chat-message', msg => {
-			console.log(msg);
+			console.log(msg.message);
+			var copyChatMessages = [...this.state.chatMessages];
+			copyChatMessages.push(msg.message);
 			this.setState({
-				chatMessages: [...this.state.chatMessages, msg]
+				chatMessages: copyChatMessages
 			});
 		});
 
 		this.submitSubscribe();
 	}
 	render() {
-		const chatMessages = this.state.chatMessages.map(chatMessage => (
-			<Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>
-		));
 
 		return (
 			<View style={styles.container}>
-				{chatMessages}
+				<View style={{flex: 1, alignItems: "stretch", backgroundColor: "red" }}>
+					{this.printMessages()}
+				</View>
 				<TextInput
 					style={styles.textInput}
 					placeholder="Your message"
@@ -64,6 +66,20 @@ class Wanna extends Component {
 			</View>
 		);
 	}
+
+	printMessages() {
+		const items = [];
+		var messages = [...this.state.chatMessages];
+
+		messages.map((message) =>
+			items.push(
+				<Text>{message}</Text>
+			)
+		)
+
+		return items;
+	}
+
 	submitSubscribe() {
 		console.log('enviou');
 		const result = socket.emit('subscribe', 'tarraxo31');
