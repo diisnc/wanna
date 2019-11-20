@@ -120,14 +120,10 @@ export default {
             // mudar esta rota para nome de utilizador
             this.self.$router.push({path: '/inspire'})
           }
-        } else {
-            response.data = JSON.stringify(response.data);
-            let error = response.data.replace(/[\[\]"\{\}]+/g, '');
-            console.log('Error1 ' + error);
         }
       })
       .catch((error) => {
-        console.log(error)
+        alert(error.response.data.message)
       });
 		},
 		myregister () {
