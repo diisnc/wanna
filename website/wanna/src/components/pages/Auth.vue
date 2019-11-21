@@ -127,20 +127,25 @@ export default {
       });
 		},
 		myregister () {
-      axios.post('http://infernoo.duckdns.org:8000/v1/auth/register', {
-        firstName: this.fname,
-        lastName: this.lname,
-        username: this.username,
-        location: this.location,
-        email: this.email,
-        password: this.password
-      })
-      .then(response => {
-        this.$router.go()
-      })
-      .catch(error => {
-        console.log(error.response)
-      });
+      if (this.firstName === '' | this.lastName === '' | this.username === '' | 
+          this.location === '' | this.email === '' | this.password === '') {
+        alert('Por favor preencha todos os campos do formulário.')
+      } else {
+          axios.post('http://infernoo.duckdns.org:8000/v1/auth/register', {
+            firstName: this.fname,
+            lastName: this.lname,
+            username: this.username,
+            location: this.location,
+            email: this.email,
+            password: this.password
+          })
+        .then(response => {
+          this.$router.go()
+        })
+        .catch(error => {
+          console.log(error.response)
+        });
+      }
     }
   }
 }
