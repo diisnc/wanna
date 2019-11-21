@@ -37,7 +37,6 @@ class Profile extends Component {
 
 	componentDidMount() {
 		this.fetchUserInfo();
-		console.log('ENTROU 1 VEZ');
 		this.startHeaderHeight = 80;
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
@@ -68,8 +67,6 @@ class Profile extends Component {
 	};
 
 	buildProfile() {
-		console.log('username da pagina:' + this.state.username);
-		console.log('username logado:' + this.props.loggedUsername);
 		return (
 			<View>
 				<View

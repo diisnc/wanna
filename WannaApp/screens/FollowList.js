@@ -36,7 +36,6 @@ class FollowList extends Component {
 	}
 
 	async getFeedDataFromApiAsync(type) {
-		console.log('feed data');
 
 		let list;
 		if (type == 'Followers') {

@@ -9,6 +9,7 @@ var currentAuthToken;
 
 export function setToken(token) {
 	this.currentAuthToken = token;
+	console.log('Bearer ' + token);
 }
 
 async function auxFetch(method, endpoint, querystring, paramsA, bodyA, headers) {
@@ -17,9 +18,8 @@ async function auxFetch(method, endpoint, querystring, paramsA, bodyA, headers) 
 		body = JSON.stringify(bodyA);
 	}
 
-	console.log(endpoint + ' ' + method);
 	if (headers.Authorization) {
-		console.log(headers.Authorization);
+		// console.log(headers.Authorization);
 	}
 
 	let params = '';
@@ -76,8 +76,6 @@ function getQueryString(params) {
 }
 
 export const ourFetchWithToken = async action => {
-	console.log('fetching');
-
 	let querystring = '';
 	if (action.query) {
 		querystring = '?' + getQueryString(action.query);
@@ -105,7 +103,6 @@ export const ourFetchWithToken = async action => {
 	if (response.status == 200 || response.status == 304) {
 		if (action.method == 'GET') {
 			let data = await response.json();
-			console.log('Tamanho do que retornou do backend: ' + data.length);
 			return data;
 		} else return 'OK';
 	} else {
