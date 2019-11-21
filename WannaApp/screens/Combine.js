@@ -232,7 +232,7 @@ class Combine extends Component {
 	// Build images on upper scroll view
 	buildUpperImages(post, selectedUpper) {
 		id = 'id= ' + JSON.stringify(this.state.upperClothes[post].id);
-		objJsonB64 = new Buffer(this.state.upperClothes[post].photoData1).toString('base64');
+		objJsonB64 = new Buffer(this.state.upperClothes[post].photoData1);
 
 		return (
 			<TouchableHighlight onPress={() => this.onPressUpperClothe(post)}>
@@ -270,7 +270,7 @@ class Combine extends Component {
 	// Build images on upper scroll view
 	buildLowerImages(post, selectedLower) {
 		id = 'id= ' + JSON.stringify(this.state.lowerClothes[post].id);
-		objJsonB64 = new Buffer(this.state.lowerClothes[post].photoData1).toString('base64');
+		objJsonB64 = new Buffer(this.state.lowerClothes[post].photoData1);
 
 		return (
 			<TouchableHighlight onPress={() => this.onPressLowerClothe(post)}>
