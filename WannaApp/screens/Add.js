@@ -10,7 +10,7 @@ import {
 	Image,
 	TouchableHighlight,
 	Button,
-	ImageEditor
+	ToastAndroid
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
@@ -473,7 +473,7 @@ class Add extends Component {
 	}
 
 	async createPhotoAsync() {
-		await createPost(
+		result = await createPost(
 			this.state.selectedGenre,
 			this.state.selectedClothe,
 			this.state.selectedColor,
@@ -483,6 +483,11 @@ class Add extends Component {
 			this.state.pickedImagesBase64,
 			this.state.insertedDescription
 		);
+
+		if (result == 'OK') {
+			this.props.navigation.navigate('Inspire');
+			ToastAndroid.show('Post created!', ToastAndroid.LONG);
+		}
 
 		return;
 	}

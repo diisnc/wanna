@@ -35,7 +35,7 @@ exports.get = (req, res) => {
 exports.create = async (req, res, next) => {
 	try {
 		await User.create(req.body);
-		res.send(200);
+		return res.sendStatus(200)
 	} catch (e) {
 		next(e);
 	}

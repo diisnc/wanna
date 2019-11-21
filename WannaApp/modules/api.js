@@ -102,12 +102,15 @@ export const ourFetchWithToken = async action => {
 		return;
 	}
 
-	let data = await response.json();
-
 	if (response.status == 200 || response.status == 304) {
-		console.log('Tamanho do que retornou do backend: ' + data.length);
-		return data;
+		if (action.method == 'GET') {
+			let data = await response.json();
+			console.log('Tamanho do que retornou do backend: ' + data.length);
+			return data;
+		} else return 'OK';
 	} else {
+		let data = await response.json();
+
 		if (data == 'Token is expired') {
 			return store.dispatch({ type: 'EXPIRED_TOKEN' });
 		}

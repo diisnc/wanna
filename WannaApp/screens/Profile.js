@@ -329,7 +329,7 @@ class Profile extends Component {
 					numColumns={3}
 					data={this.state.profile.posts}
 					renderItem={({ item, index }) => this.renderItem(item, index)}
-					keyExtractor={item => item.id}
+					keyExtractor={item => item.postid.toString()}
 				/>
 			</View>
 		);

@@ -57,7 +57,7 @@ exports.follow = async (req, res, next) => {
 			follower_id: req.user.username,
 		});
 
-		return res.send(200);
+		return res.sendStatus(200)
 	} catch (e) {
 		next(e);
 	}
@@ -76,9 +76,9 @@ exports.unfollow = async (req, res, next) => {
 	})
 		.then(function(deletedRecord) {
 			if (deletedRecord === 1) {
-				res.send(200);
+				return res.sendStatus(200)
 			} else {
-				res.status(404).json({
+				return res.status(404).json({
 					message: 'You do not follow this page',
 				});
 			}

@@ -18,7 +18,7 @@ exports.delete = async (req, res, next) => {
 				id: req.params.idFilter,
 			},
 		});
-		return res.send(200);
+		return res.sendStatus(200)
 	} catch (e) {
 		next(e);
 	}
@@ -44,7 +44,7 @@ exports.createFilter = async (req, res, next) => {
 			color: req.body.color,
 			isActive: req.body.isActive,
 		});
-		return res.send(200);
+		return res.sendStatus(200)
 	} catch (e) {
 		next(e);
 	}
