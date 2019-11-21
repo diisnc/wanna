@@ -20,6 +20,7 @@ import CheckBox from 'react-native-check-box';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
+import { addPost } from '../modules/profile/profile.reducer';
 
 const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
@@ -487,6 +488,7 @@ class Add extends Component {
 		if (result == 'OK') {
 			this.props.navigation.navigate('Inspire');
 			ToastAndroid.show('Post created!', ToastAndroid.LONG);
+			this.props.addPostDispatch();
 		}
 
 		return;
@@ -498,7 +500,11 @@ function mapStateToProps(store, ownProps) {
 	};
 }
 function mapDispatchToProps(dispatch) {
-	return {};
+	return {
+		addPostDispatch: () => {
+			dispatch(addPost());
+		}
+	};
 }
 export default connect(
 	mapStateToProps,

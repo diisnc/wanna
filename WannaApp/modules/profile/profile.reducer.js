@@ -126,6 +126,14 @@ export default function (state = initialState, action) {
 			state = { ...state }; // copy the state to a new object
 			state.nrFollowings--; // increment the new object
 			return state;
+		case 'ADD_POST':
+			state = { ...state }; // copy the state to a new object
+			state.numPosts++; // increment the new object
+			return state;
+		case 'REMOVE_POST':
+			state = { ...state }; // copy the state to a new object
+			state.numPosts--; // increment the new object
+			return state;
 		default:
 			return state;
 	}

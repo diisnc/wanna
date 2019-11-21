@@ -48,6 +48,12 @@ class Profile extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps) {
+		if (this.props.myNumPosts !== prevProps.myNumPosts) {
+			this.fetchUserInfo();
+		}
+	}
+
 	fetchUserInfo = async () => {
 		let usernamePassed;
 		usernamePassed = this.props.navigation.getParam('userID', 'local');
@@ -233,6 +239,23 @@ class Profile extends Component {
 							{this.state.userNrFollowings} a seguir
 						</Text>
 					</View>
+					<View
+						style={{
+							marginTop: 10,
+							marginBottom: 20,
+							marginHorizontal: 40,
+							paddingVertical: 15
+						}}>
+						<Text
+							style={{
+								textAlign: 'center',
+								color: 'grey',
+								fontWeight: 'bold',
+								fontSize: 18
+							}}>
+							{this.state.nrPosts} posts
+						</Text>
+					</View>
 				</View>
 			);
 		} else
@@ -243,7 +266,7 @@ class Profile extends Component {
 							style={{
 								marginTop: 10,
 								marginBottom: 20,
-								marginHorizontal: 40,
+								marginHorizontal: 10,
 								paddingVertical: 15
 							}}>
 							<Text
@@ -266,8 +289,8 @@ class Profile extends Component {
 						style={{
 							marginTop: 10,
 							marginBottom: 20,
-							marginHorizontal: 40,
-							paddingVertical: 15
+							paddingVertical: 15,
+							marginHorizontal: 10
 						}}>
 						<Text
 							style={{
@@ -284,6 +307,23 @@ class Profile extends Component {
 							{this.props.myFollowingsNumber} a seguir
 						</Text>
 					</TouchableOpacity>
+					<View
+						style={{
+							marginTop: 10,
+							marginBottom: 20,
+							paddingVertical: 15,
+							marginHorizontal: 10
+						}}>
+						<Text
+							style={{
+								textAlign: 'center',
+								color: 'grey',
+								fontWeight: 'bold',
+								fontSize: 18
+							}}>
+							{this.props.myNumPosts} posts
+						</Text>
+					</View>
 				</View>
 			);
 	}
