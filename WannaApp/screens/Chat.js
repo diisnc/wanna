@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import { newMessages } from '../modules/chat/chat.reducer';
 
 const isAndroid = Platform.OS == 'android';
+const viewPadding = 10;
 let socket;
 class Chat extends Component {
 	state = {
@@ -149,7 +150,7 @@ class Chat extends Component {
 
 	renderConversation() {
 		return (
-			<View style={styles.container}>
+			<View style={[styles.container, { paddingBottom: this.state.viewPadding }]}>
 				<FlatList
 					style={styles.list}
 					data={this.state.messages}

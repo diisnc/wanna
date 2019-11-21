@@ -20,7 +20,7 @@ export const removeError = () => {
 //Reducer
 let initialState = {
 	error: false,
-	errorMessage: 'fogo'
+	errorMessage: ''
 };
 
 export default function(state = initialState, action) {

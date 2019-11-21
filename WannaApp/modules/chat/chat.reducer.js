@@ -7,7 +7,6 @@ let initialState = {
 };
 
 export const enteringOnChat = (contact, avatarContact, idPost) => {
-	console.log('entrou no chat');
 	return {
 		type: 'ENTERED_CHAT',
 		contact,
@@ -24,11 +23,8 @@ export const newMessages = messages => {
 };
 
 export default function(state = initialState, action) {
-	console.log('Entrou na put');
-	console.log('Ação ' + action.type);
 	switch (action.type) {
 		case 'ENTERED_CHAT':
-			console.log('oi');
 			return {
 				...state,
 				avatarContact: action.avatarContact,

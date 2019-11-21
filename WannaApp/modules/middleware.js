@@ -34,7 +34,6 @@ export const jwt = store => next => action => {
 
 export const nav = store => next => action => {
 	if (action.type === 'ENTERED_CHAT') {
-		console.log('apanhou o dispatch');
 		NavigationService.navigate('Chat');
 		return next(action);
 	} else {
