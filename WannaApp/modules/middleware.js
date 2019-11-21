@@ -44,13 +44,17 @@ export const nav = store => next => action => {
 // passar o array, ir pelo array...
 export const votesHandler = store => next => action => {
 	if (action.type === 'LOADED_POSTS') {
+		console.log('entrou no handler');
 		let posts = action.posts;
 		let votes = [];
 		for (let i = 0; i < posts.length; i++) {
-			if (posts.voteType) votes[posts[i].id] = posts.voteType;
-		}
-		action.posts = array;
+			vote = {
+				postID: posts[i].id,
+				voteType: posts[i].votetype
+			};
 
+			votes.push(vote);
+		}
 		store.dispatch({ type: 'LOADED_VOTES', votes: votes });
 	} else {
 		return next(action);

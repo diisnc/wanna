@@ -34,7 +34,7 @@ module.exports = {
 		body('type', 'Type is required')
 			.exists()
 			.isInt()
-			.isIn(['0', '1']),
+			.isIn(['-1', '1']),
 	],
 
 	//DELETE /v1/post/vote

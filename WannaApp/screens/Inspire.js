@@ -53,6 +53,19 @@ class Inspire extends Component {
 		}
 	}
 
+	async getFeedDataFromApiAsync() {
+		// const newState = require('./json/responseFeed');
+		const newState = await feed(0);
+		// console.log(newState);
+		if (newState != null) {
+			this.setState({ feedData: newState, numPosts: newState.length, loading: false });
+			this.props.dispatchPosts(newState);
+		}
+		// this.setState({ loading: false });
+
+		return;
+	}
+
 	render() {
 		const loggedIn = this.props.loggedIn;
 		const token = this.props.tokenValid;
@@ -168,26 +181,19 @@ class Inspire extends Component {
 			);
 		}
 	}
-
-	async getFeedDataFromApiAsync() {
-		// const newState = require('./json/responseFeed');
-		const newState = await feed(0);
-		// console.log(newState);
-		if (newState != null) {
-			this.setState({ feedData: newState, numPosts: newState.length, loading: false });
-		}
-		// this.setState({ loading: false });
-
-		return;
-	}
 }
 
 function mapStateToProps(store) {
+	console.log(store.profile);
 	return { loggedIn: store.auth.loggedIn, tokenValid: store.auth.tokenIsValid };
 }
 
 function mapDispatchToProps(dispatch) {
-	return {};
+	return {
+		dispatchPosts: data => {
+			dispatch({ type: 'LOADED_POSTS', posts: data });
+		}
+	};
 }
 
 export default connect(

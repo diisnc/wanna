@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
+import { connect } from 'react-redux';
 
 class UserPost extends Component {
 	state = {
@@ -90,11 +91,7 @@ class UserPost extends Component {
 					{/* footer de post, dividido em 3 linhas */}
 					<View style={{ flex: 1, flexDirection: 'column' }}>
 						{/* primeira linha: likes à esquerda, comentários, guardar e comprar à direita */}
-						<View style={{ flex: 1, flexDirection: 'row' }}>
-							<MaterialCommunityIcons name="heart" size={30} />
-							<Text>1000 likes</Text>
-							<MaterialCommunityIcons name="heart-broken" size={30} />
-						</View>
+						{this.buildVotes(this.props.item.id)}
 						{/* segunda linha, dividida em 2 colunas */}
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							{/* coluna da esquerda, dividida em 2 linhas */}
@@ -125,8 +122,55 @@ class UserPost extends Component {
 			);
 		} else return null;
 	}
+
+	buildVotes(idPost) {
+		if (this.props.myVotes.length != 0) {
+			voteType = this.props.myVotes.find(x => x.postID === idPost).voteType;
+			console.log(voteType);
+			if (voteType == 0) {
+				return (
+					<View style={{ flex: 1, flexDirection: 'row' }}>
+						<MaterialCommunityIcons name="heart-outline" size={30} />
+						<Text>1000 likes</Text>
+						<MaterialCommunityIcons name="heart-broken-outline" size={30} />
+					</View>
+				);
+			} else if (voteType == 1) {
+				return (
+					<View style={{ flex: 1, flexDirection: 'row' }}>
+						<MaterialCommunityIcons name="heart" color="red" size={30} />
+						<Text>1000 likes</Text>
+						<MaterialCommunityIcons name="heart-broken-outline" size={30} />
+					</View>
+				);
+			} else if (voteType == -1) {
+				return (
+					<View style={{ flex: 1, flexDirection: 'row' }}>
+						<MaterialCommunityIcons name="heart-outline" size={30} />
+						<Text>1000 likes</Text>
+						<MaterialCommunityIcons name="heart-broken" color="red" size={30} />
+					</View>
+				);
+			} else return null;
+		}
+	}
 }
-export default UserPost;
+function mapStateToProps(store) {
+	return {
+		myVotes: store.profile.votes
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(UserPost);
+
 
 const styles = StyleSheet.create({
 	container: {

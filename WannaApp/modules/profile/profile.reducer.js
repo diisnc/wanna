@@ -74,9 +74,11 @@ export default function (state = initialState, action) {
 				nrFollowings: action.nrFollowings
 			};
 		case 'LOADED_VOTES':
+			var ids = new Set(state.votes.map(d => d.postID));
+			var merged = [...state.votes, ...action.votes.filter(d => !ids.has(d.postID))];
 			return {
 				...state,
-				votes: [...state.votes, action.votes]
+				votes: merged
 			};
 		case 'LIKED':
 			// make a copy of the existing array

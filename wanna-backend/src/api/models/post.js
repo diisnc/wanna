@@ -132,7 +132,9 @@ module.exports = (sequelize, DataTypes) => {
 		result = await this.sequelize.query(
 			'SELECT "Posts"."id", "Posts"."idUser", "Posts"."description",' +
 				' "Posts"."isAvailable", "Posts"."color", "Posts"."size", "Posts"."category", "Posts"."brand", "Posts"."price", "Photos"."photoType", ' +
-				' "Photos"."photoData", "Users"."avatarData", "Users"."location" FROM "Posts" JOIN "Photos" ON "Posts"."id" ' +
+				' "Photos"."photoData", "Users"."avatarData", "Users"."location",' +
+				' coalesce((SELECT type AS "voteType" FROM "UserPosts" WHERE "user_id" = :idUser AND "post_id" = "Posts"."id"), 0) AS voteType' +
+				' FROM "Posts" JOIN "Photos" ON "Posts"."id" ' +
 				' = "Photos"."idPost" JOIN "Users" ON "Posts"."idUser" = "Users"."username" AND "Photos"."id" IN (SELECT MIN("Photos"."id") ' +
 				' FROM "Photos" GROUP BY "Photos"."idPost") ' +
 				' WHERE EXISTS (SELECT * FROM "FollowRelationships" ' +
