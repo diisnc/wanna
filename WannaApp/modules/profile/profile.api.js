@@ -4,7 +4,7 @@ export const follow = usernameToFollow => {
 	const config = {
 		endpoint: '/v1/profile/follow/',
 		method: 'POST',
-		query: {
+		params: {
 			username: usernameToFollow
 		}
 	};
@@ -15,8 +15,8 @@ export const unfollow = usernameToUnfollow => {
 	const config = {
 		endpoint: '/v1/profile/unfollow/',
 		method: 'POST',
-		query: {
-			username: usernameToUnFollow
+		params: {
+			username: usernameToUnfollow
 		}
 	};
 	return ourFetchWithToken(config);

@@ -18,8 +18,10 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 import { Button } from 'react-native-elements';
 import { globalStyle, defaultNavigator } from './style';
 import { logout } from '../modules/auth/auth.service';
+import { followAC, unfollowAC, loadProfilePostsAC } from '../modules/profile/profile.reducer';
 import { connect } from 'react-redux';
 import { getMyProfile, getUserProfile } from '../modules/profile/profile.api';
+import { follow, unfollow } from '../modules/profile/profile.api';
 import Loading from './Loading';
 
 let { width, height } = Dimensions.get('window');
@@ -32,7 +34,10 @@ class Profile extends Component {
 		profile: null,
 		numPosts: 0,
 		loading: true,
-		username: ''
+		username: '',
+		following: null,
+		userNrFollowers: null,
+		userNrFollowings: null
 	};
 
 	componentDidMount() {
@@ -47,9 +52,12 @@ class Profile extends Component {
 		let usernamePassed;
 		usernamePassed = this.props.navigation.getParam('userID', 'local');
 
-		let profile;
+		let profile, length;
 		if (usernamePassed == 'local') {
 			profile = await getMyProfile();
+			if (profile.posts == undefined) length = 0;
+			else length = profile.posts.length;
+			this.props.loadProfilePosts(length, profile.nrFollowings.number);
 		} else {
 			profile = await getUserProfile(usernamePassed);
 		}
@@ -59,170 +67,15 @@ class Profile extends Component {
 				profile: profile,
 				numPosts: profile.posts.length,
 				loading: false,
-				username: profile.info.username
+				username: profile.info.username,
+				following: profile.following,
+				userNrFollowers: profile.nrFollowers.number,
+				userNrFollowings: profile.nrFollowings.number
 			});
 		}
 
 		return;
 	};
-
-	buildProfile() {
-		return (
-			<View>
-				<View
-					style={{
-						justifyContent: 'flex-start',
-						alignItems: 'center',
-						flexDirection: 'row',
-						paddingVertical: 10,
-						marginTop: 20
-					}}>
-					{this.state.profile.info.avatarData ? (
-						<Image
-							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									new Buffer(this.state.profile.info.avatarData)
-							}}
-							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
-						/>
-					) : (
-						<Image
-							source={require('../assets/noImage.png')}
-							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
-						/>
-					)}
-					<View style={{ marginLeft: 10 }}>
-						<Text>
-							{this.state.profile.info.firstName +
-								' ' +
-								this.state.profile.info.lastName}
-						</Text>
-						<Text>{this.state.profile.info.rating}</Text>
-					</View>
-					<View style={{ marginLeft: 50 }}>
-						<View>
-							<TouchableOpacity
-								style={{
-									marginTop: 10,
-									marginBottom: 20,
-									marginHorizontal: 40,
-									paddingVertical: 15
-								}}>
-								<Text
-									style={{
-										textAlign: 'center',
-										color: 'grey',
-										fontWeight: 'bold',
-										fontSize: 18
-									}}
-									onPress={() =>
-										this.props.navigation.navigate('FollowList', {
-											type: 'Followers'
-										})
-									}>
-									{this.state.profile.nrFollowers.number} seguidores
-								</Text>
-							</TouchableOpacity>
-						</View>
-						<TouchableOpacity
-							style={{
-								marginTop: 10,
-								marginBottom: 20,
-								marginHorizontal: 40,
-								paddingVertical: 15
-							}}>
-							<Text
-								style={{
-									textAlign: 'center',
-									color: 'grey',
-									fontWeight: 'bold',
-									fontSize: 18
-								}}
-								onPress={() =>
-									this.props.navigation.navigate('FollowList', {
-										type: 'Followings'
-									})
-								}>
-								{this.state.profile.nrFollowings.number} a seguir
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
-				<View>
-					{this.state.username == this.props.loggedUsername ? (
-						<View>
-							<TouchableOpacity
-								style={{
-									marginTop: 10,
-									marginBottom: 20,
-									marginHorizontal: 40,
-									paddingVertical: 15,
-									borderRadius: 20,
-									borderColor: 'grey',
-									borderWidth: 1.5
-								}}>
-								<Text
-									style={{ textAlign: 'center', color: 'grey' }}
-									onPress={() =>
-										this.props.navigation.navigate('EditProfile', {
-											userID: this.state.username
-										})
-									}>
-									{'Edit Profile'}{' '}
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={{
-									marginTop: 10,
-									marginBottom: 20,
-									marginHorizontal: 40,
-									paddingVertical: 15,
-									borderRadius: 20,
-									borderColor: 'grey',
-									borderWidth: 1.5
-								}}>
-								<Text
-									style={{ textAlign: 'center', color: 'grey' }}
-									onPress={() =>
-										this.props.navigation.navigate('EditProfile', {
-											userID: this.state.username
-										})
-									}>
-									{'Saved Posts'}{' '}
-								</Text>
-							</TouchableOpacity>
-						</View>
-					) : null}
-					{this.state.username != this.props.loggedUsername ? (
-						<TouchableOpacity
-							style={{
-								marginTop: 10,
-								marginBottom: 20,
-								marginHorizontal: 40,
-								paddingVertical: 15,
-								borderRadius: 20,
-								borderColor: 'grey',
-								borderWidth: 1.5
-							}}>
-							<Text
-								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() =>
-									this.props.navigation.navigate('EditProfile', {
-										userID: this.state.username
-									})
-								}>
-								{'Follow'}{' '}
-							</Text>
-						</TouchableOpacity>
-					) : null}
-				</View>
-				{/* <View style={{ borderColor: '#555', borderWidth: 1 }} /> */}
-			</View>
-		);
-	}
 
 	render() {
 		if (this.state.loading == false) {
@@ -261,7 +114,7 @@ class Profile extends Component {
 					</SafeAreaView>
 				);
 			}
-		} else return <Loading/>;
+		} else return <Loading />;
 	}
 
 	// Builds header of the page
@@ -297,6 +150,242 @@ class Profile extends Component {
 			</View>
 		);
 	}
+
+	buildProfile() {
+		return (
+			<View>
+				<View
+					style={{
+						justifyContent: 'flex-start',
+						alignItems: 'center',
+						flexDirection: 'row',
+						paddingVertical: 10,
+						marginTop: 20
+					}}>
+					{this.state.profile.info.avatarData ? (
+						<Image
+							source={{
+								uri:
+									'data:' +
+									'image/jpeg' +
+									';base64,' +
+									new Buffer(this.state.profile.info.avatarData)
+							}}
+							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
+						/>
+					) : (
+						<Image
+							source={require('../assets/noImage.png')}
+							style={{ marginLeft: 10, width: 100, height: 100, borderRadius: 50 }}
+						/>
+					)}
+					<View style={{ marginLeft: 10 }}>
+						<Text>
+							{this.state.profile.info.firstName +
+								' ' +
+								this.state.profile.info.lastName}
+						</Text>
+						<Text>{this.state.profile.info.rating}</Text>
+					</View>
+				</View>
+				{this.buildNumbers()}
+				{this.buildButtons()}
+				{/* <View style={{ borderColor: '#555', borderWidth: 1 }} /> */}
+			</View>
+		);
+	}
+
+	buildNumbers() {
+		if (this.state.username != this.props.loggedUsername) {
+			return (
+				<View style={{ marginLeft: 50, flexDirection: 'row' }}>
+					<View
+						style={{
+							marginTop: 10,
+							marginBottom: 20,
+							marginHorizontal: 40,
+							paddingVertical: 15
+						}}>
+						<Text
+							style={{
+								textAlign: 'center',
+								color: 'grey',
+								fontWeight: 'bold',
+								fontSize: 18
+							}}>
+							{this.state.userNrFollowers} seguidores
+						</Text>
+					</View>
+					<View
+						style={{
+							marginTop: 10,
+							marginBottom: 20,
+							marginHorizontal: 40,
+							paddingVertical: 15
+						}}>
+						<Text
+							style={{
+								textAlign: 'center',
+								color: 'grey',
+								fontWeight: 'bold',
+								fontSize: 18
+							}}>
+							{this.state.userNrFollowings} a seguir
+						</Text>
+					</View>
+				</View>
+			);
+		} else
+			return (
+				<View style={{ marginLeft: 50, flexDirection: 'row' }}>
+					<View>
+						<TouchableOpacity
+							style={{
+								marginTop: 10,
+								marginBottom: 20,
+								marginHorizontal: 40,
+								paddingVertical: 15
+							}}>
+							<Text
+								style={{
+									textAlign: 'center',
+									color: 'grey',
+									fontWeight: 'bold',
+									fontSize: 18
+								}}
+								onPress={() =>
+									this.props.navigation.navigate('FollowList', {
+										type: 'Followers'
+									})
+								}>
+								{this.state.profile.nrFollowers.number} seguidores
+							</Text>
+						</TouchableOpacity>
+					</View>
+					<TouchableOpacity
+						style={{
+							marginTop: 10,
+							marginBottom: 20,
+							marginHorizontal: 40,
+							paddingVertical: 15
+						}}>
+						<Text
+							style={{
+								textAlign: 'center',
+								color: 'grey',
+								fontWeight: 'bold',
+								fontSize: 18
+							}}
+							onPress={() =>
+								this.props.navigation.navigate('FollowList', {
+									type: 'Followings'
+								})
+							}>
+							{this.props.myFollowingsNumber} a seguir
+						</Text>
+					</TouchableOpacity>
+				</View>
+			);
+	}
+
+	buildButtons() {
+		return (
+			<View>
+				{this.state.username == this.props.loggedUsername ? (
+					<View>
+						<TouchableOpacity
+							style={{
+								marginTop: 10,
+								marginBottom: 20,
+								marginHorizontal: 40,
+								paddingVertical: 15,
+								borderRadius: 20,
+								borderColor: 'grey',
+								borderWidth: 1.5
+							}}>
+							<Text
+								style={{ textAlign: 'center', color: 'grey' }}
+								onPress={() =>
+									this.props.navigation.navigate('EditProfile', {
+										userID: this.state.username
+									})
+								}>
+								{'Edit Profile'}{' '}
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={{
+								marginTop: 10,
+								marginBottom: 20,
+								marginHorizontal: 40,
+								paddingVertical: 15,
+								borderRadius: 20,
+								borderColor: 'grey',
+								borderWidth: 1.5
+							}}>
+							<Text
+								style={{ textAlign: 'center', color: 'grey' }}
+								onPress={() =>
+									this.props.navigation.navigate('EditProfile', {
+										userID: this.state.username
+									})
+								}>
+								{'Saved Posts'}{' '}
+							</Text>
+						</TouchableOpacity>
+					</View>
+				) : this.state.following == false ? (
+					<TouchableOpacity
+						style={{
+							marginTop: 10,
+							marginBottom: 20,
+							marginHorizontal: 40,
+							paddingVertical: 15,
+							borderRadius: 20,
+							borderColor: 'grey',
+							borderWidth: 1.5
+						}}>
+						<Text
+							style={{ textAlign: 'center', color: 'grey' }}
+							onPress={() => this.followAction()}>
+							{'FOLLOW'}{' '}
+						</Text>
+					</TouchableOpacity>
+				) : (
+					<TouchableOpacity
+						style={{
+							marginTop: 10,
+							marginBottom: 20,
+							marginHorizontal: 40,
+							paddingVertical: 15,
+							borderRadius: 20,
+							borderColor: 'grey',
+							borderWidth: 1.5
+						}}>
+						<Text
+							style={{ textAlign: 'center', color: 'grey' }}
+							onPress={() => this.unfollowAction()}>
+							{'UNFOLLOW'}{' '}
+						</Text>
+					</TouchableOpacity>
+				)}
+			</View>
+		);
+	}
+
+	buildPosts = () => {
+		return (
+			<View style={styles.containerImages}>
+				<FlatList
+					numColumns={3}
+					data={this.state.profile.posts}
+					renderItem={({ item, index }) => this.renderItem(item, index)}
+					keyExtractor={item => item.postid.toString()}
+				/>
+			</View>
+		);
+	};
+
 	renderItem = (postInfo, index) => {
 		return (
 			<TouchableWithoutFeedback
@@ -319,23 +408,28 @@ class Profile extends Component {
 		);
 	};
 
-	buildPosts = () => {
-		return (
-			<View style={styles.containerImages}>
-				<FlatList
-					numColumns={3}
-					data={this.state.profile.posts}
-					renderItem={({ item, index }) => this.renderItem(item, index)}
-					keyExtractor={item => item.postid.toString()}
-				/>
-			</View>
-		);
+	followAction = async () => {
+		result = await follow(this.state.username);
+		if (result == 'OK') {
+			this.props.followDispatch();
+			this.setState({ following: true, userNrFollowers: this.state.userNrFollowers + 1 });
+		}
+	};
+
+	unfollowAction = async () => {
+		result = await unfollow(this.state.username);
+		if (result == 'OK') {
+			this.props.unfollowDispatch();
+			this.setState({ following: false, userNrFollowers: this.state.userNrFollowers - 1 });
+		}
 	};
 }
 
 function mapStateToProps(store) {
 	return {
-		loggedUsername: store.auth.loggedUsername
+		loggedUsername: store.auth.loggedUsername,
+		myNumPosts: store.profile.numPosts,
+		myFollowingsNumber: store.profile.nrFollowings
 	};
 }
 
@@ -343,6 +437,15 @@ function mapDispatchToProps(dispatch) {
 	return {
 		logout: () => {
 			dispatch(logout());
+		},
+		followDispatch: () => {
+			dispatch(followAC());
+		},
+		unfollowDispatch: () => {
+			dispatch(unfollowAC());
+		},
+		loadProfilePosts: (nrPosts, nrFollowings) => {
+			dispatch(loadProfilePostsAC(nrPosts, nrFollowings));
 		}
 	};
 }

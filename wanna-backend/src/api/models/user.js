@@ -106,7 +106,7 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	});
 
-	User.associate = function (models) {
+	User.associate = function(models) {
 		User.belongsToMany(models.Post, {
 			through: 'SavedPost',
 			as: 'savedposts',
@@ -256,7 +256,7 @@ module.exports = (sequelize, DataTypes) => {
 		result = await this.sequelize.query(
 			'SELECT "username" FROM "Users" WHERE "Users"."username" LIKE :usernameLike',
 			{
-				replacements: { usernameLike: "%" + usernameString + "%" },
+				replacements: { usernameLike: '%' + usernameString + '%' },
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
@@ -272,6 +272,21 @@ module.exports = (sequelize, DataTypes) => {
 			'SELECT "followed_id" FROM "FollowRelationships" where "follower_id" = :username',
 			{
 				replacements: { username: username },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	};
+
+	/**
+	 * Return list of followings
+	 * @returns {Promise<*>}
+	 */
+	User.amIFollowing = async function amIFollowing(username, contact) {
+		result = await this.sequelize.query(
+			'SELECT EXISTS(SELECT * FROM "FollowRelationships" WHERE ("follower_id" = :username AND "followed_id" = :contact))',
+			{
+				replacements: { username: username, contact: contact },
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);

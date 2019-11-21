@@ -9,10 +9,11 @@ import Login from './screens/Login';
 import Wanna from './screens/Wanna';
 import Register from './screens/Register';
 import { checkAuthStatus } from './modules/auth/auth.service';
-import { jwt, saveAuthToken, nav } from './modules/middleware';
+import { jwt, saveAuthToken, nav, votesHandler } from './modules/middleware';
 import logger from 'redux-logger';
 import { reducer as formReducer } from 'redux-form';
 import auth from './modules/auth/auth.reducer';
+import profile from './modules/profile/profile.reducer';
 import permissions, {
 	setCameraPermission,
 	setCameraFolderPermission
@@ -26,13 +27,17 @@ import NavigatorService from './modules/navigator';
 const rootReducer = combineReducers({
 	chat,
 	auth,
+	profile,
 	permissions,
 	error,
 	form: formReducer
 });
 
 // export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, thunk, logger));
-export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, nav, thunk));
+export const store = createStore(
+	rootReducer,
+	applyMiddleware(saveAuthToken, jwt, nav, votesHandler, thunk)
+);
 
 class App extends Component {
 	render() {

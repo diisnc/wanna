@@ -10,9 +10,14 @@ const httpStatus = require('http-status');
 exports.profileInfo = async (req, res, next) => {
 	try {
 		if (req.query.username) {
-			list = await User.getProfileInfo(req.query.username);
-		} else list = await User.getProfileInfo(req.user.username);
-		return res.status(httpStatus.OK).json(list);
+			object = await User.getProfileInfo(req.query.username);
+			followingQ = await User.amIFollowing(
+				req.user.username,
+				req.query.username,
+			);
+			object['following'] = followingQ[0].exists;
+		} else object = await User.getProfileInfo(req.user.username);
+		return res.status(httpStatus.OK).json(object);
 	} catch (e) {
 		next(e);
 	}
@@ -57,7 +62,7 @@ exports.follow = async (req, res, next) => {
 			follower_id: req.user.username,
 		});
 
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -76,7 +81,7 @@ exports.unfollow = async (req, res, next) => {
 	})
 		.then(function(deletedRecord) {
 			if (deletedRecord === 1) {
-				return res.sendStatus(200)
+				return res.sendStatus(200);
 			} else {
 				return res.status(404).json({
 					message: 'You do not follow this page',
