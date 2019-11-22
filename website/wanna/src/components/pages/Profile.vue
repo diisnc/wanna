@@ -2,6 +2,7 @@
   <layout-basic>
 	  <div id="app" class="page">
       <h1>profile</h1>
+      <h2>{{this.route}}</h2>
 
     </div>
   </layout-basic>
@@ -17,6 +18,7 @@ export default {
   },
   data () {
     return {
+      route: this.$router.currentRoute.name
       
     }
   } 

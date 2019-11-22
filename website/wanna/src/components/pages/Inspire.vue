@@ -21,7 +21,7 @@
                     <i class="fas fa-ellipsis-h"></i>
                   </b-button>
 
-                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id"name="post_options" width="400px" height="auto">
+                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id" name="post_options" width="400px" height="auto">
                     <b-list-group-item class="post-list" href="">Copiar ligação</b-list-group-item>
                     <b-list-group-item class="post-list" href="">Reportar</b-list-group-item>
                   </modal>
@@ -92,7 +92,6 @@
               </div>
               <!-- COMENTÁRIOS -->
               <div class="comment-area">
-
                 <div class="my-comment">
                   <a :href="product.comments[0].user"><img class="img-user" :src="product.comments[0].user_img"></a>
                   <div class="comment">
@@ -102,22 +101,61 @@
                   <a class="txt-username txt-tmstmp">{{moment(product.comments[0].timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
                   </div>
                 </div>
-
                 <div class="my-comment">
                   <a :href="current_user_name"><img class="img-user" :src="current_user_img"></a>
                   <b-form-textarea class="comment-input" v-model="text" rows="1" max-rows="4" v-bind:id="'comment_'+product.id" placeholder="Escreve um comentário..." ></b-form-textarea>
                   <button @click="" class="btn icon icon-send"/>
                 </div>
                 <div class="my-comment">
-                  <a>ver todos os comentários...</a>
-                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id"name="post_options" width="400px" height="auto">
-                    <b-list-group-item class="post-list" href="">Copiar ligação</b-list-group-item>
-                    <b-list-group-item class="post-list" href="">Reportar</b-list-group-item>
+                  <b-button class="search-bar bg-trans"
+                    @mouseover="setmodal('comments_'+product.id)"
+                    @click="showmodal('comments_'+product.id)">
+                    Ver todos os comentários
+                  </b-button>
+
+
+                  <modal
+                    v-if="shownmodal == 'comments_'+product.id"
+                    @before-open="this.shownmodal='comments_'+product.id"
+                    name="post_options" width="800px" height="auto" 
+                    scrollable=true>
+
+
+                    <div style="padding:20px 20px 10px 10px;">
+                      <div class="card-op-area" style="margin-bottom: 0px !important">
+                        <div style="display:inline-flex;">
+                          <h5 style="margin:0px;">{{product.name}}</h5>
+                        </div>
+                        <p v-if="product.manufacturer" class="details-post"><b>{{product.manufacturer}} ‏‏‎ • ‏‏‎ {{product.size}} ‏‏‎ • ‏‏‎ {{product.color}}</b></p>
+                        <p v-else class="details-post"><b>{{product.size}} ‏‏‎ • ‏‏‎ {{product.color}}</b></p>
+                        <p class="card-text">{{product.description}}</p>
+                      </div>
+                      <div class="card-options-area">
+                        <h4 style="color: #4A53FC;"><b>{{product.price.toFixed(2)}}€</b></h4>
+                      </div>
+
+                      <hr>
+
+                      <div v-for="comment in product.comments" class="my-comment">
+                        <a :href="product.comments[0].user"><img class="img-user" :src="comment.user_img"></a>
+                        <div class="comment">
+                          <a :href="product.comments[0].user" class="txt-username"><b>{{comment.user}}</b></a>
+                          <a class="txt-username">{{comment.text}}</a>
+                          <a class="txt-username">•</a>
+                          <a class="txt-username txt-tmstmp">{{moment(comment.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
+                        </div>
+                      </div>
+
+                      <div class="my-comment">
+                        <a :href="current_user_name"><img class="img-user" :src="current_user_img"></a>
+                        <b-form-textarea class="comment-input" v-model="text" rows="1" max-rows="4" v-bind:id="'comment_'+product.id" placeholder="Escreve um comentário..." ></b-form-textarea>
+                        <button class="btn icon">PUBLICAR</button>
+                      </div>
+
+                    </div>
                   </modal>
                 </div>
-                
               </div>
-
             </div>
           </b-col>
           
@@ -190,7 +228,151 @@ export default {
               user: 'rosameireles_',
               user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
               timestamp: '2019-11-10T16:28:22',
-              text: 'Já comprei ao Tiago e fiquei satisfeita com o serviço!'
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
+            },
+            {
+              user: 'yee',
+              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
+              timestamp: '2019-11-10T16:23:22',
+              text: 'Vai mas é trabalhar gandulo.'
+            },
+            {
+              user: 'tiagomcosta',
+              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+              timestamp: '2019-11-10T16:18:22',
+              text: 'Tenho umas iguais e adoro!'
+            },
+            {
+              user: 'rosameireles_',
+              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
+              timestamp: '2019-11-10T16:28:22',
+              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
             },
             {
               user: 'yee',
