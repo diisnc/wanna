@@ -45,6 +45,7 @@ export const like = idPost => {
 };
 
 export const unLike = idPost => {
+	console.log('entrou no unlike');
 	return {
 		type: 'UNLIKE',
 		idPost
@@ -83,7 +84,7 @@ export default function (state = initialState, action) {
 		case 'LIKE':
 			state = { ...state };
 			post = state.votes.find(x => x.postID === action.idPost);
-
+			console.log('Posta: ' + post);
 			console.log('entra aqui');
 			return {
 				...state,
@@ -92,7 +93,7 @@ export default function (state = initialState, action) {
 		case 'UNLIKE':
 			state = { ...state };
 			post = state.votes.find(x => x.postID === action.idPost);
-
+			console.log('Posta: ' + post);
 			return {
 				...state,
 				votes: post.nrLikes--

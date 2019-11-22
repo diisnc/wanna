@@ -196,31 +196,31 @@ class UserPost extends Component {
 		}
 	}
 
-	likeHandler(idPost) {
-		const result = vote(idPost, 1);
+	async likeHandler(idPost) {
+		const result = await vote(idPost, 1);
 		if (result == 'OK') {
-			this.props.dispatchLike();
+			this.props.dispatchLike(idPost);
 		}
 	}
 
-	unLikeHandler(idPost) {
-		const result = removeVote(idPost, 1);
+	async unLikeHandler(idPost) {
+		const result = await removeVote(idPost, 1);
 		if (result == 'OK') {
-			this.props.dispatchUnLike();
+			this.props.dispatchUnLike(idPost);
 		}
 	}
 
-	disLikeHandler(idPost) {
-		const result = vote(idPost, -1);
+	async disLikeHandler(idPost) {
+		const result = await vote(idPost, -1);
 		if (result == 'OK') {
-			this.props.dispatchDisLike();
+			this.props.dispatchDisLike(idPost);
 		}
 	}
 
-	unDisLikeHandler(idPost) {
-		const result = removeVote(idPost, -1);
+	async unDisLikeHandler(idPost) {
+		const result = await removeVote(idPost, -1);
 		if (result == 'OK') {
-			this.props.dispatchUnDisLike();
+			this.props.dispatchUnDisLike(idPost);
 		}
 	}
 }
@@ -233,17 +233,17 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		dispatchLike: () => {
-			dispatch(like());
+		dispatchLike: idPost => {
+			dispatch(like(idPost));
 		},
-		dispatchDisLike: () => {
-			dispatch(disLike());
+		dispatchDisLike: idPost => {
+			dispatch(disLike(idPost));
 		},
-		dispatchUnDisLike: () => {
-			dispatch(unDisLike());
+		dispatchUnDisLike: idPost => {
+			dispatch(unDisLike(idPost));
 		},
-		dispatchUnLike: () => {
-			dispatch(unLike());
+		dispatchUnLike: idPost => {
+			dispatch(unLike(idPost));
 		}
 	};
 }
