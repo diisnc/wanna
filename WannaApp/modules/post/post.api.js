@@ -12,12 +12,25 @@ export const feed = nrPage => {
 	return ourFetchWithToken(config);
 };
 
-export const like = (idPost, type) => {
+export const vote = (idPost, type) => {
 	const config = {
-		endpoint: '/v1/post/createUserPost',
+		endpoint: '/v1/post/vote',
 		method: 'POST',
 		body: {
-			idPost: idPost
+			idPost: idPost,
+			type: type
+		}
+	};
+	return ourFetchWithToken(config);
+};
+
+export const removeVote = (idPost, type) => {
+	const config = {
+		endpoint: '/v1/post/vote',
+		method: 'DELETE',
+		body: {
+			idPost: idPost,
+			type: type
 		}
 	};
 	return ourFetchWithToken(config);

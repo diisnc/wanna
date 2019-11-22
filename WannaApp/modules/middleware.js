@@ -50,7 +50,9 @@ export const votesHandler = store => next => action => {
 		for (let i = 0; i < posts.length; i++) {
 			vote = {
 				postID: posts[i].id,
-				voteType: posts[i].votetype
+				voteType: posts[i].votetype,
+				nrLikes: posts[i].nrlikes,
+				nrDislikes: posts[i].nrdislikes
 			};
 
 			votes.push(vote);

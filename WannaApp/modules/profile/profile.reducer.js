@@ -44,21 +44,21 @@ export const like = idPost => {
 	};
 };
 
-export const unlike = idPost => {
+export const unLike = idPost => {
 	return {
 		type: 'UNLIKE',
 		idPost
 	};
 };
 
-export const dislike = idPost => {
+export const disLike = idPost => {
 	return {
 		type: 'DISLIKE',
 		idPost
 	};
 };
 
-export const undislike = idPost => {
+export const unDisLike = idPost => {
 	return {
 		type: 'UNDISLIKE',
 		idPost
@@ -74,67 +74,60 @@ export default function (state = initialState, action) {
 				nrFollowings: action.nrFollowings
 			};
 		case 'LOADED_VOTES':
-			var ids = new Set(state.votes.map(d => d.postID));
-			var merged = [...state.votes, ...action.votes.filter(d => !ids.has(d.postID))];
+			var ids = new Set(action.votes.map(d => d.postID));
+			var merged = [...action.votes, ...state.votes.filter(d => !ids.has(d.postID))];
 			return {
 				...state,
 				votes: merged
 			};
-		case 'LIKED':
-			// make a copy of the existing array
-			let likeVotes = state.votes.slice();
-			// modify the COPY, not the original
-			likeVotes[action.idPost] = 1;
+		case 'LIKE':
+			state = { ...state };
+			post = state.votes.find(x => x.postID === action.idPost);
 
+			console.log('entra aqui');
 			return {
 				...state,
-				votes: likeVotes
+				votes: post.nrLikes++
 			};
 		case 'UNLIKE':
-			// make a copy of the existing array
-			let unlikeVotes = state.votes.slice();
-			// modify the COPY, not the original
-			unlikeVotes.splice(action.idPost, 1);
+			state = { ...state };
+			post = state.votes.find(x => x.postID === action.idPost);
 
 			return {
 				...state,
-				votes: unlikeVotes
+				votes: post.nrLikes--
 			};
 		case 'DISLIKE':
-			// make a copy of the existing array
-			let dislikeVotes = state.votes.slice();
-			// modify the COPY, not the original
-			dislikeVotes[action.idPost] = -1;
+			state = { ...state };
+			post = state.votes.find(x => x.postID === action.idPost);
 
 			return {
 				...state,
-				votes: dislikeVotes
+				votes: post.nrDislikes++
 			};
 		case 'UNDISLIKE':
-			// make a copy of the existing array
-			let undislikeVotes = state.votes.slice();
-			// modify the COPY, not the original
-			undislikeVotes.splice(action.idPost, 1);
+			state = { ...state };
+			post = state.votes.find(x => x.postID === action.idPost);
 
 			return {
 				...state,
-				votes: undislikeVotes
+				votes: post.nrDislikes--
 			};
 		case 'FOLLOW':
-			state = { ...state }; // copy the state to a new object
-			state.nrFollowings++; // increment the new object
+			state = { ...state };
+			state.nrFollowings++;
 			return state;
 		case 'UNFOLLOW':
-			state = { ...state }; // copy the state to a new object
-			state.nrFollowings--; // increment the new object
+			state = { ...state };
+			state.nrFollowings--;
 			return state;
 		case 'ADD_POST':
-			state = { ...state }; // copy the state to a new object
-			state.numPosts++; // increment the new object
+			state = { ...state };
+			state.numPosts++;
 			return state;
 		case 'REMOVE_POST':
-			state = { ...state }; // copy the state to a new object
-			state.numPosts--; // increment the new object
+			state = { ...state };
+			state.numPosts--;
 			return state;
 		default:
 			return state;
