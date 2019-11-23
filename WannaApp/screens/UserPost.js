@@ -131,7 +131,6 @@ class UserPost extends Component {
 			nrLikes = this.props.myVotes.find(x => x.postID === idPost).nrLikes;
 			nrDislikes = this.props.myVotes.find(x => x.postID === idPost).nrDislikes;
 			showLikes = nrLikes - nrDislikes;
-			console.log(voteType);
 			if (voteType == 0) {
 				return (
 					<View style={{ flex: 1, flexDirection: 'row' }}>
