@@ -153,7 +153,7 @@ exports.removeComment = async (req, res, next) => {
 
 exports.get = async (req, res, next) => {
 	try {
-		list = await Post.getPostInfo(req.params.idPost);
+		list = await Post.getPostInfo(req.params.idPost, req.user.username);
 		return res.json(list);
 	} catch (e) {
 		next(e);

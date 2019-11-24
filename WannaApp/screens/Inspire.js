@@ -184,7 +184,6 @@ class Inspire extends Component {
 }
 
 function mapStateToProps(store) {
-	console.log(store.profile);
 	return { loggedIn: store.auth.loggedIn, tokenValid: store.auth.tokenIsValid };
 }
 

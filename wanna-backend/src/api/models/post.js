@@ -162,7 +162,7 @@ module.exports = (sequelize, DataTypes) => {
 	 *
 	 */
 
-	Post.getPostInfo = async function getPostInfo(idPost) {
+	Post.getPostInfo = async function getPostInfo(idPost, username) {
 		object = new Object();
 
 		userInfo = await this.sequelize.query(
@@ -178,26 +178,18 @@ module.exports = (sequelize, DataTypes) => {
 		object['userInfo'] = userInfo[0];
 
 		postInfo = await this.sequelize.query(
-			'SELECT "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size" FROM "Posts" WHERE "Posts"."id" = (:idPost)',
+			'SELECT "Posts"."id", "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", ' +
+				' coalesce((SELECT type AS "voteType" FROM "UserPosts" WHERE "user_id" = :idUser AND "post_id" = "Posts"."id"), 0) AS voteType,' +
+				' coalesce((SELECT count(type) AS "nrLikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = 1), 0) AS nrLikes,' +
+				' coalesce((SELECT count(type) AS "nrDislikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = -1), 0) AS nrDislikes' +
+				' FROM "Posts" WHERE "Posts"."id" = (:idPost)',
 			{
-				replacements: { idPost: idPost },
+				replacements: { idPost: idPost, idUser: username },
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
 
 		object['postInfo'] = postInfo[0];
-
-		votes = await this.sequelize.query(
-			'SELECT "UserPosts"."type" AS VOTETYPE, COUNT("UserPosts"."type") AS NRVOTES ' +
-				'FROM "Posts" JOIN "UserPosts" ON "Posts"."id" = "UserPosts"."post_id" WHERE "Posts"."id" = (:idPost) ' +
-				'GROUP BY "UserPosts"."type"',
-			{
-				replacements: { idPost: idPost },
-				type: this.sequelize.QueryTypes.SELECT,
-			},
-		);
-
-		object['votes'] = votes;
 
 		photos = await this.sequelize.query(
 			'SELECT "Photos"."photoType", "Photos"."photoData" FROM "Photos" WHERE "idPost" = (:idPost)',
