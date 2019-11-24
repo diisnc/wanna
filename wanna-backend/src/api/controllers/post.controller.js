@@ -264,3 +264,33 @@ exports.unsavePost = async (req, res, next) => {
 		next(e);
 	}
 };
+
+
+/**
+ * Returns items that according to the category should be displayed in the upper side of the body  
+ * 
+ */
+
+exports.getUpperItems = async (req, res, next) => {
+	try {
+		list = await Post.getUpperItems();
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};
+
+
+/**
+ * Returns items that according to the category should be displayed in the lower side of the body 
+ * 
+ */
+
+exports.getLowerItems = async (req, res, next) => {
+	try {
+		list = await Post.getLowerItems();
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};

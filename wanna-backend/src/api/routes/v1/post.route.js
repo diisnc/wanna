@@ -38,6 +38,15 @@ router
 	.delete(validate(rules.savedPosts),controller.unsavePost);
 
 router
+	.route('/upperitems')
+	.get(controller.getUpperItems);
+
+router
+	.route('/loweritems')
+	.get(controller.getLowerItems);
+
+
+router
 	.route('/:idPost')
 	.get(controller.get)
 	.delete(controller.remove)

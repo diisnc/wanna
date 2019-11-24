@@ -97,6 +97,20 @@
 - **Rota:** v1/post/:idPost
 - **Estado:** :heavy_check_mark:
 
+---
+
+- **Descrição:** Posts da parte de cima do combine
+- **Método:** GET
+- **Rota:** v1/post/upperitems
+- **Estado:** :heavy_check_mark:
+
+---
+
+- **Descrição:** Posts da parte de baixo do combine
+- **Método:** GET
+- **Rota:** v1/post/loweritems
+- **Estado:** :heavy_check_mark:
+
 ## Perfis
 
 - **Descrição:** Seguir pessoa

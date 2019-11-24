@@ -277,6 +277,62 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	};
 
+
+	/*
+	 *
+	 * Returns items that according to the category should be displayed in the upper side of the body  
+	 */
+
+	Post.getUpperItems = async function getUpperItems(){
+		result = await this.sequelize.query(
+			'SELECT "Posts"."id", "Posts"."category", "Photos"."photoType", "Photos"."photoData"'+
+			' FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost"'+
+			' AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost")'+
+			' WHERE "Posts"."category" = (:Top) OR'+
+					'"Posts"."category" = (:Blusa) OR'+ 
+					'"Posts"."category" = (:Camisola) OR'+
+					'"Posts"."category" = (:Camisa) OR'+
+					'"Posts"."category" = (:TShirt)',
+			{
+				replacements: { 
+								Top: 'Top',
+								Blusa: 'Blusa',
+								Camisola: 'Camisola',
+								Camisa: 'Camisa',
+								TShirt: 'T-Shirt',
+							  },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	};
+
+	
+	/*
+	 *
+	 *  Returns items that according to the category should be displayed in the lower side of the body  
+	 */
+
+	Post.getLowerItems = async function getLowerItems(){
+		result = await this.sequelize.query(
+			'SELECT "Posts"."id", "Posts"."category", "Photos"."photoType", "Photos"."photoData"'+
+			' FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost"'+
+			' AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost")'+
+			' WHERE "Posts"."category" = (:Calcas) OR'+
+					'"Posts"."category" = (:Calcoes) OR'+ 
+					'"Posts"."category" = (:Sapatos)',
+			{
+				replacements: { 
+								Calcas: 'Calças',
+								Calcoes: 'Calções',
+								Sapatos: 'Sapatos',
+							  },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	};
+
 	/** Object methods */
 	const objectMethods = {
 		/**
