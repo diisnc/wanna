@@ -7,16 +7,16 @@
         <div class="mobile-top-bar">
           <h1 class="phone-title">inspire</h1>
         </div>
+
         <slot/>
 
         <div class="phone-bar">
           <md-bottom-bar md-type="fixed">
             <div style="margin: 0 auto; width: 100%;">
               <md-bottom-bar-item id="feed"><i class="icon icon-mobile-feed"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-wishlist"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-add"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-outfit"></i></md-bottom-bar-item>
+              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-notifs"></i></md-bottom-bar-item>
               <md-bottom-bar-item id="feed"><i class="icon icon-mobile-profile"></i></md-bottom-bar-item>
+              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-download"></i></md-bottom-bar-item>
             </div>
           </md-bottom-bar>
         </div>
@@ -208,9 +208,20 @@
     height: 25.5px;
   }
 
+
   .icon-mobile-feed {
     mask: url(https://svgur.com/i/FdS.svg);
     width:18px;
+    height: 20.5px;
+  }
+  .icon-mobile-notifs {
+    mask: url(https://svgur.com/i/FYn.svg);
+    width:18px;
+    height: 22px;
+  }
+  .icon-mobile-download {
+    mask: url(https://svgur.com/i/GKe.svg);
+    width:20px;
     height: 20.5px;
   }
   .icon-mobile-wishlist {

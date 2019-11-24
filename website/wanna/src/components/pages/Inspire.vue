@@ -106,7 +106,7 @@
                   <b-form-textarea class="comment-input" v-model="text" rows="1" max-rows="4" v-bind:id="'comment_'+product.id" placeholder="Escreve um comentário..." ></b-form-textarea>
                   <button @click="" class="btn icon icon-send"/>
                 </div>
-                <div class="my-comment">
+                <div class="view-comments">
                   <b-button class="search-bar bg-trans"
                     @mouseover="setmodal('comments_'+product.id)"
                     @click="showmodal('comments_'+product.id)">
@@ -115,9 +115,9 @@
 
 
                   <modal
-                    v-if="shownmodal == 'comments_'+product.id"
+                    v-if="shownmodal == 'comments_'+product.id && !isMobile()"
                     @before-open="this.shownmodal='comments_'+product.id"
-                    name="post_options" width="800px" height="auto" 
+                    name="post_options" width="40%" height="auto" 
                     scrollable=true>
 
 
@@ -502,6 +502,13 @@ export default {
     //console.log(this.products);
   },
   methods: {
+    isMobile() {
+      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+      } else{
+        return false
+      }
+    },
     //todos estes métodos são apenas para teste. Trocar depois pelo acesso à BD.
     getlike(post_id){
       return this.like;
@@ -574,7 +581,7 @@ export default {
   .comment{
     width:100%;
     margin-left: 15px;
-    padding: 10px;
+    padding: 8px 10px 8px 15px;
     border-radius:20px !important;
     background-color: #EEE !important;
     color: #000 !important;
@@ -615,6 +622,12 @@ export default {
     margin: 0px 0px 15px 10px;
     display: flex !important;
   }
+  .view-comments{
+    text-align: center;
+    width:auto !important;
+    margin: 0px 0px 0px 10px;
+    display: flex !important;
+  }
   .card-options-area{
     text-align: right;
     width:auto !important;
@@ -628,9 +641,10 @@ export default {
     height: 40px !important;
     border-radius: 50px !important;
     object-fit: cover;
+    margin-right: 10px;
   }
   .txt-username{
-    margin-left: 10px;
+    margin: 3px;
     font-size: 15px;
     color: #333 !important;
   }
@@ -739,7 +753,6 @@ export default {
     height: 22px !important;
     transition: 0.3s !important;
   }
-
   .icon-like-empty {
     mask: url(https://svgur.com/i/G0S.svg);
     transition: 0.3s !important;
@@ -784,7 +797,6 @@ export default {
     height: 23px !important;
     transition: 0.3s !important;
   }
-
   .icon-buy-empty {
     mask: url(https://svgur.com/i/G4_.svg);
     transition: 0.3s !important;
