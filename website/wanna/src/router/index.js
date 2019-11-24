@@ -3,8 +3,6 @@ import Router from 'vue-router'
 
 import Auth from '@/components/pages/Auth'
 import Inspire from '@/components/pages/Inspire'
-import Wishlist from '@/components/pages/Wishlist'
-import Outfit from '@/components/pages/Outfit'
 import Profile from '@/components/pages/Profile'
 import Manageposts from '@/components/admin/Manageposts'
 import Manageusers from '@/components/admin/Manageusers'
@@ -37,18 +35,6 @@ export default new Router({
       path: '/inspire',
       name: 'Inspire',
       component: Inspire
-      /* meta: { requiresAuth: true } */
-    },
-    {
-      path: '/wishlist',
-      name: 'Wishlist',
-      component: Wishlist
-      /* meta: { requiresAuth: true } */
-    },
-    {
-      path: '/outfit',
-      name: 'Outfit',
-      component: Outfit
       /* meta: { requiresAuth: true } */
     },
     {

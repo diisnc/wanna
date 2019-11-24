@@ -18,9 +18,24 @@ export default {
   },
   data () {
     return {
-      route: this.$router.currentRoute.name
+      route: this.$router.currentRoute.params.username
       
     }
-  } 
+  },
+  created: function() {
+
+  },
+  mounted: function() {
+    console.log(this.$router);
+  },
+  methods: {
+    isMobile() {
+      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+      } else{
+        return false
+      }
+    }
+  }
 }
 </script>
