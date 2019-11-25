@@ -347,7 +347,7 @@ class NewFilter extends Component {
 
 	// Get Data to Build Feed and Transform it to Json Object
 	async createFilterAsync() {
-		await createFilter(
+		result = await createFilter(
 			this.state.selectedGenre,
 			this.state.selectedClothe,
 			this.state.selectedColor,
@@ -355,6 +355,11 @@ class NewFilter extends Component {
 			this.state.selectedMinPrice,
 			this.state.selectedMaxPrice
 		);
+
+		if (result == 'OK') {
+			this.props.navigation.navigate('Filters');
+			ToastAndroid.show('Filter Created!', ToastAndroid.LONG);
+		}
 
 		return;
 	}
