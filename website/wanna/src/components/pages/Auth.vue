@@ -102,6 +102,9 @@ export default {
   },
   methods: {
     mylogin () {
+      if (this.email === '' | this.password === '') {
+      alert('Por favor preencha todos os campos do formulário.')
+    } else {
       axios.post('http://infernoo.duckdns.org:8000/v1/auth/login', {
         email: this.email,
         password: this.password})
@@ -125,6 +128,7 @@ export default {
       .catch((error) => {
         alert(error.response.data.message)
       });
+    }
 		},
 		myregister () {
       if (this.firstName === '' | this.lastName === '' | this.username === '' | 
