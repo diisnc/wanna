@@ -153,7 +153,7 @@ exports.removeComment = async (req, res, next) => {
 
 exports.get = async (req, res, next) => {
 	try {
-		list = await Post.getPostInfo(req.params.idPost);
+		list = await Post.getPostInfo(req.params.idPost, req.user.username);
 		return res.json(list);
 	} catch (e) {
 		next(e);
@@ -260,6 +260,36 @@ exports.unsavePost = async (req, res, next) => {
 			},
 		});
 		return res.sendStatus(200)
+	} catch (e) {
+		next(e);
+	}
+};
+
+
+/**
+ * Returns items that according to the category should be displayed in the upper side of the body  
+ * 
+ */
+
+exports.getUpperItems = async (req, res, next) => {
+	try {
+		list = await Post.getUpperItems();
+		res.json(list);
+	} catch (e) {
+		next(e);
+	}
+};
+
+
+/**
+ * Returns items that according to the category should be displayed in the lower side of the body 
+ * 
+ */
+
+exports.getLowerItems = async (req, res, next) => {
+	try {
+		list = await Post.getLowerItems();
+		res.json(list);
 	} catch (e) {
 		next(e);
 	}

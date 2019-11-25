@@ -14,12 +14,13 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
+import { searchByFilter } from '../modules/filter/filter.api';
 
 class Wanted extends Component {
 	state = {
 		wishlistData: [],
 		numPosts: 0,
-		loadingMoreData: false,
+		loadingMoreData: false
 	};
 
 	componentDidMount() {
@@ -29,7 +30,17 @@ class Wanted extends Component {
 		}
 
 		// get data from servers and save in state
-		this.getWishlistDataFromApiAsync();
+		this.getDataFromAPI();
+	}
+
+	async getDataFromAPI() {
+		const newState = await searchByFilter();
+		// console.log(newState);
+		if (newState != null) {
+			this.setState({ feedData: newState, numPosts: newState.length, loading: false });
+		}
+
+		return;
 	}
 
 	render() {
@@ -92,7 +103,7 @@ class Wanted extends Component {
 	// Builds feed of the page
 	buildFeed() {
 		return (
-			<ScrollView 
+			<ScrollView
 				scrollEventThrottle={16}
 				onScroll={Animated.event(
 					[{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
@@ -221,7 +232,7 @@ class Wanted extends Component {
 							{printIdUser1}
 						</Text>
 						*/}
-						
+
 						{/*
 						<Text key={"idUser" + tyleNr}>{printIdUser1}</Text>
 						<Text key={"description" + tyleNr}>{printDescription1}</Text>
@@ -304,7 +315,7 @@ class Wanted extends Component {
 
 	// 3 tyle javascript generation
 	genTileType2(post) {
-		
+
 		var primeiro = this.state.wishlistData[post];
 		var segundo = this.state.wishlistData[post + 1];
 		var terceiro = this.state.wishlistData[post + 2];
@@ -531,7 +542,7 @@ class Wanted extends Component {
 							{printIdUser1}
 						</Text>
 						*/}
-						
+
 						{/*
 						<Text key={"idUser" + tyleNr}>{printIdUser1}</Text>
 						<Text key={"description" + tyleNr}>{printDescription1}</Text>

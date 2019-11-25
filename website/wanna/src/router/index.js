@@ -3,9 +3,8 @@ import Router from 'vue-router'
 
 import Auth from '@/components/pages/Auth'
 import Inspire from '@/components/pages/Inspire'
-import Wishlist from '@/components/pages/Wishlist'
-import Outfit from '@/components/pages/Outfit'
 import Profile from '@/components/pages/Profile'
+import Comments from '@/components/pages/Comments'
 import Manageposts from '@/components/admin/Manageposts'
 import Manageusers from '@/components/admin/Manageusers'
 
@@ -40,21 +39,15 @@ export default new Router({
       /* meta: { requiresAuth: true } */
     },
     {
-      path: '/wishlist',
-      name: 'Wishlist',
-      component: Wishlist
-      /* meta: { requiresAuth: true } */
-    },
-    {
-      path: '/outfit',
-      name: 'Outfit',
-      component: Outfit
-      /* meta: { requiresAuth: true } */
-    },
-    {
       path: '/:username',
       name: 'Profile',
       component: Profile
+      /* meta: { requiresAuth: true } */
+    },
+    {
+      path: '/comments/:productid',
+      name: 'Comments',
+      component: Comments
       /* meta: { requiresAuth: true } */
     }
   ]

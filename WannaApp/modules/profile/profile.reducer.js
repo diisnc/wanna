@@ -45,7 +45,6 @@ export const like = idPost => {
 };
 
 export const unLike = idPost => {
-	console.log('entrou no unlike');
 	return {
 		type: 'UNLIKE',
 		idPost
@@ -66,7 +65,7 @@ export const unDisLike = idPost => {
 	};
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
 	switch (action.type) {
 		case 'LOADED_NR_POSTS':
 			return {
@@ -82,37 +81,36 @@ export default function (state = initialState, action) {
 				votes: merged
 			};
 		case 'LIKE':
-			state = { ...state };
-			post = state.votes.find(x => x.postID === action.idPost);
-			console.log('Posta: ' + post);
-			console.log('entra aqui');
 			return {
 				...state,
-				votes: post.nrLikes++
+				votes: state.votes.map(x =>
+					x.postID === action.idPost ? { ...x, voteType: 1, nrLikes: x.nrLikes + 1 } : x
+				)
 			};
 		case 'UNLIKE':
-			state = { ...state };
-			post = state.votes.find(x => x.postID === action.idPost);
-			console.log('Posta: ' + post);
 			return {
 				...state,
-				votes: post.nrLikes--
+				votes: state.votes.map(x =>
+					x.postID === action.idPost ? { ...x, voteType: 0, nrLikes: x.nrLikes - 1 } : x
+				)
 			};
 		case 'DISLIKE':
-			state = { ...state };
-			post = state.votes.find(x => x.postID === action.idPost);
-
 			return {
 				...state,
-				votes: post.nrDislikes++
+				votes: state.votes.map(x =>
+					x.postID === action.idPost
+						? { ...x, voteType: -1, nrDislikes: x.nrDislikes + 1 }
+						: x
+				)
 			};
 		case 'UNDISLIKE':
-			state = { ...state };
-			post = state.votes.find(x => x.postID === action.idPost);
-
 			return {
 				...state,
-				votes: post.nrDislikes--
+				votes: state.votes.map(x =>
+					x.postID === action.idPost
+						? { ...x, voteType: 0, nrDislikes: x.nrDislikes - 1 }
+						: x
+				)
 			};
 		case 'FOLLOW':
 			state = { ...state };

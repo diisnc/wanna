@@ -30,13 +30,10 @@ export const createFilter = (
 	return ourFetchWithToken(config);
 };
 
-export const searchByFilter = idFilter => {
+export const searchByFilter = () => {
 	const config = {
 		endpoint: '/v1/filter/searchByFilter',
-		method: 'POST',
-		body: {
-			idFilter: idFilter
-		}
+		method: 'GET'
 	};
 	return ourFetchWithToken(config);
 };

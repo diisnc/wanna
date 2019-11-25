@@ -127,11 +127,20 @@ class UserPost extends Component {
 
 	buildVotes(idPost) {
 		if (this.props.myVotes.length != 0) {
-			voteType = this.props.myVotes.find(x => x.postID === idPost).voteType;
-			nrLikes = this.props.myVotes.find(x => x.postID === idPost).nrLikes;
-			nrDislikes = this.props.myVotes.find(x => x.postID === idPost).nrDislikes;
+			voteTypePost = this.props.myVotes.find(x => x.postID === idPost);
+			if (voteTypePost == undefined) voteType = 0;
+			else voteType = voteTypePost.voteType;
+
+			nrLikesPost = this.props.myVotes.find(x => x.postID === idPost);
+			if (nrLikesPost == undefined) nrLikes = 0;
+			else nrLikes = nrLikesPost.nrLikes;
+
+			nrDislikesPost = this.props.myVotes.find(x => x.postID === idPost);
+			if (nrDislikesPost == undefined) nrDislikesPost = 0;
+			else nrDislikes = nrDislikesPost.nrDislikes;
+
 			showLikes = nrLikes - nrDislikes;
-			console.log(voteType);
+
 			if (voteType == 0) {
 				return (
 					<View style={{ flex: 1, flexDirection: 'row' }}>

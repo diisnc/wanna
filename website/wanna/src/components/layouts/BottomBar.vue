@@ -7,16 +7,16 @@
         <div class="mobile-top-bar">
           <h1 class="phone-title">inspire</h1>
         </div>
+
         <slot/>
 
         <div class="phone-bar">
           <md-bottom-bar md-type="fixed">
             <div style="margin: 0 auto; width: 100%;">
               <md-bottom-bar-item id="feed"><i class="icon icon-mobile-feed"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-wishlist"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-add"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-outfit"></i></md-bottom-bar-item>
+              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-notifs"></i></md-bottom-bar-item>
               <md-bottom-bar-item id="feed"><i class="icon icon-mobile-profile"></i></md-bottom-bar-item>
+              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-download"></i></md-bottom-bar-item>
             </div>
           </md-bottom-bar>
         </div>
@@ -55,7 +55,7 @@
               <b-list-group-item href="#foobar">Notification 4</b-list-group-item>
             </b-popover>
 
-            <button v-if="this.$router.currentRoute.name=='Profile'" class="icon icon-profile icon-active"/>
+            <button v-if="this.$router.currentRoute.name=='Profile'" @click="profileClick" class="icon icon-profile icon-active"/>
             <button v-else @click="profileClick" class="icon icon-profile"/>
           </div>
         </div>
@@ -89,7 +89,8 @@
         }
       },
       profileClick() {
-        this.$router.push('/profile');
+        //SUBSTITUIR PELO USER LOGADO!!!!
+        this.$router.push('/vitorpeixoto');
       },
       inspireClick() {
         this.$router.push('/inspire');
@@ -98,32 +99,6 @@
         this.window.width = window.innerWidth;
         this.window.height = window.innerHeight;
       }
-    /*
-      logout() {
-        if (this.$session.has('token')) {
-          this.$session.remove('token');
-          this.$router.push("/auth");
-        }
-      },
-      jogos() {
-        this.$session.set('activeTab',"jogos")
-        this.$router.push('/jogos')
-      },
-      jogo() {
-        this.$session.set('activeTab',"jogo")
-        if(this.$session.get('js')==1){
-          axios.get(process.env.API_URL + "/server/get_jogo/"+this.$session.get('jogoTab')+"/").then(response => {
-            if(response.data.convocados)
-              this.$router.push('/convocados')
-            else this.$router.push('/jogo')
-          })
-        }
-        else this.$router.push('/stats')
-      },
-      settings(){
-        this.$session.set('activeTab',"definicao")
-        this.$router.push('/definicao')
-      }*/
     }
   }
 </script>
@@ -208,9 +183,20 @@
     height: 25.5px;
   }
 
+
   .icon-mobile-feed {
     mask: url(https://svgur.com/i/FdS.svg);
     width:18px;
+    height: 20.5px;
+  }
+  .icon-mobile-notifs {
+    mask: url(https://svgur.com/i/FYn.svg);
+    width:18px;
+    height: 22px;
+  }
+  .icon-mobile-download {
+    mask: url(https://svgur.com/i/GKe.svg);
+    width:20px;
     height: 20.5px;
   }
   .icon-mobile-wishlist {
