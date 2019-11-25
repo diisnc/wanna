@@ -26,11 +26,11 @@
             </div>
             <div>
               <br/>
-              <button class="loginBtn loginBtn--facebook">
+              <button class="loginBtn loginBtn--facebook" v-on:click="facebook()">
               Login com Facebook
               </button>
 
-              <button class="loginBtn loginBtn--google">
+              <button class="loginBtn loginBtn--google" v-on:click="google()">
               Login com Google
               </button>
             </div>
@@ -151,6 +151,44 @@ export default {
         });
       }
     }
+    /*
+    facebook () {
+      axios.post('http://infernoo.duckdns.org:8000/v1/auth/facebook')
+      .then(response => {
+       
+        if (response.status == 200) {
+          let a_token = response.data.tokens.refreshToken;
+          let r_token = response.data.tokens.accessToken;
+
+          localStorage.setItem('a_token', a_token);
+          localStorage.setItem('r_token', r_token);
+          
+          this.self.$router.push({path: '/inspire'})
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message)
+      });
+    },
+    google () {
+      axios.post('http://infernoo.duckdns.org:8000/v1/auth/google')
+      .then(response => {
+       
+        if (response.status == 200) {
+          let a_token = response.data.tokens.refreshToken;
+          let r_token = response.data.tokens.accessToken;
+
+          localStorage.setItem('a_token', a_token);
+          localStorage.setItem('r_token', r_token);
+          
+          this.self.$router.push({path: '/inspire'})
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message)
+      });
+    }
+    */
   }
 }
 </script>
