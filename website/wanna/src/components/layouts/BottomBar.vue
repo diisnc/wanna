@@ -5,17 +5,18 @@
     <div v-if="isMobile()">
       <mobile>
         <div class="mobile-top-bar">
-          <h1 class="phone-title">inspire</h1>
+          <h1 class="phone-title">{{$router.currentRoute.name}}</h1>
         </div>
 
         <slot/>
 
+        <div style="height:35px;"></div>
         <div class="phone-bar">
           <md-bottom-bar md-type="fixed">
             <div style="margin: 0 auto; width: 100%;">
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-feed"></i></md-bottom-bar-item>
+              <md-bottom-bar-item id="feed" @click="inspireClick"><i class="icon icon-mobile-feed"></i></md-bottom-bar-item>
               <md-bottom-bar-item id="feed"><i class="icon icon-mobile-notifs"></i></md-bottom-bar-item>
-              <md-bottom-bar-item id="feed"><i class="icon icon-mobile-profile"></i></md-bottom-bar-item>
+              <md-bottom-bar-item id="feed" @click="profileClick"><i class="icon icon-mobile-profile"></i></md-bottom-bar-item>
               <md-bottom-bar-item id="feed"><i class="icon icon-mobile-download"></i></md-bottom-bar-item>
             </div>
           </md-bottom-bar>
@@ -23,12 +24,14 @@
 
       </mobile>
     </div>
+
+
     <div v-else>
       <desktop>
         <div class="desktop-bar"><a href="inspire">
           <div class="left-side-bar">
-            <img v-if="window.width>800" src="img/brand/full_logo.png" width="150" height="40" alt="Wanna" style="margin: auto; transition: width 1s">
-            <img v-else src="img/brand/logo.png" width="50" height="50" alt="Wanna" style="margin: auto; transition: width 1s; ">
+            <img v-if="window.width>800" src="/img/brand/full_logo.png" width="150" height="40" alt="Wanna" style="margin: auto; transition: width 1s">
+            <img v-else src="/img/brand/logo.png" width="50" height="50" alt="Wanna" style="margin: auto; transition: width 1s; ">
           </div></a>
 
           <div v-if="window.width>800" class="center-side-bar">

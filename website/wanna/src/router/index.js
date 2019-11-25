@@ -34,19 +34,19 @@ export default new Router({
     },
     {
       path: '/inspire',
-      name: 'Inspire',
+      name: 'inspire',
       component: Inspire
       /* meta: { requiresAuth: true } */
     },
     {
       path: '/:username',
-      name: 'Profile',
+      name: 'profile',
       component: Profile
       /* meta: { requiresAuth: true } */
     },
     {
       path: '/comments/:productid',
-      name: 'Comments',
+      name: 'comments',
       component: Comments
       /* meta: { requiresAuth: true } */
     }

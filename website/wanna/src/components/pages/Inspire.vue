@@ -151,9 +151,9 @@
                       <hr>
 
                       <div v-for="comment in product.comments" class="my-comment">
-                        <a :href="product.comments[0].user"><img class="img-user" :src="comment.user_img"></a>
+                        <a :href="comment.user"><img class="img-user" :src="comment.user_img"></a>
                         <div class="comment">
-                          <a :href="product.comments[0].user" class="txt-username"><b>{{comment.user}}</b></a>
+                          <a :href="comment.user" class="txt-username"><b>{{comment.user}}</b></a>
                           <a class="txt-username">{{comment.text}}</a>
                           <a class="txt-username">•</a>
                           <a class="txt-username txt-tmstmp">{{moment(comment.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
@@ -518,7 +518,6 @@ export default {
 <style>
   .comment{
     width:100%;
-    margin-left: 15px;
     padding: 8px 10px 8px 15px;
     border-radius:20px !important;
     background-color: #EEE !important;
@@ -753,7 +752,7 @@ export default {
     margin: 7px !important;
   }
   .comment-input{
-    margin: 0px 10px 0px 15px;
+    margin: 0px 10px 0px 0px;
     border-radius: 20px !important;
     background-color: #EEE !important;
     border: 0px !important;
