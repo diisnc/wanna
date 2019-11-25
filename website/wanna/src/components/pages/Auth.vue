@@ -108,8 +108,8 @@ export default {
       .then(response => {
        
         if (response.status == 200) {
-          let a_token = response.data.tokens.refreshToken;
-          let r_token = response.data.tokens.accessToken;
+          let r_token = response.data.tokens.refreshToken;
+          let a_token = response.data.tokens.accessToken;
 
           localStorage.setItem('a_token', a_token);
           localStorage.setItem('r_token', r_token);
