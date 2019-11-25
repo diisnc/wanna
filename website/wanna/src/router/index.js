@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Auth from '@/components/pages/Auth'
 import Inspire from '@/components/pages/Inspire'
 import Profile from '@/components/pages/Profile'
+import Comments from '@/components/pages/Comments'
 import Manageposts from '@/components/admin/Manageposts'
 import Manageusers from '@/components/admin/Manageusers'
 
@@ -41,6 +42,12 @@ export default new Router({
       path: '/:username',
       name: 'Profile',
       component: Profile
+      /* meta: { requiresAuth: true } */
+    },
+    {
+      path: '/comments/:productid',
+      name: 'Comments',
+      component: Comments
       /* meta: { requiresAuth: true } */
     }
   ]

@@ -1,10 +1,7 @@
 <template>
   <layout-basic>
     <div id="app">
-      <div class="container">
-        <div class="row">
-          <b-col v-for="product in products" sm="8">
-            <div class="card">
+      <div class="card">
               <!-- USER, TIMESTAMP e OPÇÕES -->
               <div class="user-area">
                 <div class="card-op-area">
@@ -171,33 +168,6 @@
                 </div>
               </div>
             </div>
-          </b-col>
-          
-          <!-- BARRA LATERAL PARA DOWNLOAD DA APP -->
-          <b-col sm="2" v-if="!isMobile() && this.showbanner==1 && this.window.width>800">
-            <div class="card card-download-app">
-              <b-button class="search-bar btn-mini" @click="hidebanner()"><i class="fas fa-times"></i></b-button>
-              <div style="padding:10px">
-                <b-carousel
-                  id="carousel-2"
-                  controls
-                  :interval="20000"
-                  v-model="slide"
-                  style="text-shadow: 1px 1px 2px #333;"
-                  @sliding-start="onSlideStart"
-                  @sliding-end="onSlideEnd"
-                >
-                  <b-carousel-slide img-src="img/banners/wishlist.png"></b-carousel-slide>
-                  <b-carousel-slide img-src="img/banners/dinheiro.png"></b-carousel-slide>
-                  <b-carousel-slide img-src="img/banners/ambiente.png"></b-carousel-slide>
-                </b-carousel>
-                <a href="" class="btn btn-primary btn-download"><b>Download app</b></a>
-              </div>
-            </div>
-          </b-col>
-
-        </div>
-      </div>
     </div>
   </layout-basic>
 </template>
@@ -206,22 +176,15 @@
 import router from "../../router"
 import LayoutBasic from "../layouts/BottomBar.vue"
 export default {
-  name: 'Inspire',
+  name: 'Comments',
   components: {
     LayoutBasic,
   },
   data () {
     return {
-      route: this.$router.currentRoute.name,
-      like: 0,
-      dislike: 0,
-      saved: 0,
-      likes: 342,
-      post_id: 2123,
       current_user_name: 'vitorpeixoto',
       current_user_img: 'https://i.imgur.com/KMlWJNv.jpg',
-      products: [
-        {
+      product: {
           id: 1,
           timestamp: '2019-11-10T16:15:22',
           user: 'joao_castro_12',
@@ -317,192 +280,17 @@ export default {
               text: 'Vai mas é trabalhar gandulo.'
             }
           ]
-        },
-        {
-          id: 2,
-          timestamp: '2019-11-06T10:09:42',
-          user: 'joanavintageoutlet',
-          user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-          name: 'Lacy shirt vintage',
-          description: "Esta camisa vintage vai assentar que nem uma luva no teu armário.",
-          price: 10,
-          size: 'M',
-          color: 'Branco',
-          manufacturer: null,
-          sex: 'Mulher',
-          imgs: [
-            "https://i.imgur.com/hs5b0fc.png",
-            "https://i.imgur.com/uSbOYV8.png"
-          ],
-          likes: 2321,
-          comments: [
-            {
-              user: 'rosameireles_',
-              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
-              timestamp: '2019-11-07T10:29:23',
-              text: 'Muito bonitas as camisolas Joana!'
-            },
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-11-06T16:18:22',
-              text: 'Meh...'
-            }
-            
-          ]
-        },
-        {
-          id: 3,
-          timestamp: '2019-11-02T19:15:42',
-          user: 'beavila_shoestore',
-          user_img: 'https://i.imgur.com/B7aj5H7.png',
-          name: 'Botins festivos',
-          description: "Preparada para a época de festivais? No teu outfit não podem faltar estes botins.",
-          price: 29.90,
-          size: '38',
-          color: 'Castanho',
-          sex: 'Mulher',
-          manufacturer: 'PROF',
-          imgs: [
-            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
-            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9318-690x455.jpg"
-          ],
-          likes: 1489,
-          comments: [
-          {
-              user: 'tatianamendess',
-              user_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBPBZloSuY-6XVhbBX7xROuv2n8OZGLmFQwFtSqFBxX87mWyRN&s',
-              timestamp: '2019-11-03T16:23:22',
-              text: 'Mal posso esperar por as levar ao Alive!'
-            },
-            {
-              user: 'rita_cunhaa',
-              user_img: 'https://making-the-web.com/sites/default/files/clipart/157025/happy-person-picture-157025-4275865.jpg',
-              timestamp: '2019-11-02T19:28:22',
-              text: 'Que giras!!!'
-            },
-            {
-              user: 'rosa_almeida__',
-              user_img: 'https://portalovertube.com/wp-content/uploads/2019/02/Amy.jpg',
-              timestamp: '2019-11-02T119:18:52',
-              text: 'Se fossem mais altas...'
-            },
-          ]
-        },
-        {
-          id: 4,
-          timestamp: '2019-10-20T21:55:12',
-          user: 'tiagorodri',
-          user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-          name: 'Calças desporto',
-          description: "Estas calças são mesmo fixes e confortáveis. As melhores do mercado.",
-          price: 9.90,
-          size: 'L',
-          color: 'Preto',
-          sex: 'Homem',
-          manufacturer: 'Hummel',
-          imgs: [
-            "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg"
-          ],
-          likes: 431,
-          comments: [
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-10-22T16:18:22',
-              text: 'Se tivesse o fato de treino completo até comprava.'
-            }
-          ]
-        }
-      ],
-      showbanner: 1,
-      window: {
-        width: 0,
-        height: 0
-      },
-      shownmodal: null
+      }
     }
   },
   created: function() {
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize();
   },
   mounted: function() {
     //console.log(this.$router);
     //console.log(this.products);
   },
   methods: {
-    isMobile() {
-      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        return true
-      } else{
-        return false
-      }
-    },
-    //todos estes métodos são apenas para teste. Trocar depois pelo acesso à BD.
-    getlike(post_id){
-      return this.like;
-    },
-    getdislike(post_id){
-      return this.dislike;
-    },
-    getsave(post_id){
-      return this.saved;
-    },
-    givelike(post_id){
-      if(this.like==0){
-        this.like=1;
-        if(this.dislike==1)
-          this.likes=this.likes+2;
-        else this.likes=this.likes+1;
-        this.dislike=0;
-      }
-    },
-    giveliketouch(post_id){
-      this.givelike(post_id);
-      //inserir coraçao na imagem, como no insta :)
-    },
-    remvlike(post_id){
-      this.like=0;
-      this.likes=this.likes-1;
-    },
-    givedislike(post_id){
-      this.dislike=1;
-      if(this.like==1)
-        this.likes=this.likes-2;
-      else this.likes=this.likes-1;
-      this.like=0;
-    },
-    remvdislike(post_id){
-      this.dislike=0;
-      this.likes=this.likes+1;
-    },
-    savepost(post_id){
-      this.saved=1;
-    },
-    unsavepost(post_id){
-      this.saved=0;
-    },
-    isMobile() {
-      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        return true
-      } else{
-        return false
-      }
-    },
-    handleResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
-    },
-    hidebanner(){
-      this.showbanner=0;
-    },
-    showmodal(productid){
-      this.$modal.show('post_options');
-    },
-    setmodal(productid){
-      this.shownmodal= productid;
-    }
+
   }
 }
 </script>
