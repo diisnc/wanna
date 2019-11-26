@@ -2,16 +2,31 @@
   <layout-basic>
 	  <div id="app">
       <div class="container">
+        <div class="row justify-content-md-center">
+          <b-col sm="7">
+            <div class="card">
 
-        <b-row class="justify-content-md-center">
-          <b-col >
+              <div class="prof-header">
 
-            <div class="prof-header">
-              <img class="prof-img-user" :src="user_img">
-              <h4 class="user-name"><b>{{username}}</b></h4>
+                <img class="prof-img-user" :src="user_img">
+                <div>
+                  <h4 class="user-name"><b>{{user_name}}</b></h4>
+                  <p class="user-name"><b><i class="fas fa-at"></i> {{user_username}}</b></p>
+                  <p class="user-name"><b><i class="fas fa-map-marker-alt"></i> {{user_location}}</b></p>
+                  <p class="user-name"><b>
+                    <i v-for="index in user_stars" class="fas fa-star"></i>
+                    <i v-for="index in (5-user_stars)"class="far fa-star"></i>
+                  </b></p>
+                </div>
+                
+
+              </div>
+
+
+
             </div>
           </b-col>
-        </b-row>
+        </div>
       </div>
     </div>
   </layout-basic>
@@ -25,16 +40,25 @@ export default {
   components: {
     LayoutBasic,
   },
-  data () {
+    data () {
     return {
-      username: this.$router.currentRoute.params.username,
+      user_username: this.$router.currentRoute.params.username,
       user_img: 'https://i.imgur.com/KMlWJNv.jpg',
+      user_name: 'Vitor Peixoto',
+      user_location: 'Braga, Portugal',
+      user_stars: 4,
+      like: 0,
+      dislike: 0,
+      saved: 0,
+      likes: 342,
+      post_id: 2123,
+      page: 0,
       products: [
         {
           id: 1,
           timestamp: '2019-11-10T16:15:22',
-          user: 'vitorpeixoto',
-          user_img: 'https://i.imgur.com/KMlWJNv.jpg',
+          user: 'joao_castro_12',
+          user_img: 'https://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg',
           name: 'Botas fixes',
           description: "Estas botas são mesmo fixes. Acho que as devias comprar ;)",
           price: 45.90,
@@ -120,102 +144,18 @@ export default {
               text: 'Tenho umas iguais e adoro!'
             },
             {
-              user: 'rosameireles_',
-              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
-              timestamp: '2019-11-10T16:28:22',
-              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
-            },
-            {
               user: 'yee',
               user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
               timestamp: '2019-11-10T16:23:22',
               text: 'Vai mas é trabalhar gandulo.'
-            },
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-11-10T16:18:22',
-              text: 'Tenho umas iguais e adoro!'
-            },
-            {
-              user: 'rosameireles_',
-              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
-              timestamp: '2019-11-10T16:28:22',
-              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
-            },
-            {
-              user: 'yee',
-              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
-              timestamp: '2019-11-10T16:23:22',
-              text: 'Vai mas é trabalhar gandulo.'
-            },
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-11-10T16:18:22',
-              text: 'Tenho umas iguais e adoro!'
-            },
-            {
-              user: 'rosameireles_',
-              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
-              timestamp: '2019-11-10T16:28:22',
-              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
-            },
-            {
-              user: 'yee',
-              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
-              timestamp: '2019-11-10T16:23:22',
-              text: 'Vai mas é trabalhar gandulo.'
-            },
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-11-10T16:18:22',
-              text: 'Tenho umas iguais e adoro!'
-            },
-            {
-              user: 'rosameireles_',
-              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
-              timestamp: '2019-11-10T16:28:22',
-              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
-            },
-            {
-              user: 'yee',
-              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
-              timestamp: '2019-11-10T16:23:22',
-              text: 'Vai mas é trabalhar gandulo.'
-            },
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-11-10T16:18:22',
-              text: 'Tenho umas iguais e adoro!'
-            },
-            {
-              user: 'rosameireles_',
-              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
-              timestamp: '2019-11-10T16:28:22',
-              text: 'Já comprei ao @joao_castro_12 e fiquei satisfeita com o serviço!'
-            },
-            {
-              user: 'yee',
-              user_img: 'https://img.estadao.com.br/thumbs/640/resources/jpg/7/8/1524230513387.jpg',
-              timestamp: '2019-11-10T16:23:22',
-              text: 'Vai mas é trabalhar gandulo.'
-            },
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-11-10T16:18:22',
-              text: 'Tenho umas iguais e adoro!'
             }
           ]
         },
         {
           id: 2,
           timestamp: '2019-11-06T10:09:42',
-          user: 'vitorpeixoto',
-          user_img: 'https://i.imgur.com/KMlWJNv.jpg',
+          user: 'joanavintageoutlet',
+          user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Lacy shirt vintage',
           description: "Esta camisa vintage vai assentar que nem uma luva no teu armário.",
           price: 10,
@@ -247,8 +187,8 @@ export default {
         {
           id: 3,
           timestamp: '2019-11-02T19:15:42',
-          user: 'vitorpeixoto',
-          user_img: 'https://i.imgur.com/KMlWJNv.jpg',
+          user: 'beavila_shoestore',
+          user_img: 'https://i.imgur.com/B7aj5H7.png',
           name: 'Botins festivos',
           description: "Preparada para a época de festivais? No teu outfit não podem faltar estes botins.",
           price: 29.90,
@@ -285,8 +225,8 @@ export default {
         {
           id: 4,
           timestamp: '2019-10-20T21:55:12',
-          user: 'vitorpeixoto',
-          user_img: 'https://i.imgur.com/KMlWJNv.jpg',
+          user: 'tiagorodri',
+          user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
           name: 'Calças desporto',
           description: "Estas calças são mesmo fixes e confortáveis. As melhores do mercado.",
           price: 9.90,
@@ -308,16 +248,81 @@ export default {
           ]
         }
       ],
-      
+      showbanner: 1,
+      window: {
+        width: 0,
+        height: 0
+      },
+      shownmodal: null
     }
   },
   created: function() {
-
+    axios.get('http://infernoo.duckdns.org:8000/v1/post/feed?page='+this.page,{
+      headers: {'Authorization': "bearer " + localStorage.getItem('a_token')}
+    })
+    .then(response => {
+      this.products = response.data
+    })
+    .catch(e => {
+      console.log(e)
+    })
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
   },
   mounted: function() {
-    console.log(this.$router);
   },
   methods: {
+    isMobile() {
+      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+      } else{
+        return false
+      }
+    },
+    //todos estes métodos são apenas para teste. Trocar depois pelo acesso à BD.
+    getlike(post_id){
+      return this.like;
+    },
+    getdislike(post_id){
+      return this.dislike;
+    },
+    getsave(post_id){
+      return this.saved;
+    },
+    givelike(post_id){
+      if(this.like==0){
+        this.like=1;
+        if(this.dislike==1)
+          this.likes=this.likes+2;
+        else this.likes=this.likes+1;
+        this.dislike=0;
+      }
+    },
+    giveliketouch(post_id){
+      this.givelike(post_id);
+      //inserir coraçao na imagem, como no insta :)
+    },
+    remvlike(post_id){
+      this.like=0;
+      this.likes=this.likes-1;
+    },
+    givedislike(post_id){
+      this.dislike=1;
+      if(this.like==1)
+        this.likes=this.likes-2;
+      else this.likes=this.likes-1;
+      this.like=0;
+    },
+    remvdislike(post_id){
+      this.dislike=0;
+      this.likes=this.likes+1;
+    },
+    savepost(post_id){
+      this.saved=1;
+    },
+    unsavepost(post_id){
+      this.saved=0;
+    },
     isMobile() {
       if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         return true
@@ -330,22 +335,21 @@ export default {
 </script>
 
 <style>
-  
   .prof-header{
     margin:auto !important;
     width: 95% !important;
-    border: 2px solid #FFEEEE !important;
     text-align: left;
+    display: flex;
   }
   .prof-img-user{
-    width: 100px !important;
-    min-width: 100px !important;
-    height: 100px !important;
+    width: 130px !important;
+    min-width: 130px !important;
+    height: 130px !important;
     border-radius: 20px !important;
     object-fit: cover;
     margin-right: 10px;
   }
   .user-name{
-    margin:10px 0px 0px 10px;
+    margin:5px 0px 0px 10px;
   }
 </style>
