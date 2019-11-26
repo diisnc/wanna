@@ -46,8 +46,37 @@ module.exports = (sequelize, DataTypes) => {
 				type: this.sequelize.QueryTypes.SELECT,
 			},
 		);
-
+		return result;
 	};
+
+	UserMessage.getContacts = async function (idUser){
+		result = await this.sequelize.query(
+			'SELECT t1."messageText",'+
+					' t1."idSender",'+
+					' t1."idReceiver",'+
+					' t1."idPost",'+
+					' t1."createdAt",'+
+					' "Photos"."photoType",'+
+					' "Photos"."photoData"'+
+			' FROM "UserMessages" t1'+
+			' JOIN "Posts" ON "Posts"."id" = t1."idPost"'+
+			' JOIN "Photos" ON "Photos"."idPost" = t1."idPost" AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost")'+
+			' JOIN (SELECT MAX(t2."createdAt") AS latestMessage, t2."idPost", t2."idReceiver", t2."idSender"'+
+                         ' FROM "UserMessages" t2'+
+                         ' GROUP BY t2."idPost", t2."idReceiver", t2."idSender") AS grouped'+
+      		' ON t1."idPost" = grouped."idPost" AND t1."createdAt" = grouped.latestMessage AND t1."idReceiver" = grouped."idReceiver" AND t1."idSender" = grouped."idSender"'+
+ 		 	' WHERE (t1."idReceiver" = (:idUser) OR t1."idSender" = (:idUser))'+
+  			' ORDER BY t1."createdAt" DESC',
+
+			{
+				replacements: {
+					idUser: idUser,
+				},
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
+		return result;
+	}
 
 	return UserMessage;
 };

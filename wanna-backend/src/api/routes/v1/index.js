@@ -5,6 +5,7 @@ const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const profileRoutes = require('./profile.route');
 const postRoutes = require('./post.route');
+const chatRoutes = require('./chat.route')
 const filterRoutes = require('./filter.route');
 const authenticate = require('../../middlewares/authenticate');
 
@@ -28,6 +29,7 @@ router.use('/users', authenticate('user'), userRoutes);
 router.use('/profile', authenticate('user'), profileRoutes);
 router.use('/post', authenticate('user'), postRoutes);
 router.use('/filter', authenticate('user'), filterRoutes);
+router.use('/chat', authenticate('user'), chatRoutes);
 router.use('/auth', authRoutes);
 
 module.exports = router;

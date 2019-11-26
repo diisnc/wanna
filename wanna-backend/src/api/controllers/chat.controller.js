@@ -27,3 +27,12 @@ exports.getMessages = async (idUser, idPost) => {
         console.error(e);
     }
 }
+
+exports.getContacts = async (req, res, next) => {
+    try{
+        const result = await UserMessage.getContacts(req.body.idUser);
+        return res.json(result);
+    }catch(e){
+        next(e);
+    }
+}
