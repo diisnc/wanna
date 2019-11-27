@@ -195,6 +195,14 @@
 - **Rota:** v1/auth/logout
 - **Estado:** :heavy_check_mark:
 
+
+---
+
+- **Descrição:** Refresh Token
+- **Método:** POST
+- **Rota:** v1/auth/refresh
+- **Estado:** :heavy_check_mark:
+
 ## Filtros
 
 - **Descrição:** Obter filtros
