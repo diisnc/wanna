@@ -53,7 +53,7 @@
 
 - **Descrição:** Pesquisar por utilizador
 - **Método:** GET
-- **Rota:** v1/user/search/:username
+- **Rota:** v1/users/search/:username
 - **Estado:** :heavy_check_mark:
 
 ---
