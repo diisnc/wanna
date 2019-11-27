@@ -10,21 +10,17 @@ import {
 	Button,
 	TouchableOpacity,
 	TouchableHighlight,
-	FlatList
+	FlatList,
+	Image
 } from 'react-native';
 import { createFilter } from '../modules/filter/filter.api';
+import { getContacts } from '../modules/chat/chat.api';
 import { connect } from 'react-redux';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
 import { enteringOnChat } from '../modules/chat/chat.reducer';
-global.Buffer = global.Buffer || require('buffer').Buffer;
 
-const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
-const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
-const colors = ['Azul', 'Vermelho', 'Preto', 'Branco', 'Outra'];
-const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
-const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
-const prices = [1, 2, 3, 4, 5, 10, 15, 30, 50, 100];
+global.Buffer = global.Buffer || require('buffer').Buffer;
 
 class ConversationsList extends Component {
 	constructor(props) {
@@ -32,52 +28,40 @@ class ConversationsList extends Component {
 	}
 
 	state = {
-		wishlistData: [],
-		numPosts: 0,
-		optionsGenre: ['Masculino', 'Feminino'],
-		optionsClothes: [],
-		optionsColors: [],
-		optionsSizes: [],
-		optionsPriceMin: [],
-		optionsPriceMax: [],
-		selectedGenre: null,
-		selectedClothe: null,
-		selectedColor: null,
-		selectedSize: null,
-		selectedMinPrice: 0,
-		selectedMaxPrice: 9999,
-		completed: false
+		conversationList: [],
+		loading: true
 	};
 
 	componentDidMount() {
-		// get data from servers and save in state
-		// this.getWishlistDataFromApiAsync();
+		this.getContactsAsync();
 	}
 
 	render() {
-		return (
-			/*
-            Fazer View Englobadora da página
-            onde o primeiro elemento é o header
-            de pesquisa e o segundo elemento
-            é o feed que contém as imagens.
-            */
-			// Safe Box for Iphone
-			<SafeAreaView style={{ flex: 1 }}>
-				{/* Full Page Box */}
-				<View
-					style={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'stretch'
-					}}>
-					{this.buildHeader()}
-					{/* this.buildWishlist() */}
-					{this.buildFilterForm()}
-				</View>
-			</SafeAreaView>
-		);
+		if (this.state.loading == false) {
+			return (
+				/*
+				Fazer View Englobadora da página
+				onde o primeiro elemento é o header
+				de pesquisa e o segundo elemento
+				é o feed que contém as imagens.
+				*/
+				// Safe Box for Iphone
+				<SafeAreaView style={{ flex: 1 }}>
+					{/* Full Page Box */}
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'column',
+							justifyContent: 'flex-start',
+							alignItems: 'stretch'
+						}}>
+						{this.buildHeader()}
+						{/* this.buildWishlist() */}
+						{this.buildFilterForm()}
+					</View>
+				</SafeAreaView>
+			);
+		} else return null;
 	}
 
 	// Builds header of the page
@@ -110,6 +94,16 @@ class ConversationsList extends Component {
 		);
 	}
 
+	async getContactsAsync() {
+		// const newState = require('./json/responseFeed');
+		const newState = await getContacts();
+		if (newState != null) {
+			this.setState({ conversationList: newState, loading: false });
+		}
+
+		return;
+	}
+
 	// Builds list of filters
 	buildFilterForm() {
 		data = [
@@ -130,45 +124,57 @@ class ConversationsList extends Component {
 			<ScrollView scrollEventThrottle={16}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
 					<FlatList
-						data={data}
+						data={this.state.conversationList}
 						renderItem={({ item }) => (
 							<TouchableHighlight
-								onPress={() =>
-									this.props.enterChat(
-										item.contact,
-										item.avatarContact,
-										item.idPost
-									)
-								}>
+								onPress={() => {
+									item.idReceiver == this.props.loggedUsername
+										? this.props.enterChat(
+												item.idSender,
+												item.avatarContact,
+												item.idPost
+										  )
+										: this.props.enterChat(
+												item.idReceiver,
+												item.avatarContact,
+												item.idPost
+										  );
+								}}>
 								<View style={{ backgroundColor: 'red', marginBottom: 5 }}>
 									<Text>{item.idPost}</Text>
-									<Text>{item.contact}</Text>
+									<Text>{item.messageText}</Text>
+									{item.idReceiver == this.props.loggedUsername ? (
+										<Text>{item.idSender}</Text>
+									) : (
+										<Text>{item.idReceiver}</Text>
+									)}
+									<Image
+										source={{
+											uri:
+												'data:' +
+												'image/jpeg' +
+												';base64,' +
+												new Buffer(item.photoData)
+										}}
+										style={{
+											marginLeft: 10,
+											width: 75,
+											height: 75,
+											borderRadius: 50
+										}}
+									/>
 								</View>
 							</TouchableHighlight>
 						)}
-						keyExtractor={item => item.id.toString()}
+						keyExtractor={item => item.idPost.toString()}
 					/>
 				</View>
 			</ScrollView>
 		);
 	}
-
-	// Get Data to Build Feed and Transform it to Json Object
-	async createFilterAsync() {
-		await createFilter(
-			this.state.selectedGenre,
-			this.state.selectedClothe,
-			this.state.selectedColor,
-			this.state.selectedSize,
-			this.state.selectedMinPrice,
-			this.state.selectedMaxPrice
-		);
-
-		return;
-	}
 }
-function mapStateToProps(store, ownProps) {
-	return {};
+function mapStateToProps(store) {
+	return { loggedUsername: store.auth.loggedUsername };
 }
 function mapDispatchToProps(dispatch) {
 	return {

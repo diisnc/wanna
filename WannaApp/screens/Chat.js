@@ -25,9 +25,8 @@ class Chat extends Component {
 		messages: [],
 		username: null,
 		avatarContact: null,
-		contact: null,
 		text: '',
-		room: ''
+		room: this.props.contact + this.props.idPost
 	};
 
 	constructor(props) {
@@ -70,9 +69,7 @@ class Chat extends Component {
 
 	componentDidMount() {
 		// exemplo tarraxo31
-		const room = this.state.text.contact + this.state.idPost;
-
-		socket.emit('subscribe', room);
+		socket.emit('subscribe', this.state.room);
 
 		Keyboard.addListener(isAndroid ? 'keyboardDidShow' : 'keyboardWillShow', e =>
 			this.setState({ viewPadding: e.endCoordinates.height - 40 })
@@ -89,6 +86,8 @@ class Chat extends Component {
 			this.keyboardDidHideListener.remove();
 		}
 	}
+
+	
 
 	render() {
 		return (
@@ -141,7 +140,7 @@ class Chat extends Component {
 						backgroundColor: 'blue'
 					}}>
 					<Text style={{ flex: 3, textAlign: 'center' }}>
-						Conversa com o {this.props.contact}
+						Conversa com {this.props.contact}
 					</Text>
 				</View>
 			</View>
@@ -261,7 +260,7 @@ function mapStateToProps(store, ownProps) {
 		username: store.auth.username,
 		avatarContact: store.chat.avatarContact,
 		contact: store.chat.contact,
-		room: store.chat.room
+		idPost: store.chat.idPost
 	};
 }
 function mapDispatchToProps(dispatch) {
