@@ -19,11 +19,27 @@
                   </b></p>
                 </div>
                 
-
               </div>
 
+            <b-row style="padding-top: 20px"> 
+              <b-col>
+                <p> *publicações* <br> Publicações </p>
+              </b-col>
+              <b-col>
+                <p> *seguidores* <br> Seguidores </p>
+              </b-col>
+              <b-col>
+                <p> *a seguir* <br> A seguir </p>
+              </b-col>
+            </b-row>
 
+            <b-row v-for="(product,index) in products">
+              <b-col v-for="(product,index) in products" v-if="index < 3">
+                <a :href="product.user"><img class="prof-img-post" :src="product.imgs"></a> 
+              </b-col>
+            </b-row v-for="(product,index) in products">
 
+            
             </div>
           </b-col>
         </div>
@@ -350,7 +366,21 @@ export default {
     margin-right: 10px;
     box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
   }
+  .prof-img-post{
+    width: 200px !important;
+    min-width: 130px !important;
+    height: 200px !important;
+    border-radius: 20px !important;
+    object-fit: cover;
+    box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+  }
   .user-name{
     margin:5px 0px 0px 10px;
   }
 </style>
+
+computed: {
+  chunkedCustomers() {
+    return chunk(this.customers, 3)
+  }
+}
