@@ -106,20 +106,6 @@ class ConversationsList extends Component {
 
 	// Builds list of filters
 	buildFilterForm() {
-		data = [
-			{
-				id: 1,
-				idPost: 31,
-				contact: 'tarraxa',
-				avatarContact: null
-			},
-			{
-				id: 2,
-				idPost: 32,
-				contact: 'tarraxa Bonita',
-				avatarContact: null
-			}
-		];
 		return (
 			<ScrollView scrollEventThrottle={16}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
@@ -166,7 +152,7 @@ class ConversationsList extends Component {
 								</View>
 							</TouchableHighlight>
 						)}
-						keyExtractor={item => item.idPost.toString()}
+						keyExtractor={item => item.id.toString()}
 					/>
 				</View>
 			</ScrollView>

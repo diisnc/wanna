@@ -9,7 +9,8 @@ import {
 	Platform,
 	TextInput,
 	TouchableHighlight,
-	SafeAreaView
+	SafeAreaView,
+	BackHandler
 } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { globalStyle, defaultNavigator } from './style';
@@ -34,12 +35,14 @@ class Chat extends Component {
 		const connectionConfig = {
 			transports: ['websocket']
 		};
-		socket = SocketIOClient('https://cbf2d5ca.ngrok.io', connectionConfig);
-		socket.on('message', msg => {
-			this.onReceivedMessage(msg);
-			this.props.newMessagesArrived(msg);
-		});
+		socket = SocketIOClient('https://04cfa956.ngrok.io', connectionConfig);
 	}
+
+	handleBackPress = () => {
+		socket.emit('leave-room', this.state.room);
+		this.props.navigation.navigate('ConversationsList');
+		return true;
+	};
 
 	_keyboardDidShow = e => {
 		let keyboardHeight = e.endCoordinates.height;
@@ -68,8 +71,24 @@ class Chat extends Component {
 	}
 
 	componentDidMount() {
+		BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+		let sub = {
+			idUser: this.props.contact,
+			idPost: this.props.idPost
+		};
+		console.log(sub);
 		// exemplo tarraxo31
-		socket.emit('subscribe', this.state.room);
+		socket.emit('subscribe', sub);
+
+		socket.on('chat-message', msg => {
+			this.onReceivedMessage(msg);
+			// this.props.newMessagesArrived(msg);
+		});
+
+		socket.on('previous-messages', msg => {
+			this.onReceivedPreviousMessage(msg);
+			// this.props.newMessagesArrived(msg);
+		});
 
 		Keyboard.addListener(isAndroid ? 'keyboardDidShow' : 'keyboardWillShow', e =>
 			this.setState({ viewPadding: e.endCoordinates.height - 40 })
@@ -78,6 +97,7 @@ class Chat extends Component {
 		Keyboard.addListener(isAndroid ? 'keyboardDidHide' : 'keyboardWillHide', () =>
 			this.setState({ viewPadding: viewPadding })
 		);
+
 	}
 
 	componentWillUnmount() {
@@ -86,8 +106,6 @@ class Chat extends Component {
 			this.keyboardDidHideListener.remove();
 		}
 	}
-
-	
 
 	render() {
 		return (
@@ -175,7 +193,7 @@ class Chat extends Component {
 								]}>
 								<Image
 									style={styles.imageStyles}
-									source={{ uri: item.user.avatar }}
+									source={require('../assets/noImage.png')}
 								/>
 								<Text style={styles.listItem}>{item.text}</Text>
 							</View>
@@ -212,21 +230,20 @@ class Chat extends Component {
 		this.setState({ text: text });
 	};
 
-	onReceivedMessage = messagesA => {
-		let messageArr = [];
-		messagesA.map(item => {
-			let messageModel = {
-				writer: this.state.contact,
-				text: item.message,
-				date: new Date()
-			};
+	onReceivedPreviousMessage = message => {
+		
+	};
 
-			messageArr.push(messageModel);
-		});
+	onReceivedMessage = message => {
+		let messageModel = {
+			writer: this.props.contact,
+			text: message.message,
+			date: new Date()
+		};
 
-		messageArr.reverse();
+		newArray = this.state.messages.concat(messageModel);
 
-		this.setState({ messages: this.state.messages.concat(messageArr) });
+		this.setState({ messages: newArray });
 	};
 
 	sendMessage = () => {
@@ -236,20 +253,22 @@ class Chat extends Component {
 			let messageToSend = {
 				room: this.state.room,
 				message: this.state.text,
-				idSender: this.state.username,
-				idReceiver: this.state.contact,
-				idPost: '31'
+				idSender: this.props.username,
+				idReceiver: this.props.contact,
+				idPost: this.props.idPost
 			};
 
 			let messageToSave = {
-				writer: this.state.username,
+				writer: this.props.username,
 				text: this.state.text,
 				date: new Date()
 			};
 
 			socket.emit('chat-message', messageToSend);
 
-			this.setState({ messages: messages.concat(messageToSave), text: '' });
+			newArray = this.state.messages.concat(messageToSave);
+
+			this.setState({ messages: newArray, text: '' });
 		}
 	};
 }
@@ -257,7 +276,7 @@ class Chat extends Component {
 function mapStateToProps(store, ownProps) {
 	console.log(store.chat);
 	return {
-		username: store.auth.username,
+		username: store.auth.loggedUsername,
 		avatarContact: store.chat.avatarContact,
 		contact: store.chat.contact,
 		idPost: store.chat.idPost

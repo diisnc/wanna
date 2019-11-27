@@ -30,7 +30,7 @@ class Wanted extends Component {
 		}
 
 		// get data from servers and save in state
-		this.getDataFromAPI();
+		// this.getDataFromAPI();
 	}
 
 	async getDataFromAPI() {

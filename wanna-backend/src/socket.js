@@ -12,7 +12,8 @@ exports.socketHandler = async (io) =>{
         //Usig rooms for private communication
 
         //setting up a room for private coms
-        socket.on('subscribe', async function(room) {
+        socket.on('subscribe', async function(data) {
+            var room = data.idUser+data.idPost;
             console.log('joining room', room);
             socket.join(room);
             //needs to return the previous messages if there's any
@@ -29,12 +30,12 @@ exports.socketHandler = async (io) =>{
             //console.log(data.idSender + " " + data.idReceiver + " "  + data.idPost + " " + data.message);
             await controller.sendMessage(data.idSender, data.idReceiver, data.idPost, data.message);
         });
-        /*
-        socket.on('disconnect', () =>{
+        
+        socket.on('leave-room', async function(room) {
             console.log('disconnecting from room', room);
             socket.leave(room);
         })
-        */
+        
     });
 
 }
