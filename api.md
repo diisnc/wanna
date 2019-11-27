@@ -53,7 +53,7 @@
 
 - **Descrição:** Pesquisar por utilizador
 - **Método:** GET
-- **Rota:** v1/user/search/:username
+- **Rota:** v1/users/search/:username
 - **Estado:** :heavy_check_mark:
 
 ---
@@ -193,6 +193,14 @@
 - **Descrição:** Logout
 - **Método:** POST
 - **Rota:** v1/auth/logout
+- **Estado:** :heavy_check_mark:
+
+
+---
+
+- **Descrição:** Refresh Token
+- **Método:** POST
+- **Rota:** v1/auth/refresh
 - **Estado:** :heavy_check_mark:
 
 ## Filtros

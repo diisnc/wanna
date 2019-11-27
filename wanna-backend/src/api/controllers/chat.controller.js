@@ -30,7 +30,7 @@ exports.getMessages = async (idUser, idPost) => {
 
 exports.getContacts = async (req, res, next) => {
     try{
-        const result = await UserMessage.getContacts(req.body.idUser);
+        const result = await UserMessage.getContacts(req.user.username);
         return res.json(result);
     }catch(e){
         next(e);
