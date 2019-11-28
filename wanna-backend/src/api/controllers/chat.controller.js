@@ -19,8 +19,7 @@ exports.sendMessage = async (idSender, idReceiver, idPost, message) => {
 
 exports.getMessages = async (req, res, next) => {
     try{
-        console.log("AAWDAWDAWDWADWADWADWADAWDAW");
-        const result = await UserMessage.getMessages(req.query.idContact, req.query.idPost);
+        const result = await UserMessage.getMessages(req.query.idContact,req.user.username,req.query.idPost);
         return res.json(result);
     }catch(e){
         next(e);

@@ -3,7 +3,7 @@ import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 import { logout } from './auth/auth.service';
 
-const config = { url: 'http://192.168.43.239:8000' };
+const config = { url: 'http://192.168.1.67:8000' };
 
 var currentAuthToken;
 

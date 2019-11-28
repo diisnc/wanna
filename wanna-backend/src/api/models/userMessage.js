@@ -32,15 +32,16 @@ module.exports = (sequelize, DataTypes) => {
 	 *
 	 * Returns previous messages in chat
 	 */
-	UserMessage.getMessages = async function(idUser, idPost) {
+	UserMessage.getMessages = async function(idContact, idUser, idPost) {
 		result = await this.sequelize.query(
 			'SELECT "UserMessages"."id", "UserMessages"."messageText" AS text, "UserMessages"."seenAt", "UserMessages"."createdAt", "UserMessages"."idSender" AS writer, "UserMessages"."idReceiver" FROM "UserMessages"' +
-				' WHERE "UserMessages"."idPost" = (:idPost) AND ("UserMessages"."idSender" = (:idUser) OR "UserMessages"."idReceiver" = (:idUser))' +
+				' WHERE "UserMessages"."idPost" = (:idPost) AND ("UserMessages"."idSender" = (:idUser) AND "UserMessages"."idReceiver" = (:idContact)) OR ("UserMessages"."idSender" = (:idContact) AND "UserMessages"."idReceiver" = (:idUser))' +
 				' ORDER BY "UserMessages"."createdAt"',
 			{
 				replacements: {
 					idUser: idUser,
 					idPost: idPost,
+					idContact: idContact
 				},
 				type: this.sequelize.QueryTypes.SELECT,
 			},
