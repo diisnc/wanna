@@ -120,13 +120,18 @@ export const editPost = idPost => {
 	return ourFetchWithToken(config);
 };
 
-export const deleteFilter = idFilter => {
+export const upperitemsCombine = () => {
 	const config = {
-		endpoint: '/v1/filter/deleteFilter',
-		method: 'POST',
-		body: {
-			idFilter: idFilter
-		}
+		endpoint: '/v1/post/upperitems',
+		method: 'GET'
+	};
+	return ourFetchWithToken(config);
+};
+
+export const loweritemsCombine = () => {
+	const config = {
+		endpoint: '/v1/post/loweritems',
+		method: 'GET'
 	};
 	return ourFetchWithToken(config);
 };

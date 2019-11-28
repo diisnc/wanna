@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
+import { upperitemsCombine, loweritemsCombine } from '../modules/post/post.api';
+import Loading from './Loading';
 
 class Combine extends Component {
 	state = {
@@ -25,7 +27,8 @@ class Combine extends Component {
 		lowerClothes: [],
 		numLowerClothes: 0,
 		selectedLowerClothe: null,
-		width: 0
+		width: 0,
+		loading: true
 	};
 
 	//onValueChange of the switch this function will be called
@@ -59,12 +62,43 @@ class Combine extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
-
-		// get data from servers and save in state
-		this.getWishlistDataFromApiAsync();
-
 		// get width for carousel purposes
 		this.setState({ width: Dimensions.get('window').width * 0.75 });
+		// get data from servers and save in state
+		this.getFeedDataFromApiAsync();
+	}
+
+	componentDidUpdate(prevProps) {
+		// console.log('mudou');
+		const hasAChanged = this.props.loggedIn !== prevProps.loggedIn;
+		const hasBChanged = this.props.tokenValid !== prevProps.tokenValid;
+		if (
+			(hasAChanged || hasBChanged) &&
+			this.props.tokenValid == true &&
+			this.props.loggedIn == true
+		) {
+			// console.log('vai pintar');
+			this.getFeedDataFromApiAsync();
+		}
+	}
+
+	async getFeedDataFromApiAsync() {
+		// const newState = require('./json/responseFeed');
+		const newStateA = await upperitemsCombine();
+		const newStateB = await loweritemsCombine();
+		// console.log(newState);
+		if (newStateA != null && newStateB != null) {
+			this.setState({
+				upperClothes: newStateA,
+				numUpperClothes: newStateA.length,
+				lowerClothes: newStateB,
+				numLowerClothes: newStateB.length,
+				loading: false
+			});
+		}
+		// this.setState({ loading: false });
+
+		return;
 	}
 
 	render() {
@@ -127,20 +161,23 @@ class Combine extends Component {
 
 	// Builds list of filters
 	buildCombination() {
-		return (
-			<View
-				style={{
-					flex: 8,
-					backgroundColor: 'black',
-					justifyContent: 'space-around',
-					alignItems: 'center'
-				}}>
-				{/* Upper clothes selector */}
-				{this.buildUpperClothesSlider()}
-				{/* Lower clothes selector */}
-				{this.buildLowerClothesSlider()}
-			</View>
-		);
+		if (this.state.loading == true) return <Loading />;
+		else {
+			return (
+				<View
+					style={{
+						flex: 8,
+						backgroundColor: 'black',
+						justifyContent: 'space-around',
+						alignItems: 'center'
+					}}>
+					{/* Upper clothes selector */}
+					{this.buildUpperClothesSlider()}
+					{/* Lower clothes selector */}
+					{this.buildLowerClothesSlider()}
+				</View>
+			);
+		}
 	}
 
 	// Build Upper Clothes selection slider and zoom
@@ -232,7 +269,7 @@ class Combine extends Component {
 	// Build images on upper scroll view
 	buildUpperImages(post, selectedUpper) {
 		id = 'id= ' + JSON.stringify(this.state.upperClothes[post].id);
-		objJsonB64 = new Buffer(this.state.upperClothes[post].photoData1);
+		objJsonB64 = new Buffer(this.state.upperClothes[post].photoData);
 
 		return (
 			<TouchableHighlight onPress={() => this.onPressUpperClothe(post)}>
@@ -270,7 +307,7 @@ class Combine extends Component {
 	// Build images on upper scroll view
 	buildLowerImages(post, selectedLower) {
 		id = 'id= ' + JSON.stringify(this.state.lowerClothes[post].id);
-		objJsonB64 = new Buffer(this.state.lowerClothes[post].photoData1);
+		objJsonB64 = new Buffer(this.state.lowerClothes[post].photoData);
 
 		return (
 			<TouchableHighlight onPress={() => this.onPressLowerClothe(post)}>
@@ -341,31 +378,6 @@ class Combine extends Component {
 			this.setState({ selectedLowerClothe: index });
 			ToastAndroid.show('Lower clothe replaced on cart', ToastAndroid.SHORT);
 		}
-	}
-
-	// Get Data to Build Feed and Transform it to Json Object
-	getWishlistDataFromApiAsync() {
-		/*
-        return fetch('https://facebook.github.io/react-native/movies.json')// ONLINE GET
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({wishlistData: responseJson, numPosts: Object.keys(responseJson).length});
-                //console.log(responseJson);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        */
-
-		const newState = require('./json/responseFeed');
-		this.setState({
-			upperClothes: newState,
-			lowerClothes: newState,
-			numUpperClothes: newState.length,
-			numLowerClothes: newState.length
-		});
-
-		return;
 	}
 
 	// Get extra content to Upper Clothes
