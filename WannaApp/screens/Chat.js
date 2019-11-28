@@ -228,10 +228,8 @@ class Chat extends Component {
 	}
 
 	async getMessagesAsync(idContact, idPost) {
-		// const newState = require('./json/responseFeed');
 		const previousMessages = await getMessages(idContact, idPost);
 		if (previousMessages != null) {
-			// console.log(previousMessages.map(x => JSON.stringify(x)));
 			this.setState({ messages: previousMessages });
 		}
 
@@ -245,11 +243,6 @@ class Chat extends Component {
 		this.setState({ text: text });
 	};
 
-	onReceivedPreviousMessage = message => {
-		newArray = this.state.messages.concat(messageModel);
-		this.setState({ messages: newArray });
-	};
-
 	onReceivedMessage = message => {
 		let messageModel = {
 			writer: this.props.contact,
@@ -257,9 +250,7 @@ class Chat extends Component {
 			date: new Date()
 		};
 
-		newArray = this.state.messages.concat(messageModel);
-
-		this.setState({ messages: newArray });
+		this.setState({ messages: [...this.state.messages, messageModel] });
 	};
 
 	sendMessage = () => {
@@ -281,8 +272,6 @@ class Chat extends Component {
 			};
 
 			socket.emit('chat-message', messageToSend);
-
-			// newArray = this.state.messages.concat(messageToSave);
 
 			this.setState({ messages: [...this.state.messages, messageToSave], text: '' });
 		}
