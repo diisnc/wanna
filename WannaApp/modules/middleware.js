@@ -1,7 +1,8 @@
 import { logout } from './auth/auth.service';
 import { refreshToken } from './auth/auth.api';
-import { api, setToken, setStore } from './api';
+import { setToken } from './api';
 import NavigationService from './navigator';
+import { Alert } from 'react-native';
 
 export const saveAuthToken = store => next => action => {
 	if (action.type === 'SET_LOGIN_SUCCESS' || action.type === 'SAVE_APP_TOKEN') {
@@ -76,4 +77,12 @@ export const votesHandler = store => next => action => {
 	} else {
 		return next(action);
 	}
+};
+
+export const errorHandler = store => next => action => {
+	if (action.type === 'CONNECTION_ERROR') {
+		Alert.alert('Falha na ligação ao servidor');
+	}
+	// continue processing this action
+	return next(action);
 };

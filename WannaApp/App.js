@@ -10,7 +10,7 @@ import Wanna from './screens/Wanna';
 import Register from './screens/Register';
 import Loading from './screens/Loading';
 import { checkAuthStatus } from './modules/auth/auth.service';
-import { jwt, saveAuthToken, nav, votesHandler } from './modules/middleware';
+import { jwt, saveAuthToken, nav, votesHandler, errorHandler } from './modules/middleware';
 import logger from 'redux-logger';
 import { reducer as formReducer } from 'redux-form';
 import auth from './modules/auth/auth.reducer';
@@ -37,7 +37,7 @@ const rootReducer = combineReducers({
 // export const store = createStore(rootReducer, applyMiddleware(saveAuthToken, jwt, thunk, logger));
 export const store = createStore(
 	rootReducer,
-	applyMiddleware(saveAuthToken, jwt, nav, votesHandler, thunk)
+	applyMiddleware(saveAuthToken, jwt, nav, votesHandler, errorHandler, thunk)
 );
 
 class App extends Component {
