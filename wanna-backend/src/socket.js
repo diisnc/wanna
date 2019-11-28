@@ -17,8 +17,9 @@ exports.socketHandler = async (io) =>{
             console.log('joining room', room);
             socket.join(room);
             //needs to return the previous messages if there's any
-            //var oldMessages = await UserMessage.getMessages(data.idUser, data.idPost);
+            //var oldMessages = await controller.getMessages(data.idUser, data.idPost);
             //socket.broadcast.to(room).emit('previous-messages', oldMessages);
+            //console.log(oldMessages);
         });
 
         //broadcast the message to the other user in the room

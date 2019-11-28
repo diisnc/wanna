@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 	UserMessage.getMessages = async function(idUser, idPost) {
 		result = await this.sequelize.query(
-			'SELECT "UserMessages"."messageText", "UserMessages"."seenAt", "UserMessages"."createdAt" FROM "UserMessages"' +
+			'SELECT "UserMessages"."id", "UserMessages"."messageText", "UserMessages"."seenAt", "UserMessages"."createdAt", "UserMessages"."idSender", "UserMessages"."idReceiver" FROM "UserMessages"' +
 				' WHERE "UserMessages"."idPost" = (:idPost) AND ("UserMessages"."idSender" = (:idUser) OR "UserMessages"."idReceiver" = (:idUser))' +
 				' ORDER BY "UserMessages"."createdAt"',
 			{

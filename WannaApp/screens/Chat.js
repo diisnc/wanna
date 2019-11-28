@@ -17,6 +17,7 @@ import { globalStyle, defaultNavigator } from './style';
 import SocketIOClient from 'socket.io-client/dist/socket.io';
 import { connect } from 'react-redux';
 import { newMessages } from '../modules/chat/chat.reducer';
+import { getMessages } from '../modules/chat/chat.api';
 
 const isAndroid = Platform.OS == 'android';
 const viewPadding = 10;
@@ -76,17 +77,16 @@ class Chat extends Component {
 			idUser: this.props.contact,
 			idPost: this.props.idPost
 		};
-		console.log(sub);
+		//console.log(sub);
 		// exemplo tarraxo31
 		socket.emit('subscribe', sub);
 
+		this.getMessagesAsync(this.props.contact, this.props.idPost);
+
+		console.log("PREVIOUS MESSAGES" + this.state.messages);
+
 		socket.on('chat-message', msg => {
 			this.onReceivedMessage(msg);
-			// this.props.newMessagesArrived(msg);
-		});
-
-		socket.on('previous-messages', msg => {
-			this.onReceivedPreviousMessage(msg);
 			// this.props.newMessagesArrived(msg);
 		});
 
@@ -97,7 +97,6 @@ class Chat extends Component {
 		Keyboard.addListener(isAndroid ? 'keyboardDidHide' : 'keyboardWillHide', () =>
 			this.setState({ viewPadding: viewPadding })
 		);
-
 	}
 
 	componentWillUnmount() {
@@ -188,18 +187,21 @@ class Chat extends Component {
 									styles.listItemContainer,
 									{
 										flexDirection:
-											item.username === 'android' ? 'row-reverse' : 'row'
+											item.idSender === this.state.username
+												? 'row-reverse'
+												: 'row'
 									}
 								]}>
 								<Image
 									style={styles.imageStyles}
 									source={require('../assets/noImage.png')}
 								/>
-								<Text style={styles.listItem}>{item.text}</Text>
+								<Text style={styles.listItem}>{item.messageText}</Text>
 							</View>
 							<View style={styles.marginBottom} />
 						</View>
 					)}
+					keyExtractor={(item, index) => index.toString()}
 				/>
 				<View style={{ flexDirection: 'row' }}>
 					<TextInput
@@ -223,6 +225,16 @@ class Chat extends Component {
 		);
 	}
 
+	async getMessagesAsync(idContact, idPost) {
+		// const newState = require('./json/responseFeed');
+		const previousMessages = await getMessages(idContact, idPost);
+		if (previousMessages != null) {
+			this.setState({ messages: previousMessages });
+		}
+
+		return;
+	}
+
 	/**
 	 * Save the input values change to state
 	 */
@@ -231,7 +243,8 @@ class Chat extends Component {
 	};
 
 	onReceivedPreviousMessage = message => {
-		
+		newArray = this.state.messages.concat(messageModel);
+		this.setState({ messages: newArray });
 	};
 
 	onReceivedMessage = message => {
@@ -274,7 +287,7 @@ class Chat extends Component {
 }
 
 function mapStateToProps(store, ownProps) {
-	console.log(store.chat);
+	//console.log(store.chat);
 	return {
 		username: store.auth.loggedUsername,
 		avatarContact: store.chat.avatarContact,

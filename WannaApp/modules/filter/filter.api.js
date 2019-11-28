@@ -42,6 +42,10 @@ export const deleteFilter = idFilter => {
 	const config = {
 		endpoint: '/v1/filter/deleteFilter',
 		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json'
+		},
 		body: {
 			idFilter: idFilter
 		}

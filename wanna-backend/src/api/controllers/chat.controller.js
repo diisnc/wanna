@@ -1,6 +1,4 @@
 var bodyParser = require('body-parser')
-//var http = require('http').Server(app);
-//var io = require('socket.io')(http);
 const httpStatus = require('http-status');
 const { UserMessage } = require('../models'); 
 
@@ -19,12 +17,13 @@ exports.sendMessage = async (idSender, idReceiver, idPost, message) => {
     }
 }
 
-exports.getMessages = async (idUser, idPost) => {
+exports.getMessages = async (req, res, next) => {
     try{
-        const result = await UserMessage.getMessages(idUser, idPost);
-        return result;
+        console.log("AAWDAWDAWDWADWADWADWADAWDAW");
+        const result = await UserMessage.getMessages(req.query.idContact, req.query.idPost);
+        return res.json(result);
     }catch(e){
-        console.error(e);
+        next(e);
     }
 }
 
