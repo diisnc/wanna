@@ -67,9 +67,11 @@ class Profile extends Component {
 		}
 
 		if (profile != null) {
-			if (profile.posts == undefined) length = 0;
-			else length = profile.posts.length;
-			this.props.loadProfilePosts(length, profile.nrFollowings.number);
+			if (usernamePassed == 'local') {
+				if (profile.posts == undefined) length = 0;
+				else length = profile.posts.length;
+				this.props.loadProfilePosts(length, profile.nrFollowings.number);
+			}
 			await this.setState({
 				profile: profile,
 				numPosts: profile.posts.length,
