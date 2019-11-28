@@ -8,6 +8,7 @@ import Main from './screens/Main';
 import Login from './screens/Login';
 import Wanna from './screens/Wanna';
 import Register from './screens/Register';
+import Loading from './screens/Loading';
 import { checkAuthStatus } from './modules/auth/auth.service';
 import { jwt, saveAuthToken, nav, votesHandler } from './modules/middleware';
 import logger from 'redux-logger';
@@ -50,6 +51,12 @@ class App extends Component {
 }
 
 const AppStackNav = createSwitchNavigator({
+	Loading: {
+		screen: Loading,
+		navigationOptions: {
+			header: null
+		}
+	},
 	Wanna: {
 		screen: Wanna,
 		navigationOptions: {
@@ -92,13 +99,8 @@ class ConnectedComponent extends React.Component {
 	}
 
 	render() {
-		//this.props.checkAuthStatus();
-
 		const loggedIn = this.props.loggedIn;
 		console.log('estado do login: ' + loggedIn);
-		// Vítor
-
-		//if (loggedIn == false) {
 		return (
 			<Navigator
 				ref={navigatorRef => {
@@ -106,10 +108,6 @@ class ConnectedComponent extends React.Component {
 				}}
 			/>
 		);
-		//}
-
-		// if (loggedIn) { return <Main /> }
-		// return <Main />;
 	}
 
 	// aux for gallery permissions

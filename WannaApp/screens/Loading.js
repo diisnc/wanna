@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Button } from 'react-native';
+import { View, StyleSheet, Image, Button, Dimensions } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { globalStyle, defaultNavigator } from './style';
+const { width, height } = Dimensions.get('window');
 
 class Wanna extends Component {
 	render() {
 		return (
-			<View style={styles.container}>
-				<Image style={styles.logo} source={require('../assets/logo.png')} />
+			<View>
+				<Image
+					style={styles.logo}
+					resizeMode="contain"
+					source={require('../assets/logo.png')}
+				/>
 			</View>
 		);
 	}
@@ -16,12 +21,8 @@ class Wanna extends Component {
 export default Wanna;
 
 const styles = StyleSheet.create({
-	container: {
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
 	logo: {
-		width: '50%',
-		height: '50%'
+		maxHeight: height,
+		maxWidth: width
 	}
 });
