@@ -179,7 +179,9 @@ class Chat extends Component {
 								{
 									display: 'flex',
 									alignItems:
-										item.username === 'android' ? 'flex-end' : 'flex-start'
+										item.writer === this.props.username
+											? 'flex-end'
+											: 'flex-start'
 								}
 							]}>
 							<View
@@ -187,7 +189,7 @@ class Chat extends Component {
 									styles.listItemContainer,
 									{
 										flexDirection:
-											item.idSender === this.state.username
+											item.writer === this.props.username
 												? 'row-reverse'
 												: 'row'
 									}
@@ -196,7 +198,7 @@ class Chat extends Component {
 									style={styles.imageStyles}
 									source={require('../assets/noImage.png')}
 								/>
-								<Text style={styles.listItem}>{item.messageText}</Text>
+								<Text style={styles.listItem}>{item.text}</Text>
 							</View>
 							<View style={styles.marginBottom} />
 						</View>
@@ -229,6 +231,7 @@ class Chat extends Component {
 		// const newState = require('./json/responseFeed');
 		const previousMessages = await getMessages(idContact, idPost);
 		if (previousMessages != null) {
+			// console.log(previousMessages.map(x => JSON.stringify(x)));
 			this.setState({ messages: previousMessages });
 		}
 
@@ -279,9 +282,9 @@ class Chat extends Component {
 
 			socket.emit('chat-message', messageToSend);
 
-			newArray = this.state.messages.concat(messageToSave);
+			// newArray = this.state.messages.concat(messageToSave);
 
-			this.setState({ messages: newArray, text: '' });
+			this.setState({ messages: [...this.state.messages, messageToSave], text: '' });
 		}
 	};
 }

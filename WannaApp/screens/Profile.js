@@ -49,7 +49,7 @@ class Profile extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.myNumPosts !== prevProps.myNumPosts) {
+		if (this.props.myNumPosts !== prevProps.myNumPosts && this.state.loading == false) {
 			this.fetchUserInfo();
 		}
 	}
@@ -57,18 +57,19 @@ class Profile extends Component {
 	fetchUserInfo = async () => {
 		let usernamePassed;
 		usernamePassed = this.props.navigation.getParam('userID', 'local');
+		console.log(usernamePassed);
 
 		let profile, length;
 		if (usernamePassed == 'local') {
 			profile = await getMyProfile();
-			if (profile.posts == null) length = 0;
-			else length = profile.posts.length;
-			this.props.loadProfilePosts(length, profile.nrFollowings.number);
 		} else {
 			profile = await getUserProfile(usernamePassed);
 		}
 
 		if (profile != null) {
+			if (profile.posts == undefined) length = 0;
+			else length = profile.posts.length;
+			this.props.loadProfilePosts(length, profile.nrFollowings.number);
 			await this.setState({
 				profile: profile,
 				numPosts: profile.posts.length,
