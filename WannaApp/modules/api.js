@@ -108,12 +108,11 @@ export const ourFetchWithToken = async action => {
 	} else {
 		let data = await response.json();
 
-		if (data == 'Token is expired') {
-			return store.dispatch({ type: 'EXPIRED_TOKEN' });
-		}
-
-		if (data == 'Invalid token') {
-			return store.dispatch({ type: 'INVALID_TOKEN' });
+		if (data == 'Invalid token' || data == 'Token is expired') {
+			let theStore = store.getState();
+			if (theStore.auth.pendingRefreshingToken != true && theStore.auth.loggedIn == true) {
+				return store.dispatch({ type: 'INVALID_TOKEN' });
+			} else return null;
 		}
 
 		if (response.status == 403 || response.status == 401) {

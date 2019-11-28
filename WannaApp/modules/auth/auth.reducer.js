@@ -36,14 +36,14 @@ export const setRegisterError = regError => {
 };
 export const setLogout = () => {
 	return {
-		type: 'SET_LOGOUT',
-		username: null
+		type: 'SET_LOGOUT'
 	};
 };
-export const saveAppToken = authToken => {
+export const saveAppToken = (authToken, refreshToken) => {
 	return {
 		type: 'SAVE_APP_TOKEN',
-		authToken
+		authToken,
+		refreshToken
 	};
 };
 //Reducer
@@ -60,7 +60,7 @@ let initialState = {
 	loggedUsername: null
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
 	switch (action.type) {
 		case 'SET_AUTH_PENDING':
 			return {
@@ -106,8 +106,8 @@ export default function(state = initialState, action) {
 		case 'SET_LOGOUT':
 			return {
 				...state,
-				authToken: false,
-				refreshToken: false,
+				authToken: null,
+				refreshToken: null,
 				loggedIn: false,
 				loggedUsername: null
 			};
@@ -133,10 +133,17 @@ export default function(state = initialState, action) {
 				pendingRefreshingToken: null,
 				tokenIsValid: true
 			};
+		case 'REFRESH_EXPIRED':
+			return {
+				...state,
+				pendingRefreshingToken: null,
+				tokenIsValid: false
+			};
 		case 'SAVE_APP_TOKEN':
 			return {
 				...state,
-				authToken: action.authToken
+				authToken: action.authToken,
+				refreshToken: action.refreshToken
 			};
 
 		default:

@@ -103,7 +103,7 @@ export const refreshToken = refreshToken => async dispatch => {
 	let data = await response.json();
 	// console.log('data do tokenservice: ' + data);
 	if (response.status == 200) {
-		dispatch(AuthReducer.saveAppToken(data.tokens.accessToken));
+		dispatch(AuthReducer.saveAppToken(data.tokens.accessToken, data.tokens.refreshToken));
 		_saveItem('refreshToken', data.tokens.refreshToken)
 			.then(resp => {
 				console.log('Refresh token refreshed');
