@@ -102,17 +102,11 @@ class Profile extends Component {
 			if (this.state.numPosts !== 0) {
 				return (
 					<SafeAreaView style={{ flex: 1 }}>
-						<View
-							style={{
-								flex: 1,
-								flexDirection: 'column',
-								justifyContent: 'flex-start',
-								alignItems: 'stretch'
-							}}>
+						<ScrollView>
 							{this.buildHeader()}
 							{this.buildProfile()}
 							{this.buildPosts()}
-						</View>
+						</ScrollView>
 					</SafeAreaView>
 				);
 			} else {
@@ -433,6 +427,7 @@ class Profile extends Component {
 				<FlatList
 					numColumns={3}
 					data={this.state.profile.posts}
+					scrollEnabled={false}
 					renderItem={({ item, index }) => this.renderItem(item, index)}
 					keyExtractor={item => item.postid.toString()}
 				/>
