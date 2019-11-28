@@ -52,6 +52,17 @@ class Profile extends Component {
 		if (this.props.myNumPosts !== prevProps.myNumPosts && this.state.loading == false) {
 			this.fetchUserInfo();
 		}
+
+		const hasAChanged = this.props.loggedIn !== prevProps.loggedIn;
+		const hasBChanged = this.props.tokenValid !== prevProps.tokenValid;
+		if (
+			(hasAChanged || hasBChanged) &&
+			this.props.tokenValid == true &&
+			this.props.loggedIn == true
+		) {
+			// console.log('vai pintar');
+			this.fetchUserInfo();
+		}
 	}
 
 	fetchUserInfo = async () => {
@@ -472,7 +483,9 @@ function mapStateToProps(store) {
 	return {
 		loggedUsername: store.auth.loggedUsername,
 		myNumPosts: store.profile.numPosts,
-		myFollowingsNumber: store.profile.nrFollowings
+		myFollowingsNumber: store.profile.nrFollowings,
+		loggedIn: store.auth.loggedIn,
+		tokenValid: store.auth.tokenIsValid
 	};
 }
 

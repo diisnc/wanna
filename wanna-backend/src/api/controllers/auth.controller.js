@@ -13,7 +13,6 @@ const {
  */
 const authResponse = async (req, res, next) => {
 	try {
-		console.log('vai devolver novas cenas');
 		const accessToken = generateAccessToken(req.user);
 
 		req.user.refreshToken = generateRefreshToken(req.user);

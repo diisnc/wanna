@@ -15,8 +15,10 @@ export const checkAuthStatus = () => async dispatch => {
 		if (authToken != null && refreshToken != null && username != null) {
 			dispatch(AuthReducer.setLoginSuccess(authToken, refreshToken, username));
 			NavigationService.navigate('Main');
-		} else dispatch(AuthReducer.setNoLogin());
-
+		} else {
+			dispatch(AuthReducer.setNoLogin());
+			NavigationService.navigate('Wanna');
+		}
 		// return authToken;
 	} catch (error) {
 		console.log('erro crlhhh ' + error);
