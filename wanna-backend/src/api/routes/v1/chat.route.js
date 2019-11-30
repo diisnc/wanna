@@ -8,5 +8,6 @@ const router = express.Router();
 
 router.route('/').get(controller.getContacts);
 router.route('/previous-messages/').get(controller.getMessages);
+router.route('/photos').get(controller.getPhotos);
 
 module.exports = router;

@@ -36,7 +36,7 @@ class Chat extends Component {
 		const connectionConfig = {
 			transports: ['websocket']
 		};
-		socket = SocketIOClient('https://edc20e49.ngrok.io', connectionConfig);
+		socket = SocketIOClient('https://11063718.ngrok.io', connectionConfig);
 	}
 
 	handleBackPress = () => {

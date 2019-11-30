@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser')
 const httpStatus = require('http-status');
 const { UserMessage } = require('../models'); 
+const { User } = require('../models')
 
 
 
@@ -29,6 +30,15 @@ exports.getMessages = async (req, res, next) => {
 exports.getContacts = async (req, res, next) => {
     try{
         const result = await UserMessage.getContacts(req.user.username);
+        return res.json(result);
+    }catch(e){
+        next(e);
+    }
+}
+
+exports.getPhotos = async function (req, res, next){
+    try{
+        const result = await User.getPhotos(req.query.idContact, req.user.username);
         return res.json(result);
     }catch(e){
         next(e);
