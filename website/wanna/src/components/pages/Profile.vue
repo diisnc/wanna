@@ -6,8 +6,8 @@
           <b-col sm="7">
             <div class="card">
 
+              <!-- CABEÇALHO COM INFO DO USER -->
               <div class="prof-header">
-
                 <img class="prof-img-user" :src="user_img">
                 <div>
                   <h4 class="user-name"><b>{{user_name}}</b></h4>
@@ -18,27 +18,50 @@
                     <i v-for="index in (5-user_stars)"class="far fa-star"></i>
                   </b></p>
                 </div>
-                
               </div>
 
-            <b-row style="padding-top: 20px"> 
-              <b-col>
-                <p> *publicações* <br> Publicações </p>
-              </b-col>
-              <b-col>
-                <p> *seguidores* <br> Seguidores </p>
-              </b-col>
-              <b-col>
-                <p> *a seguir* <br> A seguir </p>
-              </b-col>
-            </b-row>
+              <!-- POSTS, SEGUIDORES E A SEGUIR -->
+              <b-row style="padding-top: 20px"> 
+                <b-col>
+                  <b class="small-txt-header"> {{ publicacoes | numeral('0.[0]a') }} </b>
+                  <br> 
+                  <p class="small-txt">PUBLICAÇÕES</p>
+                </b-col>
+                <b-col>
+                  <b class="small-txt-header"> {{ seguidores | numeral('0.[0]a') }} </b>
+                  <br> 
+                  <p class="small-txt">SEGUIDORES</p>
+                </b-col>
+                <b-col>
+                  <b class="small-txt-header"> {{ a_seguir | numeral('0.[0]a') }} </b>
+                  <br> 
+                  <p class="small-txt">A SEGUIR</p>
+                </b-col>
+              </b-row>
 
-            <b-row v-for="(product,index) in products">
-              <b-col v-for="(product,index) in products" v-if="index < 3">
-                <a :href="product.user"><img class="prof-img-post" :src="product.imgs"></a> 
-              </b-col>
-            </b-row v-for="(product,index) in products">
+            </div>
+          </b-col>
 
+          <!-- POSTS DO USER -->
+          <b-col sm="10" style="text-align: left !important;">  
+            <div class="prof-container prof-post" v-for="product in products">
+              <button @mouseover="setmodal(product.id)" @click="showmodal(product.id)">
+                <a><img class="prof-img-post" :src="product.imgs[0]"></a>
+              </button>
+
+              <modal
+                v-if="shownmodal == product.id"
+                @before-open="this.shownmodal=product.id"
+                name="post" width="40%" height="auto"
+                scrollable=true>
+                  
+                <!-- INSERT HERE POST WIDGET! -->
+                    
+              </modal>
+
+
+            </div>
+          </b-col>
             
             </div>
           </b-col>
@@ -63,8 +86,9 @@ export default {
       user_name: 'Vitor Peixoto',
       user_location: 'Braga, Portugal',
       user_stars: 4,
-      like: 0,
-      dislike: 0,
+      publicacoes: 4,
+      seguidores: 12186,
+      a_seguir: 543,
       saved: 0,
       likes: 342,
       post_id: 2123,
@@ -295,49 +319,11 @@ export default {
         return false
       }
     },
-    //todos estes métodos são apenas para teste. Trocar depois pelo acesso à BD.
-    getlike(post_id){
-      return this.like;
+    showmodal(productid){
+      this.$modal.show('post');
     },
-    getdislike(post_id){
-      return this.dislike;
-    },
-    getsave(post_id){
-      return this.saved;
-    },
-    givelike(post_id){
-      if(this.like==0){
-        this.like=1;
-        if(this.dislike==1)
-          this.likes=this.likes+2;
-        else this.likes=this.likes+1;
-        this.dislike=0;
-      }
-    },
-    giveliketouch(post_id){
-      this.givelike(post_id);
-      //inserir coraçao na imagem, como no insta :)
-    },
-    remvlike(post_id){
-      this.like=0;
-      this.likes=this.likes-1;
-    },
-    givedislike(post_id){
-      this.dislike=1;
-      if(this.like==1)
-        this.likes=this.likes-2;
-      else this.likes=this.likes-1;
-      this.like=0;
-    },
-    remvdislike(post_id){
-      this.dislike=0;
-      this.likes=this.likes+1;
-    },
-    savepost(post_id){
-      this.saved=1;
-    },
-    unsavepost(post_id){
-      this.saved=0;
+    setmodal(productid){
+      this.shownmodal= productid;
     },
     isMobile() {
       if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -351,6 +337,13 @@ export default {
 </script>
 
 <style>
+  .small-txt{
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+  .small-txt-header{
+    font-size: 20px;
+  }
   .prof-header{
     margin:auto !important;
     width: 95% !important;
@@ -367,20 +360,41 @@ export default {
     box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
   }
   .prof-img-post{
-    width: 200px !important;
-    min-width: 130px !important;
-    height: 200px !important;
     border-radius: 20px !important;
     object-fit: cover;
+    height: 100% !important;
     box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+  }
+  .prof-post{
+    display:inline-flex;
+    width: 31% !important;
+    min-width: 31% !important;
+    height: auto !important;
+    margin: 1%;
+    border-radius: 10% !important;
+    object-fit: cover;
   }
   .user-name{
     margin:5px 0px 0px 10px;
   }
-</style>
-
-computed: {
-  chunkedCustomers() {
-    return chunk(this.customers, 3)
+  .prof-container {
+    position: relative;
+    width: 37%;
   }
-}
+  .prof-container:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%; 
+  }
+  .prof-container img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+</style>

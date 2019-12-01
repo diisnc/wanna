@@ -13,6 +13,7 @@ import moment from 'moment'
 import vmodal from 'vue-js-modal'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import vueNumeralFilterInstaller from 'vue-numeral-filter';
 
 
 //import mdbDatatable from 'mdbvue';
@@ -29,6 +30,8 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+
+
 //require('../dist/static/css/index.css')
 window.axios = axios
 
@@ -42,7 +45,9 @@ Vue.use(Vuetify);
 Vue.use(vmodal);
 Vue.prototype.moment = moment;
 Vue.use(BootstrapVue);
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios);
+Vue.use(vueNumeralFilterInstaller, { locale: 'en-gb' });
+
 //Vue.use(Carousel3d);
 //Vue.component('apexchart', VueApexCharts)
 

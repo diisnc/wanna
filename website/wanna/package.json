@@ -46,6 +46,7 @@
     "vue-material": "^1.0.0-beta-11",
     "vue-moment": "^4.0.0",
     "vue-moments-ago": "^0.2.0",
+    "vue-numeral-filter": "^1.1.1",
     "vue-perfect-scrollbar": "^0.1.0",
     "vue-router": "^3.1.3",
     "vue-session": "^1.0.0",
