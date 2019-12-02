@@ -10,13 +10,23 @@ export const getContacts = () => {
 };
 
 export const getMessages = (idContact, idPost) => {
-	console.log("Entrei no método para fazer o pedido à API"+idContact+idPost);
 	const config = {
 		endpoint: '/v1/chat/previous-messages/',
 		method: 'GET',
 		query: {
 			idContact: idContact,
 			idPost: idPost
+		}
+	};
+	return ourFetchWithToken(config);
+};
+
+export const getAvatar = idContact => {
+	const config = {
+		endpoint: '/v1/chat/photos/',
+		method: 'GET',
+		query: {
+			idContact: idContact
 		}
 	};
 	return ourFetchWithToken(config);

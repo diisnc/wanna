@@ -312,17 +312,17 @@ module.exports = (sequelize, DataTypes) => {
 	*	Returns the avatars of both users in a chat conversation
 	*/
 
-	User.getPhotos = async function (idContact, idUser){
+	User.getPhoto = async function (idContact){
 		result = await this.sequelize.query(
-			'SELECT "Users"."avatarType", "Users"."avatarData", "Users"."username" FROM "Users" WHERE ("Users"."username" = (:idUser) OR "Users"."username" = (:idContact))',
+			'SELECT "Users"."avatarType", "Users"."avatarData", "Users"."username" FROM "Users" WHERE "Users"."username" = (:idContact)',
 			{
 				replacements: {
-					idUser: idUser,
 					idContact: idContact
 				},
 				type: this.sequelize.QueryTypes.SELECT,
 			}
 		);
+		console.log(result);
 		return result;
 	};
 

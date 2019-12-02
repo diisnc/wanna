@@ -36,9 +36,9 @@ exports.getContacts = async (req, res, next) => {
     }
 }
 
-exports.getPhotos = async function (req, res, next){
+exports.getPhoto = async function (req, res, next){
     try{
-        const result = await User.getPhotos(req.query.idContact, req.user.username);
+        const result = await User.getPhoto(req.query.idContact);
         return res.json(result);
     }catch(e){
         next(e);

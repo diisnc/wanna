@@ -18,6 +18,7 @@ import SocketIOClient from 'socket.io-client/dist/socket.io';
 import { connect } from 'react-redux';
 import { newMessages } from '../modules/chat/chat.reducer';
 import { getMessages } from '../modules/chat/chat.api';
+import { getAvatar } from '../modules/chat/chat.api';
 
 const isAndroid = Platform.OS == 'android';
 const viewPadding = 10;
@@ -26,7 +27,7 @@ class Chat extends Component {
 	state = {
 		messages: [],
 		username: null,
-		avatarContact: null,
+		avatarContact: [],
 		text: '',
 		room: this.props.contact + this.props.idPost
 	};
@@ -36,7 +37,7 @@ class Chat extends Component {
 		const connectionConfig = {
 			transports: ['websocket']
 		};
-		socket = SocketIOClient('https://11063718.ngrok.io', connectionConfig);
+		socket = SocketIOClient('https://28501ba8.ngrok.io', connectionConfig);
 	}
 
 	handleBackPress = () => {
@@ -83,11 +84,10 @@ class Chat extends Component {
 
 		this.getMessagesAsync(this.props.contact, this.props.idPost);
 
-		console.log("PREVIOUS MESSAGES" + this.state.messages);
+		this.getAvatarAsync(this.props.contact);
 
 		socket.on('chat-message', msg => {
 			this.onReceivedMessage(msg);
-			// this.props.newMessagesArrived(msg);
 		});
 
 		Keyboard.addListener(isAndroid ? 'keyboardDidShow' : 'keyboardWillShow', e =>
@@ -109,11 +109,11 @@ class Chat extends Component {
 	render() {
 		return (
 			/*
-            Fazer View Englobadora da página
-            onde o primeiro elemento é o header
-            de pesquisa e o segundo elemento
-            é o feed que contém as imagens.
-            */
+			Fazer View Englobadora da página
+			onde o primeiro elemento é o header
+			de pesquisa e o segundo elemento
+			é o feed que contém as imagens.
+			*/
 			// Safe Box for Iphone
 			<SafeAreaView style={{ flex: 1 }}>
 				{/* Full Page Box */}
@@ -196,7 +196,16 @@ class Chat extends Component {
 								]}>
 								<Image
 									style={styles.imageStyles}
-									source={require('../assets/noImage.png')}
+									/*
+									source={{
+										uri:
+											'data:' +
+											'image/jpeg' +
+											';base64,' +
+											new Buffer(item.avatarType)
+									}}
+									*/
+									//source={require('../assets/noImage.png')}
 								/>
 								<Text style={styles.listItem}>{item.text}</Text>
 							</View>
@@ -232,7 +241,15 @@ class Chat extends Component {
 		if (previousMessages != null) {
 			this.setState({ messages: previousMessages });
 		}
+		return;
+	}
 
+	async getAvatarAsync(idContact) {
+		const avatar = await getAvatar(idContact);
+		if (avatar != null) {
+			this.setState({ avatarContact: avatar });
+			//this.props.avatarContact = avatar;
+		}
 		return;
 	}
 
