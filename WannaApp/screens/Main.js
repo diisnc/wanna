@@ -108,6 +108,13 @@ const FeedStack = createStackNavigator({
 		navigationOptions: {
 			header: null
 		}
+	},
+	Comments: {
+		screen: Comments,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
 	}
 });
 
