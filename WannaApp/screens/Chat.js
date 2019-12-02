@@ -169,7 +169,7 @@ class Chat extends Component {
 			<View style={[styles.container, { paddingBottom: this.state.viewPadding }]}>
 				<FlatList
 					style={styles.list}
-					data={this.state.messages}
+					data={this.state.messages.concat(this.state.avatarContact)}
 					ref={ref => (this.flatList = ref)}
 					onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
 					onLayout={() => this.flatList.scrollToEnd({ animated: true })}
@@ -196,15 +196,13 @@ class Chat extends Component {
 								]}>
 								<Image
 									style={styles.imageStyles}
-									/*
 									source={{
 										uri:
 											'data:' +
 											'image/jpeg' +
 											';base64,' +
-											new Buffer(item.avatarType)
+											new Buffer(item.avatarData)
 									}}
-									*/
 									//source={require('../assets/noImage.png')}
 								/>
 								<Text style={styles.listItem}>{item.text}</Text>
