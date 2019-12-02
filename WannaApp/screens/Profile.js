@@ -153,12 +153,20 @@ class Profile extends Component {
 					}}>
 					<Text style={{ flex: 3, textAlign: 'center' }}>Perfil</Text>
 					{this.state.username == this.props.loggedUsername ? (
-						<MaterialCommunityIcons.Button
-							name="logout"
-							size={40}
-							style={{ flex: 1 }}
-							onPress={() => this.props.logout()}
-						/>
+						<View style={{ flexDirection: 'row' }}>
+							<MaterialCommunityIcons.Button
+								name="chat"
+								size={40}
+								style={{ flex: 1 }}
+								onPress={() => this.props.navigation.navigate('ConversationsList')}
+							/>
+							<MaterialCommunityIcons.Button
+								name="logout"
+								size={40}
+								style={{ flex: 1 }}
+								onPress={() => this.props.logout()}
+							/>
+						</View>
 					) : null}
 				</View>
 			</View>

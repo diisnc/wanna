@@ -84,6 +84,18 @@ const UserStack = createStackNavigator({
 		navigationOptions: {
 			header: null
 		}
+	},
+	ConversationsList: {
+		screen: ConversationsList,
+		navigationOptions: {
+			header: null
+		}
+	},
+	Chat: {
+		screen: Chat,
+		navigationOptions: {
+			header: null
+		}
 	}
 });
 
@@ -111,23 +123,6 @@ const FeedStack = createStackNavigator({
 	},
 	Comments: {
 		screen: Comments,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	}
-});
-
-const ChatStack = createStackNavigator({
-	ConversationsList: {
-		screen: ConversationsList,
-		headerMode: 'none',
-		navigationOptions: {
-			header: null
-		}
-	},
-	Chat: {
-		screen: Chat,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null
@@ -182,15 +177,6 @@ const MainTab = createMaterialTopTabNavigator(
 				tabBarLabel: <Text style={{ fontSize: 10 }}>PROFILE</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons name="person-outline" color={tintColor} size={24} />
-				)
-			}
-		},
-		ConversationsList: {
-			screen: ChatStack,
-			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 10 }}>CHAT</Text>,
-				tabBarIcon: ({ tintColor }) => (
-					<MaterialIcons name="chat" color={tintColor} size={24} />
 				)
 			}
 		}
