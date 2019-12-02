@@ -13,13 +13,13 @@ class Wanna extends Component {
 						onPress={() => this.props.navigation.navigate('Login')}
 						buttonStyle={[globalStyle.btn, styles.authBtn]}
 						titleStyle={globalStyle.btnText}
-						title="Log in"
+						title="Login"
 					/>
 					<Button
 						onPress={() => this.props.navigation.navigate('Register')}
 						buttonStyle={[globalStyle.btn, styles.authBtn]}
 						titleStyle={globalStyle.btnText}
-						title={'Create account'}
+						title={'Registo'}
 					/>
 					<Button
 						onPress={() => this.props.navigation.navigate('Main')}

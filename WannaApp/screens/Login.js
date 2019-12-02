@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Platform } from 'react-native';
+import { StyleSheet, Text, TextInput, Image, View, Platform, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { Input, Button } from 'react-native-elements';
+import { Input } from 'react-native-elements';
+import { Button, Block, theme } from '../galio';
 import { login } from '../modules/auth/auth.api';
-
 import { globalStyle, defaultNavigator } from './style';
+import { Ionicons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
+
+
+import Logo from '../components/Logo';
+
+const { width } = Dimensions.get('screen');
+const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollEndDrag: Keyboard.dismiss };
 
 class Login extends Component {
 	constructor(props) {
@@ -23,20 +30,16 @@ class Login extends Component {
 			<View
 				style={{
 					height: this.startHeaderHeight,
-					backgroundColor: 'white',
-					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
+					backgroundColor: 'white'
 				}}>
 				<View
 					style={{
-						height: '90%',
+						height: '95%',
 						flexDirection: 'row',
-						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>LOGIN</Text>
 				</View>
 			</View>
 		);
@@ -47,31 +50,48 @@ class Login extends Component {
 		const submitForm = e => {
 			this.props.login(e.email, e.password);
 		};
-
+		
+		// SCROLLVIEW EXPLANATION
+		// 		'keyboardShouldPersistTaps' property allows to click the login bth with the keyboard opens. If removed, u have to click twice
+		// 		
+		// 		'keyboardDismissMode' is so the keyboard closes when u drag - does not work on android yet...
+		// 		 https://github.com/facebook/react-native/issues/20540  Read this 
+		//  	 Shitty workaround: onScrollBeginDrag={Keyboard.dismiss} - i think its better without this
 		return (
-			<View>
+			<View style={styles.container}>
+				<ScrollView keyboardShouldPersistTaps='always'>
 				{this.buildHeader()}
-				<Field name="email" component={renderEmail} />
-				<Field name="password" component={renderPassword} />
+					<Logo />
 
-				<View style={styles.errorMessage}>
-					<Text>{this.props.errorMessage}</Text>
-				</View>
+					<Field name="email" component={renderEmail} />
+					<Field name="password" component={renderPassword} />
 
-				<View style={styles.authBtnWrap}>
-					<Button
-						onPress={handleSubmit(submitForm)}
-						buttonStyle={[globalStyle.btn, styles.authBtn]}
-						titleStyle={globalStyle.btnText}
-						title="Log in"
-					/>
-					<Button
-						onPress={() => this.props.navigation.navigate('Wanna')}
-						buttonStyle={[globalStyle.btn, styles.authBtn]}
-						titleStyle={globalStyle.btnText}
-						title={'Voltar'}
-					/>
-				</View>
+					<Button shadowless 
+						color='#3498DB' 
+						style={[styles.button, styles.shadow]}
+						onPress={handleSubmit(submitForm)}>
+						Login
+					</Button>
+
+					<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+						<Ionicons name="logo-facebook" onPress={() => alert('Login com Facebook')} style={{ padding: 7 }} size={32} color="#3b5998" />
+						<Ionicons name="logo-twitter" onPress={() => alert('Login com Twitter')} style={{ padding: 7 }} size={31} color="#1dcaff" />
+						<FontAwesome name="google" onPress={() => alert('Login com Google')} style={{ padding: 7 }} size={29} color="#DB4437" />
+					</View>
+
+					<View style={styles.errorMessage}>
+						<Text>{this.props.errorMessage}</Text>
+					</View>
+
+					<View style={styles.signupTextCont}>
+						<Text style={styles.signupText}>Ainda não tens conta?</Text>
+						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}><
+							Text style={styles.signupButton}> Regista-te!</Text>
+						</TouchableOpacity>
+					</View>
+
+				</ScrollView>
+
 			</View>
 		);
 	}
@@ -80,10 +100,12 @@ class Login extends Component {
 //must be rendered outside of the render method - from Redux Form docs
 const renderEmail = ({ input: { onChange, ...restInput } }) => {
 	return (
-		<Input
-			placeholder="Email"
-			inputContainerStyle={styles.input}
-			inputStyle={styles.placeholder}
+			<TextInput style={styles.inputBox} 
+			name='email'
+			placeholder="E-mail"
+			placeholderTextColor = "rgba(128,128,128, 0.8)"
+			selectionColor="#fff"
+			keyboardType="email-address"
 			onChangeText={onChange}
 			{...restInput}
 		/>
@@ -91,15 +113,14 @@ const renderEmail = ({ input: { onChange, ...restInput } }) => {
 };
 const renderPassword = ({ input: { onChange, ...restInput } }) => {
 	return (
-		<Input
+			<TextInput style={styles.inputBox} 
+			name='password'
 			placeholder="Password"
-			name="password"
-			inputContainerStyle={styles.input}
-			inputStyle={styles.placeholder}
-			onChangeText={onChange}
 			secureTextEntry={true}
+			placeholderTextColor = "rgba(128,128,128, 0.8)"
+			onChangeText={onChange}
 			{...restInput}
-		/>
+		/>  
 	);
 };
 
@@ -126,47 +147,55 @@ export default reduxForm({
 })(LoginConnect);
 
 const styles = StyleSheet.create({
-	container: {
+	container : {
+		backgroundColor:'white',
 		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 10
+		alignItems:'center',
+		justifyContent :'center'
+	  },
+	inputBox: {
+		width: width - (theme.SIZES.BASE * 3.5),
+        backgroundColor:'rgba(128,128,128, 0.2)',
+        borderRadius: 25,
+        paddingHorizontal:16,
+        fontSize:16,
+        color:'#000000', //not the color of the placeholder, but the color when u write
+		marginVertical: 10,
+		height: '6%'
 	},
-	input: {
-		backgroundColor: '#ffffff',
-		borderBottomWidth: 0,
-		marginBottom: 10,
-		borderRadius: 2,
-		paddingVertical: 5,
-		width: '100%'
+	shadow: {
+		shadowColor: 'black',
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.2,
+		elevation: 2
 	},
-	placeholder: {
-		fontSize: 12
+	button: {
+		marginBottom: theme.SIZES.BASE,
+		width: width - (theme.SIZES.BASE * 3.5),
+		borderRadius: 25,
+		paddingVertical: 13
+	},
+	signupTextCont : {
+	  flexGrow: 1,
+	  alignItems:'flex-end',
+	  justifyContent :'center',
+	  paddingVertical:16,
+	  flexDirection:'row'
+	},
+	signupText: {
+		color:'rgba(128,128,128, 0.7)',
+		fontSize:16
+	},
+	signupButton: {
+		color:'#3498DB',
+		fontSize:16,
+		fontWeight:'500'
 	},
 	errorMessage: {
 		marginTop: 40
 	},
 	loggedInDesc: {
 		marginTop: 40
-	},
-	authBtnWrap: {
-		flexDirection: 'row',
-		justifyContent: 'space-around',
-		width: '100%',
-		paddingHorizontal: 15
-	},
-	authBtn: {
-		marginHorizontal: 0,
-		marginVertical: 18,
-		width: '80%',
-		alignSelf: 'center',
-		backgroundColor: '#000000'
-	},
-	accessBtn: {
-		marginHorizontal: 0,
-		marginVertical: 30,
-		width: '100%',
-		alignSelf: 'center'
 	}
 });
