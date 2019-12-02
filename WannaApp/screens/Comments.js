@@ -54,6 +54,7 @@ class Comments extends Component {
 						flex: 1,
 						flexDirection: 'column',
 						justifyContent: 'flex-start',
+						alignItems: 'stretch'
 					}}>
 					{this.buildHeader()}
 					{this.renderComments()}
