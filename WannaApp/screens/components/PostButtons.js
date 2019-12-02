@@ -159,7 +159,7 @@ class PostButtons extends Component {
 							idPost: idPost
 						});
 					}}>
-					<MaterialCommunityIcons name="comment" size={30} />
+					<MaterialCommunityIcons name="comment-text-outline" size={30} />
 				</TouchableOpacity>
 			</View>
 		);
