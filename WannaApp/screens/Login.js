@@ -55,8 +55,8 @@ class Login extends Component {
 		//  	 Shitty workaround: onScrollBeginDrag={Keyboard.dismiss} - i think its better without this
 		return (
 			<View style={styles.container}>
-				<ScrollView keyboardShouldPersistTaps='always'>
-				{this.buildHeader()}
+				<ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
+					{this.buildHeader()}
 					<Logo />
 
 					<Field name="email" component={renderEmail} />
