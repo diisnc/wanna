@@ -135,7 +135,8 @@ module.exports = (sequelize, DataTypes) => {
 				' "Photos"."photoData", "Users"."avatarData", "Users"."location",' +
 				' coalesce((SELECT type AS "voteType" FROM "UserPosts" WHERE "user_id" = :idUser AND "post_id" = "Posts"."id"), 0) AS voteType,' +
 				' coalesce((SELECT count(type) AS "nrLikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = 1), 0) AS nrLikes,' +
-				' coalesce((SELECT count(type) AS "nrDislikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = -1), 0) AS nrDislikes' +
+				' coalesce((SELECT count(type) AS "nrDislikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = -1), 0) AS nrDislikes,' +
+				' coalesce((SELECT count("SavedPosts"."createdAt") AS "saved" FROM "SavedPosts" WHERE "post_id" = "Posts"."id" AND "user_id" = :idUser), 0) AS saved' +
 				' FROM "Posts" JOIN "Photos" ON "Posts"."id" ' +
 				' = "Photos"."idPost" JOIN "Users" ON "Posts"."idUser" = "Users"."username" AND "Photos"."id" IN (SELECT MIN("Photos"."id") ' +
 				' FROM "Photos" GROUP BY "Photos"."idPost") ' +
@@ -181,7 +182,8 @@ module.exports = (sequelize, DataTypes) => {
 			'SELECT "Posts"."id", "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", ' +
 				' coalesce((SELECT type AS "voteType" FROM "UserPosts" WHERE "user_id" = :idUser AND "post_id" = "Posts"."id"), 0) AS voteType,' +
 				' coalesce((SELECT count(type) AS "nrLikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = 1), 0) AS nrLikes,' +
-				' coalesce((SELECT count(type) AS "nrDislikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = -1), 0) AS nrDislikes' +
+				' coalesce((SELECT count(type) AS "nrDislikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = -1), 0) AS nrDislikes,' +
+				' coalesce((SELECT count("SavedPosts"."createdAt") AS "saved" FROM "SavedPosts" WHERE "post_id" = "Posts"."id" AND "user_id" = :idUser), 0) AS saved' +
 				' FROM "Posts" WHERE "Posts"."id" = (:idPost)',
 			{
 				replacements: { idPost: idPost, idUser: username },

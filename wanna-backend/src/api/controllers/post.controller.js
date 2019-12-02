@@ -222,7 +222,7 @@ exports.markUnavailable = async (req, res, next) => {
 
 exports.getPostComments = async (req, res, next) => {
 	try {
-		list = await Post.getComments(req.body.idPost);
+		list = await Post.getComments(req.query.idPost);
 		return res.json(list);
 	} catch (e) {
 		next(e);
@@ -267,8 +267,8 @@ exports.unsavePost = async (req, res, next) => {
 
 
 /**
- * Returns items that according to the category should be displayed in the upper side of the body  
- * 
+ * Returns items that according to the category should be displayed in the upper side of the body
+ *
  */
 
 exports.getUpperItems = async (req, res, next) => {
@@ -282,8 +282,8 @@ exports.getUpperItems = async (req, res, next) => {
 
 
 /**
- * Returns items that according to the category should be displayed in the lower side of the body 
- * 
+ * Returns items that according to the category should be displayed in the lower side of the body
+ *
  */
 
 exports.getLowerItems = async (req, res, next) => {

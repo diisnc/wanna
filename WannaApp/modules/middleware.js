@@ -45,7 +45,7 @@ export const nav = store => next => action => {
 // passar o array, ir pelo array...
 export const votesHandler = store => next => action => {
 	if (action.type === 'LOADED_POSTS') {
-		console.log('entrou no handler de posts');
+		console.log('Carregou os likes dos posts do FEED!');
 		let posts = action.posts;
 		let votes = [];
 
@@ -54,21 +54,23 @@ export const votesHandler = store => next => action => {
 				postID: posts[i].id,
 				voteType: posts[i].votetype,
 				nrLikes: parseInt(posts[i].nrlikes, 10),
-				nrDislikes: parseInt(posts[i].nrdislikes, 10)
+				nrDislikes: parseInt(posts[i].nrdislikes, 10),
+				saved: parseInt(posts[i].saved, 10)
 			};
 
 			votes.push(vote);
 		}
 		store.dispatch({ type: 'LOADED_VOTES', votes: votes });
 	} else if (action.type === 'LOADED_POST') {
-		console.log('entrou no handler de post');
+		console.log('Carregou os likes dos post!');
 		let posts = action.posts;
 		let votes = [];
 		vote = {
 			postID: posts.postInfo.id,
 			voteType: posts.postInfo.votetype,
 			nrLikes: parseInt(posts.postInfo.nrlikes, 10),
-			nrDislikes: parseInt(posts.postInfo.nrdislikes, 10)
+			nrDislikes: parseInt(posts.postInfo.nrdislikes, 10),
+			saved: parseInt(posts.postInfo.saved, 10)
 		};
 
 		votes.push(vote);

@@ -7,6 +7,7 @@ import EditProfile from './EditProfile';
 import Filters from './Filters';
 import NewFilter from './NewFilter';
 import FollowList from './FollowList';
+import Comments from './Comments';
 import ConversationsList from './ConversationsList';
 import Chat from './Chat';
 import UserPostProfile from './UserPostProfile';
@@ -72,6 +73,13 @@ const UserStack = createStackNavigator({
 	},
 	FollowList: {
 		screen: FollowList,
+		headerMode: 'none',
+		navigationOptions: {
+			header: null
+		}
+	},
+	Comments: {
+		screen: Comments,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null

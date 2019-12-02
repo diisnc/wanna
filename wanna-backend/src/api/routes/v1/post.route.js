@@ -13,13 +13,9 @@ const upload = multer({ dest: __dirname + '/images' });
  */
 //router.param('postId', controller.load);
 
-router
-	.route('/feed')
-	.get(validate(rules.feed),controller.feed);
+router.route('/feed').get(validate(rules.feed), controller.feed);
 
-router
-	.route('/createPost')
-	.post(validate(rules.createPost),controller.create);
+router.route('/createPost').post(validate(rules.createPost), controller.create);
 
 router
 	.route('/vote')
@@ -28,23 +24,18 @@ router
 
 router
 	.route('/comment')
-	.get(validate(rules.getComments),controller.getPostComments)
+	.get(validate(rules.getComments), controller.getPostComments)
 	.post(validate(rules.createComment), controller.createComment)
 	.delete(validate(rules.deleteComment), controller.removeComment);
 
 router
 	.route('/savedpost')
-	.post(validate(rules.savedPosts),controller.savePost)
-	.delete(validate(rules.savedPosts),controller.unsavePost);
+	.post(validate(rules.savedPosts), controller.savePost)
+	.delete(validate(rules.savedPosts), controller.unsavePost);
 
-router
-	.route('/upperitems')
-	.get(controller.getUpperItems);
+router.route('/upperitems').get(controller.getUpperItems);
 
-router
-	.route('/loweritems')
-	.get(controller.getLowerItems);
-
+router.route('/loweritems').get(controller.getLowerItems);
 
 router
 	.route('/:idPost')

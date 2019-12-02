@@ -14,9 +14,7 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
-import { connect } from 'react-redux';
-import { like, unDisLike, unLike, disLike } from '../modules/profile/profile.reducer';
-import { vote, removeVote } from '../modules/post/post.api';
+import PostButtons from './components/PostButtons';
 
 class UserPost extends Component {
 	state = {
@@ -93,7 +91,10 @@ class UserPost extends Component {
 					{/* footer de post, dividido em 3 linhas */}
 					<View style={{ flex: 1, flexDirection: 'column' }}>
 						{/* primeira linha: likes à esquerda, comentários, guardar e comprar à direita */}
-						{this.buildVotes(this.props.item.id)}
+						<PostButtons
+							idPost={this.props.item.id}
+							navigation={this.props.navigation}
+						/>
 						{/* segunda linha, dividida em 2 colunas */}
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							{/* coluna da esquerda, dividida em 2 linhas */}
@@ -124,143 +125,9 @@ class UserPost extends Component {
 			);
 		} else return null;
 	}
-
-	buildVotes(idPost) {
-		if (this.props.myVotes.length != 0) {
-			voteTypePost = this.props.myVotes.find(x => x.postID === idPost);
-			if (voteTypePost == undefined) voteType = 0;
-			else voteType = voteTypePost.voteType;
-
-			nrLikesPost = this.props.myVotes.find(x => x.postID === idPost);
-			if (nrLikesPost == undefined) nrLikes = 0;
-			else nrLikes = nrLikesPost.nrLikes;
-
-			nrDislikesPost = this.props.myVotes.find(x => x.postID === idPost);
-			if (nrDislikesPost == undefined) nrDislikesPost = 0;
-			else nrDislikes = nrDislikesPost.nrDislikes;
-
-			showLikes = nrLikes - nrDislikes;
-
-			if (voteType == 0) {
-				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
-						<TouchableOpacity
-							activeOpacity={0.5}
-							onPress={() => {
-								this.likeHandler(idPost);
-							}}>
-							<MaterialCommunityIcons name="heart-outline" size={30} />
-						</TouchableOpacity>
-						<Text>{showLikes} likes</Text>
-						<TouchableOpacity
-							activeOpacity={0.5}
-							onPress={() => {
-								this.disLikeHandler(idPost);
-							}}>
-							<MaterialCommunityIcons name="heart-broken-outline" size={30} />
-						</TouchableOpacity>
-					</View>
-				);
-			} else if (voteType == 1) {
-				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
-						<TouchableOpacity
-							activeOpacity={0.5}
-							onPress={() => {
-								this.unLikeHandler(idPost);
-							}}>
-							<MaterialCommunityIcons name="heart" color="red" size={30} />
-						</TouchableOpacity>
-						<Text>{showLikes} likes</Text>
-						<TouchableOpacity
-							activeOpacity={0.5}
-							onPress={() => {
-								this.disLikeHandler(idPost);
-							}}>
-							<MaterialCommunityIcons name="heart-broken-outline" size={30} />
-						</TouchableOpacity>
-					</View>
-				);
-			} else if (voteType == -1) {
-				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
-						<TouchableOpacity
-							activeOpacity={0.5}
-							onPress={() => {
-								this.likeHandler(idPost);
-							}}>
-							<MaterialCommunityIcons name="heart-outline" size={30} />
-						</TouchableOpacity>
-						<Text>{showLikes} likes</Text>
-						<TouchableOpacity
-							activeOpacity={0.5}
-							onPress={() => {
-								this.unDisLikeHandler(idPost);
-							}}>
-							<MaterialCommunityIcons name="heart-broken" color="red" size={30} />
-						</TouchableOpacity>
-					</View>
-				);
-			} else return null;
-		}
-	}
-
-	async likeHandler(idPost) {
-		const result = await vote(idPost, 1);
-		if (result == 'OK') {
-			this.props.dispatchLike(idPost);
-		}
-	}
-
-	async unLikeHandler(idPost) {
-		const result = await removeVote(idPost, 1);
-		if (result == 'OK') {
-			this.props.dispatchUnLike(idPost);
-		}
-	}
-
-	async disLikeHandler(idPost) {
-		const result = await vote(idPost, -1);
-		if (result == 'OK') {
-			this.props.dispatchDisLike(idPost);
-		}
-	}
-
-	async unDisLikeHandler(idPost) {
-		const result = await removeVote(idPost, -1);
-		if (result == 'OK') {
-			this.props.dispatchUnDisLike(idPost);
-		}
-	}
 }
 
-function mapStateToProps(store) {
-	return {
-		myVotes: store.profile.votes
-	};
-}
-
-function mapDispatchToProps(dispatch) {
-	return {
-		dispatchLike: idPost => {
-			dispatch(like(idPost));
-		},
-		dispatchDisLike: idPost => {
-			dispatch(disLike(idPost));
-		},
-		dispatchUnDisLike: idPost => {
-			dispatch(unDisLike(idPost));
-		},
-		dispatchUnLike: idPost => {
-			dispatch(unLike(idPost));
-		}
-	};
-}
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(UserPost);
+export default UserPost;
 
 const styles = StyleSheet.create({
 	container: {

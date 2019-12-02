@@ -65,6 +65,20 @@ export const unDisLike = idPost => {
 	};
 };
 
+export const save = idPost => {
+	return {
+		type: 'SAVE',
+		idPost
+	};
+};
+
+export const unsave = idPost => {
+	return {
+		type: 'UNSAVE',
+		idPost
+	};
+};
+
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case 'LOADED_NR_POSTS':
@@ -111,6 +125,16 @@ export default function(state = initialState, action) {
 						? { ...x, voteType: 0, nrDislikes: x.nrDislikes - 1 }
 						: x
 				)
+			};
+		case 'SAVE':
+			return {
+				...state,
+				votes: state.votes.map(x => (x.postID === action.idPost ? { ...x, saved: 1 } : x))
+			};
+		case 'UNSAVE':
+			return {
+				...state,
+				votes: state.votes.map(x => (x.postID === action.idPost ? { ...x, saved: 0 } : x))
 			};
 		case 'FOLLOW':
 			state = { ...state };

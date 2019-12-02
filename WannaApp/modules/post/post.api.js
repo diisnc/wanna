@@ -38,21 +38,22 @@ export const removeVote = (idPost, type) => {
 
 export const getComments = idPost => {
 	const config = {
-		endpoint: '/v1/post/getComments',
-		method: 'POST',
-		body: {
+		endpoint: '/v1/post/comment',
+		method: 'GET',
+		query: {
 			idPost: idPost
 		}
 	};
 	return ourFetchWithToken(config);
 };
 
-export const comment = (idPost, type) => {
+export const comment = (idPost, text) => {
 	const config = {
 		endpoint: '/v1/post/comment',
 		method: 'POST',
 		body: {
-			idPost: idPost
+			idPost: idPost,
+			commentData: text
 		}
 	};
 	return ourFetchWithToken(config);
@@ -132,6 +133,28 @@ export const loweritemsCombine = () => {
 	const config = {
 		endpoint: '/v1/post/loweritems',
 		method: 'GET'
+	};
+	return ourFetchWithToken(config);
+};
+
+export const savePost = idPost => {
+	const config = {
+		endpoint: '/v1/post/savedpost',
+		method: 'POST',
+		body: {
+			idPost: idPost
+		}
+	};
+	return ourFetchWithToken(config);
+};
+
+export const unsavePost = idPost => {
+	const config = {
+		endpoint: '/v1/post/savedpost',
+		method: 'DELETE',
+		body: {
+			idPost: idPost
+		}
 	};
 	return ourFetchWithToken(config);
 };
