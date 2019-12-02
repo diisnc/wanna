@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, Image, View, Platform, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Platform, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { Input } from 'react-native-elements';
-import { Button, Block, theme } from '../galio';
+import { Button, theme } from '../galio';
 import { login } from '../modules/auth/auth.api';
-import { globalStyle, defaultNavigator } from './style';
-import { Ionicons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
-
+import { Ionicons, FontAwesome } from '@expo/vector-icons'
 
 import Logo from '../components/Logo';
 
 const { width } = Dimensions.get('screen');
-const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollEndDrag: Keyboard.dismiss };
 
 class Login extends Component {
 	constructor(props) {
