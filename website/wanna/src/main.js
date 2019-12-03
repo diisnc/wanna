@@ -30,8 +30,6 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-
-
 //require('../dist/static/css/index.css')
 window.axios = axios
 

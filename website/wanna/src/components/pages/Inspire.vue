@@ -216,7 +216,6 @@ export default {
       like: 0,
       dislike: 0,
       saved: 0,
-      likes: 342,
       post_id: 2123,
       current_user_name: 'vitorpeixoto',
       current_user_img: 'https://i.imgur.com/KMlWJNv.jpg',
