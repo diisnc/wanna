@@ -1,13 +1,46 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Button } from 'react-native';
+import { StyleSheet, View, Platform, Button } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { globalStyle, defaultNavigator } from './style';
 
+import Logo from '../components/Logo';
+
 class Wanna extends Component {
+	
+	// Builds header of the page
+	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
+		return (
+			// Safe Box for Android
+			<View
+				style={{
+					height: this.startHeaderHeight,
+					backgroundColor: 'white'
+				}}>
+				<View
+					style={{
+						height: '95%',
+						flexDirection: 'row',
+						justifyContent: 'center',
+						alignItems: 'center',
+						backgroundColor: 'white'
+					}}>
+				</View>
+			</View>
+		);
+	}	
+
 	render() {
 		return (
 			<View style={styles.container}>
-				<Image style={styles.logo} source={require('../assets/logo.png')} />
+
+				{this.buildHeader()}
+				
+				<Logo />
+
 				<View style={styles.authBtnWrap}>
 					<Button
 						onPress={() => this.props.navigation.navigate('Login')}
@@ -27,6 +60,7 @@ class Wanna extends Component {
 						titleStyle={globalStyle.btnText}
 						title={'Mudar'}
 					/>
+
 				</View>
 			</View>
 		);
@@ -37,12 +71,9 @@ export default Wanna;
 
 const styles = StyleSheet.create({
 	container: {
+		backgroundColor:'white',
 		justifyContent: 'center',
 		alignItems: 'center'
-	},
-	logo: {
-		width: '50%',
-		height: '50%'
 	},
 	authBtnWrap: {
 		flexDirection: 'row',

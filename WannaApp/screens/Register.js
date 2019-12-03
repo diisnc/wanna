@@ -1,17 +1,46 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Platform, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { Input, Button } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
-
+import { Input } from 'react-native-elements';
 import { register } from '../modules/auth/auth.api';
-
 import { globalStyle, defaultNavigator } from './style';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Button, theme } from '../galio';
+
+import Logo from '../components/Logo';
+
+const { width } = Dimensions.get('screen');
 
 class Register extends Component {
 	constructor(props) {
 		super(props);
+	}
+
+	// Builds header of the page
+	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
+		return (
+			// Safe Box for Android
+			<View
+				style={{
+					height: this.startHeaderHeight,
+					backgroundColor: 'white'
+				}}>
+				<View
+					style={{
+						height: '95%',
+						flexDirection: 'row',
+						justifyContent: 'center',
+						alignItems: 'center',
+						backgroundColor: 'white'
+					}}>
+				</View>
+			</View>
+		);
 	}
 
 	render() {
@@ -21,32 +50,46 @@ class Register extends Component {
 		};
 
 		return (
-			<View>
-				<Field name="user" placeholder="Username" component={renderInput} />
-				<Field name="first" placeholder="First name" component={renderInput} />
-				<Field name="last" placeholder="Last name" component={renderInput} />
-				<Field name="location" placeholder="Your Location" component={renderInput} />
-				<Field name="email" placeholder="Email" component={renderInput} />
-				<Field name="password" placeholder="Password" component={renderPassword} />
-				<View style={styles.errorMessage}>
-					<Text>{this.props.errorMessage}</Text>
-				</View>
+			<View style={styles.container}>
+				<ScrollView keyboardShouldPersistTaps='always' 
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}
+					contentContainerStyle={{paddingBottom: 90}}>
+					
+					{this.buildHeader()}
 
-				<Button
-					onPress={handleSubmit(submitForm)}
-					buttonStyle={[globalStyle.btn]}
-					titleStyle={globalStyle.btnText}
-					title={'Register'}
-				/>
-				<Button
-					onPress={() => this.props.navigation.navigate('Wanna')}
-					buttonStyle={[globalStyle.btn]}
-					titleStyle={globalStyle.btnText}
-					title={'Voltar'}
-				/>
-				{this.props.registered ? (
-					<Text style={styles.loggedInDesc}>Register was successfull</Text>
-				) : null}
+					<Logo />
+
+					<Field name="user" placeholder="Nome de utilizador" component={renderInput} />
+					<Field name="first" placeholder="Primeiro nome" component={renderInput} />
+					<Field name="last" placeholder="Último nome" component={renderInput} />
+					<Field name="location" placeholder="Localização" component={renderInput} />
+					<Field name="email" placeholder="E-mail" component={renderInput} />
+					<Field name="password" placeholder="Palavra-passe" component={renderPassword} />
+					
+					<View style={styles.errorMessage}>
+						<Text>{this.props.errorMessage}</Text>
+					</View>
+
+					<Button shadowless 
+						color='#3498DB' 
+						style={[styles.button, styles.shadow]}
+						onPress={handleSubmit(submitForm)}>
+						Registar
+					</Button>
+
+					<View style={styles.signinTextCont}>
+						<Text style={styles.signinText}>Tens uma conta?</Text>
+						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}><
+							Text style={styles.signinButton}> Inicia sessão.</Text>
+						</TouchableOpacity>
+					</View>
+
+					{this.props.registered ? (
+						<Text style={styles.loggedInDesc}>Register was successfull</Text>
+					) : null}
+
+				</ScrollView>
 			</View>
 		);
 	}
@@ -55,24 +98,25 @@ class Register extends Component {
 //must be rendered outside of the render method as this will cause it to re-render each time the props change
 const renderInput = ({ input: { onChange, ...restInput }, placeholder }) => {
 	return (
-		<Input
-			inputContainerStyle={styles.input}
-			inputStyle={styles.placeholder}
-			onChangeText={onChange}
+		<TextInput style={styles.inputBox} 
 			placeholder={placeholder}
+			placeholderTextColor = "rgba(128,128,128, 0.8)"
+			selectionColor="#fff"
+			keyboardType="email-address"
+			onChangeText={onChange}
 			{...restInput}
 		/>
+
 	);
 };
 const renderPassword = ({ input: { onChange, ...restInput }, placeholder }) => {
 	return (
-		<Input
-			inputContainerStyle={styles.input}
-			inputStyle={styles.placeholder}
-			onChangeText={onChange}
+		<TextInput style={styles.inputBox} 
 			placeholder={placeholder}
-			{...restInput}
 			secureTextEntry={true}
+			placeholderTextColor = "rgba(128,128,128, 0.8)"
+			onChangeText={onChange}
+			{...restInput}
 		/>
 	);
 };
@@ -100,33 +144,50 @@ export default reduxForm({
 })(RegisterConnect);
 
 const styles = StyleSheet.create({
-	container: {
+	container : {
+		backgroundColor:'white',
 		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems:'center',
+		justifyContent :'center'
+	  },
+	inputBox: {
+		width: width - (theme.SIZES.BASE * 3.5),
+        backgroundColor:'rgba(128,128,128, 0.2)',
+        borderRadius: 25,
+        paddingHorizontal:16,
+        fontSize:16,
+        color:'#000000', //not the color of the placeholder, but the color when u write
+		marginVertical: 10,
+		height: '6%'
 	},
-	input: {
-		backgroundColor: '#ffffff',
-		borderBottomWidth: 0,
-		marginBottom: 10,
-		borderRadius: 2,
-		paddingVertical: 5,
-		width: '100%'
+	shadow: {
+		shadowColor: 'black',
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.2,
+		elevation: 2
 	},
-	placeholder: {
-		fontSize: 12
+	button: {
+		marginBottom: theme.SIZES.BASE,
+		width: width - (theme.SIZES.BASE * 3.5),
+		borderRadius: 25,
+		paddingVertical: 13
 	},
-	submitButton: {
-		backgroundColor: '#000000',
-		borderRadius: 10,
-		marginTop: 20,
-		borderWidth: 1,
-		borderColor: '#666666'
+	signinTextCont : {
+	  flexGrow: 1,
+	  alignItems:'flex-end',
+	  justifyContent :'center',
+	  paddingVertical:16,
+	  flexDirection:'row'
 	},
-	submitButtonText: {
-		textAlign: 'center',
-		color: '#444'
+	signinText: {
+		color:'rgba(128,128,128, 0.7)',
+		fontSize:16
+	},
+	signinButton: {
+		color:'#3498DB',
+		fontSize:16,
+		fontWeight:'500'
 	},
 	errorMessage: {
 		marginTop: 40

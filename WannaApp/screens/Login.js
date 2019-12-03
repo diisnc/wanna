@@ -48,15 +48,21 @@ class Login extends Component {
 		};
 		
 		// SCROLLVIEW EXPLANATION
-		// 		'keyboardShouldPersistTaps' property allows to click the login bth with the keyboard opens. If removed, u have to click twice
+		// 		'keyboardShouldPersistTaps' property allows to click the login bth with the keyboard opened. If removed, u have to click twice
 		// 		
 		// 		'keyboardDismissMode' is so the keyboard closes when u drag - does not work on android yet...
 		// 		 https://github.com/facebook/react-native/issues/20540  Read this 
 		//  	 Shitty workaround: onScrollBeginDrag={Keyboard.dismiss} - i think its better without this
+		//
+		//		'showsVerticalScrollIndicator' hide the ugly blackish bar
 		return (
 			<View style={styles.container}>
-				<ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
+				<ScrollView keyboardShouldPersistTaps='always'
+					showsVerticalScrollIndicator={false} 
+					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
+					
 					{this.buildHeader()}
+					
 					<Logo />
 
 					<Field name="email" component={renderEmail} />
@@ -87,7 +93,6 @@ class Login extends Component {
 					</View>
 
 				</ScrollView>
-
 			</View>
 		);
 	}
@@ -97,25 +102,25 @@ class Login extends Component {
 const renderEmail = ({ input: { onChange, ...restInput } }) => {
 	return (
 			<TextInput style={styles.inputBox} 
-			name='email'
-			placeholder="E-mail"
-			placeholderTextColor = "rgba(128,128,128, 0.8)"
-			selectionColor="#fff"
-			keyboardType="email-address"
-			onChangeText={onChange}
-			{...restInput}
+				name='email'
+				placeholder="E-mail"
+				placeholderTextColor = "rgba(128,128,128, 0.8)"
+				selectionColor="#fff"
+				keyboardType="email-address"
+				onChangeText={onChange}
+				{...restInput}
 		/>
 	);
 };
 const renderPassword = ({ input: { onChange, ...restInput } }) => {
 	return (
 			<TextInput style={styles.inputBox} 
-			name='password'
-			placeholder="Password"
-			secureTextEntry={true}
-			placeholderTextColor = "rgba(128,128,128, 0.8)"
-			onChangeText={onChange}
-			{...restInput}
+				name='password'
+				placeholder="Palavra-passe"
+				secureTextEntry={true}
+				placeholderTextColor = "rgba(128,128,128, 0.8)"
+				onChangeText={onChange}
+				{...restInput}
 		/>  
 	);
 };
