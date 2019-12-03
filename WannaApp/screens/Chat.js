@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { newMessages } from '../modules/chat/chat.reducer';
 import { getMessages } from '../modules/chat/chat.api';
 import { getAvatar } from '../modules/chat/chat.api';
+import { setLightEstimationEnabled } from 'expo/build/AR';
 
 const isAndroid = Platform.OS == 'android';
 const viewPadding = 10;
@@ -97,7 +98,9 @@ class Chat extends Component {
 		Keyboard.addListener(isAndroid ? 'keyboardDidHide' : 'keyboardWillHide', () =>
 			this.setState({ viewPadding: viewPadding })
 		);
+
 	}
+
 
 	componentWillUnmount() {
 		if (Platform.OS === 'android') {
@@ -107,6 +110,7 @@ class Chat extends Component {
 	}
 
 	render() {
+		this.timestampToDate(this.state.messages);
 		return (
 			/*
 			Fazer View Englobadora da página
@@ -169,7 +173,7 @@ class Chat extends Component {
 			<View style={[styles.container, { paddingBottom: this.state.viewPadding }]}>
 				<FlatList
 					style={styles.list}
-					data={this.state.messages.concat(this.state.avatarContact)}
+					data={this.state.messages}
 					ref={ref => (this.flatList = ref)}
 					onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
 					onLayout={() => this.flatList.scrollToEnd({ animated: true })}
@@ -196,16 +200,19 @@ class Chat extends Component {
 								]}>
 								<Image
 									style={styles.imageStyles}
+									/*
 									source={{
 										uri:
 											'data:' +
 											'image/jpeg' +
 											';base64,' +
-											new Buffer(item.avatarData)
+											new Buffer(this.state.avatarContact.avataData)
 									}}
-									//source={require('../assets/noImage.png')}
+									*/
+									source={require('../assets/noImage.png')}
 								/>
 								<Text style={styles.listItem}>{item.text}</Text>
+								<Text style={styles.listItem}>{item.createdAt}</Text>
 							</View>
 							<View style={styles.marginBottom} />
 						</View>
@@ -250,6 +257,27 @@ class Chat extends Component {
 		}
 		return;
 	}
+
+	timestampToDate(messages){
+		[].map.call(messages, function(obj){
+			console.log("NOOOO LOOOOPP");
+			var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+			var date = new Date(obj.createdAt);
+			console.log(date);
+			
+			var day = date.getDate();
+			var month = date.getMonth();
+			var year = date.getFullYear();
+			var hours = date.getHours();
+			var minutos = '0' + date.getMinutes();
+
+			var formattedTime = day + ' de ' + months[month] + ' de ' + year + ' às ' + hours + ':' + minutos.substr(-2);
+			console.log(formattedTime);
+			//obj.createdAt = formattedTime;
+		})
+		//this.setState({messages: newMessages});
+	}
+
 
 	/**
 	 * Save the input values change to state

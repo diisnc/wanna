@@ -32,12 +32,29 @@ class ConversationsList extends Component {
 		loading: true
 	};
 
+	timestampToDate(conversationList){
+        [].map.call(conversationList, function(obj){
+			var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+			var date = new Date(obj.createdAt);
+			var day = date.getDate();
+			var month = date.getMonth();
+			var year = date.getFullYear();
+			var hours = date.getHours();
+			var minutos = '0' + date.getMinutes();
+
+			var formattedTime = day + ' de ' + months[month] + ' de ' + year + ' às ' + hours + ':' + minutos.substr(-2);
+			obj.createdAt = formattedTime;
+		})
+	}
+
 	componentDidMount() {
 		this.getContactsAsync();
 	}
 
+
 	render() {
 		if (this.state.loading == false) {
+			this.timestampToDate(this.state.conversationList);
 			return (
 				/*
 				Fazer View Englobadora da página
@@ -129,6 +146,7 @@ class ConversationsList extends Component {
 								<View style={{ backgroundColor: 'red', marginBottom: 5 }}>
 									<Text>{item.idPost}</Text>
 									<Text>{item.messageText}</Text>
+									<Text>{item.createdAt}</Text>
 									{item.idReceiver == this.props.loggedUsername ? (
 										<Text>{item.idSender}</Text>
 									) : (
