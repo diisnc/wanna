@@ -28,10 +28,11 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 class PostButtons extends Component {
 	render() {
 		return (
-			<View style={{ flex: 1, flexDirection: 'column' }}>
+			<View style={{ flex: 1, flexDirection: 'row' }}>
 				{this.buildVotes(this.props.idPost)}
 				{this.buildSavedPost(this.props.idPost)}
 				{this.buildComments(this.props.idPost)}
+				{this.buildChat(this.props.idPost)}
 			</View>
 		);
 	}
@@ -150,6 +151,22 @@ class PostButtons extends Component {
 	}
 
 	buildComments(idPost) {
+		return (
+			<View style={{ flex: 1, flexDirection: 'row' }}>
+				<TouchableOpacity
+					activeOpacity={0.5}
+					onPress={() => {
+						this.props.navigation.navigate('Comments', {
+							idPost: idPost
+						});
+					}}>
+					<MaterialCommunityIcons name="comment-text-outline" size={30} />
+				</TouchableOpacity>
+			</View>
+		);
+	}
+
+	buildChat(idPost) {
 		return (
 			<View style={{ flex: 1, flexDirection: 'row' }}>
 				<TouchableOpacity
