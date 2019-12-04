@@ -53,8 +53,7 @@ class Register extends Component {
 			<View style={styles.container}>
 				<ScrollView keyboardShouldPersistTaps='always' 
 					showsVerticalScrollIndicator={false}
-					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}
-					contentContainerStyle={{paddingBottom: 90}}>
+					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', paddingBottom: 90 }}>
 					
 					{this.buildHeader()}
 

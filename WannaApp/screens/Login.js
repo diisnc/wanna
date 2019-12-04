@@ -59,7 +59,7 @@ class Login extends Component {
 			<View style={styles.container}>
 				<ScrollView keyboardShouldPersistTaps='always'
 					showsVerticalScrollIndicator={false} 
-					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
+					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between'}}>
 					
 					{this.buildHeader()}
 					
