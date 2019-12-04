@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Input } from 'react-native-elements';
 import { register } from '../modules/auth/auth.api';
+import { globalStyle, defaultNavigator } from './style';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { Button, theme } from '../galio';
 
 import Logo from '../components/Logo';
@@ -51,7 +53,7 @@ class Register extends Component {
 			<View style={styles.container}>
 				<ScrollView keyboardShouldPersistTaps='always' 
 					showsVerticalScrollIndicator={false}
-					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', paddingBottom: 89 }}>
+					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', paddingBottom: 90 }}>
 					
 					{this.buildHeader()}
 
@@ -63,6 +65,10 @@ class Register extends Component {
 					<Field name="location" placeholder="Localização" component={renderInput} />
 					<Field name="email" placeholder="E-mail" component={renderInput} />
 					<Field name="password" placeholder="Palavra-passe" component={renderPassword} />
+					
+					<View style={styles.errorMessage}>
+						<Text>{this.props.errorMessage}</Text>
+					</View>
 
 					<Button shadowless 
 						color='#3498DB' 
@@ -70,10 +76,6 @@ class Register extends Component {
 						onPress={handleSubmit(submitForm)}>
 						Registar
 					</Button>
-
-					<View style={styles.errorMessage}>
-						<Text>{this.props.errorMessage}</Text>
-					</View>
 
 					<View style={styles.signinTextCont}>
 						<Text style={styles.signinText}>Tens uma conta?</Text>

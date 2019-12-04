@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Platform, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
+import { StyleSheet, View, Platform, Button } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
-import { Button, theme } from '../galio';
 import { globalStyle, defaultNavigator } from './style';
 
 import Logo from '../components/Logo';
-
-const { width } = Dimensions.get('screen');
 
 class Wanna extends Component {
 	
@@ -44,24 +41,27 @@ class Wanna extends Component {
 				
 				<Logo />
 
-				<Button shadowless 
-					color='#3498DB' 
-					style={[styles.button, styles.shadow]}
-					onPress={() => this.props.navigation.navigate('Login')}>
-					Login
-				</Button>
+				<View style={styles.authBtnWrap}>
+					<Button
+						onPress={() => this.props.navigation.navigate('Login')}
+						buttonStyle={[globalStyle.btn, styles.authBtn]}
+						titleStyle={globalStyle.btnText}
+						title="Login"
+					/>
+					<Button
+						onPress={() => this.props.navigation.navigate('Register')}
+						buttonStyle={[globalStyle.btn, styles.authBtn]}
+						titleStyle={globalStyle.btnText}
+						title={'Registo'}
+					/>
+					<Button
+						onPress={() => this.props.navigation.navigate('Main')}
+						buttonStyle={[globalStyle.btn, styles.authBtn]}
+						titleStyle={globalStyle.btnText}
+						title={'Mudar'}
+					/>
 
-				<Button shadowless 
-					color='#3498DB' 
-					style={[styles.button, styles.shadow]}
-					onPress={() => this.props.navigation.navigate('Register')}>
-					Registo
-				</Button>
-
-				<View style={styles.signupTextCont}>
-					<Text style={styles.signupText}>Todos os direitos reservados ©</Text>
 				</View>
-
 			</View>
 		);
 	}
@@ -70,56 +70,22 @@ class Wanna extends Component {
 export default Wanna;
 
 const styles = StyleSheet.create({
-	container : {
+	container: {
 		backgroundColor:'white',
-		flex: 1,
-		alignItems:'center',
-		justifyContent :'center'
-	  },
-	shadow: {
-		shadowColor: 'black',
-		shadowOffset: { width: 0, height: 2 },
-		shadowRadius: 4,
-		shadowOpacity: 0.2,
-		elevation: 2
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
-	button: {
-		marginBottom: theme.SIZES.BASE,
-		width: width - (theme.SIZES.BASE * 3.5),
-		borderRadius: 25,
-		paddingVertical: 13
+	authBtnWrap: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		width: '100%',
+		paddingHorizontal: 15
 	},
-		signupTextCont : {
-	  flexGrow: 1,
-	  alignItems:'flex-end',
-	  justifyContent :'center',
-	  paddingVertical:16,
-	  flexDirection:'row'
-	},
-	signupText: {
-		color:'rgba(128,128,128, 0.7)',
-		fontSize:16
-	},
-	signupButton: {
-		color:'#3498DB',
-		fontSize:16,
-		fontWeight:'500'
-	},
-	signupTextCont : {
-		flexGrow: 1,
-		alignItems:'flex-end',
-		justifyContent :'center',
-		paddingVertical:16,
-		flexDirection:'row'
-	},
-	signupText: {
-		  color:'rgba(128,128,128, 0.7)',
-		  fontSize:16
-	},
-	signupButton: {
-		  color:'#3498DB',
-		  fontSize:16,
-		  fontWeight:'500'
+	authBtn: {
+		marginHorizontal: 0,
+		marginVertical: 18,
+		width: '80%',
+		alignSelf: 'center',
+		backgroundColor: '#000000'
 	}
 });
-
