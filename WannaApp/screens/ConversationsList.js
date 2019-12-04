@@ -147,8 +147,6 @@ class ConversationsList extends Component {
 								}}>
 								<View style={{ backgroundColor: 'red', marginBottom: 5 }}>
 									<Text>{item.idPost}</Text>
-									<Text>{item.messageText}</Text>
-									<Text>{item.createdAt}</Text>
 									{item.idReceiver == this.props.loggedUsername ? (
 										<Text>{item.idSender}</Text>
 									) : (
@@ -172,7 +170,7 @@ class ConversationsList extends Component {
 								</View>
 							</TouchableHighlight>
 						)}
-						keyExtractor={item => item.id.toString()}
+						keyExtractor={(item, index) => index.toString()}
 					/>
 				</View>
 			</ScrollView>
