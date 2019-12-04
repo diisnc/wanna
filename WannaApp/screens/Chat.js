@@ -28,9 +28,11 @@ class Chat extends Component {
 	state = {
 		messages: [],
 		username: null,
+		noImage: true,
 		avatarContact: [],
 		text: '',
-		room: this.props.contact + this.props.idPost
+		room: this.props.contact + this.props.idPost,
+		loading: true
 	};
 
 	constructor(props) {
@@ -59,6 +61,25 @@ class Chat extends Component {
 			minInputToolbarHeight: 45
 		});
 	};
+
+	timestampToDate(messages)  {
+		newArray = messages;
+		[].map.call(newArray, function(obj){
+			var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+			var date = new Date(obj.createdAt);
+			var day = date.getDate();
+			var month = date.getMonth();
+			var year = date.getFullYear();
+			var hours = date.getHours();
+			var minutos = '0' + date.getMinutes();
+
+			var formattedTime = day + ' de ' + months[month] + ' de ' + year + ' às ' + hours + ':' + minutos.substr(-2);
+			obj.createdAt = formattedTime;
+		})
+		return newArray;
+	}
+
+
 
 	componentWillMount() {
 		if (Platform.OS === 'android') {
@@ -110,30 +131,32 @@ class Chat extends Component {
 	}
 
 	render() {
-		this.timestampToDate(this.state.messages);
-		return (
-			/*
-			Fazer View Englobadora da página
-			onde o primeiro elemento é o header
-			de pesquisa e o segundo elemento
-			é o feed que contém as imagens.
-			*/
-			// Safe Box for Iphone
-			<SafeAreaView style={{ flex: 1 }}>
-				{/* Full Page Box */}
-				<View
-					style={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'stretch'
-					}}>
-					{this.buildHeader()}
-					{/* this.buildWishlist() */}
-					{this.renderConversation()}
-				</View>
-			</SafeAreaView>
-		);
+		
+		if(this.state.loading == false){
+
+			return (
+				/*
+				Fazer View Englobadora da página
+				onde o primeiro elemento é o header
+				de pesquisa e o segundo elemento
+				é o feed que contém as imagens.
+				*/
+				// Safe Box for Iphone
+				<SafeAreaView style={{ flex: 1 }}>
+					{/* Full Page Box */}
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'column',
+							justifyContent: 'flex-start',
+							alignItems: 'stretch'
+						}}>
+						{this.buildHeader()}
+						{this.renderConversation()}
+					</View>
+				</SafeAreaView>
+			);
+		}else return null;				
 	}
 
 	// Builds header of the page
@@ -198,19 +221,26 @@ class Chat extends Component {
 												: 'row'
 									}
 								]}>
-								<Image
+								{item.writer !== this.props.username && this.state.noImage == false
+								?(
+									<Image
 									style={styles.imageStyles}
-									/*
 									source={{
 										uri:
 											'data:' +
 											'image/jpeg' +
 											';base64,' +
-											new Buffer(this.state.avatarContact.avataData)
+											new Buffer(this.state.avatarContact.avatarData)
 									}}
-									*/
+									/>
+								)
+								:
+								<Image
+									style={styles.imageStyles}
 									source={require('../assets/noImage.png')}
 								/>
+								}
+								
 								<Text style={styles.listItem}>{item.text}</Text>
 								<Text style={styles.listItem}>{item.createdAt}</Text>
 							</View>
@@ -243,8 +273,9 @@ class Chat extends Component {
 
 	async getMessagesAsync(idContact, idPost) {
 		const previousMessages = await getMessages(idContact, idPost);
-		if (previousMessages != null) {
-			this.setState({ messages: previousMessages });
+		const newArray = this.timestampToDate(previousMessages);
+		if (newArray != null) {
+			this.setState({ messages: newArray });
 		}
 		return;
 	}
@@ -252,32 +283,13 @@ class Chat extends Component {
 	async getAvatarAsync(idContact) {
 		const avatar = await getAvatar(idContact);
 		if (avatar != null) {
-			this.setState({ avatarContact: avatar });
-			//this.props.avatarContact = avatar;
+			this.setState({ loading: false });
+			if(avatar.avatarData != null){
+				this.setState({ noImage: false, avatarContact: avatar});
+			}
 		}
 		return;
 	}
-
-	timestampToDate(messages){
-		[].map.call(messages, function(obj){
-			console.log("NOOOO LOOOOPP");
-			var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-			var date = new Date(obj.createdAt);
-			console.log(date);
-			
-			var day = date.getDate();
-			var month = date.getMonth();
-			var year = date.getFullYear();
-			var hours = date.getHours();
-			var minutos = '0' + date.getMinutes();
-
-			var formattedTime = day + ' de ' + months[month] + ' de ' + year + ' às ' + hours + ':' + minutos.substr(-2);
-			console.log(formattedTime);
-			//obj.createdAt = formattedTime;
-		})
-		//this.setState({messages: newMessages});
-	}
-
 
 	/**
 	 * Save the input values change to state
@@ -325,7 +337,6 @@ function mapStateToProps(store, ownProps) {
 	//console.log(store.chat);
 	return {
 		username: store.auth.loggedUsername,
-		avatarContact: store.chat.avatarContact,
 		contact: store.chat.contact,
 		idPost: store.chat.idPost
 	};
