@@ -1,57 +1,178 @@
 <template>
   <layout-basic>
-	  <div id="app">
+    <div id="app">
       <div class="container">
-        <div class="row justify-content-md-center">
-          <b-col sm="7">
+        <b-row class="justify-content-md-center">
+          <b-col sm="8">
             <div class="card">
+              <!-- USER, TIMESTAMP e OPÇÕES -->
+              <div class="user-area">
+                <div class="card-op-area">
+                  <a :href="product.user"><img class="img-user" :src="product.user_img"></a>
+                  <a :href="product.user" class="txt-username"><b>{{product.user}}</b></a>
+                  <a class="txt-username">•</a>
+                  <a class="txt-username txt-tmstmp">{{moment(product.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
+                
+                </div>
+                <div class="card-options-area">
+                  <b-button class="search-bar btn-mini bg-trans"
+                    @mouseover="setmodal(product.id)"
+                    @click="showmodal(product.id)">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </b-button>
 
-              <!-- CABEÇALHO COM INFO DO USER -->
-              <div class="prof-header">
-                <img class="prof-img-user" :src="user_img">
-                <div>
-                  <h4 class="user-name"><b>{{user_name}}</b></h4>
-                  <p class="user-name"><b><i class="fas fa-at"></i> {{user_username}}</b></p>
-                  <p class="user-name"><b><i class="fas fa-map-marker-alt"></i> {{user_location}}</b></p>
-                  <p class="user-name"><b>
-                    <i v-for="index in user_stars" class="fas fa-star"></i>
-                    <i v-for="index in (5-user_stars)"class="far fa-star"></i>
-                  </b></p>
+                  <modal v-if="shownmodal == product.id" @before-open="this.shownmodal=product.id" name="post_options" width="400px" height="auto">
+                    <b-list-group-item class="post-list" href="">Copiar ligação</b-list-group-item>
+                    <b-list-group-item class="post-list" href="">Reportar</b-list-group-item>
+                  </modal>
                 </div>
               </div>
+              <!-- FOTOS DO POST -->
+              <div class="card-img-caixa">
 
-              <!-- POSTS, SEGUIDORES E A SEGUIR -->
-              <b-row style="padding-top: 20px"> 
-                <b-col>
-                  <b class="small-txt-header"> {{ products.length | numeral('0.[0]a') }} </b>
-                  <br> 
-                  <p class="small-txt">PUBLICAÇÕES</p>
-                </b-col>
-                <b-col>
-                  <b class="small-txt-header"> {{ seguidores | numeral('0.[0]a') }} </b>
-                  <br> 
-                  <p class="small-txt">SEGUIDORES</p>
-                </b-col>
-                <b-col>
-                  <b class="small-txt-header"> {{ a_seguir | numeral('0.[0]a') }} </b>
-                  <br> 
-                  <p class="small-txt">A SEGUIR</p>
-                </b-col>
-              </b-row>
+                <img v-if="product.imgs.length==1" class="card-img card-img-blur" :src="product.imgs[0]">
+                <img v-if="product.imgs.length==1" class="card-img card-img-front" :src="product.imgs[0]" @dblclick="giveliketouch()">
 
+                <b-carousel v-if="product.imgs.length>1" id="carousel1"
+                  style="text-shadow: 1px 1px 2px #333;"
+                  controls
+                  indicators
+                  :interval="30000"
+                  v-model="slide"
+                  @sliding-start="onSlideStart"
+                  @sliding-end="onSlideEnd">
+
+                  <b-carousel-slide v-for="image in product.imgs" :img-src="image">
+                  </b-carousel-slide>
+
+                </b-carousel>
+              </div>
+              <!-- REAÇÕES AO POST -->
+              <div class="reactions-area">
+                <div class="reaction-left-area">
+
+                    <button v-if="getlike(post_id) === 0" @click="givelike(post_id)" class="icon icon-reaction icon-like-empty"> ‏‏‎ </button>
+                    <button v-if="getlike(post_id) === 1" @click="remvlike(post_id)" class="icon icon-reaction icon-like-full"> ‏‏‎ </button>
+
+                    <b>{{product.likes}}</b>
+
+                    <button v-if="getdislike(post_id) === 0" @click="givedislike(post_id)" class="icon icon-reaction icon-dislike-empty"> ‏‏‎ </button>
+                    <button v-if="getdislike(post_id) === 1" @click="remvdislike(post_id)" class="icon icon-reaction icon-dislike-full"> ‏‏‎ </button>
+
+                </div>
+                <div class="reaction-right-area">
+                  <button v-if="getsave(post_id) === 0" @click="savepost(post_id)" class="icon icon-reaction icon-save-empty"> ‏‏‎ </button>
+                  <button v-if="getsave(post_id) === 1" @click="unsavepost(post_id)" class="icon icon-reaction icon-save-full"> ‏‏‎ </button>
+                  <button @click="" class="icon icon-reaction icon-buy-empty"> ‏‏‎ </button>
+                </div>
+              </div>
+              <!-- TITULO, MARCA, DESCRIÇÃO, PREÇO e AFINS -->
+              <div class="description-area">
+                <div class="card-op-area">
+                  <div style="display:inline-flex;">
+                    <h5 style="margin:0px;">{{product.name}}</h5> 
+                    <button 
+                      v-b-toggle="product.id"
+                      class="toggle-description">
+                      <i class="fa fa-sort-down"></i>
+                    </button>
+                  </div>
+                  <p v-if="product.manufacturer" class="details-post"><b>{{product.manufacturer}} ‏‏‎ • ‏‏‎ {{product.size}} ‏‏‎ • ‏‏‎ {{product.color}}</b></p>
+                  <p v-else class="details-post"><b>{{product.size}} ‏‏‎ • ‏‏‎ {{product.color}}</b></p>
+                </div>
+                <div class="card-options-area">
+                  <h4 style="color: #4A53FC;"><b>{{product.price.toFixed(2)}}€</b></h4>
+                </div>
+                
+                <b-collapse v-bind:id="product.id" class="mt-2">
+                  <div class="card-op-area">
+                    <p class="card-text">{{product.description}}</p>
+                  </div>
+                </b-collapse>
+              </div>
+              <!-- COMENTÁRIOS -->
+              <div class="comment-area">
+                <!-- COMENTÁRIO MAIS RECENTE -->
+                <div class="my-comment">
+                  <a :href="product.comments[0].user"><img class="img-user" :src="product.comments[0].user_img"></a>
+                  <div class="comment">
+                    <a :href="product.comments[0].user" class="txt-username"><b>{{product.comments[0].user}}</b></a>
+                    <a class="txt-username">{{product.comments[0].text}}</a>
+                    <a class="txt-username">•</a>
+                  <a class="txt-username txt-tmstmp">{{moment(product.comments[0].timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
+                  </div>
+                </div>
+
+                <!-- INSERIR O MEU COMENTARIO -->
+                <div class="my-comment">
+                  <a :href="current_user_name"><img class="img-user" :src="current_user_img"></a>
+                  <b-form-textarea class="comment-input" v-model="text" rows="1" max-rows="4" v-bind:id="'comment_'+product.id" placeholder="Escreve um comentário..." ></b-form-textarea>
+                  <button @click="" class="btn icon icon-send"/>
+                </div>
+
+                <!-- VER MAIS COMENTARIOS -->
+                <div class="view-comments">
+                  <!-- BOTÃO PARA MODAL EM WEBSITE -->
+                  <b-button class="search-bar bg-trans"
+                    v-if="!isMobile()"
+                    @mouseover="setmodal('comments_'+product.id)"
+                    @click="showmodal('comments_'+product.id)">
+                    Ver todos os comentários
+                  </b-button>
+
+                  <!-- BOTÃO PARA FULL PAGE EM MOBILE -->
+                  <b-button class="search-bar"
+                    v-if="isMobile()"
+                    @click="$router.push('/comments/'+product.id)">
+                    Ver todos os comentários
+                  </b-button>
+
+                  <!-- MODAL COM COMENTARIOS NO WEBSITE -->
+                  <modal
+                    v-if="shownmodal == 'comments_'+product.id"
+                    @before-open="this.shownmodal='comments_'+product.id"
+                    name="post_options" width="40%" height="auto"
+                    scrollable=true>
+                  
+
+                    <div style="padding:20px 20px 10px 10px;">
+                      <div class="card-op-area" style="margin-bottom: 0px !important">
+                        <div style="display:inline-flex;">
+                          <h5 style="margin:0px;">{{product.name}}</h5>
+                        </div>
+                        <p v-if="product.manufacturer" class="details-post"><b>{{product.manufacturer}} ‏‏‎ • ‏‏‎ {{product.size}} ‏‏‎ • ‏‏‎ {{product.color}}</b></p>
+                        <p v-else class="details-post"><b>{{product.size}} ‏‏‎ • ‏‏‎ {{product.color}}</b></p>
+                        <p class="card-text">{{product.description}}</p>
+                      </div>
+                      <div class="card-options-area">
+                        <h4 style="color: #4A53FC;"><b>{{product.price.toFixed(2)}}€</b></h4>
+                      </div>
+
+                      <hr>
+
+                      <div v-for="comment in product.comments" class="my-comment">
+                        <a :href="comment.user"><img class="img-user" :src="comment.user_img"></a>
+                        <div class="comment">
+                          <a :href="comment.user" class="txt-username"><b>{{comment.user}}</b></a>
+                          <a class="txt-username">{{comment.text}}</a>
+                          <a class="txt-username">•</a>
+                          <a class="txt-username txt-tmstmp">{{moment(comment.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
+                        </div>
+                      </div>
+
+                      <div class="my-comment">
+                        <a :href="current_user_name"><img class="img-user" :src="current_user_img"></a>
+                        <b-form-textarea class="comment-input" v-model="text" rows="1" max-rows="4" v-bind:id="'comment_'+product.id" placeholder="Escreve um comentário..." ></b-form-textarea>
+                        <button class="btn icon">PUBLICAR</button>
+                      </div>
+
+                    </div>
+                  </modal>
+                </div>
+              </div>
             </div>
           </b-col>
-
-          <!-- POSTS DO USER -->
-          <b-col sm="10" style="text-align: left !important;">  
-            <div class="prof-container prof-post" v-for="product in products">
-              <a :href="'/post/'+product.id"><img class="prof-img-post" :src="product.imgs[0]"></a>
-
-            </div>
-          </b-col>
-            
-
-        </div>
+        </b-row>
       </div>
     </div>
   </layout-basic>
@@ -61,26 +182,21 @@
 import router from "../../router"
 import LayoutBasic from "../layouts/BottomBar.vue"
 export default {
-  name: 'Profile',
+  name: 'Inspire',
   components: {
     LayoutBasic,
   },
-    data () {
+  data () {
     return {
-      user_username: this.$router.currentRoute.params.username,
-      user_img: 'https://i.imgur.com/KMlWJNv.jpg',
-      user_name: 'Vitor Peixoto',
-      user_location: 'Braga, Portugal',
-      user_stars: 4,
-      publicacoes: 4,
-      seguidores: 12786,
-      a_seguir: 543,
+      route: this.$router.currentRoute.name,
       like: 0,
       dislike: 0,
       saved: 0,
       post_id: 2123,
+      current_user_name: 'vitorpeixoto',
+      current_user_img: 'https://i.imgur.com/KMlWJNv.jpg',
       page: 0,
-      products: [
+      product: 
         {
           id: 104,
           timestamp: '2019-11-10T16:15:22',
@@ -178,110 +294,12 @@ export default {
             }
           ]
         },
-        {
-          id: 105,
-          timestamp: '2019-11-06T10:09:42',
-          user: 'joanavintageoutlet',
-          user_img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-          name: 'Lacy shirt vintage',
-          description: "Esta camisa vintage vai assentar que nem uma luva no teu armário.",
-          price: 10,
-          size: 'M',
-          color: 'Branco',
-          manufacturer: null,
-          sex: 'Mulher',
-          imgs: [
-            "https://i.imgur.com/hs5b0fc.png",
-            "https://i.imgur.com/uSbOYV8.png"
-          ],
-          likes: 2321,
-          comments: [
-            {
-              user: 'rosameireles_',
-              user_img: 'https://engineering.unl.edu/images/staff/Kayla_Person-small.jpg',
-              timestamp: '2019-11-07T10:29:23',
-              text: 'Muito bonitas as camisolas Joana!'
-            },
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-11-06T16:18:22',
-              text: 'Meh...'
-            }
-            
-          ]
-        },
-        {
-          id: 106,
-          timestamp: '2019-11-02T19:15:42',
-          user: 'beavila_shoestore',
-          user_img: 'https://i.imgur.com/B7aj5H7.png',
-          name: 'Botins festivos',
-          description: "Preparada para a época de festivais? No teu outfit não podem faltar estes botins.",
-          price: 29.90,
-          size: '38',
-          color: 'Castanho',
-          sex: 'Mulher',
-          manufacturer: 'PROF',
-          imgs: [
-            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9317-1024x683.jpg",
-            "https://joanavaz.pt/wp-content/uploads/2017/04/IMG_9318-690x455.jpg"
-          ],
-          likes: 1489,
-          comments: [
-          {
-              user: 'tatianamendess',
-              user_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBPBZloSuY-6XVhbBX7xROuv2n8OZGLmFQwFtSqFBxX87mWyRN&s',
-              timestamp: '2019-11-03T16:23:22',
-              text: 'Mal posso esperar por as levar ao Alive!'
-            },
-            {
-              user: 'rita_cunhaa',
-              user_img: 'https://making-the-web.com/sites/default/files/clipart/157025/happy-person-picture-157025-4275865.jpg',
-              timestamp: '2019-11-02T19:28:22',
-              text: 'Que giras!!!'
-            },
-            {
-              user: 'rosa_almeida__',
-              user_img: 'https://portalovertube.com/wp-content/uploads/2019/02/Amy.jpg',
-              timestamp: '2019-11-02T119:18:52',
-              text: 'Se fossem mais altas...'
-            },
-          ]
-        },
-        {
-          id: 107,
-          timestamp: '2019-10-20T21:55:12',
-          user: 'tiagorodri',
-          user_img: 'https://images.unsplash.com/photo-1536548665027-b96d34a005ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-          name: 'Calças desporto',
-          description: "Estas calças são mesmo fixes e confortáveis. As melhores do mercado.",
-          price: 9.90,
-          size: 'L',
-          color: 'Preto',
-          sex: 'Homem',
-          manufacturer: 'Hummel',
-          imgs: [
-            "https://cdn.hummel.net/Admin/Public/GetImage.ashx?Width=500&Heigh=500&Compression=85&Crop=5&Image=/Files/Images/Perfion/c4a8bb97-17b9-4c23-a2d7-07ea40747b99.jpg"
-          ],
-          likes: 431,
-          comments: [
-            {
-              user: 'tiagomcosta',
-              user_img: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-              timestamp: '2019-10-22T16:18:22',
-              text: 'Se tivesse o fato de treino completo até comprava.'
-            }
-          ]
-        }
-      ],
       showbanner: 1,
       window: {
         width: 0,
         height: 0
       },
-      shownmodal: null,
-      shownmodalposition: null
+      shownmodal: null
     }
   },
   created: function() {
@@ -300,25 +318,6 @@ export default {
   mounted: function() {
   },
   methods: {
-    isMobile() {
-      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        return true
-      } else{
-        return false
-      }
-    },
-    showmodal(productid){
-      this.$modal.show('post');
-    },
-    setmodal(productid){
-      this.shownmodal= productid;
-      var i = 0;
-      while (i<this.products.length){
-        if(this.products[i].id==productid)
-          this.shownmodalposition = i;
-        i++;
-      }
-    },
     isMobile() {
       if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         return true
@@ -369,72 +368,32 @@ export default {
     },
     unsavepost(post_id){
       this.saved=0;
+    },
+    isMobile() {
+      if(/Android|WebOS|iPhone|iPad|Blackberry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+      } else{
+        return false
+      }
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    },
+    hidebanner(){
+      this.showbanner=0;
+    },
+    showmodal(productid){
+      this.$modal.show('post_options');
+    },
+    setmodal(productid){
+      this.shownmodal= productid;
     }
   }
 }
 </script>
 
 <style>
-  .small-txt{
-    font-size: 13px;
-    letter-spacing: 2px;
-  }
-  .small-txt-header{
-    font-size: 20px;
-  }
-  .prof-header{
-    margin:auto !important;
-    width: 95% !important;
-    text-align: left;
-    display: flex;
-  }
-  .prof-img-user{
-    width: 130px !important;
-    min-width: 130px !important;
-    height: 130px !important;
-    border-radius: 20px !important;
-    object-fit: cover;
-    margin-right: 10px;
-    box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
-  }
-  .prof-img-post{
-    border-radius: 20px !important;
-    object-fit: cover;
-    height: 100% !important;
-    box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
-  }
-  .prof-post{
-    display:inline-flex;
-    width: 31% !important;
-    min-width: 31% !important;
-    height: auto !important;
-    margin: 1%;
-    border-radius: 10% !important;
-    object-fit: cover;
-  }
-  .user-name{
-    margin:5px 0px 0px 10px;
-  }
-  .prof-container {
-    position: relative;
-    width: 37%;
-  }
-  .prof-container:after {
-    content: "";
-    display: block;
-    padding-bottom: 100%; 
-  }
-  .prof-container img {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
   .comment{
     width:100%;
     padding: 8px 10px 8px 15px;

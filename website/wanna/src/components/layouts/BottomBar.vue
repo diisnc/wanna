@@ -28,11 +28,13 @@
 
     <div v-else>
       <desktop>
-        <div class="desktop-bar"><a href="inspire">
+        <div class="desktop-bar">
           <div class="left-side-bar">
+            <button @click="$router.push('/inspire/')">
             <img v-if="window.width>800" src="/img/brand/full_logo.png" width="150" height="40" alt="Wanna" style="margin: auto; transition: width 1s">
             <img v-else src="/img/brand/logo.png" width="50" height="50" alt="Wanna" style="margin: auto; transition: width 1s; ">
-          </div></a>
+            </button>
+          </div>
 
           <div v-if="window.width>800" class="center-side-bar">
             <b-form-group class="search-bar">
@@ -185,8 +187,6 @@
     width:21px;
     height: 25.5px;
   }
-
-
   .icon-mobile-feed {
     mask: url(https://svgur.com/i/FdS.svg);
     width:18px;
