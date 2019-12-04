@@ -5,6 +5,7 @@ import Auth from '@/components/pages/Auth'
 import Inspire from '@/components/pages/Inspire'
 import Profile from '@/components/pages/Profile'
 import Comments from '@/components/pages/Comments'
+import Post from '@/components/pages/Post'
 import Manageposts from '@/components/admin/Manageposts'
 import Manageusers from '@/components/admin/Manageusers'
 
@@ -48,6 +49,12 @@ export default new Router({
       path: '/comments/:productid',
       name: 'comments',
       component: Comments
+      /* meta: { requiresAuth: true } */
+    },
+    {
+      path: '/post/:productid',
+      name: 'post',
+      component: Post
       /* meta: { requiresAuth: true } */
     }
   ]

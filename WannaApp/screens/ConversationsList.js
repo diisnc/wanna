@@ -33,7 +33,8 @@ class ConversationsList extends Component {
 	};
 
 	timestampToDate(conversationList){
-        [].map.call(conversationList, function(obj){
+		newArray = conversationList;
+		[].map.call(newArray, function(obj){
 			var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 			var date = new Date(obj.createdAt);
 			var day = date.getDate();
@@ -45,6 +46,7 @@ class ConversationsList extends Component {
 			var formattedTime = day + ' de ' + months[month] + ' de ' + year + ' às ' + hours + ':' + minutos.substr(-2);
 			obj.createdAt = formattedTime;
 		})
+		return newArray;
 	}
 
 	componentDidMount() {
@@ -54,7 +56,6 @@ class ConversationsList extends Component {
 
 	render() {
 		if (this.state.loading == false) {
-			this.timestampToDate(this.state.conversationList);
 			return (
 				/*
 				Fazer View Englobadora da página
@@ -114,8 +115,9 @@ class ConversationsList extends Component {
 	async getContactsAsync() {
 		// const newState = require('./json/responseFeed');
 		const newState = await getContacts();
-		if (newState != null) {
-			this.setState({ conversationList: newState, loading: false });
+		const newArray = this.timestampToDate(newState);
+		if (newArray != null) {
+			this.setState({ conversationList: newArray, loading: false });
 		}
 
 		return;
@@ -145,8 +147,6 @@ class ConversationsList extends Component {
 								}}>
 								<View style={{ backgroundColor: 'red', marginBottom: 5 }}>
 									<Text>{item.idPost}</Text>
-									<Text>{item.messageText}</Text>
-									<Text>{item.createdAt}</Text>
 									{item.idReceiver == this.props.loggedUsername ? (
 										<Text>{item.idSender}</Text>
 									) : (
@@ -170,7 +170,7 @@ class ConversationsList extends Component {
 								</View>
 							</TouchableHighlight>
 						)}
-						keyExtractor={item => item.id.toString()}
+						keyExtractor={(item, index) => index.toString()}
 					/>
 				</View>
 			</ScrollView>
