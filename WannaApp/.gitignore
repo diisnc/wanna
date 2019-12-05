@@ -1,6 +1,8 @@
 # Dependency directories
-node_modules/
+node_modules/*
+!node_modules/react-native-elements/src/helpers/getIconType.js
 jspm_packages
 .expo/
 
 package-lock.json
+yarn.lock
