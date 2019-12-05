@@ -16,6 +16,7 @@ import {
 import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
+import { searchUser } from '../modules/profile/profile.api';
 import UserPost from './UserPost';
 import Loading from './Loading';
 import { SearchBar, ListItem } from 'react-native-elements';
@@ -25,13 +26,15 @@ class Inspire extends Component {
 	state = {
 		feedData: [],
 		numPosts: 0,
-		loading: true
+		loading: true,
+		inputSearch: null,
+		searchR: []
 	};
 
 	componentDidMount() {
-		this.startHeaderHeight = 80;
+		this.startHeaderHeight = 500;
 		if (Platform.OS == 'android') {
-			this.startHeaderHeight = 60;
+			this.startHeaderHeight = 500;
 		}
 
 		// get data from servers and save in state
@@ -68,8 +71,6 @@ class Inspire extends Component {
 	render() {
 		const loggedIn = this.props.loggedIn;
 		const token = this.props.tokenValid;
-		console.log('login ' + loggedIn);
-		console.log('token valid ' + token);
 		if (loggedIn == true && token == true) {
 			if (this.state.numPosts != 0) {
 				return (
@@ -127,54 +128,74 @@ class Inspire extends Component {
 	buildHeader() {
 		return (
 			// Safe Box for Android
-			<View
-				style={{
-					height: this.startHeaderHeight,
-					backgroundColor: 'white',
-					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
-				}}>
+			<View style={{ paddingTop: 20, height: 'auto', flex: 0 }}>
 				{/* Search Box */}
-				<View
-					style={{
-						height: '90%',
-						flexDirection: 'row',
-						padding: 10,
-						backgroundColor: 'white',
-						marginHorizontal: 20,
-						shadowOffset: { width: 0, height: 0 },
-						shadowColor: 'black',
-						shadowOpacity: 0.2,
-						elevation: 1,
-						justifyContent: 'flex-end'
-					}}>
+				<View style={styles.viewStyle}>
 					<SearchBar
-						style={{ marginTop: 100 }}
-						placeholder="Search"
-						onIconPress={() => Alert.alert('HEHE')}
+						round
+						lightTheme
+						searchIcon={{ size: 24 }}
+						onChangeText={text => this.updateSearch(text)}
+						placeholder="Pesquisa por utilizador..."
+						autoCorrect={false}
+						value={this.state.inputSearch}
+						containerStyle={{ backgroundColor: 'white' }}
+						onClear={this.clearResults}
+						onCancel={this.clearResults}
 					/>
+					{this.state.searchR == null ? null : (
+						<FlatList
+							data={this.state.searchR}
+							ItemSeparatorComponent={this.ListViewItemSeparator}
+							//Item Separator View
+							renderItem={({ item }) => (
+								// Single Comes here which will be repeatative for the FlatListItems
+								<TouchableOpacity
+									onPress={() => {
+										this.props.navigation.navigate('UserProfile', {
+											userID: item.username
+										});
+									}}>
+									<Text style={styles.textStyle}>{item.username}</Text>
+								</TouchableOpacity>
+							)}
+							enableEmptySections={true}
+							style={{ marginTop: 10 }}
+							keyExtractor={(item, index) => item.username.toString()}
+						/>
+					)}
 				</View>
 			</View>
 		);
 	}
 
-	searchFilterFunction = text => {
-		this.setState({ data: newData });
-
+	ListViewItemSeparator = () => {
+		//Item sparator view
 		return (
-			<List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-				<FlatList
-					data={this.state.data}
-					renderItem={({ item }) => (
-						<ListItem
-						/>
-					)}
-					keyExtractor={item => item.email}
-					ItemSeparatorComponent={this.renderSeparator}
-					ListHeaderComponent={this.renderHeader}
-				/>
-			</List>
+			<View
+				style={{
+					height: 0.3,
+					width: '90%',
+					backgroundColor: '#080808'
+				}}
+			/>
 		);
+	};
+
+	clearResults = () => {
+		this.setState({ searchR: null });
+	};
+
+	updateSearch = async search => {
+		this.setState({ inputSearch: search });
+		if (search != null) {
+			this.searchFilterFunction(search);
+		}
+	};
+
+	searchFilterFunction = async text => {
+		resultSearch = await searchUser(text);
+		this.setState({ searchR: resultSearch });
 	};
 
 	// Insta style feed using UserPost
@@ -211,10 +232,7 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Inspire);
+export default connect(mapStateToProps, mapDispatchToProps)(Inspire);
 
 const styles = StyleSheet.create({
 	container: {
@@ -251,5 +269,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		color: '#eee',
 		backgroundColor: 'white'
+	},
+	viewStyle: {
+		height: 'auto',
+		flex: 0,
+		backgroundColor: 'red',
+		marginTop: Platform.OS == 'ios' ? 30 : 0
+	},
+	textStyle: {
+		padding: 10
 	}
 });

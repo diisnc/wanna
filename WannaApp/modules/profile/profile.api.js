@@ -80,3 +80,14 @@ export const getSalesHistory = () => {
 	};
 	return ourFetchWithToken(config);
 };
+
+export const searchUser = userString => {
+	const config = {
+		endpoint: '/v1/users/search/',
+		method: 'GET',
+		params: {
+			userString: userString
+		}
+	};
+	return ourFetchWithToken(config);
+};
