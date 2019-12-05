@@ -40,7 +40,7 @@ class Chat extends Component {
 		const connectionConfig = {
 			transports: ['websocket']
 		};
-		socket = SocketIOClient('https://28501ba8.ngrok.io', connectionConfig);
+		socket = SocketIOClient('https://7d539135.ngrok.io', connectionConfig);
 	}
 
 	handleBackPress = () => {
@@ -170,9 +170,9 @@ class Chat extends Component {
 			<View
 				style={{
 					height: this.startHeaderHeight,
-					backgroundColor: 'white',
+					backgroundColor: '#00afff',
 					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
+					borderBottomColor: '#00afff'
 				}}>
 				<View
 					style={{
@@ -181,10 +181,10 @@ class Chat extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: '#00afff'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>
-						Conversa com {this.props.contact}
+					<Text style={{ flex: 3, textAlign: 'center', fontSize: 18, color:'white', fontWeight: 'bold' }}>
+						 {this.props.contact}
 					</Text>
 				</View>
 			</View>
@@ -240,10 +240,9 @@ class Chat extends Component {
 									source={require('../assets/noImage.png')}
 								/>
 								}
-								
 								<Text style={styles.listItem}>{item.text}</Text>
-								<Text style={styles.listItem}>{item.createdAt}</Text>
 							</View>
+							<Text style={styles.date}>{item.createdAt}</Text>
 							<View style={styles.marginBottom} />
 						</View>
 					)}
@@ -255,7 +254,7 @@ class Chat extends Component {
 						onChangeText={this.changeTextHandler}
 						onSubmitEditing={this.sendMessage}
 						value={this.state.text}
-						placeholder="Type a message"
+						placeholder="Enviar mensagem..."
 						returnKeyType="done"
 						returnKeyLabel="done"
 						underlineColorAndroid="transparent"
@@ -264,7 +263,7 @@ class Chat extends Component {
 						style={styles.inputButton}
 						underlayColor="#fff"
 						onPress={this.sendMessage}>
-						<Text>Send</Text>
+						<Text>Enviar</Text>
 					</TouchableHighlight>
 				</View>
 			</View>
@@ -376,6 +375,15 @@ const styles = StyleSheet.create({
 		paddingTop: 2,
 		paddingBottom: 2,
 		fontSize: 14
+	},
+	date: {
+		width: 'auto',
+		maxWidth: '80%',
+		paddingTop: 2,
+		paddingBottom: 2,
+		fontSize: 11,
+		color: '#a8a8a8'
+
 	},
 	marginBottom: {
 		height: 5,

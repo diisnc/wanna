@@ -93,9 +93,9 @@ class ConversationsList extends Component {
 			<View
 				style={{
 					height: this.startHeaderHeight,
-					backgroundColor: 'white',
+					backgroundColor: '#00afff',
 					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
+					borderBottomColor: '#dddd'
 				}}>
 				<View
 					style={{
@@ -104,9 +104,10 @@ class ConversationsList extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: '#00afff'
+
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>Conversas</Text>
+					<Text style={{ flex: 3, textAlign: 'center', color: 'white', fontSize: 18, fontWeight: 'bold' }}>Todas as mensages</Text>
 				</View>
 			</View>
 		);
@@ -145,13 +146,28 @@ class ConversationsList extends Component {
 												item.idPost
 										  );
 								}}>
-								<View style={{ backgroundColor: 'red', marginBottom: 5 }}>
-									<Text>{item.idPost}</Text>
-									{item.idReceiver == this.props.loggedUsername ? (
+								<View style={styles.containerStyle}>
+									{item.idReceiver === this.props.loggedUsername ? (
 										<Text>{item.idSender}</Text>
 									) : (
 										<Text>{item.idReceiver}</Text>
 									)}
+									<Text>{item.idPost}</Text>
+									<Text>Título do post</Text>
+									{item.idSender === this.props.loggedUsername ? (
+										<Text>{ "You: " + item.messageText}</Text>
+									) : (
+										<Text>{item.idSender + ": " + item.messageText}</Text>
+									)}
+									
+									<Text style={styles.date}>{item.createdAt}</Text>
+									<View style={[
+										{
+												display: 'flex',
+												alignItems: 'flex-end'
+													
+										}
+									  ]}>
 									<Image
 										source={{
 											uri:
@@ -161,12 +177,13 @@ class ConversationsList extends Component {
 												new Buffer(item.photoData)
 										}}
 										style={{
-											marginLeft: 10,
-											width: 75,
-											height: 75,
-											borderRadius: 50
+											marginLeft: 20,
+											width: 95,
+											height: 95,
+											borderRadius: 700
 										}}
 									/>
+									</View>
 								</View>
 							</TouchableHighlight>
 						)}
@@ -193,9 +210,29 @@ export default connect(
 )(ConversationsList);
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center'
-	}
+	containerStyle: {
+	  borderWidth: 1,
+	  borderRadius: 2,
+	  borderColor: '#ddd',
+	  borderBottomWidth: 0,
+	  shadowColor: '#000',
+	  shadowOffset: { width: 0, height: 2 },
+	  shadowOpacity: 0.8,
+	  shadowRadius: 2,
+	  elevation: 1,
+	  marginLeft: 5,
+	  marginRight: 5,
+	  marginTop: 10,
+	},
+    date: {
+		width: 'auto',
+		maxWidth: '80%',
+		paddingTop: 2,
+		paddingBottom: 2,
+		fontSize: 14,
+		color: '#a8a8a8'
+
+	},
 });
+
+
