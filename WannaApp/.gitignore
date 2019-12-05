@@ -1,6 +1,14 @@
-# Dependency directories
+
+!node_modules/
 node_modules/*
+!node_modules/react-native-elements/
+node_modules/react-native-elements/*
+!node_modules/react-native-elements/src/
+node_modules/react-native-elements/src/*
+!node_modules/react-native-elements/src/helpers/
+node_modules/react-native-elements/src/helpers/*
 !node_modules/react-native-elements/src/helpers/getIconType.js
+
 jspm_packages
 .expo/
 

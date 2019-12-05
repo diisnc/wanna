@@ -9,12 +9,16 @@ import {
 	ScrollView,
 	Image,
 	Switch,
-	FlatList
+	FlatList,
+	Dimensions
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { getFilters } from '../modules/filter/filter.api';
 import Loading from './Loading';
+import { Button, theme } from '../galio';
+
+const { width } = Dimensions.get('screen');
 
 class Filters extends Component {
 	state = {
@@ -138,6 +142,13 @@ class Filters extends Component {
 							}}
 						/>
 					</View>
+					<Button
+						shadowless
+						color="#3498DB"
+						style={[styles.button, styles.shadow]}
+						onPress={this.searchFilters}>
+						Procurar
+					</Button>
 				</ScrollView>
 			);
 		}
@@ -175,6 +186,12 @@ class Filters extends Component {
 			</View>
 		);
 	}
+
+	async searchFilters() {
+		console.log('entrou no coiso');
+
+		return;
+	}
 }
 export default Filters;
 
@@ -183,5 +200,18 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	shadow: {
+		shadowColor: 'black',
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.2,
+		elevation: 2
+	},
+	button: {
+		marginBottom: theme.SIZES.BASE,
+		width: width - theme.SIZES.BASE * 3.5,
+		borderRadius: 25,
+		paddingVertical: 13
 	}
 });

@@ -13,13 +13,12 @@ import {
 	TouchableOpacity,
 	StatusBar
 } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { feed } from '../modules/post/post.api';
 import UserPost from './UserPost';
 import Loading from './Loading';
-
+import { SearchBar, ListItem } from 'react-native-elements';
 const { height, width } = Dimensions.get('window');
 
 class Inspire extends Component {
@@ -149,17 +148,34 @@ class Inspire extends Component {
 						elevation: 1,
 						justifyContent: 'flex-end'
 					}}>
-					<MaterialIcons name="search" size={20} style={{ marginRight: 10 }} />
-					<TextInput
-						underlineColorAndroid="transparent"
-						placeholder="Try Camisola"
-						placeholderTextColor="grey"
-						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white', height: 30 }}
+					<SearchBar
+						style={{ marginTop: 100 }}
+						placeholder="Search"
+						onIconPress={() => Alert.alert('HEHE')}
 					/>
 				</View>
 			</View>
 		);
 	}
+
+	searchFilterFunction = text => {
+		this.setState({ data: newData });
+
+		return (
+			<List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+				<FlatList
+					data={this.state.data}
+					renderItem={({ item }) => (
+						<ListItem
+						/>
+					)}
+					keyExtractor={item => item.email}
+					ItemSeparatorComponent={this.renderSeparator}
+					ListHeaderComponent={this.renderHeader}
+				/>
+			</List>
+		);
+	};
 
 	// Insta style feed using UserPost
 	buildInstaStyle() {
