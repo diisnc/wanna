@@ -145,9 +145,9 @@ class Combine extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>NEW FILTER</Text>
+					<Text style={{ flex: 3, textAlign: 'center' }}>COMBINAR</Text>
 					<MaterialCommunityIcons.Button
 						name="plus"
 						size={40}

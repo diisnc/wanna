@@ -92,8 +92,8 @@ class Profile extends Component {
 				loading: false,
 				username: profile.info.username,
 				following: profile.following,
-				userNrFollowers: profile.nrFollowers.number,
-				userNrFollowings: profile.nrFollowings.number
+				userNrFollowers: parseInt(profile.nrFollowers.number),
+				userNrFollowings: parseInt(profile.nrFollowings.number)
 			});
 		}
 

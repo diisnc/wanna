@@ -40,17 +40,25 @@ class UserPost extends Component {
 					<View style={{ flex: 1, flexDirection: 'row' }}>
 						{/* primeira coluna: foto do perfil */}
 						<View>
-							<Image
-								source={{
-									uri:
-										'data:' +
-										'image/jpeg' +
-										';base64,' +
-										new Buffer(this.props.item.avatarData)
-								}}
-								style={{ width: 40, height: 40, borderRadius: 60 }}
-								resizeMode="contain"
-							/>
+							{this.props.item.avatarData != null ? (
+								<Image
+									style={{ width: 40, height: 40, borderRadius: 60 }}
+									resizeMode="contain"
+									source={{
+										uri:
+											'data:' +
+											'image/jpeg' +
+											';base64,' +
+											new Buffer(this.props.item.avatarData)
+									}}
+								/>
+							) : (
+								<Image
+									style={{ width: 40, height: 40, borderRadius: 60 }}
+									resizeMode="contain"
+									source={require('../assets/noImage.png')}
+								/>
+							)}
 						</View>
 						{/* segunda coluna: nome de perfil e localização */}
 						<View style={{ flex: 1, flexDirection: 'column' }}>
