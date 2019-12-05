@@ -231,6 +231,7 @@ class Add extends Component {
 						key={'clothe'}
 						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
 						<ModalDropdown
+							onDropdownWillShow={this.clotheWillShow.bind(this)}
 							onSelect={(index, value) => {
 								this.handleClothe({ selected: value });
 							}}
@@ -255,6 +256,7 @@ class Add extends Component {
 						key={'color'}
 						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
 						<ModalDropdown
+							onDropdownWillShow={this.colorWillShow.bind(this)}
 							onSelect={(index, value) => {
 								this.handleColor({ selected: value });
 							}}
@@ -279,6 +281,7 @@ class Add extends Component {
 						key={'sizes'}
 						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
 						<ModalDropdown
+							onDropdownWillShow={this.sizeWillShow.bind(this)}
 							onSelect={(index, value) => {
 								this.handleSizes({ selected: value });
 							}}
@@ -366,6 +369,21 @@ class Add extends Component {
 				</View>
 			</ScrollView>
 		);
+	}
+
+	clotheWillShow() {
+		if (this.state.optionsClothes.length == 0) return false;
+		return true;
+	}
+
+	colorWillShow() {
+		if (this.state.optionsColors.length == 0) return false;
+		return true;
+	}
+
+	sizeWillShow() {
+		if (this.state.optionsSizes.length == 0) return false;
+		return true;
 	}
 
 	// handle image result
