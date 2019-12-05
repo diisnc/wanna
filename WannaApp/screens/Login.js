@@ -87,8 +87,8 @@ class Login extends Component {
 
 					<View style={styles.signupTextCont}>
 						<Text style={styles.signupText}>Ainda não tens conta?</Text>
-						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}><
-							Text style={styles.signupButton}> Regista-te!</Text>
+						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}>
+							<Text style={styles.signupButton}> Regista-te!</Text>
 						</TouchableOpacity>
 					</View>
 

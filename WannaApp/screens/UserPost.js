@@ -14,7 +14,11 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
+import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';	
+import { theme } from '../galio';
 import PostButtons from './components/PostButtons';
+
+const screenWidth = Dimensions.get('window').width
 
 class UserPost extends Component {
 	state = {
@@ -29,52 +33,64 @@ class UserPost extends Component {
 	render() {
 		if (this.props.item != null) {
 			return (
-				<View
-					style={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'stretch'
-					}}>
-					{/* header de post, dividido em 2 colunas*/}
-					<View style={{ flex: 1, flexDirection: 'row' }}>
-						{/* primeira coluna: foto do perfil */}
-						<View>
+				<Card>
+					<CardItem>
+						<Left>
+
 							{this.props.item.avatarData != null ? (
-								<Image
-									style={{ width: 40, height: 40, borderRadius: 60 }}
-									resizeMode="contain"
-									source={{
-										uri:
-											'data:' +
-											'image/jpeg' +
-											';base64,' +
-											new Buffer(this.props.item.avatarData)
-									}}
-								/>
-							) : (
-								<Image
-									style={{ width: 40, height: 40, borderRadius: 60 }}
-									resizeMode="contain"
-									source={require('../assets/noImage.png')}
-								/>
-							)}
-						</View>
-						{/* segunda coluna: nome de perfil e localização */}
-						<View style={{ flex: 1, flexDirection: 'column' }}>
-							<TouchableOpacity
+								<TouchableOpacity
 								onPress={() => {
 									this.props.navigation.navigate('UserProfile', {
 										userID: this.props.item.idUser
 									});
 								}}>
-								<Text>{this.props.item.idUser}</Text>
-							</TouchableOpacity>
-							<Text>{this.props.item.location}</Text>
-						</View>
-					</View>
-					{/* imagens do post */}
-					<View>
+									<Image
+										style={{ width: 40, height: 40, borderRadius: 40/2 }}
+										source={{
+											uri:
+												'data:' +
+												'image/jpeg' +
+												';base64,' +
+												new Buffer(this.props.item.avatarData)
+										}}
+									/>
+								</TouchableOpacity>
+							) : (
+								<TouchableOpacity
+								onPress={() => {
+									this.props.navigation.navigate('UserProfile', {
+										userID: this.props.item.idUser
+									});
+								}}>
+									<Image
+										style={{ width: 40, height: 40, borderRadius: 40/2 }}
+										source={require('../assets/noImage.png')}
+									/>
+								</TouchableOpacity>
+							)}
+
+							<Body>
+								<TouchableOpacity
+									onPress={() => {
+										this.props.navigation.navigate('UserProfile', {
+											userID: this.props.item.idUser
+										});
+									}}>
+									<Text style={{fontWeight: 'bold'}}>
+										{this.props.item.idUser}
+									</Text>
+								</TouchableOpacity>
+								
+								<Text style={{fontSize: 12}}>{this.props.item.location}</Text>
+							</Body>
+						</Left>
+					</CardItem>
+
+
+
+
+
+					<CardItem cardBody>
 						<TouchableOpacity
 							activeOpacity={0.8}
 							onPress={() => {
@@ -90,28 +106,28 @@ class UserPost extends Component {
 										';base64,' +
 										new Buffer(this.props.item.photoData)
 								}}
-								style={{ width: 500, height: 500 }}
-								resizeMode="contain"
+								style={{ height: 300, 
+									width: screenWidth - (theme.SIZES.BASE * 0.5)}}
 							/>
 						</TouchableOpacity>
-					</View>
+					</CardItem>
 
-					{/* footer de post, dividido em 3 linhas */}
+
+
+
+				
 					<View style={{ flex: 1, flexDirection: 'column' }}>
-						{/* primeira linha: likes à esquerda, comentários, guardar e comprar à direita */}
 						<PostButtons
 							idPost={this.props.item.id}
 							navigation={this.props.navigation}
 						/>
-						{/* segunda linha, dividida em 2 colunas */}
 						<View style={{ flex: 1, flexDirection: 'row' }}>
-							{/* coluna da esquerda, dividida em 2 linhas */}
 							<View style={{ flex: 1, flexDirection: 'column' }}>
-								{/* primeira linha: nome do produto */}
+
 								<View style={{ flex: 1 }}>
 									<Text>{this.props.item.category}</Text>
 								</View>
-								{/* segunda linha: marca e tamanho e cor */}
+
 								<View style={{ flex: 1 }}>
 									<Text>
 										{this.props.item.brand}, {this.props.item.color},{' '}
@@ -119,17 +135,17 @@ class UserPost extends Component {
 									</Text>
 								</View>
 							</View>
-							{/* coluna da direita: preço*/}
+							
 							<View style={{ flex: 1 }}>
 								<Text>{this.props.item.price}€</Text>
 							</View>
 						</View>
-						{/* terceira linha: descrição */}
+						
 						<View style={{ flex: 1 }}>
 							<Text>{this.props.item.description}</Text>
 						</View>
 					</View>
-				</View>
+				</Card>
 			);
 		} else return null;
 	}
@@ -142,6 +158,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#ddd'
+		backgroundColor: 'white'
 	}
 });
