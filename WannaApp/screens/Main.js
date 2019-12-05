@@ -19,15 +19,15 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
 const FilterStack = createStackNavigator({
-	Wanted: {
-		screen: Wanted,
+	Filters: {
+		screen: Filters,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null
 		}
 	},
-	Filters: {
-		screen: Filters,
+	Wanted: {
+		screen: Wanted,
 		headerMode: 'none',
 		navigationOptions: {
 			header: null

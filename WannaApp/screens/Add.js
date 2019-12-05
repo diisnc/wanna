@@ -97,9 +97,9 @@ class Add extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 1, textAlign: 'center' }}>NEW POST</Text>
+					<Text style={{ flex: 1, textAlign: 'center' }}>NOVO POST</Text>
 				</View>
 			</View>
 		);

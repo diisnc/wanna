@@ -26,7 +26,7 @@ exports.delete = async (req, res, next) => {
 
 exports.getFilters = async (req, res, next) => {
 	try {
-		list = await Filter.getFilters();
+		list = await Filter.getFilters(req.user.username);
 		return res.json(list);
 	} catch (e) {
 		next(e);
@@ -37,12 +37,11 @@ exports.createFilter = async (req, res, next) => {
 	try {
 		await Filter.create({
 			category: req.body.category,
-			idUser: req.user.username,
 			priceMin: req.body.priceMin,
 			priceMax: req.body.priceMax,
 			size: req.body.size,
 			color: req.body.color,
-			isActive: req.body.isActive,
+			idUser: req.user.username,
 		});
 		return res.sendStatus(200)
 	} catch (e) {

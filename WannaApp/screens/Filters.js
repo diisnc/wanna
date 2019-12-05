@@ -8,16 +8,20 @@ import {
 	Platform,
 	ScrollView,
 	Image,
-	Switch
+	Switch,
+	FlatList
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { getFilters } from '../modules/filter/filter.api';
+import Loading from './Loading';
 
 class Filters extends Component {
 	state = {
 		selectedFilters: [],
-		switchValues: [false, false]
+		switchValues: [false, false],
+		filters: [],
+		loading: true
 	};
 
 	//onValueChange of the switch this function will be called
@@ -57,9 +61,9 @@ class Filters extends Component {
 
 	async getFiltersFromAPI() {
 		const newState = await getFilters();
-		// console.log(newState);
+		console.log(newState);
 		if (newState != null) {
-			this.setState({ feedData: newState, numPosts: newState.length, loading: false });
+			this.setState({ filters: newState, numPosts: newState.length, loading: false });
 		}
 
 		return;
@@ -67,12 +71,6 @@ class Filters extends Component {
 
 	render() {
 		return (
-			/*
-            Fazer View Englobadora da página
-            onde o primeiro elemento é o header
-            de pesquisa e o segundo elemento
-            é o feed que contém as imagens.
-            */
 			// Safe Box for Iphone
 			<SafeAreaView style={{ flex: 1 }}>
 				{/* Full Page Box */}
@@ -109,15 +107,9 @@ class Filters extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: 'white'
 					}}>
-					<MaterialIcons.Button
-						name="arrow-back"
-						size={40}
-						style={{ flex: 1 }}
-						onPress={() => this.props.navigation.navigate('Wanted')}
-					/>
-					<Text style={{ flex: 3, textAlign: 'center' }}>NEW FILTER</Text>
+					<Text style={{ flex: 3, textAlign: 'center' }}>OS MEUS FILTROS</Text>
 					<MaterialCommunityIcons.Button
 						name="plus"
 						size={40}
@@ -131,45 +123,57 @@ class Filters extends Component {
 
 	// Builds list of filters
 	buildFilterList() {
-		return (
-			<ScrollView scrollEventThrottle={16}>
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-					<FlatList
-						data={this.state.list}
-						keyExtractor={(item, index) => index.toString()}
-						style={styles.list}
-						renderItem={({ item, index }) => {
-							return this.buildSingleFilter(item, index);
-						}}
-					/>
-				</View>
-			</ScrollView>
-		);
+		if (this.state.loading == true) return <Loading />;
+		else {
+			console.log('entra no flatlist');
+			return (
+				<ScrollView scrollEventThrottle={16}>
+					<View style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
+						<FlatList
+							data={this.state.filters}
+							keyExtractor={(item, index) => item.id.toString()}
+							style={styles.list}
+							renderItem={({ item, index }) => {
+								return this.buildSingleFilter(item, index);
+							}}
+						/>
+					</View>
+				</ScrollView>
+			);
+		}
 	}
 
 	buildSingleFilter(item, index) {
-		<View
-			key={'filter' + index}
-			style={{
-				height: 80,
-				flexDirection: 'row',
-				alignItems: 'center',
-				justifyContent: 'center',
-				backgroundColor: 'green'
-			}}>
-			<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>Camisola</Text>
-			<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>Azul</Text>
-			<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>L</Text>
-			<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>10€</Text>
-			<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>15€</Text>
-			<Switch
-				style={{ margin: 10 }}
-				// controla switchValues, filterId servirá para selectedFilters
-				onValueChange={value =>
-					this.toggleSwitch({ i: 0, newValue: value, filterId: 'filter' + index })
-				}
-				value={this.state.switchValues[0]}></Switch>
-		</View>;
+		return (
+			<View
+				key={'filter' + index}
+				style={{
+					height: 80,
+					flexDirection: 'row',
+					alignItems: 'center',
+					justifyContent: 'center',
+					backgroundColor: 'green'
+				}}>
+				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
+					{item.category}
+				</Text>
+				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>{item.color}</Text>
+				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>{item.size}</Text>
+				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
+					{item.priceMin}
+				</Text>
+				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
+					{item.priceMax}
+				</Text>
+				<Switch
+					style={{ margin: 10 }}
+					// controla switchValues, filterId servirá para selectedFilters
+					onValueChange={value =>
+						this.toggleSwitch({ i: 0, newValue: value, filterId: 'filter' + index })
+					}
+					value={this.state.switchValues[0]}></Switch>
+			</View>
+		);
 	}
 }
 export default Filters;

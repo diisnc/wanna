@@ -207,10 +207,10 @@ class Profile extends Component {
 						/>
 					)}
 					<View style={{alignItems: 'center'}}>
-						<Text style={{ fontSize: 20, marginBottom: 5 }}> 
-							{this.state.profile.info.firstName + ' ' + this.state.profile.info.lastName} 
+						<Text style={{ fontSize: 20, marginBottom: 5 }}>
+							{this.state.profile.info.firstName + ' ' + this.state.profile.info.lastName}
 						</Text>
-						
+
 						{this.state.profile.info.rating > 0	? (
 							<Stars
 								rating={parseInt( this.state.profile.info.rating, 10 )}
@@ -240,7 +240,7 @@ class Profile extends Component {
 								fontWeight: 'bold',
 								fontSize: 16
 							}}>
-							{this.state.nrPosts}x{"\n"}posts
+							{this.state.numPosts}{"\n"}posts
 						</Text>
 					</View>
 					<View

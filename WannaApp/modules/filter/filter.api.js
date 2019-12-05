@@ -2,14 +2,13 @@ import { ourFetchWithToken } from '../api';
 
 export const getFilters = () => {
 	const config = {
-		endpoint: '/v1/filter/',
+		endpoint: '/v1/filter',
 		method: 'GET'
 	};
 	return ourFetchWithToken(config);
 };
 
 export const createFilter = (
-	selectedGenre,
 	selectedClothe,
 	selectedColor,
 	selectedSize,

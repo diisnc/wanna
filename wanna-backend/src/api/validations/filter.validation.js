@@ -7,7 +7,6 @@ module.exports = {
 		body('priceMax'),
 		body('size'),
 		body('color'),
-		body('isActive'),
 	],
 
 	searchByFilter: [

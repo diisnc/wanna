@@ -24,10 +24,6 @@ class Wanted extends Component {
 	};
 
 	componentDidMount() {
-		this.startHeaderHeight = 80;
-		if (Platform.OS == 'android') {
-			this.startHeaderHeight = 60;
-		}
 
 		// get data from servers and save in state
 		// this.getDataFromAPI();
@@ -70,6 +66,10 @@ class Wanted extends Component {
 
 	// Builds header of the page
 	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
 		return (
 			// Safe Box for Android
 			<View

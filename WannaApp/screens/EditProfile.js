@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, BackHandler, SafeAreaView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { Input, Button } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { register } from '../modules/auth/auth.api';
 
 import { globalStyle, defaultNavigator } from './style';
+import {
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+	Platform,
+	TouchableOpacity,
+	Dimensions,
+	ScrollView,
+	Keyboard,
+	SafeAreaView
+} from 'react-native';
+import { Button, theme } from '../galio';
+
+const { width } = Dimensions.get('screen');
 
 class EditProfile extends Component {
 	constructor(props) {
 		super(props);
-		// BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 	}
 
 	componentDidMount() {}
-
-	handleBackPress = () => {
-		this.props.navigation.navigate('OtherProfile');
-		return true;
-	};
 
 	render() {
 		return (
@@ -61,9 +69,9 @@ class EditProfile extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>Editar Perfil</Text>
+					<Text style={{ flex: 3, textAlign: 'center' }}>EDITAR PERFIL</Text>
 				</View>
 			</View>
 		);
@@ -72,28 +80,39 @@ class EditProfile extends Component {
 	renderForm() {
 		const { handleSubmit } = this.props;
 		const submitForm = e => {
-			this.props.register(e.user, e.first, e.last, e.email, e.password);
+			this.props.register(e.user, e.first, e.last, e.location, e.email, e.password);
 		};
-		return (
-			<View>
-				<Field name="user" placeholder="Username" component={renderInput} />
-				<Field name="first" placeholder="First name" component={renderInput} />
-				<Field name="last" placeholder="Last name" component={renderInput} />
-				<Field name="email" placeholder="Email" component={renderInput} />
-				<Field name="password" placeholder="Password" component={renderPassword} />
-				<View style={styles.errorMessage}>
-					<Text>{this.props.errorMessage}</Text>
-				</View>
 
-				<Button
-					onPress={handleSubmit(submitForm)}
-					buttonStyle={[globalStyle.btn]}
-					titleStyle={globalStyle.btnText}
-					title={'Register'}
-				/>
-				{this.props.registered ? (
-					<Text style={styles.loggedInDesc}>Register was successfull</Text>
-				) : null}
+		return (
+			<View style={styles.container}>
+				<ScrollView
+					keyboardShouldPersistTaps="always"
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={{
+						flexGrow: 1,
+						justifyContent: 'space-between',
+						paddingBottom: 89
+					}}>
+					<Field name="location" placeholder="Localização" component={renderInput} />
+					<Field name="email" placeholder="E-mail" component={renderInput} />
+					<Field name="password" placeholder="Palavra-passe" component={renderPassword} />
+
+					<Button
+						shadowless
+						color="#3498DB"
+						style={[styles.button, styles.shadow]}
+						onPress={handleSubmit(submitForm)}>
+						Registar
+					</Button>
+
+					<View style={styles.errorMessage}>
+						<Text>{this.props.errorMessage}</Text>
+					</View>
+
+					{this.props.registered ? (
+						<Text style={styles.loggedInDesc}>Register was successfull</Text>
+					) : null}
+				</ScrollView>
 			</View>
 		);
 	}
@@ -148,34 +167,49 @@ export default reduxForm({
 
 const styles = StyleSheet.create({
 	container: {
+		backgroundColor: 'white',
 		flex: 1,
-		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	inputBox: {
+		width: width - theme.SIZES.BASE * 3.5,
+		backgroundColor: 'rgba(128,128,128, 0.2)',
+		borderRadius: 25,
+		paddingHorizontal: 16,
+		fontSize: 16,
+		color: '#000000', //not the color of the placeholder, but the color when u write
+		marginVertical: 10,
+		height: '6%'
+	},
+	shadow: {
+		shadowColor: 'black',
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.2,
+		elevation: 2
+	},
+	button: {
+		marginBottom: theme.SIZES.BASE,
+		width: width - theme.SIZES.BASE * 3.5,
+		borderRadius: 25,
+		paddingVertical: 13
+	},
+	signinTextCont: {
+		flexGrow: 1,
+		alignItems: 'flex-end',
 		justifyContent: 'center',
-		alignItems: 'center'
+		paddingVertical: 16,
+		flexDirection: 'row'
 	},
-	input: {
-		backgroundColor: '#ffffff',
-		borderBottomWidth: 0,
-		marginBottom: 10,
-		borderRadius: 2,
-		paddingVertical: 5,
-		width: '100%',
-		margin: 10
+	signinText: {
+		color: 'rgba(128,128,128, 0.7)',
+		fontSize: 16
 	},
-	placeholder: {
-		fontSize: 12
-	},
-	submitButton: {
-		backgroundColor: '#000000',
-		borderRadius: 10,
-		marginTop: 20,
-		borderWidth: 1,
-		borderColor: '#666666',
-		margin: 10
-	},
-	submitButtonText: {
-		textAlign: 'center',
-		color: '#444'
+	signinButton: {
+		color: '#3498DB',
+		fontSize: 16,
+		fontWeight: '500'
 	},
 	errorMessage: {
 		marginTop: 40

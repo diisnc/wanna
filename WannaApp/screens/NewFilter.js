@@ -8,7 +8,8 @@ import {
 	Platform,
 	ScrollView,
 	Button,
-	TouchableOpacity
+	TouchableOpacity,
+	ToastAndroid
 } from 'react-native';
 import { createFilter } from '../modules/filter/filter.api';
 import { connect } from 'react-redux';
@@ -18,10 +19,10 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 
 const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
-const colors = ['Azul', 'Vermelho', 'Preto', 'Branco', 'Outra'];
+const colors = ['Todas', 'Azul', 'Vermelho', 'Preto', 'Branco', 'Outra'];
 const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
 const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
-const prices = [1, 2, 3, 4, 5, 10, 15, 30, 50, 100];
+const prices = [1, 2, 3, 4, 5, 10, 15, 30, 50, 75, 100, 200, 400, 500];
 
 class NewFilter extends Component {
 	state = {
@@ -124,12 +125,6 @@ class NewFilter extends Component {
 
 	render() {
 		return (
-			/*
-            Fazer View Englobadora da página
-            onde o primeiro elemento é o header
-            de pesquisa e o segundo elemento
-            é o feed que contém as imagens.
-            */
 			// Safe Box for Iphone
 			<SafeAreaView style={{ flex: 1 }}>
 				{/* Full Page Box */}
@@ -141,15 +136,17 @@ class NewFilter extends Component {
 						alignItems: 'stretch'
 					}}>
 					{this.buildHeader()}
-					{/* this.buildWishlist() */}
 					{this.buildFilterForm()}
 				</View>
 			</SafeAreaView>
 		);
 	}
 
-	// Builds header of the page
 	buildHeader() {
+		this.startHeaderHeight = 80;
+		if (Platform.OS == 'android') {
+			this.startHeaderHeight = 60;
+		}
 		return (
 			// Safe Box for Android
 			<View
@@ -159,26 +156,16 @@ class NewFilter extends Component {
 					borderBottomWidth: 1,
 					borderBottomColor: '#dddddd'
 				}}>
-				{/* Search Box */}
 				<View
 					style={{
+						height: '90%',
 						flexDirection: 'row',
 						padding: 10,
-						backgroundColor: 'white',
-						marginHorizontal: 20,
-						shadowOffset: { width: 0, height: 0 },
-						shadowColor: 'black',
-						shadowOpacity: 0.2,
-						elevation: 1,
-						justifyContent: 'flex-end'
+						justifyContent: 'center',
+						alignItems: 'center',
+						backgroundColor: 'blue'
 					}}>
-					<MaterialIcons name="search" size={20} style={{ marginRight: 10 }} />
-					<TextInput
-						underlineColorAndroid="transparent"
-						placeholder="Try Camisola"
-						placeholderTextColor="grey"
-						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
-					/>
+					<Text style={{ flex: 1, textAlign: 'center' }}>NOVO FILTRO</Text>
 				</View>
 			</View>
 		);
@@ -334,7 +321,7 @@ class NewFilter extends Component {
 						/>
 					</View>
 					{this.state.completed ? (
-						<Button title="Adicionar" onPress={() => createFilter()} />
+						<Button title="Adicionar" onPress={() => this.createFilter()} />
 					) : null}
 
 					<View style={styles.errorMessage}>
@@ -346,9 +333,8 @@ class NewFilter extends Component {
 	}
 
 	// Get Data to Build Feed and Transform it to Json Object
-	async createFilterAsync() {
+	async createFilter() {
 		result = await createFilter(
-			this.state.selectedGenre,
 			this.state.selectedClothe,
 			this.state.selectedColor,
 			this.state.selectedSize,
