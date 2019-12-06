@@ -25,10 +25,12 @@ const { height, width } = Dimensions.get('window');
 class Inspire extends Component {
 	state = {
 		feedData: [],
+		newData: [],
 		numPosts: 0,
 		loading: true,
 		inputSearch: null,
-		searchR: []
+		searchR: [],
+		index: 0
 	};
 
 	componentDidMount() {
@@ -57,7 +59,8 @@ class Inspire extends Component {
 
 	async getFeedDataFromApiAsync() {
 		// const newState = require('./json/responseFeed');
-		const newState = await feed(0);
+		const newState = await feed(this.state.index);
+		console.log('passando por aqui');
 		// console.log(newState);
 		if (newState != null) {
 			this.setState({ feedData: newState, numPosts: newState.length, loading: false });
@@ -209,6 +212,8 @@ class Inspire extends Component {
 							data={this.state.feedData}
 							keyExtractor={(item, index) => index.toString()}
 							style={styles.list}
+							onEndReachedThreshold={0.4}
+							onEndReached={this.handleLoadMore.bind(this)}
 							renderItem={({ item, index }) => {
 								return <UserPost item={item} navigation={this.props.navigation} />;
 							}}
@@ -217,6 +222,24 @@ class Inspire extends Component {
 				</View>
 			);
 		}
+	}
+
+	async handleLoadMore() {
+		indexToRequest = this.state.index + 1;
+		const newState = await feed(indexToRequest);
+		// console.log(newState);
+		cpyFeedData = [...this.state.feedData];
+		if (newState != null) {
+			cpyFeedData = cpyFeedData.concat(newState);
+			this.setState({
+				feedData: cpyFeedData,
+				numPosts: cpyFeedData.length,
+				index: indexToRequest
+			});
+			this.props.dispatchPosts(newState);
+		}
+
+		return;
 	}
 }
 

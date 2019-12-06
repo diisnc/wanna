@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Input } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
+import * as ImageManipulator from 'expo-image-manipulator';
+import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { register } from '../modules/auth/auth.api';
 
@@ -28,7 +31,7 @@ class EditProfile extends Component {
 		super(props);
 	}
 
-	componentDidMount() {}
+	componentDidMount() { }
 
 	render() {
 		return (
@@ -97,6 +100,9 @@ class EditProfile extends Component {
 					<Field name="email" placeholder="E-mail" component={renderInput} />
 					<Field name="password" placeholder="Palavra-passe" component={renderPassword} />
 
+					<Text>Mudar Foto de Perfil</Text>
+					{this.buildImagePicker()}
+
 					<Button
 						shadowless
 						color="#3498DB"
@@ -116,6 +122,70 @@ class EditProfile extends Component {
 			</View>
 		);
 	}
+
+	// Build space to pick image
+	buildImagePicker() {
+		return (
+			<View
+				style={{
+					height: 100,
+					flexDirection: 'row',
+					padding: 10,
+					justifyContent: 'center',
+					alignItems: 'center',
+					backgroundColor: 'pink'
+				}}>
+				{/* Take photo */}
+				<MaterialCommunityIcons.Button
+					name="camera"
+					size={40}
+					style={{ flex: 1 }}
+					onPress={this.takePhoto}
+				/>
+				{/* Select from gallery */}
+				<MaterialCommunityIcons.Button
+					name="folder-image"
+					size={40}
+					style={{ flex: 1 }}
+					onPress={this.pickImage}
+				/>
+			</View>
+		);
+	}
+
+	// access camera and take photo
+	takePhoto = async () => {
+		let pickerResult = await ImagePicker.launchCameraAsync({
+			allowsEditing: true,
+			aspect: [4, 3],
+			base64: true
+		});
+
+		const manipResult = await ImageManipulator.manipulateAsync(
+			pickerResult.uri,
+			[{ resize: { width: 100, height: 100 } }],
+			{ format: 'jpeg', base64: true }
+		);
+
+		this.handleImagePicked(manipResult.base64);
+	};
+
+	// access photo folder and pick
+	pickImage = async () => {
+		let pickerResult = await ImagePicker.launchImageLibraryAsync({
+			allowsEditing: true,
+			aspect: [4, 3],
+			base64: true
+		});
+
+		const manipResult = await ImageManipulator.manipulateAsync(
+			pickerResult.uri,
+			[{ resize: { width: 100, height: 100 } }],
+			{ format: 'jpeg', base64: true }
+		);
+
+		this.handleImagePicked(manipResult.base64);
+	};
 }
 
 //must be rendered outside of the render method as this will cause it to re-render each time the props change

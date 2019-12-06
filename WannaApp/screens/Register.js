@@ -49,10 +49,10 @@ class Register extends Component {
 
 		return (
 			<View style={styles.container}>
-				<ScrollView keyboardShouldPersistTaps='always' 
+				<ScrollView keyboardShouldPersistTaps='always'
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', paddingBottom: 89 }}>
-					
+
 					{this.buildHeader()}
 
 					<Logo />
@@ -64,8 +64,8 @@ class Register extends Component {
 					<Field name="email" placeholder="E-mail" component={renderInput} />
 					<Field name="password" placeholder="Palavra-passe" component={renderPassword} />
 
-					<Button shadowless 
-						color='#3498DB' 
+					<Button shadowless
+						color='#3498DB'
 						style={[styles.button, styles.shadow]}
 						onPress={handleSubmit(submitForm)}>
 						Registar
@@ -77,8 +77,8 @@ class Register extends Component {
 
 					<View style={styles.signinTextCont}>
 						<Text style={styles.signinText}>Tens uma conta?</Text>
-						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}><
-							Text style={styles.signinButton}> Inicia sessão.</Text>
+						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}>
+							<Text style={styles.signinButton}> Inicia sessão.</Text>
 						</TouchableOpacity>
 					</View>
 
@@ -95,7 +95,7 @@ class Register extends Component {
 //must be rendered outside of the render method as this will cause it to re-render each time the props change
 const renderInput = ({ input: { onChange, ...restInput }, placeholder }) => {
 	return (
-		<TextInput style={styles.inputBox} 
+		<TextInput style={styles.inputBox}
 			placeholder={placeholder}
 			placeholderTextColor = "rgba(128,128,128, 0.8)"
 			selectionColor="#fff"
@@ -108,7 +108,7 @@ const renderInput = ({ input: { onChange, ...restInput }, placeholder }) => {
 };
 const renderPassword = ({ input: { onChange, ...restInput }, placeholder }) => {
 	return (
-		<TextInput style={styles.inputBox} 
+		<TextInput style={styles.inputBox}
 			placeholder={placeholder}
 			secureTextEntry={true}
 			placeholderTextColor = "rgba(128,128,128, 0.8)"

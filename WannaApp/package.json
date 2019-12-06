@@ -10,6 +10,7 @@
     "expo-vector-icons": "^10.0.1",
     "galio-framework": "^0.6.3",
     "isomorphic-fetch": "^2.2.1",
+    "native-base": "^2.13.8",
     "query-string": "^4.3.2",
     "react": "16.8.3",
     "react-dom": "^15.4.2",
