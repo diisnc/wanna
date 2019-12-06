@@ -27,6 +27,9 @@ import { Button, theme } from '../galio';
 const { width } = Dimensions.get('screen');
 
 class EditProfile extends Component {
+	state = {
+		pickedImagesBase64: []
+	};
 	constructor(props) {
 		super(props);
 	}
@@ -186,6 +189,10 @@ class EditProfile extends Component {
 
 		this.handleImagePicked(manipResult.base64);
 	};
+
+	handleImagePicked(pickerResult) {
+		this.setState({ pickedImagesBase64: pickerResult });
+	}
 }
 
 //must be rendered outside of the render method as this will cause it to re-render each time the props change

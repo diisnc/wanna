@@ -24,16 +24,15 @@ class Wanted extends Component {
 	};
 
 	componentDidMount() {
-
 		// get data from servers and save in state
-		// this.getDataFromAPI();
+		this.getDataFromAPI();
 	}
 
 	async getDataFromAPI() {
 		const newState = await searchByFilter();
 		// console.log(newState);
 		if (newState != null) {
-			this.setState({ feedData: newState, numPosts: newState.length, loading: false });
+			this.setState({ wishlistData: newState, numPosts: newState.length, loading: false });
 		}
 
 		return;
@@ -41,12 +40,6 @@ class Wanted extends Component {
 
 	render() {
 		return (
-			/*
-            Fazer View Englobadora da página
-            onde o primeiro elemento é o header
-            de pesquisa e o segundo elemento
-            é o feed que contém as imagens.
-            */
 			// Safe Box for Iphone
 			<SafeAreaView style={{ flex: 1 }}>
 				{/* Full Page Box */}
@@ -110,12 +103,11 @@ class Wanted extends Component {
 					{
 						listener: event => {
 							if (this.isCloseToBottom(event.nativeEvent)) {
-								this.loadMoreData()
+								this.loadMoreData();
 							}
-					  	}
+						}
 					}
-				)}
-			>
+				)}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
 					{this.buildFeedTile()}
 				</View>
@@ -163,7 +155,6 @@ class Wanted extends Component {
 
 	// 2+1 tyle javascript generation
 	genTileType1(post) {
-
 		var primeiro = this.state.wishlistData[post];
 		var segundo = this.state.wishlistData[post + 1];
 		var terceiro = this.state.wishlistData[post + 2];
@@ -180,7 +171,7 @@ class Wanted extends Component {
 		printPrice1 = "price= " + JSON.stringify(primeiro.price);
 		printPhotoType11 = "photoType1= " + JSON.stringify(primeiro.photoType1);
 		*/
-		objJsonB641 = new Buffer(primeiro.photoData1);
+		objJsonB641 = new Buffer(primeiro.photoData);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(segundo.id);
 		/*
@@ -190,7 +181,7 @@ class Wanted extends Component {
 		printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
 		printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
 		*/
-		objJsonB642 = new Buffer(segundo.photoData1);
+		objJsonB642 = new Buffer(segundo.photoData);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(terceiro.id);
 		/*
@@ -200,10 +191,10 @@ class Wanted extends Component {
 		printPrice3 = "price= " + JSON.stringify(this.state.wishlistData[post+2].price);
 		printPhotoType13 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+2].photoType1);
 		*/
-		objJsonB643 = new Buffer(terceiro.photoData1);
+		objJsonB643 = new Buffer(terceiro.photoData);
 
 		// build javascript
-		return(
+		return (
 			<View
 				key={'superTile' + postsPrinted}
 				style={{
@@ -211,19 +202,18 @@ class Wanted extends Component {
 					flexDirection: 'row',
 					alignItems: 'stretch',
 					backgroundColor: 'blue'
-			}}>
+				}}>
 				<View
 					style={{
 						flex: 1,
 						backgroundColor: 'grey',
 						margin: 10,
 						flexDirection: 'column'
-				}}>
+					}}>
 					<View
 						key={'tile' + postsPrinted}
-						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
-					>
-						<Text >{printId1}</Text>
+						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
+						<Text>{printId1}</Text>
 						{/*
 						<Text
 							onPress={() =>
@@ -242,12 +232,7 @@ class Wanted extends Component {
 						*/}
 						<Image
 							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									objJsonB641 +
-									''
+								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB641 + ''
 							}}
 							style={{
 								flex: 1
@@ -268,12 +253,7 @@ class Wanted extends Component {
 						*/}
 						<Image
 							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									objJsonB642 +
-									''
+								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB642 + ''
 							}}
 							style={{
 								flex: 1
@@ -284,8 +264,7 @@ class Wanted extends Component {
 				</View>
 				<View
 					key={'tile' + postsPrinted + 2}
-					style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}
-				>
+					style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}>
 					<Text>{printId3}</Text>
 					{/*
 					<Text key={"idUser" + tyleNr+2}>{printIdUser3}</Text>
@@ -296,12 +275,7 @@ class Wanted extends Component {
 					*/}
 					<Image
 						source={{
-							uri:
-								'data:' +
-								'image/jpeg' +
-								';base64,' +
-								objJsonB643 +
-								''
+							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB643 + ''
 						}}
 						style={{
 							flex: 1
@@ -310,12 +284,11 @@ class Wanted extends Component {
 					/>
 				</View>
 			</View>
-		)
+		);
 	}
 
 	// 3 tyle javascript generation
 	genTileType2(post) {
-
 		var primeiro = this.state.wishlistData[post];
 		var segundo = this.state.wishlistData[post + 1];
 		var terceiro = this.state.wishlistData[post + 2];
@@ -332,7 +305,7 @@ class Wanted extends Component {
 		printPrice1 = "price= " + JSON.stringify(primeiro.price);
 		printPhotoType11 = "photoType1= " + JSON.stringify(primeiro.photoType1);
 		*/
-		objJsonB641 = new Buffer(primeiro.photoData1);
+		objJsonB641 = new Buffer(primeiro.photoData);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(segundo.id);
 		/*
@@ -342,7 +315,7 @@ class Wanted extends Component {
 		printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
 		printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
 		*/
-		objJsonB642 = new Buffer(segundo.photoData1);
+		objJsonB642 = new Buffer(segundo.photoData);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(terceiro.id);
 		/*
@@ -352,10 +325,10 @@ class Wanted extends Component {
 		printPrice3 = "price= " + JSON.stringify(this.state.wishlistData[post+2].price);
 		printPhotoType13 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+2].photoType1);
 		*/
-		objJsonB643 = new Buffer(terceiro.photoData1);
+		objJsonB643 = new Buffer(terceiro.photoData);
 
 		// build javascript
-		return(
+		return (
 			<View
 				key={'superTile' + postsPrinted}
 				style={{
@@ -364,11 +337,12 @@ class Wanted extends Component {
 					alignItems: 'stretch',
 					backgroundColor: 'green'
 				}}>
-				<View style={{
+				<View
+					style={{
 						flex: 1,
 						backgroundColor: 'pink',
 						margin: 10
-				}}>
+					}}>
 					<Text key={'id' + postsPrinted}>{printId1}</Text>
 					{/*
 					<Text key={"idUser" + post}>{printIdUser1}</Text>
@@ -379,17 +353,12 @@ class Wanted extends Component {
 					*/}
 					<Image
 						source={{
-							uri:
-								'data:' +
-								'image/jpeg' +
-								';base64,' +
-								objJsonB641 +
-								''
+							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB641 + ''
 						}}
 						style={{
 							flex: 1
 						}}
-						resizeMode = "contain"
+						resizeMode="contain"
 					/>
 				</View>
 				<View style={{ flex: 1, backgroundColor: 'grey', margin: 10 }}>
@@ -403,17 +372,12 @@ class Wanted extends Component {
 					*/}
 					<Image
 						source={{
-							uri:
-								'data:' +
-								'image/jpeg' +
-								';base64,' +
-								objJsonB642 +
-								''
+							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB642 + ''
 						}}
 						style={{
 							flex: 1
 						}}
-						resizeMode = "contain"
+						resizeMode="contain"
 					/>
 				</View>
 				<View style={{ flex: 1, backgroundColor: 'grey', margin: 10 }}>
@@ -427,17 +391,12 @@ class Wanted extends Component {
 					*/}
 					<Image
 						source={{
-							uri:
-								'data:' +
-								'image/jpeg' +
-								';base64,' +
-								objJsonB643 +
-								''
+							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB643 + ''
 						}}
 						style={{
 							flex: 1
 						}}
-						resizeMode = "contain"
+						resizeMode="contain"
 					/>
 				</View>
 			</View>
@@ -446,7 +405,6 @@ class Wanted extends Component {
 
 	// 1+2 tyle javascript generation
 	genTileType3(post) {
-
 		var primeiro = this.state.wishlistData[post];
 		var segundo = this.state.wishlistData[post + 1];
 		var terceiro = this.state.wishlistData[post + 2];
@@ -463,7 +421,7 @@ class Wanted extends Component {
 		printPrice1 = "price= " + JSON.stringify(primeiro.price);
 		printPhotoType11 = "photoType1= " + JSON.stringify(primeiro.photoType1);
 		*/
-		objJsonB641 = new Buffer(primeiro.photoData1);
+		objJsonB641 = new Buffer(primeiro.photoData);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(segundo.id);
 		/*
@@ -473,7 +431,7 @@ class Wanted extends Component {
 		printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
 		printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
 		*/
-		objJsonB642 = new Buffer(segundo.photoData1);
+		objJsonB642 = new Buffer(segundo.photoData);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(terceiro.id);
 		/*
@@ -483,10 +441,10 @@ class Wanted extends Component {
 		printPrice3 = "price= " + JSON.stringify(this.state.wishlistData[post+2].price);
 		printPhotoType13 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+2].photoType1);
 		*/
-		objJsonB643 = new Buffer(terceiro.photoData1);
+		objJsonB643 = new Buffer(terceiro.photoData);
 
 		// build javascript
-		return(
+		return (
 			<View
 				key={'superTile' + postsPrinted}
 				style={{
@@ -494,11 +452,10 @@ class Wanted extends Component {
 					flexDirection: 'row',
 					alignItems: 'stretch',
 					backgroundColor: 'blue'
-			}}>
+				}}>
 				<View
 					key={'tile' + postsPrinted}
-					style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}
-				>
+					style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}>
 					<Text>{printId1}</Text>
 					{/*
 					<Text key={"idUser" + tyleNr+2}>{printIdUser3}</Text>
@@ -509,12 +466,7 @@ class Wanted extends Component {
 					*/}
 					<Image
 						source={{
-							uri:
-								'data:' +
-								'image/jpeg' +
-								';base64,' +
-								objJsonB641 +
-								''
+							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB641 + ''
 						}}
 						style={{
 							flex: 1
@@ -528,12 +480,11 @@ class Wanted extends Component {
 						backgroundColor: 'grey',
 						margin: 10,
 						flexDirection: 'column'
-				}}>
+					}}>
 					<View
 						key={'tile' + postsPrinted + 1}
-						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
-					>
-						<Text >{printId2}</Text>
+						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
+						<Text>{printId2}</Text>
 						{/*
 						<Text
 							onPress={() =>
@@ -552,12 +503,7 @@ class Wanted extends Component {
 						*/}
 						<Image
 							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									objJsonB642 +
-									''
+								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB642 + ''
 							}}
 							style={{
 								flex: 1
@@ -578,12 +524,7 @@ class Wanted extends Component {
 						*/}
 						<Image
 							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									objJsonB643 +
-									''
+								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB643 + ''
 							}}
 							style={{
 								flex: 1
@@ -593,22 +534,21 @@ class Wanted extends Component {
 					</View>
 				</View>
 			</View>
-		)
+		);
 	}
 
 	// to check if user scrolled till the end of the scroll view
-	isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
-		const paddingToBottom = 20
-		return layoutMeasurement.height + contentOffset.y >=
-			contentSize.height - paddingToBottom
-	}
+	isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+		const paddingToBottom = 20;
+		return layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;
+	};
 
 	loadMoreData = () => {
-		const {loadMore} = this.state.loadingMoreData
+		const { loadMore } = this.state.loadingMoreData;
 		if (loadMore) {
-			return
+			return;
 		}
-		this.setState({loadingMoreData: true})
+		this.setState({ loadingMoreData: true });
 
 		/*loading - set loadMore = false when done*/
 		ToastAndroid.show('A carregar...', ToastAndroid.SHORT);
@@ -622,8 +562,8 @@ class Wanted extends Component {
 			wishlistData: newState,
 			numPosts: newState.length,
 			loadingMoreData: false
-		})
-	}
+		});
+	};
 
 	// Get Data to Build Feed and Transform it to Json Object
 	getWishlistDataFromApiAsync() {

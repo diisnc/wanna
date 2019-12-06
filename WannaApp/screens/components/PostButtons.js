@@ -230,7 +230,7 @@ class PostButtons extends Component {
 }
 
 function mapStateToProps(store) {
-	console.log(store.profile);
+	// console.log(store.profile);
 	return {
 		myVotes: store.profile.votes
 	};

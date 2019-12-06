@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
-import { getFilters } from '../modules/filter/filter.api';
+import { getFilters, enableFilter, disableFilter } from '../modules/filter/filter.api';
 import Loading from './Loading';
 import { Button, theme } from '../galio';
 
@@ -22,37 +22,9 @@ const { width } = Dimensions.get('screen');
 
 class Filters extends Component {
 	state = {
-		selectedFilters: [],
-		switchValues: [false, false],
 		filters: [],
 		loading: true
 	};
-
-	//onValueChange of the switch this function will be called
-	toggleSwitch(newState) {
-		//console.log("Antigo state: " + this.state.selectedFilters)
-
-		// change toggle value
-		let switchValuesCopy = [...this.state.switchValues];
-		switchValuesCopy[newState.i] = newState.newValue;
-		this.setState({ switchValues: switchValuesCopy });
-		// add to selected filters
-		var selectedFiltersCopy = [...this.state.selectedFilters];
-		if (newState.newValue == true) {
-			selectedFiltersCopy.push(newState.filterId);
-		}
-		// remove from selected filters
-		else {
-			let index = selectedFiltersCopy.indexOf(newState.filterId);
-			if (index > -1) {
-				selectedFiltersCopy.splice(index, 1);
-			}
-		}
-		this.setState({ selectedFilters: selectedFiltersCopy });
-
-		//console.log(newState.newValue)
-		//console.log(newState.filterId)
-	}
 
 	componentDidMount() {
 		this.startHeaderHeight = 80;
@@ -65,6 +37,7 @@ class Filters extends Component {
 
 	async getFiltersFromAPI() {
 		const newState = await getFilters();
+
 		console.log(newState);
 		if (newState != null) {
 			this.setState({ filters: newState, numPosts: newState.length, loading: false });
@@ -129,7 +102,6 @@ class Filters extends Component {
 	buildFilterList() {
 		if (this.state.loading == true) return <Loading />;
 		else {
-			console.log('entra no flatlist');
 			return (
 				<ScrollView scrollEventThrottle={16}>
 					<View style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
@@ -146,7 +118,7 @@ class Filters extends Component {
 						shadowless
 						color="#3498DB"
 						style={[styles.button, styles.shadow]}
-						onPress={this.searchFilters}>
+						onPress={() => this.props.navigation.navigate('Wanted')}>
 						Procurar
 					</Button>
 				</ScrollView>
@@ -179,18 +151,38 @@ class Filters extends Component {
 				<Switch
 					style={{ margin: 10 }}
 					// controla switchValues, filterId servirá para selectedFilters
-					onValueChange={value =>
-						this.toggleSwitch({ i: 0, newValue: value, filterId: 'filter' + index })
-					}
-					value={this.state.switchValues[0]}></Switch>
+					onValueChange={value => this.customToggleSwitch(value, item.id)}
+					value={item.isActive}></Switch>
 			</View>
 		);
 	}
 
-	async searchFilters() {
-		console.log('entrou no coiso');
+	customToggleSwitch(status, idFilter) {
+		if (status == false) {
+			this.disableFilterHandler(idFilter);
+		} else this.enableFilterHandler(idFilter);
+	}
 
-		return;
+	changeStatusState(booleanToChange, idFilter) {
+		const newArray = this.state.filters.map(i =>
+			i.id == idFilter ? Object.assign({}, i, { isActive: booleanToChange }) : i
+		);
+
+		this.setState({ filters: newArray });
+	}
+
+	async enableFilterHandler(idFilter) {
+		const result = await enableFilter(idFilter);
+		if (result == 'OK') {
+			this.changeStatusState(true, idFilter);
+		}
+	}
+
+	async disableFilterHandler(idFilter) {
+		const result = await disableFilter(idFilter);
+		if (result == 'OK') {
+			this.changeStatusState(false, idFilter);
+		}
 	}
 }
 export default Filters;

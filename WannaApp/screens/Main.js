@@ -11,6 +11,7 @@ import Comments from './Comments';
 import ConversationsList from './ConversationsList';
 import Chat from './Chat';
 import UserPostProfile from './UserPostProfile';
+import SavedPosts from './SavedPosts';
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
@@ -107,6 +108,13 @@ const UserStack = createStackNavigator(
 		},
 		EditProfile: {
 			screen: EditProfile,
+			headerMode: 'none',
+			navigationOptions: {
+				header: null
+			}
+		},
+		SavedPosts: {
+			screen: SavedPosts,
 			headerMode: 'none',
 			navigationOptions: {
 				header: null

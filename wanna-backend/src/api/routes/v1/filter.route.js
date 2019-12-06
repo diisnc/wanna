@@ -13,11 +13,19 @@ router
 
 router
 	.route('/searchByFilter')
-	.post(validate(rules.searchByFilter), controller.searchByFilter);
+	.get(controller.searchByFilter);
 
 router
 	.route('/:idFilter')
 	.get(controller.get)
 	.delete(controller.delete);
+
+router
+	.route('/enableFilter')
+	.post(validate(rules.changeFilterStatus), controller.enableFilter);
+
+router
+	.route('/disableFilter')
+	.post(validate(rules.changeFilterStatus), controller.disableFilter);
 
 module.exports = router;

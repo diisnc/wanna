@@ -91,3 +91,11 @@ export const searchUser = userString => {
 	};
 	return ourFetchWithToken(config);
 };
+
+export const savedPostsList = () => {
+	const config = {
+		endpoint: '/v1/profile/savedposts',
+		method: 'GET'
+	};
+	return ourFetchWithToken(config);
+};

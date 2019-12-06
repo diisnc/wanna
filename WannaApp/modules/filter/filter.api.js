@@ -51,3 +51,25 @@ export const deleteFilter = idFilter => {
 	};
 	return ourFetchWithToken(config);
 };
+
+export const enableFilter = idFilter => {
+	const config = {
+		endpoint: '/v1/filter/enableFilter',
+		method: 'POST',
+		body: {
+			idFilter: idFilter
+		}
+	};
+	return ourFetchWithToken(config);
+};
+
+export const disableFilter = idFilter => {
+	const config = {
+		endpoint: '/v1/filter/disableFilter',
+		method: 'POST',
+		body: {
+			idFilter: idFilter
+		}
+	};
+	return ourFetchWithToken(config);
+};

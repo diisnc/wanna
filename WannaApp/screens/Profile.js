@@ -151,23 +151,27 @@ class Profile extends Component {
 						padding: 10,
 						flexDirection: 'row',
 						alignItems: 'center',
-						justifyContent: 'flex-end',
+						justifyContent: 'flex-end'
 						//backgroundColor: 'green'
 					}}>
-					<Text style={{flex: 2, textAlign: 'center', fontSize: 20 }}>Perfil</Text>
+					<Text style={{ flex: 2, textAlign: 'center', fontSize: 20 }}>Perfil</Text>
 					{this.state.username == this.props.loggedUsername ? (
-						<View style={{ flexDirection: 'row'}}>
+						<View style={{ flexDirection: 'row' }}>
 							<AntDesign.Button
 								name="message1"
 								color={'black'}
 								size={25}
-								style={{ alignContent: 'center', backgroundColor: 'white'}}
+								style={{ alignContent: 'center', backgroundColor: 'white' }}
 								onPress={() => this.props.navigation.navigate('ConversationsList')}
 							/>
 							<AntDesign.Button
 								name="logout"
 								color={'black'}
-								style={{ justifycontent: 'center', alignContent: 'center', backgroundColor: 'white'}}
+								style={{
+									justifycontent: 'center',
+									alignContent: 'center',
+									backgroundColor: 'white'
+								}}
 								size={25}
 								onPress={() => this.props.logout()}
 							/>
@@ -187,7 +191,7 @@ class Profile extends Component {
 						justifyContent: 'center',
 						alignItems: 'center',
 						flexDirection: 'row',
-						paddingVertical: 5,
+						paddingVertical: 5
 					}}>
 					{this.state.profile.info.avatarData ? (
 						<Image
@@ -198,22 +202,24 @@ class Profile extends Component {
 									';base64,' +
 									new Buffer(this.state.profile.info.avatarData)
 							}}
-							style={{marginRight: '10%', width: 90, height: 90, borderRadius: 50 }}
+							style={{ marginRight: '10%', width: 90, height: 90, borderRadius: 50 }}
 						/>
 					) : (
 						<Image
 							source={require('../assets/noImage.png')}
-							style={{marginRight: '10%', width: 90, height: 90, borderRadius: 50 }}
+							style={{ marginRight: '10%', width: 90, height: 90, borderRadius: 50 }}
 						/>
 					)}
-					<View style={{alignItems: 'center'}}>
+					<View style={{ alignItems: 'center' }}>
 						<Text style={{ fontSize: 20, marginBottom: 5 }}>
-							{this.state.profile.info.firstName + ' ' + this.state.profile.info.lastName}
+							{this.state.profile.info.firstName +
+								' ' +
+								this.state.profile.info.lastName}
 						</Text>
 
-						{this.state.profile.info.rating > 0	? (
+						{this.state.profile.info.rating > 0 ? (
 							<Stars
-								rating={parseInt( this.state.profile.info.rating, 10 )}
+								rating={parseInt(this.state.profile.info.rating, 10)}
 								size={20}
 								color={colors.purple}
 							/>
@@ -230,9 +236,8 @@ class Profile extends Component {
 	buildNumbers() {
 		if (this.state.username != this.props.loggedUsername) {
 			return (
-				<View style={{flexDirection: 'row', alignSelf: 'center', height: 50}}>
-					<View
-						style={{marginHorizontal: '1%',	width: '25%'}}>
+				<View style={{ flexDirection: 'row', alignSelf: 'center', height: 50 }}>
+					<View style={{ marginHorizontal: '1%', width: '25%' }}>
 						<Text
 							style={{
 								textAlign: 'center',
@@ -240,11 +245,11 @@ class Profile extends Component {
 								fontWeight: 'bold',
 								fontSize: 16
 							}}>
-							{this.state.numPosts}{"\n"}posts
+							{this.state.numPosts}
+							{'\n'}posts
 						</Text>
 					</View>
-					<View
-						style={{width: '25%', marginHorizontal: '1%'}}>
+					<View style={{ width: '25%', marginHorizontal: '1%' }}>
 						<Text
 							style={{
 								textAlign: 'center',
@@ -252,10 +257,11 @@ class Profile extends Component {
 								fontWeight: 'bold',
 								fontSize: 16
 							}}>
-							{this.state.userNrFollowers}{"\n"}seguidores
+							{this.state.userNrFollowers}
+							{'\n'}seguidores
 						</Text>
 					</View>
-					<View style={{width: '25%', marginHorizontal: '1%'}}>
+					<View style={{ width: '25%', marginHorizontal: '1%' }}>
 						<Text
 							style={{
 								textAlign: 'center',
@@ -263,14 +269,15 @@ class Profile extends Component {
 								fontWeight: 'bold',
 								fontSize: 16
 							}}>
-							{this.state.userNrFollowings}{"\n"}a seguir
+							{this.state.userNrFollowings}
+							{'\n'}a seguir
 						</Text>
 					</View>
 				</View>
 			);
 		} else
 			return (
-				<View style={{flexDirection: 'row', alignSelf: 'center', height: 50}}>
+				<View style={{ flexDirection: 'row', alignSelf: 'center', height: 50 }}>
 					<View
 						style={{
 							marginHorizontal: '1%',
@@ -284,10 +291,11 @@ class Profile extends Component {
 								fontWeight: 'bold',
 								fontSize: 16
 							}}>
-							{this.props.myNumPosts}{"\n"}posts
+							{this.props.myNumPosts}
+							{'\n'}posts
 						</Text>
 					</View>
-					<View style={{width: '25%', marginHorizontal: '1%'}}>
+					<View style={{ width: '25%', marginHorizontal: '1%' }}>
 						<TouchableOpacity>
 							<Text
 								style={{
@@ -301,11 +309,12 @@ class Profile extends Component {
 										type: 'Followers'
 									})
 								}>
-								{this.state.profile.nrFollowers.number}{"\n"}seguidores
+								{this.state.profile.nrFollowers.number}
+								{'\n'}seguidores
 							</Text>
 						</TouchableOpacity>
-					</View >
-					<View style={{width: '25%', marginHorizontal: '1%'}}>
+					</View>
+					<View style={{ width: '25%', marginHorizontal: '1%' }}>
 						<TouchableOpacity>
 							<Text
 								style={{
@@ -319,7 +328,8 @@ class Profile extends Component {
 										type: 'Followings'
 									})
 								}>
-								{this.props.myFollowingsNumber}{"\n"}a seguir
+								{this.props.myFollowingsNumber}
+								{'\n'}a seguir
 							</Text>
 						</TouchableOpacity>
 					</View>
@@ -332,7 +342,12 @@ class Profile extends Component {
 		return (
 			<View>
 				{this.state.username == this.props.loggedUsername ? (
-					<View style={{flexDirection: 'row', alignSelf: 'center', borderBottomColor: 'grey'}}>
+					<View
+						style={{
+							flexDirection: 'row',
+							alignSelf: 'center',
+							borderBottomColor: 'grey'
+						}}>
 						<TouchableOpacity
 							style={{
 								width: '35%',
@@ -350,7 +365,7 @@ class Profile extends Component {
 										userID: this.state.username
 									})
 								}>
-								{'Edit Profile'}{' '}
+								{'Editar Perfil'}
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
@@ -365,17 +380,18 @@ class Profile extends Component {
 							}}>
 							<Text
 								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() =>
-									this.props.navigation.navigate('EditProfile', {
-										userID: this.state.username
-									})
-								}>
-								{'Saved Posts'}{' '}
+								onPress={() => this.props.navigation.navigate('SavedPosts')}>
+								{'Guardados'}
 							</Text>
 						</TouchableOpacity>
 					</View>
 				) : this.state.following == false ? (
-					<View style={{flexDirection: 'row', alignSelf: 'center', borderBottomColor: 'grey'}}>
+					<View
+						style={{
+							flexDirection: 'row',
+							alignSelf: 'center',
+							borderBottomColor: 'grey'
+						}}>
 						<TouchableOpacity
 							style={{
 								width: '35%',
@@ -394,7 +410,12 @@ class Profile extends Component {
 						</TouchableOpacity>
 					</View>
 				) : (
-					<View style={{flexDirection: 'row', alignSelf: 'center', borderBottomColor: 'grey'}}>
+					<View
+						style={{
+							flexDirection: 'row',
+							alignSelf: 'center',
+							borderBottomColor: 'grey'
+						}}>
 						<TouchableOpacity
 							style={{
 								width: '35%',
@@ -417,17 +438,27 @@ class Profile extends Component {
 		);
 	}
 
-
 	// Posts do utilizador
 	buildPosts = () => {
 		return (
 			<View style={styles.containerImages}>
-				<View style={{borderBottomColor: 'grey', borderBottomWidth: 0.5, marginBottom: 10, marginHorizontal: '5%'}}></View>
+				<View
+					style={{
+						borderBottomColor: 'grey',
+						borderBottomWidth: 0.5,
+						marginBottom: 10,
+						marginHorizontal: '5%'
+					}}></View>
 				<FlatList
 					numColumns={3}
 					data={this.state.profile.posts}
 					scrollEnabled={false}
-					style={{flex: 1, alignSelf: 'center', marginHorizontal: '2%', borderRadius: width * 0.1}}
+					style={{
+						flex: 1,
+						alignSelf: 'center',
+						marginHorizontal: '2%',
+						borderRadius: width * 0.1
+					}}
 					renderItem={({ item, index }) => this.renderItem(item, index)}
 					keyExtractor={item => item.postid.toString()}
 				/>
@@ -530,8 +561,8 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		borderRadius: width * 0.05,
-		height: width * 0.30,
-		width: width * 0.30,
+		height: width * 0.3,
+		width: width * 0.3,
 		margin: '0.25%'
-	},
+	}
 });

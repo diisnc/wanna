@@ -234,8 +234,11 @@ module.exports = (sequelize, DataTypes) => {
 
 	Post.getSavedPosts = async function getSavedPosts(idUser) {
 		list = await this.sequelize.query(
-			'SELECT "SavedPosts"."user_id" AS User,"Posts"."idUser" AS PostOwner,"Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size"' +
-				'FROM "Posts"  JOIN "SavedPosts" ON "SavedPosts"."post_id" = "Posts"."id" WHERE "SavedPosts"."user_id" = (:idUser)' +
+			'SELECT "SavedPosts"."user_id", "Posts"."idUser", "Posts"."id", "Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "Photos"."photoData" ' +
+				'FROM "Posts" JOIN "SavedPosts" ON "SavedPosts"."post_id" = "Posts"."id" ' +
+				'JOIN "Photos" ON "Photos"."idPost" = "Posts"."id" AND "Photos"."id" IN (SELECT MIN("Photos"."id") ' +
+				'FROM "Photos" GROUP BY "Photos"."idPost") ' +
+				'WHERE "SavedPosts"."user_id" = (:idUser) ' +
 				'ORDER BY "SavedPosts"."createdAt"',
 			{
 				replacements: { idUser: idUser },
@@ -245,26 +248,34 @@ module.exports = (sequelize, DataTypes) => {
 		return list;
 	};
 
-	Post.getFilteredPosts = async function getFilteredPosts(body) {
+	Post.getFilteredPosts = async function getFilteredPosts(idUser) {
+
+		body = await this.sequelize.query(
+			'SELECT * FROM "Filters" WHERE "Filters"."idUser" = (:idUser)',
+			{
+				replacements: { idUser: idUser },
+				type: this.sequelize.QueryTypes.SELECT,
+			},
+		);
 		var sql = '';
 		for (var i = 0; i < body.length; i++) {
-			sql = sql.concat(' SELECT * FROM "Posts" WHERE ');
-			if (body.categories[i]) {
+			sql = sql.concat(' SELECT * FROM "Posts" JOIN "Photos" ON "Photos"."idPost" = "Posts"."id" AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost") WHERE ');
+			if (body[i].category) {
 				sql = sql.concat(
-					' "category" = \'' + body.categories[i] + "' AND ",
+					' "category" = \'' + body[i].category + "' AND ",
 				);
 			}
-			if (body.colors[i]) {
-				sql = sql.concat(' "color" = \'' + body.colors[i] + "' AND ");
+			if (body[i].color) {
+				sql = sql.concat(' "color" = \'' + body[i].color + "' AND ");
 			}
-			if (body.sizes[i]) {
-				sql = sql.concat(' "size" = \'' + body.sizes[i] + "' AND ");
+			if (body[i].size) {
+				sql = sql.concat(' "size" = \'' + body[i].size + "' AND ");
 			}
-			if (body.pricesMin[i]) {
-				sql = sql.concat(' "price" >= ' + body.pricesMin[i] + ' AND ');
+			if (body[i].priceMin) {
+				sql = sql.concat(' "price" >= ' + body[i].priceMin + ' AND ');
 			}
-			if (body.pricesMax[i]) {
-				sql = sql.concat(' "price" <= ' + body.pricesMax[i] + ' AND ');
+			if (body[i].priceMax) {
+				sql = sql.concat(' "price" <= ' + body[i].priceMax + ' AND ');
 			}
 			sql = sql.concat(' 1 = 1 ');
 			if (i < body.length - 1) {
@@ -272,7 +283,11 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		}
 		if (sql) {
-			list = await this.sequelize.query(sql);
+			console.log('QUERY ' + sql);
+			list = await this.sequelize.query(sql, {
+				replacements: { idUser: idUser },
+				type: this.sequelize.QueryTypes.SELECT,
+			});
 			return list;
 		} else {
 			return '';

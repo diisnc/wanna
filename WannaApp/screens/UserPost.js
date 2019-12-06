@@ -14,11 +14,11 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
-import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';	
+import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
 import { theme } from '../galio';
 import PostButtons from './components/PostButtons';
 
-const screenWidth = Dimensions.get('window').width
+const screenWidth = Dimensions.get('window').width;
 
 class UserPost extends Component {
 	state = {
@@ -36,16 +36,15 @@ class UserPost extends Component {
 				<Card>
 					<CardItem>
 						<Left>
-
 							{this.props.item.avatarData != null ? (
 								<TouchableOpacity
-								onPress={() => {
-									this.props.navigation.navigate('UserProfile', {
-										userID: this.props.item.idUser
-									});
-								}}>
+									onPress={() => {
+										this.props.navigation.navigate('UserProfile', {
+											userID: this.props.item.idUser
+										});
+									}}>
 									<Image
-										style={{ width: 40, height: 40, borderRadius: 40/2 }}
+										style={{ width: 40, height: 40, borderRadius: 40 / 2 }}
 										source={{
 											uri:
 												'data:' +
@@ -57,13 +56,13 @@ class UserPost extends Component {
 								</TouchableOpacity>
 							) : (
 								<TouchableOpacity
-								onPress={() => {
-									this.props.navigation.navigate('UserProfile', {
-										userID: this.props.item.idUser
-									});
-								}}>
+									onPress={() => {
+										this.props.navigation.navigate('UserProfile', {
+											userID: this.props.item.idUser
+										});
+									}}>
 									<Image
-										style={{ width: 40, height: 40, borderRadius: 40/2 }}
+										style={{ width: 40, height: 40, borderRadius: 40 / 2 }}
 										source={require('../assets/noImage.png')}
 									/>
 								</TouchableOpacity>
@@ -76,19 +75,15 @@ class UserPost extends Component {
 											userID: this.props.item.idUser
 										});
 									}}>
-									<Text style={{fontWeight: 'bold'}}>
+									<Text style={{ fontWeight: 'bold' }}>
 										{this.props.item.idUser}
 									</Text>
 								</TouchableOpacity>
-								
-								<Text style={{fontSize: 12}}>{this.props.item.location}</Text>
+
+								<Text style={{ fontSize: 12 }}>{this.props.item.location}</Text>
 							</Body>
 						</Left>
 					</CardItem>
-
-
-
-
 
 					<CardItem cardBody>
 						<TouchableOpacity
@@ -106,16 +101,11 @@ class UserPost extends Component {
 										';base64,' +
 										new Buffer(this.props.item.photoData)
 								}}
-								style={{ height: 300, 
-									width: screenWidth - (theme.SIZES.BASE * 0.5)}}
+								style={{ height: 300, width: screenWidth - theme.SIZES.BASE * 0.5 }}
 							/>
 						</TouchableOpacity>
 					</CardItem>
 
-
-
-
-				
 					<View style={{ flex: 1, flexDirection: 'column' }}>
 						<PostButtons
 							idPost={this.props.item.id}
@@ -123,7 +113,6 @@ class UserPost extends Component {
 						/>
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<View style={{ flex: 1, flexDirection: 'column' }}>
-
 								<View style={{ flex: 1 }}>
 									<Text>{this.props.item.category}</Text>
 								</View>
@@ -135,12 +124,12 @@ class UserPost extends Component {
 									</Text>
 								</View>
 							</View>
-							
+
 							<View style={{ flex: 1 }}>
 								<Text>{this.props.item.price}€</Text>
 							</View>
 						</View>
-						
+
 						<View style={{ flex: 1 }}>
 							<Text>{this.props.item.description}</Text>
 						</View>

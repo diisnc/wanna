@@ -388,9 +388,6 @@ class Add extends Component {
 
 	// handle image result
 	handleImagePicked(pickerResult) {
-		{
-			/* add image to rui list */
-		}
 		let pickedImagesBase64Copy = [...this.state.pickedImagesBase64];
 		pickedImagesBase64Copy.push(pickerResult);
 		this.setState({ pickedImagesBase64: pickedImagesBase64Copy });

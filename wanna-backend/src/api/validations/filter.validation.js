@@ -17,4 +17,5 @@ module.exports = {
 		body('colors'),
 		body('length'),
 	],
+	changeFilterStatus: [body('idFilter', 'Filter ID is required').exists()],
 };
