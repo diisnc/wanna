@@ -71,7 +71,7 @@ class Profile extends Component {
 	fetchUserInfo = async () => {
 		let usernamePassed;
 		usernamePassed = this.props.navigation.getParam('userID', 'local');
-		console.log(usernamePassed);
+		// console.log(usernamePassed);
 
 		let profile, length;
 		if (usernamePassed == 'local') {

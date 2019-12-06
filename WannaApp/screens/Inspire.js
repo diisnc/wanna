@@ -60,7 +60,6 @@ class Inspire extends Component {
 	async getFeedDataFromApiAsync() {
 		// const newState = require('./json/responseFeed');
 		const newState = await feed(this.state.index);
-		console.log('passando por aqui');
 		// console.log(newState);
 		if (newState != null) {
 			this.setState({ feedData: newState, numPosts: newState.length, loading: false });

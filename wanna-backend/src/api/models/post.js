@@ -283,7 +283,6 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		}
 		if (sql) {
-			console.log('QUERY ' + sql);
 			list = await this.sequelize.query(sql, {
 				replacements: { idUser: idUser },
 				type: this.sequelize.QueryTypes.SELECT,

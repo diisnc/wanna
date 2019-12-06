@@ -38,7 +38,6 @@ class Filters extends Component {
 	async getFiltersFromAPI() {
 		const newState = await getFilters();
 
-		console.log(newState);
 		if (newState != null) {
 			this.setState({ filters: newState, numPosts: newState.length, loading: false });
 		}
