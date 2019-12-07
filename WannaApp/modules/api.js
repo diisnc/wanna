@@ -3,7 +3,7 @@ import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 import { logout } from './auth/auth.service';
 
-const config = { url: 'http://192.168.10.243:8000' };
+const config = { url: 'http://192.168.43.178:8000' };
 
 var currentAuthToken;
 
@@ -101,13 +101,23 @@ export const ourFetchWithToken = async action => {
 		return;
 	}
 
+	let data = null;
+
 	if (response.status == 200 || response.status == 304) {
 		if (action.method == 'GET') {
-			let data = await response.json();
+			try {
+				data = await response.json();
+			} catch (e) {
+				alert('ERRO AO PROCESSAR O PEDIDO');
+			}
 			return data;
 		} else return 'OK';
 	} else {
-		let data = await response.json();
+		try {
+			data = await response.json();
+		} catch (e) {
+			alert('ERRO AO PROCESSAR O PEDIDO');
+		}
 
 		if (data == 'Invalid token' || data == 'Token is expired') {
 			let theStore = store.getState();
