@@ -45,13 +45,7 @@ class UserPost extends Component {
 									}}>
 									<Image
 										style={{ width: 40, height: 40, borderRadius: 40 / 2 }}
-										source={{
-											uri:
-												'data:' +
-												'image/jpeg' +
-												';base64,' +
-												new Buffer(this.props.item.avatarData)
-										}}
+										source={{ uri: this.props.item.avatarData }}
 									/>
 								</TouchableOpacity>
 							) : (
@@ -94,13 +88,7 @@ class UserPost extends Component {
 								});
 							}}>
 							<Image
-								source={{
-									uri:
-										'data:' +
-										'image/jpeg' +
-										';base64,' +
-										new Buffer(this.props.item.photoData)
-								}}
+								source={{ uri: this.props.item.photoData }}
 								style={{ height: 300, width: screenWidth - theme.SIZES.BASE * 0.5 }}
 							/>
 						</TouchableOpacity>

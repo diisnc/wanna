@@ -117,13 +117,7 @@ class UserPostProfile extends Component {
 					<View>
 						{this.state.post.userInfo.avatarData ? (
 							<Image
-								source={{
-									uri:
-										'data:' +
-										'image/jpeg' +
-										';base64,' +
-										new Buffer(this.state.post.userInfo.avatarData)
-								}}
+								source={{ uri: this.state.post.userInfo.avatarData }}
 								style={{ width: 40, height: 40, borderRadius: 60 }}
 								resizeMode="contain"
 							/>
@@ -172,13 +166,7 @@ class UserPostProfile extends Component {
 										alignItems: 'center'
 									}}>
 									<Image
-										source={{
-											uri:
-												'data:' +
-												'image/jpeg' +
-												';base64,' +
-												new Buffer(this.state.post.photos[index].photoData)
-										}}
+										source={{ uri: this.state.post.photos[index].photoData }}
 										style={{
 											height: '100%',
 											aspectRatio: 1,

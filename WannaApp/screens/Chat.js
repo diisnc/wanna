@@ -62,10 +62,23 @@ class Chat extends Component {
 		});
 	};
 
-	timestampToDate(messages)  {
+	timestampToDate(messages) {
 		newArray = messages;
-		[].map.call(newArray, function(obj){
-			var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+		[].map.call(newArray, function(obj) {
+			var months = [
+				'Janeiro',
+				'Fevereiro',
+				'Março',
+				'Abril',
+				'Maio',
+				'Junho',
+				'Julho',
+				'Agosto',
+				'Setembro',
+				'Outubro',
+				'Novembro',
+				'Dezembro'
+			];
 			var date = new Date(obj.createdAt);
 			var day = date.getDate();
 			var month = date.getMonth();
@@ -73,13 +86,20 @@ class Chat extends Component {
 			var hours = date.getHours();
 			var minutos = '0' + date.getMinutes();
 
-			var formattedTime = day + ' de ' + months[month] + ' de ' + year + ' às ' + hours + ':' + minutos.substr(-2);
+			var formattedTime =
+				day +
+				' de ' +
+				months[month] +
+				' de ' +
+				year +
+				' às ' +
+				hours +
+				':' +
+				minutos.substr(-2);
 			obj.createdAt = formattedTime;
-		})
+		});
 		return newArray;
 	}
-
-
 
 	componentWillMount() {
 		if (Platform.OS === 'android') {
@@ -119,9 +139,7 @@ class Chat extends Component {
 		Keyboard.addListener(isAndroid ? 'keyboardDidHide' : 'keyboardWillHide', () =>
 			this.setState({ viewPadding: viewPadding })
 		);
-
 	}
-
 
 	componentWillUnmount() {
 		if (Platform.OS === 'android') {
@@ -131,9 +149,7 @@ class Chat extends Component {
 	}
 
 	render() {
-		
-		if(this.state.loading == false){
-
+		if (this.state.loading == false) {
 			return (
 				/*
 				Fazer View Englobadora da página
@@ -156,7 +172,7 @@ class Chat extends Component {
 					</View>
 				</SafeAreaView>
 			);
-		}else return null;				
+		} else return null;
 	}
 
 	// Builds header of the page
@@ -183,8 +199,15 @@ class Chat extends Component {
 						alignItems: 'center',
 						backgroundColor: '#00afff'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center', fontSize: 18, color:'white', fontWeight: 'bold' }}>
-						 {this.props.contact}
+					<Text
+						style={{
+							flex: 3,
+							textAlign: 'center',
+							fontSize: 18,
+							color: 'white',
+							fontWeight: 'bold'
+						}}>
+						{this.props.contact}
 					</Text>
 				</View>
 			</View>
@@ -221,25 +244,18 @@ class Chat extends Component {
 												: 'row'
 									}
 								]}>
-								{item.writer !== this.props.username && this.state.noImage == false
-								?(
+								{item.writer !== this.props.username &&
+								this.state.noImage == false ? (
 									<Image
-									style={styles.imageStyles}
-									source={{
-										uri:
-											'data:' +
-											'image/jpeg' +
-											';base64,' +
-											new Buffer(this.state.avatarContact.avatarData)
-									}}
+										style={styles.imageStyles}
+										source={{ uri: this.state.avatarContact.avatarData }}
 									/>
-								)
-								:
-								<Image
-									style={styles.imageStyles}
-									source={require('../assets/noImage.png')}
-								/>
-								}
+								) : (
+									<Image
+										style={styles.imageStyles}
+										source={require('../assets/noImage.png')}
+									/>
+								)}
 								<Text style={styles.listItem}>{item.text}</Text>
 							</View>
 							<Text style={styles.date}>{item.createdAt}</Text>
@@ -283,8 +299,8 @@ class Chat extends Component {
 		const avatar = await getAvatar(idContact);
 		if (avatar != null) {
 			this.setState({ loading: false });
-			if(avatar.avatarData != null){
-				this.setState({ noImage: false, avatarContact: avatar});
+			if (avatar.avatarData != null) {
+				this.setState({ noImage: false, avatarContact: avatar });
 			}
 		}
 		return;
@@ -383,7 +399,6 @@ const styles = StyleSheet.create({
 		paddingBottom: 2,
 		fontSize: 11,
 		color: '#a8a8a8'
-
 	},
 	marginBottom: {
 		height: 5,

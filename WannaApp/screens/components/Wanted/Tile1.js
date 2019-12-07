@@ -34,12 +34,9 @@ class Tyle1 extends Component {
 		this.getWishlistDataFromApiAsync();
 	}
 
-
 	// COLOCAR PROPS AQUI E DEPOIS CHAMAR ISTO NO WANTED
 	render() {
-
 		if (this.props.item != null) {
-
 			var primeiro = this.props.item[0];
 			var segundo = this.props.item[1];
 			var terceiro = this.props.item[2];
@@ -55,7 +52,7 @@ class Tyle1 extends Component {
 			printPrice1 = "price= " + JSON.stringify(primeiro.price);
 			printPhotoType11 = "photoType1= " + JSON.stringify(primeiro.photoType1);
 			*/
-			objJsonB641 = new Buffer(primeiro.photoData1);
+			// objJsonB641 = new Buffer(primeiro.photoData1);
 			// format data post 2
 			printId2 = 'id= ' + JSON.stringify(segundo.id);
 			/*
@@ -65,7 +62,7 @@ class Tyle1 extends Component {
 			printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
 			printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
 			*/
-			objJsonB642 = new Buffer(segundo.photoData1);
+			// objJsonB642 = new Buffer(segundo.photoData1);
 			// format data post 3
 			printId3 = 'id= ' + JSON.stringify(terceiro.id);
 			/*
@@ -75,10 +72,10 @@ class Tyle1 extends Component {
 			printPrice3 = "price= " + JSON.stringify(this.state.wishlistData[post+2].price);
 			printPhotoType13 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+2].photoType1);
 			*/
-			objJsonB643 = new Buffer(terceiro.photoData1);
+			// objJsonB643 = new Buffer(terceiro.photoData1);
 
 			// build javascript
-			return(
+			return (
 				<View
 					key={'superTile' + postsPrinted}
 					style={{
@@ -86,19 +83,18 @@ class Tyle1 extends Component {
 						flexDirection: 'row',
 						alignItems: 'stretch',
 						backgroundColor: 'blue'
-				}}>
+					}}>
 					<View
 						style={{
 							flex: 1,
 							backgroundColor: 'grey',
 							margin: 10,
 							flexDirection: 'column'
-					}}>
+						}}>
 						<View
 							key={'tile' + postsPrinted}
-							style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}
-						>
-							<Text >{printId1}</Text>
+							style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
+							<Text>{printId1}</Text>
 							{/*
 							<Text
 								onPress={() =>
@@ -107,7 +103,7 @@ class Tyle1 extends Component {
 								{printIdUser1}
 							</Text>
 							*/}
-							
+
 							{/*
 							<Text key={"idUser" + tyleNr}>{printIdUser1}</Text>
 							<Text key={"description" + tyleNr}>{printDescription1}</Text>
@@ -116,14 +112,7 @@ class Tyle1 extends Component {
 							<Text key={"photoType1" + tyleNr}>{printPhotoType11}</Text>
 							*/}
 							<Image
-								source={{
-									uri:
-										'data:' +
-										'image/jpeg' +
-										';base64,' +
-										objJsonB641 +
-										''
-								}}
+								source={{ uri: primeiro.photoData }}
 								style={{
 									flex: 1
 								}}
@@ -142,14 +131,7 @@ class Tyle1 extends Component {
 							<Text key={"photoType1" + tyleNr+1}>{printPhotoType12}</Text>
 							*/}
 							<Image
-								source={{
-									uri:
-										'data:' +
-										'image/jpeg' +
-										';base64,' +
-										objJsonB642 +
-										''
-								}}
+								source={{ uri: segundo.photoData }}
 								style={{
 									flex: 1
 								}}
@@ -159,8 +141,7 @@ class Tyle1 extends Component {
 					</View>
 					<View
 						key={'tile' + postsPrinted + 2}
-						style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}
-					>
+						style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}>
 						<Text>{printId3}</Text>
 						{/*
 						<Text key={"idUser" + tyleNr+2}>{printIdUser3}</Text>
@@ -170,14 +151,7 @@ class Tyle1 extends Component {
 						<Text key={"photoType1" + tyleNr+2}>{printPhotoType13}</Text>
 						*/}
 						<Image
-							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									objJsonB643 +
-									''
-							}}
+							source={{ uri: terceiro.photoData }}
 							style={{
 								flex: 1
 							}}
@@ -185,7 +159,7 @@ class Tyle1 extends Component {
 						/>
 					</View>
 				</View>
-			)
+			);
 		} else return null;
 	}
 
@@ -205,17 +179,21 @@ class Tyle1 extends Component {
 
 		const newState = require('../../json/responseFeed');
 		var triplesArray = [];
-		
+
 		// create triples from singles
 		for (let index = 0; index < newState.length - 3; index += 3) {
 			let triple = [];
-			triple.push(newState[index])
-			triple.push(newState[index + 1])
-			triple.push(newState[index + 2])
+			triple.push(newState[index]);
+			triple.push(newState[index + 1]);
+			triple.push(newState[index + 2]);
 			triplesArray.push(triple);
 		}
 
-		this.setState({ wishlistData: triplesArray, numPosts: triplesArray.length, loading: false });
+		this.setState({
+			wishlistData: triplesArray,
+			numPosts: triplesArray.length,
+			loading: false
+		});
 
 		return;
 	}

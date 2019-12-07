@@ -269,7 +269,6 @@ class Combine extends Component {
 	// Build images on upper scroll view
 	buildUpperImages(post, selectedUpper) {
 		id = 'id= ' + JSON.stringify(this.state.upperClothes[post].id);
-		objJsonB64 = new Buffer(this.state.upperClothes[post].photoData);
 
 		return (
 			<TouchableHighlight onPress={() => this.onPressUpperClothe(post)}>
@@ -283,14 +282,7 @@ class Combine extends Component {
 						alignItems: 'center'
 					}}>
 					<Image
-						source={{
-							uri:
-								'data:' +
-								this.state.upperClothes[post].photoType1 +
-								';base64,' +
-								objJsonB64 +
-								''
-						}}
+						source={{uri: this.state.upperClothes[post].photoData}}
 						style={{
 							height: '90%',
 							aspectRatio: 1,
@@ -307,7 +299,6 @@ class Combine extends Component {
 	// Build images on upper scroll view
 	buildLowerImages(post, selectedLower) {
 		id = 'id= ' + JSON.stringify(this.state.lowerClothes[post].id);
-		objJsonB64 = new Buffer(this.state.lowerClothes[post].photoData);
 
 		return (
 			<TouchableHighlight onPress={() => this.onPressLowerClothe(post)}>
@@ -321,14 +312,7 @@ class Combine extends Component {
 						alignItems: 'center'
 					}}>
 					<Image
-						source={{
-							uri:
-								'data:' +
-								this.state.lowerClothes[post].photoType1 +
-								';base64,' +
-								objJsonB64 +
-								''
-						}}
+						source={{uri: this.state.lowerClothes[post].photoData}}
 						style={{
 							height: '90%',
 							aspectRatio: 1,

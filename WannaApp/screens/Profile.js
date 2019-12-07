@@ -199,13 +199,7 @@ class Profile extends Component {
 					}}>
 					{this.state.profile.info.avatarData ? (
 						<Image
-							source={{
-								uri:
-									'data:' +
-									'image/jpeg' +
-									';base64,' +
-									new Buffer(this.state.profile.info.avatarData)
-							}}
+							source={{ uri: this.state.profile.info.avatarData }}
 							style={{ marginRight: '10%', width: 90, height: 90, borderRadius: 50 }}
 						/>
 					) : (
@@ -485,10 +479,7 @@ class Profile extends Component {
 					<Image
 						resizeMode="cover"
 						style={styles.image}
-						source={{
-							uri:
-								'data:' + 'image/jpeg' + ';base64,' + new Buffer(postInfo.photoData)
-						}}
+						source={{ uri: postInfo.photoData }}
 					/>
 				</View>
 			</TouchableWithoutFeedback>

@@ -452,7 +452,7 @@ class Add extends Component {
 
 		const manipResult = await ImageManipulator.manipulateAsync(
 			pickerResult.uri,
-			[{ resize: { width: 300, height: 300 } }],
+			[{ resize: { width: 512, height: 384 } }],
 			{ format: 'jpeg', base64: true }
 		);
 
@@ -469,7 +469,7 @@ class Add extends Component {
 
 		const manipResult = await ImageManipulator.manipulateAsync(
 			pickerResult.uri,
-			[{ resize: { width: 300, height: 300 } }],
+			[{ resize: { width: 512, height: 384 } }],
 			{ format: 'jpeg', base64: true }
 		);
 

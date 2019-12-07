@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.DECIMAL(10, 1),
 		},
 		avatarData: {
-			type: DataTypes.BLOB(),
+			type: DataTypes.STRING,
 			allowNull: true,
 			defaultValue: null,
 		},

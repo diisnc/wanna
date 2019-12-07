@@ -125,13 +125,7 @@ class Comments extends Component {
 								]}>
 								<Image
 									style={styles.imageStyles}
-									source={{
-										uri:
-											'data:' +
-											'image/jpeg' +
-											';base64,' +
-											new Buffer(item.avatarData)
-									}}
+									source={{ uri: item.avatarData }}
 									//source={require('../assets/noImage.png')}
 								/>
 								<Text style={styles.listItem}>{item.commentText}</Text>

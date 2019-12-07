@@ -32,10 +32,23 @@ class ConversationsList extends Component {
 		loading: true
 	};
 
-	timestampToDate(conversationList){
+	timestampToDate(conversationList) {
 		newArray = conversationList;
-		[].map.call(newArray, function(obj){
-			var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+		[].map.call(newArray, function(obj) {
+			var months = [
+				'Janeiro',
+				'Fevereiro',
+				'Março',
+				'Abril',
+				'Maio',
+				'Junho',
+				'Julho',
+				'Agosto',
+				'Setembro',
+				'Outubro',
+				'Novembro',
+				'Dezembro'
+			];
 			var date = new Date(obj.createdAt);
 			var day = date.getDate();
 			var month = date.getMonth();
@@ -43,16 +56,24 @@ class ConversationsList extends Component {
 			var hours = date.getHours();
 			var minutos = '0' + date.getMinutes();
 
-			var formattedTime = day + ' de ' + months[month] + ' de ' + year + ' às ' + hours + ':' + minutos.substr(-2);
+			var formattedTime =
+				day +
+				' de ' +
+				months[month] +
+				' de ' +
+				year +
+				' às ' +
+				hours +
+				':' +
+				minutos.substr(-2);
 			obj.createdAt = formattedTime;
-		})
+		});
 		return newArray;
 	}
 
 	componentDidMount() {
 		this.getContactsAsync();
 	}
-
 
 	render() {
 		if (this.state.loading == false) {
@@ -105,9 +126,17 @@ class ConversationsList extends Component {
 						justifyContent: 'center',
 						alignItems: 'center',
 						backgroundColor: '#00afff'
-
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center', color: 'white', fontSize: 18, fontWeight: 'bold' }}>Todas as mensages</Text>
+					<Text
+						style={{
+							flex: 3,
+							textAlign: 'center',
+							color: 'white',
+							fontSize: 18,
+							fontWeight: 'bold'
+						}}>
+						Todas as mensages
+					</Text>
 				</View>
 			</View>
 		);
@@ -155,34 +184,28 @@ class ConversationsList extends Component {
 									<Text>{item.idPost}</Text>
 									<Text>Título do post</Text>
 									{item.idSender === this.props.loggedUsername ? (
-										<Text>{ "You: " + item.messageText}</Text>
+										<Text>{'You: ' + item.messageText}</Text>
 									) : (
-										<Text>{item.idSender + ": " + item.messageText}</Text>
+										<Text>{item.idSender + ': ' + item.messageText}</Text>
 									)}
-									
+
 									<Text style={styles.date}>{item.createdAt}</Text>
-									<View style={[
-										{
+									<View
+										style={[
+											{
 												display: 'flex',
 												alignItems: 'flex-end'
-													
-										}
-									  ]}>
-									<Image
-										source={{
-											uri:
-												'data:' +
-												'image/jpeg' +
-												';base64,' +
-												new Buffer(item.photoData)
-										}}
-										style={{
-											marginLeft: 20,
-											width: 95,
-											height: 95,
-											borderRadius: 700
-										}}
-									/>
+											}
+										]}>
+										<Image
+											source={{ uri: item.photoData }}
+											style={{
+												marginLeft: 20,
+												width: 95,
+												height: 95,
+												borderRadius: 700
+											}}
+										/>
 									</View>
 								</View>
 							</TouchableHighlight>
@@ -211,28 +234,25 @@ export default connect(
 
 const styles = StyleSheet.create({
 	containerStyle: {
-	  borderWidth: 1,
-	  borderRadius: 2,
-	  borderColor: '#ddd',
-	  borderBottomWidth: 0,
-	  shadowColor: '#000',
-	  shadowOffset: { width: 0, height: 2 },
-	  shadowOpacity: 0.8,
-	  shadowRadius: 2,
-	  elevation: 1,
-	  marginLeft: 5,
-	  marginRight: 5,
-	  marginTop: 10,
+		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: '#ddd',
+		borderBottomWidth: 0,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
+		marginLeft: 5,
+		marginRight: 5,
+		marginTop: 10
 	},
-    date: {
+	date: {
 		width: 'auto',
 		maxWidth: '80%',
 		paddingTop: 2,
 		paddingBottom: 2,
 		fontSize: 14,
 		color: '#a8a8a8'
-
-	},
+	}
 });
-
-

@@ -139,13 +139,7 @@ class Wanted extends Component {
 										});
 									}}>
 									<Image
-										source={{
-											uri:
-												'data:' +
-												'image/jpeg' +
-												';base64,' +
-												new Buffer(item.photoData)
-										}}
+										source={{ uri: item.photoData }}
 										style={{
 											height: 300,
 											width: screenWidth - theme.SIZES.BASE * 0.5
@@ -216,7 +210,7 @@ class Wanted extends Component {
 		printPrice1 = "price= " + JSON.stringify(primeiro.price);
 		printPhotoType11 = "photoType1= " + JSON.stringify(primeiro.photoType1);
 		*/
-		objJsonB641 = new Buffer(primeiro.photoData);
+		// objJsonB641 = new Buffer(primeiro.photoData);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(segundo.id);
 		/*
@@ -226,7 +220,7 @@ class Wanted extends Component {
 		printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
 		printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
 		*/
-		objJsonB642 = new Buffer(segundo.photoData);
+		// objJsonB642 = new Buffer(segundo.photoData);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(terceiro.id);
 		/*
@@ -236,7 +230,7 @@ class Wanted extends Component {
 		printPrice3 = "price= " + JSON.stringify(this.state.wishlistData[post+2].price);
 		printPhotoType13 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+2].photoType1);
 		*/
-		objJsonB643 = new Buffer(terceiro.photoData);
+		// objJsonB643 = new Buffer(terceiro.photoData);
 
 		// build javascript
 		return (
@@ -276,9 +270,7 @@ class Wanted extends Component {
 						<Text key={"photoType1" + tyleNr}>{printPhotoType11}</Text>
 						*/}
 						<Image
-							source={{
-								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB641 + ''
-							}}
+							source={{ uri: primeiro.photoData }}
 							style={{
 								flex: 1
 							}}
@@ -297,9 +289,7 @@ class Wanted extends Component {
 						<Text key={"photoType1" + tyleNr+1}>{printPhotoType12}</Text>
 						*/}
 						<Image
-							source={{
-								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB642 + ''
-							}}
+							source={{ uri: segundo.photoData }}
 							style={{
 								flex: 1
 							}}
@@ -319,9 +309,7 @@ class Wanted extends Component {
 					<Text key={"photoType1" + tyleNr+2}>{printPhotoType13}</Text>
 					*/}
 					<Image
-						source={{
-							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB643 + ''
-						}}
+						source={{ uri: terceiro.photoData }}
 						style={{
 							flex: 1
 						}}
@@ -350,7 +338,7 @@ class Wanted extends Component {
 		printPrice1 = "price= " + JSON.stringify(primeiro.price);
 		printPhotoType11 = "photoType1= " + JSON.stringify(primeiro.photoType1);
 		*/
-		objJsonB641 = new Buffer(primeiro.photoData);
+		// objJsonB641 = new Buffer(primeiro.photoData);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(segundo.id);
 		/*
@@ -360,7 +348,7 @@ class Wanted extends Component {
 		printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
 		printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
 		*/
-		objJsonB642 = new Buffer(segundo.photoData);
+		// objJsonB642 = new Buffer(segundo.photoData);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(terceiro.id);
 		/*
@@ -370,7 +358,7 @@ class Wanted extends Component {
 		printPrice3 = "price= " + JSON.stringify(this.state.wishlistData[post+2].price);
 		printPhotoType13 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+2].photoType1);
 		*/
-		objJsonB643 = new Buffer(terceiro.photoData);
+		// objJsonB643 = new Buffer(terceiro.photoData);
 
 		// build javascript
 		return (
@@ -397,9 +385,7 @@ class Wanted extends Component {
 					<Text key={"photoType1" + post}>{printPhotoType11}</Text>
 					*/}
 					<Image
-						source={{
-							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB641 + ''
-						}}
+						source={{ uri: primeiro.photoData }}
 						style={{
 							flex: 1
 						}}
@@ -416,9 +402,7 @@ class Wanted extends Component {
 					<Text key={"photoType1" + post+1}>{printPhotoType12}</Text>
 					*/}
 					<Image
-						source={{
-							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB642 + ''
-						}}
+						source={{ uri: segundo.photoData }}
 						style={{
 							flex: 1
 						}}
@@ -435,9 +419,7 @@ class Wanted extends Component {
 					<Text key={"photoType1" + post+2}>{printPhotoType13}</Text>
 					*/}
 					<Image
-						source={{
-							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB643 + ''
-						}}
+						source={{ uri: terceiro.photoData }}
 						style={{
 							flex: 1
 						}}
@@ -466,7 +448,7 @@ class Wanted extends Component {
 		printPrice1 = "price= " + JSON.stringify(primeiro.price);
 		printPhotoType11 = "photoType1= " + JSON.stringify(primeiro.photoType1);
 		*/
-		objJsonB641 = new Buffer(primeiro.photoData);
+		// objJsonB641 = new Buffer(primeiro.photoData);
 		// format data post 2
 		printId2 = 'id= ' + JSON.stringify(segundo.id);
 		/*
@@ -476,7 +458,7 @@ class Wanted extends Component {
 		printPrice2 = "price= " + JSON.stringify(this.state.wishlistData[post+1].price);
 		printPhotoType12 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+1].photoType1);
 		*/
-		objJsonB642 = new Buffer(segundo.photoData);
+		// objJsonB642 = new Buffer(segundo.photoData);
 		// format data post 3
 		printId3 = 'id= ' + JSON.stringify(terceiro.id);
 		/*
@@ -486,7 +468,7 @@ class Wanted extends Component {
 		printPrice3 = "price= " + JSON.stringify(this.state.wishlistData[post+2].price);
 		printPhotoType13 = "photoType1= " + JSON.stringify(this.state.wishlistData[post+2].photoType1);
 		*/
-		objJsonB643 = new Buffer(terceiro.photoData);
+		// objJsonB643 = new Buffer(terceiro.photoData);
 
 		// build javascript
 		return (
@@ -510,9 +492,7 @@ class Wanted extends Component {
 					<Text key={"photoType1" + tyleNr+2}>{printPhotoType13}</Text>
 					*/}
 					<Image
-						source={{
-							uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB641 + ''
-						}}
+						source={{ uri: primeiro.photoData }}
 						style={{
 							flex: 1
 						}}
@@ -547,9 +527,7 @@ class Wanted extends Component {
 						<Text key={"photoType1" + tyleNr}>{printPhotoType11}</Text>
 						*/}
 						<Image
-							source={{
-								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB642 + ''
-							}}
+							source={{ uri: segundo.photoData }}
 							style={{
 								flex: 1
 							}}
@@ -568,9 +546,7 @@ class Wanted extends Component {
 						<Text key={"photoType1" + tyleNr+1}>{printPhotoType12}</Text>
 						*/}
 						<Image
-							source={{
-								uri: 'data:' + 'image/jpeg' + ';base64,' + objJsonB643 + ''
-							}}
+							source={{ uri: terceiro.photoData }}
 							style={{
 								flex: 1
 							}}

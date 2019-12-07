@@ -4,7 +4,14 @@ const { UserPost } = require('../models');
 const { Comment } = require('../models');
 const { SavedPost } = require('../models');
 var fs = require('fs');
+var cloudinary = require('cloudinary').v2;
 const httpStatus = require('http-status');
+
+cloudinary.config({
+	cloud_name: 'dc7hjsttf',
+	api_key: '336844426425166',
+	api_secret: '2TZg-Y8fDx6EtXZL2vJv61Ymvnk',
+});
 
 /**
  * Returns Upload photo
@@ -25,12 +32,23 @@ exports.create = async (req, res, next) => {
 		});
 
 		for (var i = 0; i < req.body.imageData.length; i++) {
-			const photo = await Photo.create({
-				photoData: req.body.imageData[i],
-				photoType: 'image/jpeg',
-			});
+			var uploadStr = 'data:image/jpeg;base64,' + req.body.imageData[i];
 
-			await photo.setPost(post);
+			let result;
+			try {
+				result = await cloudinary.uploader.upload(uploadStr);
+			} catch (e) {
+				return next(e);
+			}
+
+			if (result != null) {
+				const photo = await Photo.create({
+					photoData: result.url,
+					photoType: 'image/jpeg',
+				});
+
+				await photo.setPost(post);
+			}
 		}
 		return res.sendStatus(200);
 	} catch (e) {
@@ -265,7 +283,6 @@ exports.unsavePost = async (req, res, next) => {
 	}
 };
 
-
 /**
  * Returns items that according to the category should be displayed in the upper side of the body
  *
@@ -279,7 +296,6 @@ exports.getUpperItems = async (req, res, next) => {
 		next(e);
 	}
 };
-
 
 /**
  * Returns items that according to the category should be displayed in the lower side of the body

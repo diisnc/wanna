@@ -134,13 +134,7 @@ class SavedPosts extends Component {
 											}
 										]}>
 										<Image
-											source={{
-												uri:
-													'data:' +
-													'image/jpeg' +
-													';base64,' +
-													new Buffer(item.photoData)
-											}}
+											source={{ uri: item.photoData }}
 											style={{
 												marginLeft: 20,
 												width: 95,
