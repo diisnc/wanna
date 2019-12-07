@@ -99,3 +99,16 @@ export const savedPostsList = () => {
 	};
 	return ourFetchWithToken(config);
 };
+
+export const editProfile = (location, password, avatarData) => {
+	const config = {
+		endpoint: '/v1/users/',
+		method: 'PATCH',
+		body: {
+			location: location,
+			password: password,
+			avatarData: avatarData
+		}
+	};
+	return ourFetchWithToken(config);
+};

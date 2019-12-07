@@ -13,12 +13,12 @@ router.param('userId', controller.load);
 router
 	.route('/')
 	.get(validate(rules.listUsers), controller.list)
-	.post(validate(rules.createUser), controller.create);
+	.post(validate(rules.createUser), controller.create)
+	.patch(controller.update);
 
 router
 	.route('/:userId')
 	.get(controller.get)
-	.patch(validate(rules.updateUser), controller.update)
 	.delete(controller.remove);
 
 router

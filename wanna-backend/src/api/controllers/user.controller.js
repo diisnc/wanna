@@ -35,7 +35,7 @@ exports.get = (req, res) => {
 exports.create = async (req, res, next) => {
 	try {
 		await User.create(req.body);
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -46,12 +46,16 @@ exports.create = async (req, res, next) => {
  * @public
  */
 exports.update = async (req, res, next) => {
-	const ommitRole = req.locals.user.role !== 'admin' ? 'role' : '';
-	const updatedUser = omit(req.body, ommitRole);
-	let user = Object.assign(req.locals.user, updatedUser);
-	user = await user.save();
+	const entries = Object.entries(req.body);
+	const data = {};
+	for (i = 0; i < entries.length; i++) {
+		if (entries[i][1] != null) {
+			data[entries[i][0]] = entries[i][1];
+		}
+	}
+	await User.update(data, { where: { username: req.user.username }, individualHooks: true });
 	try {
-		res.json(user.transform());
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}

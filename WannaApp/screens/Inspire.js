@@ -136,12 +136,13 @@ class Inspire extends Component {
 					<SearchBar
 						round
 						lightTheme
-						searchIcon={{ size: 24 }}
+						searchIcon={{ size: 20 }}
 						onChangeText={text => this.updateSearch(text)}
-						placeholder="Pesquisa por utilizador..."
+						placeholder="Pesquisa por Utilizador..."
 						autoCorrect={false}
 						value={this.state.inputSearch}
 						containerStyle={{ backgroundColor: 'white' }}
+						inputContainerStyle={{ backgroundColor: 'whitesmoke' }}
 						onClear={this.clearResults}
 						onCancel={this.clearResults}
 					/>

@@ -94,10 +94,10 @@ module.exports = (sequelize, DataTypes) => {
 	/** Models Hooks */
 	User.beforeSave(async user => {
 		try {
-			if (user._changed.email) {
+			if (user.email) {
 				user.email = user.email.toLowerCase();
 			}
-			if (user._changed.password) {
+			if (user.password) {
 				user.password = await bcrypt.hash(user.password, 10);
 			}
 			return user;
@@ -203,7 +203,7 @@ module.exports = (sequelize, DataTypes) => {
 	User.getProfileInfo = async function getProfileInfo(username) {
 		object = new Object();
 		profileInfo = await this.sequelize.query(
-			'SELECT "avatarData","avatarType","firstName", "lastName", "username", "email", "rating" FROM "Users" WHERE "Users"."username" = (:username)',
+			'SELECT "avatarData","avatarType","firstName", "lastName", "username", "email", "rating", "location" FROM "Users" WHERE "Users"."username" = (:username)',
 			{
 				replacements: { username: username },
 				type: this.sequelize.QueryTypes.SELECT,

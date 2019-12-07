@@ -17,7 +17,7 @@ import { MaterialIcons, MaterialCommunityIcons, AntDesign } from '@expo/vector-i
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { globalStyle, defaultNavigator } from './style';
 import { logout } from '../modules/auth/auth.service';
-import { followAC, unfollowAC, loadProfilePostsAC } from '../modules/profile/profile.reducer';
+import { followAC, unfollowAC, loadProfilePostsAC, editProfile } from '../modules/profile/profile.reducer';
 import { connect } from 'react-redux';
 import { getMyProfile, getUserProfile } from '../modules/profile/profile.api';
 import { follow, unfollow } from '../modules/profile/profile.api';
@@ -53,6 +53,10 @@ class Profile extends Component {
 
 	componentDidUpdate(prevProps) {
 		if (this.props.myNumPosts !== prevProps.myNumPosts && this.state.loading == false) {
+			this.fetchUserInfo();
+		}
+
+		if (this.props.pendingEdit !== prevProps.pendingEdit && this.props.pendingEdit == false) {
 			this.fetchUserInfo();
 		}
 
@@ -360,11 +364,7 @@ class Profile extends Component {
 							}}>
 							<Text
 								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() =>
-									this.props.navigation.navigate('EditProfile', {
-										userID: this.state.username
-									})
-								}>
+								onPress={() => this.goToEdit()}>
 								{'Editar Perfil'}
 							</Text>
 						</TouchableOpacity>
@@ -436,6 +436,13 @@ class Profile extends Component {
 				)}
 			</View>
 		);
+	}
+
+	goToEdit() {
+		this.props.navigation.navigate('EditProfile', {
+			location: this.state.profile.info.location
+		});
+		this.props.enteredEdit();
 	}
 
 	// Posts do utilizador
@@ -511,7 +518,8 @@ function mapStateToProps(store) {
 		myNumPosts: store.profile.numPosts,
 		myFollowingsNumber: store.profile.nrFollowings,
 		loggedIn: store.auth.loggedIn,
-		tokenValid: store.auth.tokenIsValid
+		tokenValid: store.auth.tokenIsValid,
+		pendingEdit: store.profile.pendingEditProfile
 	};
 }
 
@@ -528,6 +536,9 @@ function mapDispatchToProps(dispatch) {
 		},
 		loadProfilePosts: (nrPosts, nrFollowings) => {
 			dispatch(loadProfilePostsAC(nrPosts, nrFollowings));
+		},
+		enteredEdit: () => {
+			dispatch(editProfile());
 		}
 	};
 }

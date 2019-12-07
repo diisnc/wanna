@@ -2,7 +2,9 @@
 let initialState = {
 	nrFollowings: 0,
 	numPosts: null,
-	votes: []
+	votes: [],
+	numFilters: null,
+	pendingEditProfile: false
 };
 
 export const loadProfilePostsAC = (nrPosts, nrFollowings) => {
@@ -13,15 +15,46 @@ export const loadProfilePostsAC = (nrPosts, nrFollowings) => {
 	};
 };
 
+export const loadFilters = number => {
+	return {
+		type: 'LOAD_NR_FILTERS',
+		number
+	};
+};
+
+export const editProfile = () => {
+	return {
+		type: 'EDIT_PROFILE'
+	};
+};
+
+export const notEditProfile = () => {
+	return {
+		type: 'NOT_EDIT_PROFILE'
+	};
+};
+
 export const addPost = () => {
 	return {
 		type: 'ADD_POST'
 	};
 };
 
+export const addFilter = () => {
+	return {
+		type: 'ADD_FILTER'
+	};
+};
+
 export const removePost = () => {
 	return {
 		type: 'REMOVE_POST'
+	};
+};
+
+export const removeFilter = () => {
+	return {
+		type: 'REMOVE_FILTER'
 	};
 };
 
@@ -79,7 +112,7 @@ export const unsave = idPost => {
 	};
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
 	switch (action.type) {
 		case 'LOADED_NR_POSTS':
 			return {
@@ -87,6 +120,27 @@ export default function(state = initialState, action) {
 				numPosts: action.nrPosts,
 				nrFollowings: action.nrFollowings
 			};
+		case 'LOAD_NR_FILTERS':
+			return {
+				...state,
+				numFilters: action.number
+			};
+		case 'EDIT_PROFILE':
+			state = { ...state };
+			state.pendingEditProfile = true;
+			return state;
+		case 'NOT_EDIT_PROFILE':
+			state = { ...state };
+			state.pendingEditProfile = false;
+			return state;
+		case 'ADD_FILTER':
+			state = { ...state };
+			state.numFilters++;
+			return state;
+		case 'REMOVE_FILTER':
+			state = { ...state };
+			state.numFilters--;
+			return state;
 		case 'LOADED_VOTES':
 			var ids = new Set(action.votes.map(d => d.postID));
 			var merged = [...action.votes, ...state.votes.filter(d => !ids.has(d.postID))];

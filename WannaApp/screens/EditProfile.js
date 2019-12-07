@@ -6,8 +6,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-
-import { register } from '../modules/auth/auth.api';
+import Loading from './Loading';
+import { editProfile } from '../modules/profile/profile.api';
+import { notEditProfile } from '../modules/profile/profile.reducer';
 
 import { globalStyle, defaultNavigator } from './style';
 import {
@@ -20,37 +21,55 @@ import {
 	Dimensions,
 	ScrollView,
 	Keyboard,
-	SafeAreaView
+	SafeAreaView,
+	ToastAndroid
 } from 'react-native';
 import { Button, theme } from '../galio';
+import { getMyProfile } from '../modules/profile/profile.api';
 
 const { width } = Dimensions.get('screen');
 
 class EditProfile extends Component {
 	state = {
-		pickedImagesBase64: []
+		avatarData: null,
+		location: null,
+		password: null,
+		loading: true
 	};
 	constructor(props) {
 		super(props);
 	}
 
-	componentDidMount() { }
+	componentDidMount() {
+		this.getProfileToShow();
+	}
+
+	getProfileToShow() {
+		let locationPassed;
+		locationPassed = this.props.navigation.getParam('location', 'local');
+
+		if (locationPassed !== 'local') {
+			this.setState({ location: locationPassed, loading: false });
+		}
+	}
 
 	render() {
-		return (
-			<SafeAreaView style={{ flex: 1 }}>
-				<View
-					style={{
-						flex: 1,
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'stretch'
-					}}>
-					{this.buildHeader()}
-					{this.renderForm()}
-				</View>
-			</SafeAreaView>
-		);
+		if (this.state.loading == false) {
+			return (
+				<SafeAreaView style={{ flex: 1 }}>
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'column',
+							justifyContent: 'flex-start',
+							alignItems: 'stretch'
+						}}>
+						{this.buildHeader()}
+						{this.renderForm()}
+					</View>
+				</SafeAreaView>
+			);
+		} else return <Loading />;
 	}
 
 	// Builds header of the page
@@ -86,7 +105,8 @@ class EditProfile extends Component {
 	renderForm() {
 		const { handleSubmit } = this.props;
 		const submitForm = e => {
-			this.props.register(e.user, e.first, e.last, e.location, e.email, e.password);
+			this.editProfile(e.location, e.password, this.state.avatarData);
+			this.setState({ location: e.location, password: e.password, loading: false });
 		};
 
 		return (
@@ -99,8 +119,12 @@ class EditProfile extends Component {
 						justifyContent: 'space-between',
 						paddingBottom: 89
 					}}>
-					<Field name="location" placeholder="Localização" component={renderInput} />
-					<Field name="email" placeholder="E-mail" component={renderInput} />
+					<Text>Localização</Text>
+					<Field
+						name="location"
+						placeholder={this.state.location}
+						component={renderInput}
+					/>
 					<Field name="password" placeholder="Palavra-passe" component={renderPassword} />
 
 					<Text>Mudar Foto de Perfil</Text>
@@ -111,7 +135,7 @@ class EditProfile extends Component {
 						color="#3498DB"
 						style={[styles.button, styles.shadow]}
 						onPress={handleSubmit(submitForm)}>
-						Registar
+						Editar
 					</Button>
 
 					<View style={styles.errorMessage}>
@@ -191,7 +215,19 @@ class EditProfile extends Component {
 	};
 
 	handleImagePicked(pickerResult) {
-		this.setState({ pickedImagesBase64: pickerResult });
+		this.setState({ avatarData: pickerResult });
+	}
+
+	async editProfile(location, password, avatar) {
+		result = await editProfile(location, password, avatar);
+
+		if (result == 'OK') {
+			this.props.exitedEdit();
+			this.props.navigation.navigate('MyProfile');
+			ToastAndroid.show('Perfil Editado!', ToastAndroid.LONG);
+		}
+
+		return;
 	}
 }
 
@@ -224,13 +260,14 @@ function mapStateToProps(store, ownProps) {
 	return {
 		errorMessage: store.auth.regError,
 		registered: store.auth.registered,
+		loggedUsername: store.auth.loggedUsername,
 		authToken: store.auth.authToken
 	};
 }
 function mapDispatchToProps(dispatch) {
 	return {
-		register: (username, first, last, email, password) => {
-			dispatch(register(username, first, last, email, password));
+		exitedEdit: () => {
+			dispatch(notEditProfile());
 		}
 	};
 }

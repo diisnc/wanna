@@ -25,11 +25,6 @@ module.exports = {
 
 	// PATCH /v1/users/:userId
 	updateUser: [
-		body('email', 'Invalid email').isEmail(),
-		body('password', 'Passwords must be at least 8 chars long').isLength({
-			min: 8,
-		}),
-		param('userId', 'User id is required').exists(),
 	],
 
 	// PATCH /v1/users/:userString

@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
+import { addFilter } from '../modules/profile/profile.reducer';
 
 const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
@@ -343,6 +344,7 @@ class NewFilter extends Component {
 		);
 
 		if (result == 'OK') {
+			this.props.dispatchAddFilter();
 			this.props.navigation.navigate('Filters');
 			ToastAndroid.show('Filter Created!', ToastAndroid.LONG);
 		}
@@ -356,7 +358,11 @@ function mapStateToProps(store, ownProps) {
 	};
 }
 function mapDispatchToProps(dispatch) {
-	return {};
+	return {
+		dispatchAddFilter: () => {
+			dispatch(addFilter());
+		}
+	};
 }
 export default connect(
 	mapStateToProps,

@@ -12,9 +12,11 @@ import {
 	FlatList,
 	Dimensions
 } from 'react-native';
+import { connect } from 'react-redux';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { getFilters, enableFilter, disableFilter } from '../modules/filter/filter.api';
+import { loadFilters } from '../modules/profile/profile.reducer';
 import Loading from './Loading';
 import { Button, theme } from '../galio';
 
@@ -35,10 +37,27 @@ class Filters extends Component {
 		this.getFiltersFromAPI();
 	}
 
+	componentDidUpdate(prevProps) {
+		if (this.props.myNumFilters !== prevProps.myNumFilters && this.state.loading == false) {
+			this.getFiltersFromAPI();
+		}
+
+		const hasAChanged = this.props.loggedIn !== prevProps.loggedIn;
+		const hasBChanged = this.props.tokenValid !== prevProps.tokenValid;
+		if (
+			(hasAChanged || hasBChanged) &&
+			this.props.tokenValid == true &&
+			this.props.loggedIn == true
+		) {
+			this.getFiltersFromAPI();
+		}
+	}
+
 	async getFiltersFromAPI() {
 		const newState = await getFilters();
 
 		if (newState != null) {
+			this.props.dispatchFilters(newState.length);
 			this.setState({ filters: newState, numPosts: newState.length, loading: false });
 		}
 
@@ -184,7 +203,27 @@ class Filters extends Component {
 		}
 	}
 }
-export default Filters;
+
+function mapStateToProps(store) {
+	return {
+		loggedIn: store.auth.loggedIn,
+		tokenValid: store.auth.tokenIsValid,
+		myNumFilters: store.profile.numFilters
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		dispatchFilters: nrPosts => {
+			dispatch(loadFilters(nrPosts));
+		}
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Filters);
 
 const styles = StyleSheet.create({
 	container: {

@@ -214,29 +214,29 @@ const MainTab = createMaterialTopTabNavigator(
 		Inspire: {
 			screen: FeedStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 10 }}>INSPIRE</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>INSPIRA-TE</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="home-outline" color={tintColor} size={24} />
+					<MaterialCommunityIcons name="home-outline" color={tintColor} size={26} />
 				)
 			}
 		},
 		Wanted: {
 			screen: FilterStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 10 }}>WANTED</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>FILTROS</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={24} />
+					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={26} />
 				)
 			}
 		},
 		Add: {
 			screen: Add,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 10 }}>ADD</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>ADICIONAR</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<Image
 						source={require('../assets/logo64.png')}
-						style={{ height: 24, width: 24 }}
+						style={{ height: 26, width: 26 }}
 					/>
 				)
 			}
@@ -244,18 +244,18 @@ const MainTab = createMaterialTopTabNavigator(
 		Combine: {
 			screen: Combine,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 10 }}>COMBINE</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>COMBINAR</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={24} />
+					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={26} />
 				)
 			}
 		},
 		Profile: {
 			screen: UserStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 10 }}>PROFILE</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>PERFIL</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialIcons name="person-outline" color={tintColor} size={24} />
+					<MaterialIcons name="person-outline" color={tintColor} size={26} />
 				)
 			}
 		}
