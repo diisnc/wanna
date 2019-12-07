@@ -73,7 +73,7 @@ exports.createVote = async (req, res, next) => {
 				post_id: req.body.idPost,
 				type: req.body.type,
 			});
-			return res.sendStatus(200)
+			return res.sendStatus(200);
 		} else {
 			await UserPost.update(
 				{ type: req.body.type },
@@ -86,7 +86,7 @@ exports.createVote = async (req, res, next) => {
 					plain: true,
 				},
 			);
-			return res.sendStatus(200)
+			return res.sendStatus(200);
 		}
 	} catch (e) {
 		next(e);
@@ -106,7 +106,7 @@ exports.removeVote = async function removeVote(req, res, next) {
 				user_id: req.user.username,
 			},
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -124,7 +124,7 @@ exports.createComment = async (req, res, next) => {
 			idUser: req.user.username,
 			idPost: req.body.idPost,
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -141,7 +141,7 @@ exports.removeComment = async (req, res, next) => {
 				id: req.body.idComment,
 			},
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -173,7 +173,7 @@ exports.remove = async (req, res, next) => {
 				id: req.params.idPost,
 			},
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -194,7 +194,7 @@ exports.update = async (req, res, next) => {
 			}
 		}
 		await Post.update(data, { where: { id: req.params.idPost } });
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -209,7 +209,7 @@ exports.markUnavailable = async (req, res, next) => {
 			{ isAvailable: 'false' },
 			{ where: { id: req.params.idPost } },
 		);
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -240,7 +240,7 @@ exports.savePost = async (req, res, next) => {
 			user_id: req.user.username,
 			post_id: req.body.idPost,
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -259,7 +259,7 @@ exports.unsavePost = async (req, res, next) => {
 				user_id: req.user.username,
 			},
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}

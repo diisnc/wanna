@@ -18,7 +18,7 @@ exports.delete = async (req, res, next) => {
 				id: req.params.idFilter,
 			},
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -43,7 +43,7 @@ exports.createFilter = async (req, res, next) => {
 			color: req.body.color,
 			idUser: req.user.username,
 		});
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -64,7 +64,7 @@ exports.enableFilter = async (req, res, next) => {
 			{ isActive: 'true' },
 			{ where: { id: req.body.idFilter } },
 		);
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
@@ -76,7 +76,7 @@ exports.disableFilter = async (req, res, next) => {
 			{ isActive: 'false' },
 			{ where: { id: req.body.idFilter } },
 		);
-		return res.sendStatus(200)
+		return res.sendStatus(200);
 	} catch (e) {
 		next(e);
 	}
