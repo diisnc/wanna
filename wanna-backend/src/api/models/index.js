@@ -9,6 +9,15 @@ const config = require('../../database/config.js')[env];
 const db = {};
 const basename = path.basename(__filename);
 
+var cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+	cloud_name: 'dc7hjsttf',
+	api_key: '336844426425166',
+	api_secret: '2TZg-Y8fDx6EtXZL2vJv61Ymvnk',
+});
+
+
 const { createFakeUsers } = require('../../database/factories/usersFactory');
 const { createFakePosts } = require('../../database/factories/postsFactory');
 const { createFakePhotos } = require('../../database/factories/photosFactory');
@@ -59,6 +68,7 @@ db.Sequelize = Sequelize;
 
 async function createFakeData(nrPosts) {
 	try {
+		await cloudinary.api.delete_all_resources();
 		await sequelize.sync({ force: true });
 		const users = await createFakeUsers(sequelize, 50);
 		await db.User.bulkCreate(users, {
@@ -90,6 +100,6 @@ async function createFakeData(nrPosts) {
 }
 
 // passar o número de posts a criar como argumento
-createFakeData(30);
+// createFakeData(30);
 
 module.exports = db;
