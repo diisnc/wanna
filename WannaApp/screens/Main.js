@@ -90,6 +90,13 @@ const FilterStack = createStackNavigator(
 			navigationOptions: {
 				header: null
 			}
+		},
+		UserPostProfile: {
+			screen: UserPostProfile,
+			headerMode: 'none',
+			navigationOptions: {
+				header: null
+			}
 		}
 	},
 	{

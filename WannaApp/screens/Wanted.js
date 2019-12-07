@@ -10,11 +10,17 @@ import {
 	Image,
 	TouchableHighlight,
 	ToastAndroid,
-	Animated
+	Animated,
+	TouchableOpacity,
+	FlatList,
+	Dimensions
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { searchByFilter } from '../modules/filter/filter.api';
+import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
+const screenWidth = Dimensions.get('window').width;
+import { theme } from '../galio';
 
 class Wanted extends Component {
 	state = {
@@ -79,7 +85,7 @@ class Wanted extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						backgroundColor: 'white'
 					}}>
 					<Text style={{ flex: 3, textAlign: 'center' }}>WANTED</Text>
 					<MaterialCommunityIcons.Button
@@ -109,10 +115,49 @@ class Wanted extends Component {
 					}
 				)}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-					{this.buildFeedTile()}
+					{this.handlerNrPosts()}
 				</View>
 			</ScrollView>
 		);
+	}
+
+	handlerNrPosts() {
+		if (this.state.wishlistData.length < 3)
+			return (
+				<FlatList
+					data={this.state.wishlistData}
+					keyExtractor={(item, index) => index.toString()}
+					style={styles.list}
+					renderItem={({ item, index }) => {
+						return (
+							<CardItem cardBody>
+								<TouchableOpacity
+									activeOpacity={0.8}
+									onPress={() => {
+										this.props.navigation.navigate('UserPostProfile', {
+											postID: item.idPost
+										});
+									}}>
+									<Image
+										source={{
+											uri:
+												'data:' +
+												'image/jpeg' +
+												';base64,' +
+												new Buffer(item.photoData)
+										}}
+										style={{
+											height: 300,
+											width: screenWidth - theme.SIZES.BASE * 0.5
+										}}
+									/>
+								</TouchableOpacity>
+							</CardItem>
+						);
+					}}
+				/>
+			);
+		else return this.buildFeedTile();
 	}
 
 	// Build 2+1, 3, 1+2, 3 tile grid
