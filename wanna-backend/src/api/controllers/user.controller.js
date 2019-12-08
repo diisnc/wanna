@@ -4,6 +4,12 @@ const { User } = require('../models');
 const { UserPost } = require('../models');
 const { ApiError } = require('../utils/customErrors');
 const paginate = require('../middlewares/paginationResponse');
+var cloudinary = require('cloudinary').v2;
+cloudinary.config({
+	cloud_name: 'dc7hjsttf',
+	api_key: '336844426425166',
+	api_secret: '2TZg-Y8fDx6EtXZL2vJv61Ymvnk',
+});
 
 /**
  * Load user and append to req.
@@ -50,10 +56,24 @@ exports.update = async (req, res, next) => {
 	const data = {};
 	for (i = 0; i < entries.length; i++) {
 		if (entries[i][1] != null) {
+			if (entries[i][0] == 'avatarData') {
+				var uploadStr = 'data:image/jpeg;base64,' + entries[i][1];
+				let result;
+				try {
+					result = await cloudinary.uploader.upload(uploadStr);
+					entries[i][1] = result.url;
+				} catch (e) {
+					return next(e);
+				}
+			}
+
 			data[entries[i][0]] = entries[i][1];
 		}
 	}
-	await User.update(data, { where: { username: req.user.username }, individualHooks: true });
+	await User.update(data, {
+		where: { username: req.user.username },
+		individualHooks: true,
+	});
 	try {
 		return res.sendStatus(200);
 	} catch (e) {

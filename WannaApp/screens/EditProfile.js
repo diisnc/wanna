@@ -188,13 +188,15 @@ class EditProfile extends Component {
 			base64: true
 		});
 
-		const manipResult = await ImageManipulator.manipulateAsync(
-			pickerResult.uri,
-			[{ resize: { width: 100, height: 100 } }],
-			{ format: 'jpeg', base64: true }
-		);
+		if (pickerResult.uri != null) {
+			const manipResult = await ImageManipulator.manipulateAsync(
+				pickerResult.uri,
+				[{ resize: { width: 100, height: 100 } }],
+				{ format: 'jpeg', base64: true }
+			);
 
-		this.handleImagePicked(manipResult.base64);
+			this.handleImagePicked(manipResult.base64);
+		}
 	};
 
 	// access photo folder and pick
@@ -205,13 +207,15 @@ class EditProfile extends Component {
 			base64: true
 		});
 
-		const manipResult = await ImageManipulator.manipulateAsync(
-			pickerResult.uri,
-			[{ resize: { width: 100, height: 100 } }],
-			{ format: 'jpeg', base64: true }
-		);
+		if (pickerResult.uri != null) {
+			const manipResult = await ImageManipulator.manipulateAsync(
+				pickerResult.uri,
+				[{ resize: { width: 100, height: 100 } }],
+				{ format: 'jpeg', base64: true }
+			);
 
-		this.handleImagePicked(manipResult.base64);
+			this.handleImagePicked(manipResult.base64);
+		}
 	};
 
 	handleImagePicked(pickerResult) {
