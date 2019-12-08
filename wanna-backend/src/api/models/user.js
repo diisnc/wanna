@@ -94,10 +94,13 @@ module.exports = (sequelize, DataTypes) => {
 	/** Models Hooks */
 	User.beforeSave(async user => {
 		try {
-			if (user.email) {
+			if (user.changed('username')) {
+				user.username = user.username.toLowerCase();
+			}
+			if (user.changed('email')) {
 				user.email = user.email.toLowerCase();
 			}
-			if (user.password) {
+			if (user.changed('password')) {
 				user.password = await bcrypt.hash(user.password, 10);
 			}
 			return user;
@@ -372,6 +375,7 @@ module.exports = (sequelize, DataTypes) => {
 		 * @returns {Promise}
 		 */
 		async verifyPassword(password) {
+			console.log('password ' + password);
 			return bcrypt.compare(password, this.password);
 		},
 
