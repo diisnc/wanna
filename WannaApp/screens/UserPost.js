@@ -74,10 +74,17 @@ class UserPost extends Component {
 									</Text>
 								</TouchableOpacity>
 
-								<Text style={{ fontSize: 12 }}>{this.props.item.location}</Text>
+								<Text style={{ fontSize: 12, color: 'gray' }}>{this.props.item.location}</Text>
 							</Body>
 						</Left>
 					</CardItem>
+
+
+
+
+
+
+
 
 					<CardItem cardBody>
 						<TouchableOpacity
@@ -94,34 +101,42 @@ class UserPost extends Component {
 						</TouchableOpacity>
 					</CardItem>
 
-					<View style={{ flex: 1, flexDirection: 'column' }}>
-						<PostButtons
+
+
+
+
+
+					<PostButtons
 							idPost={this.props.item.id}
 							navigation={this.props.navigation}
-						/>
-						<View style={{ flex: 1, flexDirection: 'row' }}>
-							<View style={{ flex: 1, flexDirection: 'column' }}>
-								<View style={{ flex: 1 }}>
-									<Text>{this.props.item.category}</Text>
-								</View>
+					/>
 
-								<View style={{ flex: 1 }}>
-									<Text>
-										{this.props.item.brand}, {this.props.item.color},{' '}
-										{this.props.item.size}
-									</Text>
-								</View>
-							</View>
 
-							<View style={{ flex: 1 }}>
+
+					<CardItem>	
+							<Left>
+								<Text>{this.props.item.category}</Text>
+							</Left>
+
+							<Right>
 								<Text>{this.props.item.price}€</Text>
-							</View>
-						</View>
+							</Right>
+					</CardItem>
 
-						<View style={{ flex: 1 }}>
-							<Text>{this.props.item.description}</Text>
-						</View>
-					</View>
+
+
+					<CardItem>
+						<Text>
+								{this.props.item.brand}, {this.props.item.color},{' '}
+								{this.props.item.size}
+						</Text>
+							
+					</CardItem>
+
+
+					<CardItem>
+						<Text>{this.props.item.description}</Text>
+					</CardItem>
 				</Card>
 			);
 		} else return null;

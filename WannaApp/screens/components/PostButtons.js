@@ -23,17 +23,18 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import { vote, removeVote, savePost, unsavePost } from '../../modules/post/post.api';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons, EvilIcons, Ionicons } from '@expo/vector-icons';
+import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
 
 class PostButtons extends Component {
 	render() {
 		return (
-			<View style={{ flex: 1, flexDirection: 'row' }}>
+			<CardItem>
 				{this.buildVotes(this.props.idPost)}
 				{this.buildSavedPost(this.props.idPost)}
 				{this.buildComments(this.props.idPost)}
 				{this.buildChat(this.props.idPost)}
-			</View>
+			</CardItem>
 		);
 	}
 	buildVotes(idPost) {
@@ -54,63 +55,66 @@ class PostButtons extends Component {
 
 			if (voteType == 0) {
 				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
+					<Left>
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.likeHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="heart-outline" size={30} />
+							<EvilIcons name="arrow-up" size={32} style={{paddingRight: '5%'}}/>
 						</TouchableOpacity>
-						<Text>{showLikes} likes</Text>
+						
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.disLikeHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="heart-broken-outline" size={30} />
+							<EvilIcons name="arrow-down" size={32} style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-					</View>
+						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+					</Left>
 				);
 			} else if (voteType == 1) {
 				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
+					<Left>
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.unLikeHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="heart" color="red" size={30} />
+							<EvilIcons name="arrow-up" size={32} color="#3498DB" style={{paddingRight: '5%'}}/>
 						</TouchableOpacity>
-						<Text>{showLikes} likes</Text>
+						
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.disLikeHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="heart-broken-outline" size={30} />
+							<EvilIcons name="arrow-down" size={32} style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-					</View>
+						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+					</Left>
 				);
 			} else if (voteType == -1) {
 				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
+					<Left>
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.likeHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="heart-outline" size={30} />
+							<EvilIcons name="arrow-up" size={32} style={{paddingRight: '5%'}}/>
 						</TouchableOpacity>
-						<Text>{showLikes} likes</Text>
+						
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.unDisLikeHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="heart-broken" color="red" size={30} />
+							<EvilIcons name="arrow-down" size={32} color="#3498DB" style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-					</View>
+						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+					</Left>
 				);
 			} else return null;
 		}
@@ -124,27 +128,27 @@ class PostButtons extends Component {
 
 			if (saved == 0) {
 				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
+					<Right>
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.saveHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="bookmark-outline" size={30} />
+							<EvilIcons name="plus" size={32} />
 						</TouchableOpacity>
-					</View>
+					</Right>
 				);
 			} else {
 				return (
-					<View style={{ flex: 1, flexDirection: 'row' }}>
+					<Right>
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.unsaveHandler(idPost);
 							}}>
-							<MaterialCommunityIcons name="bookmark" color="red" size={30} />
+							<EvilIcons name="plus" color="#3498DB" size={32} />
 						</TouchableOpacity>
-					</View>
+					</Right>
 				);
 			}
 		}
@@ -152,7 +156,7 @@ class PostButtons extends Component {
 
 	buildComments(idPost) {
 		return (
-			<View style={{ flex: 1, flexDirection: 'row' }}>
+			<Right>
 				<TouchableOpacity
 					activeOpacity={0.5}
 					onPress={() => {
@@ -160,15 +164,15 @@ class PostButtons extends Component {
 							idPost: idPost
 						});
 					}}>
-					<MaterialCommunityIcons name="comment-text-outline" size={30} />
+					<EvilIcons name="comment" size={32} />
 				</TouchableOpacity>
-			</View>
+			</Right>
 		);
 	}
 
 	buildChat(idPost) {
 		return (
-			<View style={{ flex: 1, flexDirection: 'row' }}>
+			<Right>
 				<TouchableOpacity
 					activeOpacity={0.5}
 					onPress={() => {
@@ -176,9 +180,9 @@ class PostButtons extends Component {
 							idPost: idPost
 						});
 					}}>
-					<MaterialCommunityIcons name="comment-text-outline" size={30} />
+					<EvilIcons name="envelope" size={32} />
 				</TouchableOpacity>
-			</View>
+			</Right>
 		);
 	}
 

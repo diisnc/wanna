@@ -104,7 +104,8 @@ class Inspire extends Component {
 								alignItems: 'stretch'
 							}}>
 							{this.buildHeader()}
-							<Loading />
+							<Loading/>
+							{/*<Text>Sem posts? Começa por seguir alguém!</Text>*/}
 						</View>
 					</SafeAreaView>
 				);
