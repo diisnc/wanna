@@ -214,7 +214,7 @@ const MainTab = createMaterialTopTabNavigator(
 		Inspire: {
 			screen: FeedStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>INSPIRA-TE</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Inspira-te</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialCommunityIcons name="home-outline" color={tintColor} size={26} />
 				)
@@ -223,7 +223,7 @@ const MainTab = createMaterialTopTabNavigator(
 		Wanted: {
 			screen: FilterStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>FILTROS</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Filtros</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={26} />
 				)
@@ -232,7 +232,7 @@ const MainTab = createMaterialTopTabNavigator(
 		Add: {
 			screen: Add,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>ADICIONAR</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Adicionar</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<Image
 						source={require('../assets/logo64.png')}
@@ -244,7 +244,7 @@ const MainTab = createMaterialTopTabNavigator(
 		Combine: {
 			screen: Combine,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>COMBINAR</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Combinar</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={26} />
 				)
@@ -253,7 +253,7 @@ const MainTab = createMaterialTopTabNavigator(
 		Profile: {
 			screen: UserStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>PERFIL</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Perfil</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons name="person-outline" color={tintColor} size={26} />
 				)
