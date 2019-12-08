@@ -13,7 +13,7 @@ import {
 	FlatList,
 	TouchableWithoutFeedback
 } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import { Feather, MaterialIcons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { globalStyle, defaultNavigator } from './style';
 import { logout } from '../modules/auth/auth.service';
@@ -26,6 +26,7 @@ import { red } from 'ansi-colors';
 import Stars from './components/Profile/Stars';
 import colors from './styles/colors/index';
 import { Button, theme } from '../galio';
+import { LinearGradient } from 'expo-linear-gradient';
 
 let { width, height } = Dimensions.get('window');
 
@@ -155,28 +156,23 @@ class Profile extends Component {
 						padding: 10,
 						flexDirection: 'row',
 						alignItems: 'center',
-						justifyContent: 'flex-end'
-						//backgroundColor: 'green'
+						justifyContent: 'flex-end',
 					}}>
-					<Text style={{ flex: 2, textAlign: 'center', fontSize: 20 }}>Perfil</Text>
+					<Text style={{  flex: 2, textAlign: 'center', fontSize: 20 }}>Perfil</Text>
 					{this.state.username == this.props.loggedUsername ? (
-						<View style={{ flexDirection: 'row' }}>
-							<AntDesign.Button
-								name="message1"
+						<View style={{ flexDirection: 'row'}}>
+							<Feather.Button
+								name="send"
 								color={'black'}
-								size={25}
-								style={{ alignContent: 'center', backgroundColor: 'white' }}
+								size={26}
+								style={{ backgroundColor: 'white'}}
 								onPress={() => this.props.navigation.navigate('ConversationsList')}
 							/>
 							<AntDesign.Button
 								name="logout"
 								color={'black'}
-								style={{
-									justifycontent: 'center',
-									alignContent: 'center',
-									backgroundColor: 'white'
-								}}
-								size={25}
+								style={{ backgroundColor: 'white'}}
+								size={26}
 								onPress={() => this.props.logout()}
 							/>
 						</View>
@@ -195,7 +191,8 @@ class Profile extends Component {
 						justifyContent: 'center',
 						alignItems: 'center',
 						flexDirection: 'row',
-						paddingVertical: 5
+						paddingVertical: 5,
+						backgroundColor: '#fafafa',
 					}}>
 					{this.state.profile.info.avatarData ? (
 						<Image
@@ -219,7 +216,7 @@ class Profile extends Component {
 							<Stars
 								rating={parseInt(this.state.profile.info.rating, 10)}
 								size={20}
-								color={colors.purple}
+								color= '#8f2ff6' 
 							/>
 						) : null}
 					</View>
@@ -234,20 +231,20 @@ class Profile extends Component {
 	buildNumbers() {
 		if (this.state.username != this.props.loggedUsername) {
 			return (
-				<View style={{ flexDirection: 'row', alignSelf: 'center', height: 50 }}>
-					<View style={{ marginHorizontal: '1%', width: '25%' }}>
+				<View style={{ flexDirection: 'row', alignSelf: 'center', height: 50, backgroundColor: '#fafafa', width: '100%', justifyContent: 'center'}}>
+					<View style={{ marginHorizontal: '1%', width: '25%', backgroundColor: 'transparent', }}>
 						<Text
 							style={{
 								textAlign: 'center',
 								color: 'grey',
 								fontWeight: 'bold',
-								fontSize: 16
+								fontSize: 16,
 							}}>
 							{this.state.numPosts}
 							{'\n'}posts
 						</Text>
 					</View>
-					<View style={{ width: '25%', marginHorizontal: '1%' }}>
+					<View style={{ width: '25%', marginHorizontal: '1%', backgroundColor: 'transparent', }}>
 						<Text
 							style={{
 								textAlign: 'center',
@@ -259,7 +256,7 @@ class Profile extends Component {
 							{'\n'}seguidores
 						</Text>
 					</View>
-					<View style={{ width: '25%', marginHorizontal: '1%' }}>
+					<View style={{ width: '25%', marginHorizontal: '1%', backgroundColor: 'transparent', }}>
 						<Text
 							style={{
 								textAlign: 'center',
@@ -275,11 +272,11 @@ class Profile extends Component {
 			);
 		} else
 			return (
-				<View style={{ flexDirection: 'row', alignSelf: 'center', height: 50 }}>
+				<View style={{ flexDirection: 'row', alignSelf: 'center', height: 50, backgroundColor: '#fafafa', width: '100%', justifyContent: 'center' }}>
 					<View
 						style={{
 							marginHorizontal: '1%',
-							//backgroundColor: 'red',
+							backgroundColor: 'transparent',
 							width: '25%'
 						}}>
 						<Text
@@ -293,7 +290,7 @@ class Profile extends Component {
 							{'\n'}posts
 						</Text>
 					</View>
-					<View style={{ width: '25%', marginHorizontal: '1%' }}>
+					<View style={{ width: '25%', marginHorizontal: '1%', backgroundColor: 'transparent', }}>
 						<TouchableOpacity>
 							<Text
 								style={{
@@ -312,7 +309,7 @@ class Profile extends Component {
 							</Text>
 						</TouchableOpacity>
 					</View>
-					<View style={{ width: '25%', marginHorizontal: '1%' }}>
+					<View style={{ width: '25%', marginHorizontal: '1%', backgroundColor: 'transparent', }}>
 						<TouchableOpacity>
 							<Text
 								style={{
@@ -344,47 +341,47 @@ class Profile extends Component {
 						style={{
 							flexDirection: 'row',
 							alignSelf: 'center',
-							borderBottomColor: 'grey'
+							alignItems: "center",
+							borderBottomColor: 'grey',
+							backgroundColor: '#fafafa',
+							width: '100%',
+							justifyContent: 'center'
 						}}>
-						<TouchableOpacity
-							style={{
-								width: '35%',
-								marginBottom: 10,
-								marginHorizontal: 5,
-								paddingVertical: 15,
-								borderRadius: 20,
-								borderColor: 'grey',
-								borderWidth: 1
-							}}>
-							<Text
-								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() => this.goToEdit()}>
-								{'Editar Perfil'}
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={{
-								width: '35%',
-								marginBottom: 10,
-								marginHorizontal: 5,
-								paddingVertical: 15,
-								borderRadius: 20,
-								borderColor: 'grey',
-								borderWidth: 1
-							}}>
-							<Text
-								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() => this.props.navigation.navigate('SavedPosts')}>
-								{'Guardados'}
-							</Text>
-						</TouchableOpacity>
+
+						<LinearGradient
+							colors={['#2b7ffc', '#8f2ff6']}
+							style={[styles.button, styles.shadow]}>
+							<TouchableOpacity>
+								<Text
+									style={{ textAlign: 'center', color: 'white' }}
+									onPress={() => this.goToEdit()}>
+									Editar Perfil
+								</Text>
+							</TouchableOpacity>
+						</LinearGradient>
+
+						<LinearGradient
+							colors={['#2b7ffc', '#8f2ff6']}
+							style={[styles.button, styles.shadow]}>
+							<TouchableOpacity>
+								<Text
+									style={{ textAlign: 'center', color: 'white' }}
+									onPress={() => this.props.navigation.navigate('SavedPosts')}>
+									Guardados
+								</Text>
+							</TouchableOpacity>
+						</LinearGradient>
+
 					</View>
 				) : this.state.following == false ? (
 					<View
 						style={{
 							flexDirection: 'row',
 							alignSelf: 'center',
-							borderBottomColor: 'grey'
+							borderBottomColor: 'grey',
+							backgroundColor: '#fafafa',
+							width: '100%',
+							justifyContent: 'center' 
 						}}>
 						<TouchableOpacity
 							style={{
@@ -445,10 +442,9 @@ class Profile extends Component {
 			<View style={styles.containerImages}>
 				<View
 					style={{
-						borderBottomColor: 'grey',
-						borderBottomWidth: 0.5,
+						borderBottomColor: '#dddddd',
+						borderBottomWidth: 1,
 						marginBottom: 10,
-						marginHorizontal: '5%'
 					}}></View>
 				<FlatList
 					numColumns={3}
@@ -549,7 +545,7 @@ const styles = StyleSheet.create({
 	containerImages: {
 		flex: 1,
 		alignItems: 'stretch',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	gridImgContainer: {
 		alignContent: 'center'
@@ -561,6 +557,21 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		marginRight: 10
 	},
+	shadow: {
+		shadowColor: 'black',
+		shadowOffset: { width: 20, height: 20 },
+		shadowRadius: 40,
+		shadowOpacity: 0.8,
+		elevation: 1
+	},
+	button: {
+		marginBottom: 10,
+		width: '35%',
+		paddingVertical: 12,
+		borderRadius: 20,
+		marginHorizontal: 5,
+		marginBottom: 10,
+	},
 	image: {
 		borderRadius: width * 0.05,
 		height: width * 0.3,
@@ -568,3 +579,4 @@ const styles = StyleSheet.create({
 		margin: '0.25%'
 	}
 });
+

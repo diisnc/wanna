@@ -17,6 +17,8 @@ import Loading from './Loading';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { getFollowers, getFollowings } from '../modules/profile/profile.api';
+import { Left } from 'native-base';
+import { grey } from 'ansi-colors';
 
 class FollowList extends Component {
 	state = {
@@ -75,28 +77,58 @@ class FollowList extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
-		return (
-			// Safe Box for Android
-			<View
-				style={{
-					height: this.startHeaderHeight,
-					backgroundColor: 'white',
-					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
-				}}>
+
+		if (this.props.navigation.getParam('type') == 'Followers') {
+
+			return (
+				// Safe Box for Android
 				<View
 					style={{
-						height: '90%',
-						flexDirection: 'row',
-						padding: 10,
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: 'blue'
+						height: this.startHeaderHeight,
+						backgroundColor: 'white',
+						borderBottomWidth: 1,
+						borderBottomColor: '#dddddd'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>{this.state.type}</Text>
+					<View
+						style={{
+							height: '90%',
+							flexDirection: 'row',
+							padding: 10,
+							justifyContent: 'center',
+							alignItems: 'center'
+						}}>
+						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}> Seguidores </Text>
+					</View>
 				</View>
-			</View>
-		);
+			);
+
+		} 
+		else {
+
+			return (
+				// Safe Box for Android
+				<View
+					style={{
+						height: this.startHeaderHeight,
+						backgroundColor: 'white',
+						borderBottomWidth: 1,
+						borderBottomColor: '#dddddd'
+					}}>
+					<View
+						style={{
+							height: '90%',
+							flexDirection: 'row',
+							padding: 10,
+							justifyContent: 'center',
+							alignItems: 'center'
+						}}>
+						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}> A seguir </Text>
+					</View>
+				</View>
+			);
+
+		}
+		
 	}
 
 	// Insta style feed using UserPost
@@ -109,17 +141,18 @@ class FollowList extends Component {
 						<FlatList
 							data={this.state.list}
 							keyExtractor={(item, index) => index.toString()}
-							style={styles.list}
 							renderItem={({ item, index }) => {
 								console.log(item.followed_id);
 								return (
-									<View style={{ flex: 1, flexDirection: 'row' }}>
+									<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', borderBottomColor: grey, borderBottomWidth: 0.5}}>
+
 										{/* primeira coluna: foto do perfil */}
 										<View>
-											<MaterialIcons name="person" size={40} />
+											<MaterialIcons name="person" size={60} />
 										</View>
-										<Text>{item.followed_id}</Text>
+
 										{/* segunda coluna: nome de perfil e localização */}
+										<Text style={{ fontSize: 20, width: '100%' }}>{item.followed_id}</Text>
 									</View>
 								);
 							}}
@@ -135,8 +168,7 @@ export default FollowList;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#ddd'
+		alignItems: 'flex-start',
+		justifyContent: 'center'
 	}
 });
