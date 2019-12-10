@@ -13,11 +13,11 @@ import Chat from './Chat';
 import UserPostProfile from './UserPostProfile';
 import SavedPosts from './SavedPosts';
 import React, { Component } from 'react';
-import { createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, Image, Animated, Easing } from 'react-native';
+import { StyleSheet, Text, Image, Animated, Easing } from 'react-native';
 
 const transitionConfig = () => {
 	return {

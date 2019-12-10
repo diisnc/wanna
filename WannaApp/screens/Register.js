@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Platform, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Platform, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { Input } from 'react-native-elements';
 import { register } from '../modules/auth/auth.api';
 import { Button, theme } from '../galio';
 

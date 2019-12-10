@@ -11,20 +11,11 @@ import {
 import {
 	View,
 	Text,
-	StyleSheet,
-	SafeAreaView,
-	TextInput,
-	Platform,
-	ScrollView,
-	Image,
-	TouchableHighlight,
-	Dimensions,
-	FlatList,
 	TouchableOpacity
 } from 'react-native';
 import { vote, removeVote, savePost, unsavePost } from '../../modules/post/post.api';
-import { MaterialIcons, MaterialCommunityIcons, EvilIcons, Ionicons } from '@expo/vector-icons';
-import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
+import { EvilIcons } from '@expo/vector-icons';
+import { CardItem, Left, Right } from 'native-base';
 
 class PostButtons extends Component {
 	render() {

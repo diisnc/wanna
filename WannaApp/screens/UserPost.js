@@ -3,18 +3,12 @@ import {
 	View,
 	Text,
 	StyleSheet,
-	SafeAreaView,
-	TextInput,
-	Platform,
-	ScrollView,
 	Image,
-	TouchableHighlight,
 	Dimensions,
 	TouchableOpacity
 } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
-import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
+import { Card, CardItem, Body, Left, Right } from 'native-base';
 import { theme } from '../galio';
 import PostButtons from './components/PostButtons';
 

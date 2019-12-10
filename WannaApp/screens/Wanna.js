@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Platform, TouchableOpacity, Dimensions, ScrollView, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, Platform, Dimensions } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { Button, theme } from '../galio';
-import { globalStyle, defaultNavigator } from './style';
 
 import Logo from '../components/Logo';
 

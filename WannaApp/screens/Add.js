@@ -17,14 +17,14 @@ import { TextInputMask } from 'react-native-masked-text';
 import { createPost } from '../modules/post/post.api';
 import { connect } from 'react-redux';
 import CheckBox from 'react-native-check-box';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import { addPost } from '../modules/profile/profile.reducer';
 
-const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
-const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
-const colors = ['Azul', 'Vermelho', 'Preto', 'Branco', 'Outra'];
+const maleClothes = ['Camisa', 'Camisola', 'Calçado', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
+const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calçado', 'Casaco', 'Outro'];
+const colors = ['Azul', 'Vermelho', 'Rosa', 'Bege', 'Castanho',  'Preto', 'Branco', 'Outra'];
 const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
 const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
 
@@ -34,7 +34,7 @@ class Add extends Component {
 		numPosts: 0,
 		pickedImagesBase64: [],
 		/* form */
-		optionsGenre: ['Masculino', 'Feminino'],
+		optionsGenre: ['Masculino', 'Feminino', 'Unissexo'],
 		optionsClothes: [],
 		optionsColors: [],
 		optionsSizes: [],
