@@ -216,7 +216,7 @@ const MainTab = createMaterialTopTabNavigator(
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Inspira-te</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="home-outline" color={tintColor} size={26} />
+					<MaterialCommunityIcons name="home-outline" color={tintColor} size={28} />
 				)
 			}
 		},
@@ -225,7 +225,7 @@ const MainTab = createMaterialTopTabNavigator(
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Filtros</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={26} />
+					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={28} />
 				)
 			}
 		},
@@ -235,8 +235,8 @@ const MainTab = createMaterialTopTabNavigator(
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Adicionar</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<Image
-						source={require('../assets/logo64.png')}
-						style={{ height: 26, width: 26 }}
+						source={require('../assets/add.png')}
+						style={{ height: 30, width: 30, flex: 1 }}
 					/>
 				)
 			}
@@ -246,7 +246,7 @@ const MainTab = createMaterialTopTabNavigator(
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Combinar</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={26} />
+					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={28} />
 				)
 			}
 		},
@@ -255,7 +255,7 @@ const MainTab = createMaterialTopTabNavigator(
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Perfil</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialIcons name="person-outline" color={tintColor} size={26} />
+					<MaterialIcons name="person-outline" color={tintColor} size={28} />
 				)
 			}
 		}
@@ -264,7 +264,7 @@ const MainTab = createMaterialTopTabNavigator(
 		swipeEnabled: true,
 		animationEnabled: true,
 		tabBarOptions: {
-			activeTintColor: 'red',
+			activeTintColor: '#3498DB',
 			inactiveTintColor: 'grey',
 			style: {
 				backgroundColor: 'white',
@@ -275,10 +275,14 @@ const MainTab = createMaterialTopTabNavigator(
 				elevation: 5
 			},
 			indicatorStyle: {
-				backgroundColor: 'red'
+				backgroundColor: 'white'
 			},
 			showIcon: true,
-			showLabel: true
+			showLabel: false,
+			iconStyle: {
+				width: 30,
+				height: 30
+			}
 		},
 		tabBarPosition: 'bottom'
 	}

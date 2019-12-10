@@ -131,7 +131,7 @@ class Inspire extends Component {
 	buildHeader() {
 		return (
 			// Safe Box for Android
-			<View style={{ paddingTop: 20, height: 'auto', flex: 0 }}>
+			<View style={{ paddingTop: 10, height: 'auto', flex: 0 }}>
 				{/* Search Box */}
 				<View style={styles.viewStyle}>
 					<SearchBar
@@ -164,7 +164,7 @@ class Inspire extends Component {
 								</TouchableOpacity>
 							)}
 							enableEmptySections={true}
-							style={{ marginTop: 10 }}
+							style={{ marginTop: 0.5 }}
 							keyExtractor={(item, index) => item.username.toString()}
 						/>
 					)}
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
 	viewStyle: {
 		height: 'auto',
 		flex: 0,
-		backgroundColor: 'red',
+		backgroundColor: 'white',
 		marginTop: Platform.OS == 'ios' ? 30 : 0
 	},
 	textStyle: {
