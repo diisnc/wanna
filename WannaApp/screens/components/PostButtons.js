@@ -76,7 +76,7 @@ class PostButtons extends Component {
 							}}>
 							<EvilIcons name="arrow-down" size={33} style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
 					</Left>
 				);
 			} else if (voteType == 1) {
@@ -97,7 +97,7 @@ class PostButtons extends Component {
 							}}>
 							<EvilIcons name="arrow-down" size={33} style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
 					</Left>
 				);
 			} else if (voteType == -1) {
@@ -118,7 +118,7 @@ class PostButtons extends Component {
 							}}>
 							<EvilIcons name="arrow-down" size={33} color="#3498DB" style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
 					</Left>
 				);
 			} else return null;

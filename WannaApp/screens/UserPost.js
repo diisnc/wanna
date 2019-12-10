@@ -106,37 +106,56 @@ class UserPost extends Component {
 
 
 
+
 					<PostButtons
-							idPost={this.props.item.id}
-							navigation={this.props.navigation}
+								idPost={this.props.item.id}
+								navigation={this.props.navigation}
 					/>
 
 
 
+
+
+
 					<CardItem>	
-							<Left>
-								<Text>{this.props.item.category}</Text>
-							</Left>
+						<Left>
+							<View style={{flex: 1, flexDirection: 'column'}}>
+								<Text style={{fontWeight: 'bold', fontSize: 16}}>
+									{this.props.item.category}
+								</Text>
 
-							<Right>
-								<Text>{this.props.item.price}€</Text>
-							</Right>
+								
+								{this.props.item.brand == null ? (
+									<Text style={{color: 'gray'}}>
+										{this.props.item.color} • {this.props.item.size}
+									</Text>
+								) : (									
+									<Text style={{color: 'gray'}}>
+										{this.props.item.brand} • {this.props.item.color} • {this.props.item.size}
+									</Text>
+								)}
+								
+								
+								{/* DESCRIÇÃO
+
+									Esta descrição não aparece no feed, mas depois aproveitem para o userPostProfile 
+									Nota: Talvez noutro CardItem, caso contrário o preço que aparece do lado direito
+										  vai deslizando para baixo se a descrição for grande :)
+
+								<Text style={{color: 'gray'}}>
+									{this.props.item.description}
+								</Text>
+								*/}
+							</View>	
+						</Left>
+								
+						<Right>
+							{this.props.item.brand == null ? null : (
+								<Text style={{color:'#3498DB', fontWeight: 'bold', fontSize: 17}}>{this.props.item.price}€</Text>
+							)}
+						</Right>
 					</CardItem>
 
-
-
-					<CardItem>
-						<Text>
-								{this.props.item.brand}, {this.props.item.color},{' '}
-								{this.props.item.size}
-						</Text>
-							
-					</CardItem>
-
-
-					<CardItem>
-						<Text>{this.props.item.description}</Text>
-					</CardItem>
 				</Card>
 			);
 		} else return null;
