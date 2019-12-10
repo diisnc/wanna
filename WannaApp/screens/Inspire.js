@@ -24,7 +24,7 @@ class Inspire extends Component {
 	state = {
 		feedData: [],
 		newData: [],
-		numPosts: 0,
+		numPosts: null,
 		loading: true,
 		inputSearch: null,
 		searchR: [],
