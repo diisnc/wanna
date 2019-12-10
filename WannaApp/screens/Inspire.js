@@ -209,7 +209,8 @@ class Inspire extends Component {
 			return (
 				<View style={styles.container}>
 					{this.state.loading == true ? null : (
-						<FlatList
+						<FlatList 
+							showsVerticalScrollIndicator={false}
 							data={this.state.feedData}
 							keyExtractor={(item, index) => index.toString()}
 							style={styles.list}
