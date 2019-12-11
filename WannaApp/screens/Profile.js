@@ -130,7 +130,7 @@ class Profile extends Component {
 							{this.buildHeader()}
 							{this.buildProfile()}
 							<View>
-								<Text>No images</Text>
+								<Text style={{ alignSelf: 'center', color: 'grey', paddingTop: 10 }} >Sem publicações</Text>
 							</View>
 						</View>
 					</SafeAreaView>
@@ -216,7 +216,7 @@ class Profile extends Component {
 							<Stars
 								rating={parseInt(this.state.profile.info.rating, 10)}
 								size={20}
-								color= '#8f2ff6' 
+								color= '#3498DB' 
 							/>
 						) : null}
 					</View>
@@ -348,29 +348,19 @@ class Profile extends Component {
 							justifyContent: 'center'
 						}}>
 
-						<LinearGradient
-							colors={['#2b7ffc', '#8f2ff6']}
-							style={[styles.button, styles.shadow]}>
-							<TouchableOpacity>
-								<Text
-									style={{ textAlign: 'center', color: 'white' }}
-									onPress={() => this.goToEdit()}>
-									Editar Perfil
-								</Text>
-							</TouchableOpacity>
-						</LinearGradient>
+						<Button shadowless 
+							color='#3498DB' 
+							style={[styles.button, styles.shadow]}
+							onPress={() => this.goToEdit()}>
+							Editar Perfil
+						</Button>
 
-						<LinearGradient
-							colors={['#2b7ffc', '#8f2ff6']}
-							style={[styles.button, styles.shadow]}>
-							<TouchableOpacity>
-								<Text
-									style={{ textAlign: 'center', color: 'white' }}
-									onPress={() => this.props.navigation.navigate('SavedPosts')}>
-									Guardados
-								</Text>
-							</TouchableOpacity>
-						</LinearGradient>
+						<Button shadowless 
+							color='#3498DB' 
+							style={[styles.button, styles.shadow]}
+							onPress={() => this.props.navigation.navigate('SavedPosts')}>
+							Guardados
+						</Button>
 
 					</View>
 				) : this.state.following == false ? (
@@ -383,48 +373,41 @@ class Profile extends Component {
 							width: '100%',
 							justifyContent: 'center' 
 						}}>
-						<TouchableOpacity
-							style={{
-								width: '35%',
-								marginBottom: 10,
-								marginHorizontal: 5,
-								paddingVertical: 15,
-								borderRadius: 20,
-								borderColor: 'grey',
-								borderWidth: 1
-							}}>
-							<Text
-								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() => this.followAction()}>
-								{'FOLLOW'}{' '}
-							</Text>
-						</TouchableOpacity>
+
+						<Button  
+							color='#3498DB' 
+							style={[styles.button, styles.shadow]}
+							onPress={() => this.followAction()}>
+							Follow
+						</Button>
+
 					</View>
 				) : (
 					<View
 						style={{
 							flexDirection: 'row',
 							alignSelf: 'center',
-							borderBottomColor: 'grey'
+							borderBottomColor: 'grey',
+							backgroundColor: '#fafafa',
+							width: '100%',
+							justifyContent: 'center' 
 						}}>
-						<TouchableOpacity
-							style={{
-								width: '35%',
-								marginBottom: 10,
-								marginHorizontal: 5,
-								paddingVertical: 15,
-								borderRadius: 20,
-								borderColor: 'grey',
-								borderWidth: 1
-							}}>
-							<Text
-								style={{ textAlign: 'center', color: 'grey' }}
-								onPress={() => this.unfollowAction()}>
-								{'UNFOLLOW'}{' '}
-							</Text>
-						</TouchableOpacity>
+
+						<Button  
+							color='#3498DB' 
+							style={[styles.button, styles.shadow]}
+							onPress={() => this.unfollowAction()}>
+							Unfollow
+						</Button>
+ 
 					</View>
 				)}
+				<View
+					style={{
+						borderBottomColor: '#dddddd',
+						borderBottomWidth: 1,
+						marginBottom: 10,
+				}}></View>
 			</View>
 		);
 	}
@@ -440,12 +423,6 @@ class Profile extends Component {
 	buildPosts = () => {
 		return (
 			<View style={styles.containerImages}>
-				<View
-					style={{
-						borderBottomColor: '#dddddd',
-						borderBottomWidth: 1,
-						marginBottom: 10,
-					}}></View>
 				<FlatList
 					numColumns={3}
 					data={this.state.profile.posts}

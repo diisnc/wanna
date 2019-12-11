@@ -5,7 +5,7 @@ import { Input } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { EvilIcons, MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import Loading from './Loading';
 import { editProfile } from '../modules/profile/profile.api';
 import { notEditProfile } from '../modules/profile/profile.reducer';
@@ -26,6 +26,7 @@ import {
 } from 'react-native';
 import { Button, theme } from '../galio';
 import { getMyProfile } from '../modules/profile/profile.api';
+import { black } from 'ansi-colors';
 
 const { width } = Dimensions.get('screen');
 
@@ -96,7 +97,7 @@ class EditProfile extends Component {
 						alignItems: 'center',
 						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>EDITAR PERFIL</Text>
+					<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>Editar Perfil</Text>
 				</View>
 			</View>
 		);
@@ -115,27 +116,31 @@ class EditProfile extends Component {
 					keyboardShouldPersistTaps="always"
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{
-						flexGrow: 1,
-						justifyContent: 'space-between',
-						paddingBottom: 89
 					}}>
-					<Text>Localização</Text>
-					<Field
+
+					<Text style={{ fontSize: 16, marginTop: 10 }}>Mudar Foto de Perfil:</Text>
+					{this.buildImagePicker()}
+
+					<Text style={{ fontSize: 16}}>Localização:</Text>
+					<Field style={{ padding: 10000 }}
 						name="location"
 						placeholder={this.state.location}
 						component={renderInput}
 					/>
-					<Field name="password" placeholder="Palavra-passe" component={renderPassword} />
 
-					<Text>Mudar Foto de Perfil</Text>
-					{this.buildImagePicker()}
+					<Text style={{ fontSize: 16, marginTop: 10, marginBottom: 10 }}>Palavra-passe:</Text>
+					<Field 
+						name="password" 
+						placeholder="Palavra-passe"
+						component={renderPassword} 
+					/>
 
 					<Button
 						shadowless
 						color="#3498DB"
 						style={[styles.button, styles.shadow]}
 						onPress={handleSubmit(submitForm)}>
-						Editar
+						Confirmar Alterações
 					</Button>
 
 					<View style={styles.errorMessage}>
@@ -160,19 +165,22 @@ class EditProfile extends Component {
 					padding: 10,
 					justifyContent: 'center',
 					alignItems: 'center',
-					backgroundColor: 'pink'
 				}}>
 				{/* Take photo */}
-				<MaterialCommunityIcons.Button
+				<EvilIcons.Button
 					name="camera"
-					size={40}
+					color= 'black'
+					backgroundColor= 'white'
+					size={60}
 					style={{ flex: 1 }}
 					onPress={this.takePhoto}
 				/>
 				{/* Select from gallery */}
-				<MaterialCommunityIcons.Button
-					name="folder-image"
-					size={40}
+				<EvilIcons.Button
+					name="image"
+					color= 'black'
+					backgroundColor= 'white'					
+					size={60}
 					style={{ flex: 1 }}
 					onPress={this.pickImage}
 				/>
@@ -203,7 +211,7 @@ class EditProfile extends Component {
 	pickImage = async () => {
 		let pickerResult = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
-			aspect: [4, 3],
+			aspect: [1, 1],
 			base64: true
 		});
 
@@ -308,10 +316,12 @@ const styles = StyleSheet.create({
 		elevation: 2
 	},
 	button: {
+		marginTop: 15,
+		alignSelf: 'center',
 		marginBottom: theme.SIZES.BASE,
 		width: width - theme.SIZES.BASE * 3.5,
 		borderRadius: 25,
-		paddingVertical: 13
+		paddingVertical: 13,
 	},
 	signinTextCont: {
 		flexGrow: 1,

@@ -148,12 +148,14 @@ class FollowList extends Component {
 											flex: 1,
 											flexDirection: 'row',
 											alignItems: 'center',
-											borderBottomColor: grey,
+											borderBottomColor: '#dddddd',
 											borderBottomWidth: 0.5
 										}}>
 										{/* primeira coluna: foto do perfil */}
-										<View>
-											<MaterialIcons name="person" size={60} />
+										<View style= {{ marginHorizontal: '2%' }}>
+											<MaterialIcons 
+												name="person-outline" 
+												size={60}/>
 										</View>
 										{/* segunda coluna: nome de perfil e localização */}
 										{this.state.type == 'Followings' ? (

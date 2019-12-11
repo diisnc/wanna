@@ -69,7 +69,6 @@ class SavedPosts extends Component {
 			<View
 				style={{
 					height: this.startHeaderHeight,
-					backgroundColor: '#00afff',
 					borderBottomWidth: 1,
 					borderBottomColor: '#dddd'
 				}}>
@@ -80,15 +79,12 @@ class SavedPosts extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: '#00afff'
 					}}>
 					<Text
 						style={{
 							flex: 3,
 							textAlign: 'center',
-							color: 'white',
-							fontSize: 18,
-							fontWeight: 'bold'
+							fontSize: 20,
 						}}>
 						Posts Guardados
 					</Text>
@@ -111,7 +107,7 @@ class SavedPosts extends Component {
 	buildFilterForm() {
 		return (
 			<ScrollView scrollEventThrottle={16}>
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
+				<View style={{ flex: 1, backgroundColor: 'white', margin: 10, flexDirection: 'row' }}>
 					<FlatList
 						data={this.state.savedPosts}
 						renderItem={({ item }) => (
@@ -122,24 +118,19 @@ class SavedPosts extends Component {
 									});
 								}}>
 								<View style={styles.containerStyle}>
-									<Text>{item.idUser}</Text>
-									<Text>Título do post</Text>
-									<Text>{item.price}</Text>
-									<Text>{item.isAvailable}</Text>
-									<View
-										style={[
-											{
-												display: 'flex',
-												alignItems: 'flex-end'
-											}
-										]}>
+									<Text style={{ alignSelf: 'center', flex: 2, fontSize: 16, marginLeft: '5%', marginHorizontal: 20 }}>
+										{item.idUser} {"\n"}
+										Título do post {"\n"}
+										Preço: {item.price}€{"\n"} 
+										Disponibilidade: {item.isAvailable}</Text>
+									<View>
 										<Image
 											source={{ uri: item.photoData }}
 											style={{
-												marginLeft: 20,
+												marginRight: '5%',
 												width: 95,
 												height: 95,
-												borderRadius: 700
+												borderRadius: 10
 											}}
 										/>
 									</View>
@@ -171,7 +162,6 @@ export default connect(
 const styles = StyleSheet.create({
 	containerStyle: {
 		borderWidth: 1,
-		borderRadius: 2,
 		borderColor: '#ddd',
 		borderBottomWidth: 0,
 		shadowColor: '#000',
@@ -181,6 +171,8 @@ const styles = StyleSheet.create({
 		elevation: 1,
 		marginLeft: 5,
 		marginRight: 5,
-		marginTop: 10
+		marginBottom: 10,
+		paddingVertical: 10,
+		flexDirection: 'row',
 	}
 });
