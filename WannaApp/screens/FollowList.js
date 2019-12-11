@@ -38,7 +38,6 @@ class FollowList extends Component {
 	}
 
 	async getFeedDataFromApiAsync(type) {
-
 		let list;
 		if (type == 'Followers') {
 			list = await getFollowers();
@@ -46,7 +45,7 @@ class FollowList extends Component {
 		else return;
 
 		if (list != null) {
-			this.setState({ list: list, loading: false });
+			this.setState({ list: list, loading: false, type: type });
 		}
 
 		return;
@@ -79,7 +78,6 @@ class FollowList extends Component {
 		}
 
 		if (this.props.navigation.getParam('type') == 'Followers') {
-
 			return (
 				// Safe Box for Android
 				<View
@@ -97,14 +95,14 @@ class FollowList extends Component {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}> Seguidores </Text>
+						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>
+							{' '}
+							Seguidores{' '}
+						</Text>
 					</View>
 				</View>
 			);
-
-		} 
-		else {
-
+		} else {
 			return (
 				// Safe Box for Android
 				<View
@@ -122,13 +120,14 @@ class FollowList extends Component {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}> A seguir </Text>
+						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>
+							{' '}
+							A seguir{' '}
+						</Text>
 					</View>
 				</View>
 			);
-
 		}
-		
 	}
 
 	// Insta style feed using UserPost
@@ -144,15 +143,28 @@ class FollowList extends Component {
 							renderItem={({ item, index }) => {
 								console.log(item.followed_id);
 								return (
-									<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', borderBottomColor: grey, borderBottomWidth: 0.5}}>
-
+									<View
+										style={{
+											flex: 1,
+											flexDirection: 'row',
+											alignItems: 'center',
+											borderBottomColor: grey,
+											borderBottomWidth: 0.5
+										}}>
 										{/* primeira coluna: foto do perfil */}
 										<View>
 											<MaterialIcons name="person" size={60} />
 										</View>
-
 										{/* segunda coluna: nome de perfil e localização */}
-										<Text style={{ fontSize: 20, width: '100%' }}>{item.followed_id}</Text>
+										{this.state.type == 'Followings' ? (
+											<Text style={{ fontSize: 20, width: '100%' }}>
+												{item.followed_id}
+											</Text>
+										) : (
+											<Text style={{ fontSize: 20, width: '100%' }}>
+												{item.follower_id}
+											</Text>
+										)}
 									</View>
 								);
 							}}
