@@ -16,6 +16,7 @@ import {
 import { vote, removeVote, savePost, unsavePost } from '../../modules/post/post.api';
 import { EvilIcons } from '@expo/vector-icons';
 import { CardItem, Left, Right } from 'native-base';
+import { enteringOnChat } from '../../modules/chat/chat.reducer';
 
 class PostButtons extends Component {
 	render() {
@@ -167,19 +168,20 @@ class PostButtons extends Component {
 	}
 
 	buildChat(idPost) {
-		return (
-			<View>
-				<TouchableOpacity
-					activeOpacity={0.5}
-					onPress={() => {
-						this.props.navigation.navigate('Comments', {
-							idPost: idPost
-						});
-					}}>
-					<EvilIcons name="envelope" size={33} style={{paddingRight: '3.5%'}}/>
-				</TouchableOpacity>
-			</View>
-		);
+		if(this.props.idUser != this.props.loggedUsername){
+			return (
+				<View>
+					<TouchableOpacity
+						activeOpacity={0.5}
+						onPress={() => {
+							this.props.enterChat(this.props.idUser, null, idPost);
+						}}>
+						<EvilIcons name="envelope" size={33} style={{paddingRight: '3.5%'}}/>
+					</TouchableOpacity>
+				</View>
+			);
+		}else return null;
+
 	}
 
 	async saveHandler(idPost) {
@@ -232,7 +234,8 @@ class PostButtons extends Component {
 function mapStateToProps(store) {
 	// console.log(store.profile);
 	return {
-		myVotes: store.profile.votes
+		myVotes: store.profile.votes,
+		loggedUsername: store.auth.loggedUsername
 	};
 }
 
@@ -258,6 +261,9 @@ function mapDispatchToProps(dispatch) {
 		},
 		dispatchUnSavePosts: idPost => {
 			dispatch(unsave(idPost));
+		},
+		enterChat: (contact, avatarContact, idPost) => {
+			dispatch(enteringOnChat(contact, avatarContact, idPost));
 		}
 	};
 }

@@ -168,6 +168,7 @@ class UserPostProfile extends Component {
 
 				<PostButtons
 					idPost={this.state.post.postInfo.id}
+					idUser={this.state.post.postInfo.idUser}
 					navigation={this.props.navigation}
 				/>
 

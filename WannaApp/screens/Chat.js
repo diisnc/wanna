@@ -21,6 +21,7 @@ import { getMessages } from '../modules/chat/chat.api';
 import { getAvatar } from '../modules/chat/chat.api';
 import { setLightEstimationEnabled } from 'expo/build/AR';
 
+let backHandlerCus;
 const isAndroid = Platform.OS == 'android';
 const viewPadding = 10;
 let socket;
@@ -40,12 +41,13 @@ class Chat extends Component {
 		const connectionConfig = {
 			transports: ['websocket']
 		};
-		socket = SocketIOClient('https://7d539135.ngrok.io', connectionConfig);
+		socket = SocketIOClient('https://5a3f05b3.ngrok.io', connectionConfig);
 	}
 
 	handleBackPress = () => {
 		socket.emit('leave-room', this.state.room);
-		this.props.navigation.navigate('ConversationsList');
+		backHandlerCus.remove();
+		this.props.navigation.goBack(null);
 		return true;
 	};
 
@@ -62,7 +64,7 @@ class Chat extends Component {
 		});
 	};
 
-	timestampToDate(messages) {
+	timestampToDateFromDB(messages) {
 		newArray = messages;
 		[].map.call(newArray, function(obj) {
 			var months = [
@@ -101,6 +103,41 @@ class Chat extends Component {
 		return newArray;
 	}
 
+	timestampToDate(timestamp){
+		var months = [
+			'Janeiro',
+			'Fevereiro',
+			'Março',
+			'Abril',
+			'Maio',
+			'Junho',
+			'Julho',
+			'Agosto',
+			'Setembro',
+			'Outubro',
+			'Novembro',
+			'Dezembro'
+		];
+		var date = new Date(timestamp);
+		var day = date.getDate();
+		var month = date.getMonth();
+		var year = date.getFullYear();
+		var hours = date.getHours();
+		var minutos = '0' + date.getMinutes();
+
+		var formattedTime =
+			day +
+			' de ' +
+			months[month] +
+			' de ' +
+			year +
+			' às ' +
+			hours +
+			':' +
+			minutos.substr(-2);
+		return formattedTime	 
+	}
+
 	componentWillMount() {
 		if (Platform.OS === 'android') {
 			this.keyboardDidShowListener = Keyboard.addListener(
@@ -115,7 +152,7 @@ class Chat extends Component {
 	}
 
 	componentDidMount() {
-		BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+		backHandlerCus = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 		let sub = {
 			idUser: this.props.contact,
 			idPost: this.props.idPost
@@ -288,7 +325,10 @@ class Chat extends Component {
 
 	async getMessagesAsync(idContact, idPost) {
 		const previousMessages = await getMessages(idContact, idPost);
-		const newArray = this.timestampToDate(previousMessages);
+		let newArray = null;
+		if (previousMessages != null) {
+			newArray = this.timestampToDateFromDB(previousMessages);
+		}
 		if (newArray != null) {
 			this.setState({ messages: newArray });
 		}
@@ -314,10 +354,13 @@ class Chat extends Component {
 	};
 
 	onReceivedMessage = message => {
+		timestamp = new Date();
 		let messageModel = {
 			writer: this.props.contact,
 			text: message.message,
-			date: new Date()
+			createdAt: this.timestampToDate(timestamp)
+
+
 		};
 
 		this.setState({ messages: [...this.state.messages, messageModel] });
@@ -325,7 +368,8 @@ class Chat extends Component {
 
 	sendMessage = () => {
 		let notEmpty = this.state.text.trim().length > 0;
-
+		timestamp = new Date();
+		console.log(timestamp);
 		if (notEmpty) {
 			let messageToSend = {
 				room: this.state.room,
@@ -338,7 +382,9 @@ class Chat extends Component {
 			let messageToSave = {
 				writer: this.props.username,
 				text: this.state.text,
-				date: new Date()
+				createdAt: this.timestampToDate(timestamp)
+
+
 			};
 
 			socket.emit('chat-message', messageToSend);

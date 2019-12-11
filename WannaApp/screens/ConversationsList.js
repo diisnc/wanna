@@ -11,7 +11,8 @@ import {
 	TouchableOpacity,
 	TouchableHighlight,
 	FlatList,
-	Image
+	Image,
+	BackHandler
 } from 'react-native';
 import { createFilter } from '../modules/filter/filter.api';
 import { getContacts } from '../modules/chat/chat.api';
@@ -72,7 +73,11 @@ class ConversationsList extends Component {
 	}
 
 	componentDidMount() {
-		this.getContactsAsync();
+		
+		this.props.navigation.addListener('willFocus', () => {
+			this.getContacts();
+		});
+
 	}
 
 	render() {
@@ -135,14 +140,14 @@ class ConversationsList extends Component {
 							fontSize: 18,
 							fontWeight: 'bold'
 						}}>
-						Todas as mensages
+						As minhas mensagens
 					</Text>
 				</View>
 			</View>
 		);
 	}
 
-	async getContactsAsync() {
+	async getContacts() {
 		// const newState = require('./json/responseFeed');
 		const newState = await getContacts();
 		const newArray = this.timestampToDate(newState);

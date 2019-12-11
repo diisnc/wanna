@@ -202,6 +202,12 @@ const FeedStack = createStackNavigator(
 			navigationOptions: {
 				header: null
 			}
+		},
+		Chat: {
+			screen: Chat,
+			navigationOptions: {
+				header: null
+			}
 		}
 	},
 	{

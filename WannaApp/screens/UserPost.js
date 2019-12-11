@@ -103,6 +103,7 @@ class UserPost extends Component {
 
 					<PostButtons
 								idPost={this.props.item.id}
+								idUser={this.props.item.idUser}
 								navigation={this.props.navigation}
 					/>
 
