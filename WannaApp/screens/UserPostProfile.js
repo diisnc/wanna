@@ -20,6 +20,10 @@ import { connect } from 'react-redux';
 import { like, unDisLike, unLike, disLike, save, unsave } from '../modules/profile/profile.reducer';
 import { vote, removeVote, savePost, unsavePost } from '../modules/post/post.api';
 import PostButtons from './components/PostButtons';
+import { Card, CardItem, Body, Left, Right } from 'native-base';
+import { theme } from '../galio';
+
+const screenWidth = Dimensions.get('window').width;
 
 class UserPostProfile extends Component {
 	state = {
@@ -94,9 +98,9 @@ class UserPostProfile extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
+						fontSize: 20
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>POST</Text>
+					<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>Post</Text>
 				</View>
 			</View>
 		);
@@ -104,117 +108,99 @@ class UserPostProfile extends Component {
 
 	buildPost() {
 		return (
-			<View
-				style={{
-					flex: 1,
-					flexDirection: 'column',
-					justifyContent: 'flex-start',
-					alignItems: 'stretch'
-				}}>
-				{/* header de post, dividido em 2 colunas*/}
-				<View style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}>
-					{/* primeira coluna: foto do perfil */}
-					<View>
-						{this.state.post.userInfo.avatarData ? (
+			<Card>
+				<CardItem>
+					<Left>
+						{this.state.post.userInfo.avatarData != null ? (
 							<Image
-								source={{ uri: this.state.post.userInfo.avatarData }}
-								style={{ width: 40, height: 40, borderRadius: 60 }}
-								resizeMode="contain"
+									style={{ width: 60, height: 60, borderRadius: 50 }}
+									source={{ uri: this.state.post.userInfo.avatarData }}
 							/>
 						) : (
 							<Image
-								source={require('../assets/noImage.png')}
-								style={{ width: 40, height: 40, borderRadius: 60 }}
-								resizeMode="contain"
-							/>
+									style={{ width: 60, height: 60, borderRadius: 50 }}
+									source={require('../assets/noImage.png')}
+								/>
 						)}
-					</View>
-					{/* segunda coluna: nome de perfil e localização */}
-					<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'red' }}>
-						<TouchableOpacity
-							onPress={() => {
-								this.props.navigation.navigate('UserProfile', {
-									userID: this.state.post.postInfo.idUser
-								});
-							}}>
-							<Text>{this.state.post.postInfo.idUser}</Text>
-						</TouchableOpacity>
-						<Text>Braga</Text>
-					</View>
-				</View>
-				{/* imagens do post */}
-				<View
-					style={{
-						flex: 1,
-						width: this.state.width,
-						backgroundColor: 'green',
-						margin: 10,
-						justifyContent: 'space-around',
-						alignItems: 'center'
-					}}>
-					<FlatList
-						horizontal
-						data={this.state.post.photos}
-						renderItem={({ index }) => {
-							return (
-								<View
-									key={index}
-									style={{
-										width: this.state.width,
-										height: '100%',
-										justifyContent: 'space-around',
-										alignItems: 'center'
-									}}>
-									<Image
-										source={{ uri: this.state.post.photos[index].photoData }}
-										style={{
-											height: '100%',
-											aspectRatio: 1,
-											overflow: 'hidden'
-										}}
-										resizeMode="contain"
-									/>
-								</View>
-							);
-						}}
-						keyExtractor={(item, index) => this.state.postID + index.toString()}
-						pagingEnabled
-						snapToInterval={this.state.width}
-						snapToAlignment="center"
-					/>
-				</View>
+						<Body>
+							<Text style={{ fontSize: 16, alignContent: 'center' }}>
+								{this.state.post.postInfo.idUser}
+							</Text>
+							<Text style={{ fontSize: 12, color: 'grey' }}>
+								LOCALIZAÇÃO
+							</Text>
+						</Body>
+					</Left>
+				</CardItem>
 
-				{/* footer de post, dividido em 3 linhas */}
-				<View style={{ flex: 1, flexDirection: 'column' }}>
-					{/* primeira linha: likes à esquerda, comentários, guardar e comprar à direita */}
-					<PostButtons idPost={this.state.postID} navigation={this.props.navigation} />
-					{/* segunda linha, dividida em 2 colunas */}
-					<View style={{ flex: 1, flexDirection: 'row' }}>
-						{/* coluna da esquerda, dividida em 2 linhas */}
-						<View style={{ flex: 1, flexDirection: 'column' }}>
-							{/* primeira linha: nome do produto */}
-							<View style={{ flex: 1 }}>
-								<Text>{this.state.post.postInfo.category}</Text>
-							</View>
-							{/* segunda linha: marca e tamanho e cor */}
-							<View style={{ flex: 1 }}>
-								<Text>
-									Marca, {this.state.post.postInfo.color},{' '}
-									{this.state.post.postInfo.size}
+				<CardItem cardBody>
+					<FlatList
+							horizontal
+							data={this.state.post.photos}
+							renderItem={({ index }) => {
+								return (
+									<View
+										key={index}
+										style={{
+											width: screenWidth - theme.SIZES.BASE * 0.5 ,
+											height: 300,
+											justifyContent: 'space-around',
+											alignItems: 'center'
+										}}>
+										<Image
+											source={{ uri: this.state.post.photos[index].photoData }}
+											style={{
+												aspectRatio: 1,
+												width: '90%',
+												backgroundColor: 'red'
+											}}
+											resizeMode="cover"
+										/>
+									</View>
+								);
+							}}
+							keyExtractor={(item, index) => this.state.postID + index.toString()}
+							pagingEnabled
+							snapToInterval={this.state.width}
+							snapToAlignment="center">
+					</FlatList>
+				</CardItem>
+
+				<PostButtons
+					idPost={this.state.post.postInfo.id}
+					navigation={this.props.navigation}
+				/>
+
+				<CardItem>	
+					<Left>
+						<View style={{flex: 1, flexDirection: 'column'}}>
+							<Text style={{fontWeight: 'bold', fontSize: 16}}>
+								{this.state.post.postInfo.category}
+							</Text>				
+							{this.state.post.postInfo.brand == null ? (
+								<Text style={{color: 'gray'}}>
+									{this.state.post.postInfo.color} • {this.state.post.postInfo.size}
 								</Text>
-							</View>
-						</View>
-						{/* coluna da direita: preço*/}
-						<View style={{ flex: 1 }}>
-							<Text>{this.state.post.postInfo.price}€</Text>
-						</View>
-					</View>
-					{/* terceira linha: descrição */}
-					<View style={{ flex: 1 }}>
-						<Text>{this.state.post.postInfo.description}</Text>
-					</View>
-				</View>
-			</View>
+							) : (									
+								<Text style={{color: 'gray'}}>
+									{this.state.post.postInfo.brand} • {this.state.post.postInfo.color} • {this.state.post.postInfo.size}
+								</Text>
+							)}
+
+							<Text style={{color: 'gray'}}>
+								{this.state.post.postInfo.description}
+							</Text>
+						</View>	
+					</Left>
+								
+					<Right>
+						<Text style={{color:'#3498DB', fontWeight: 'bold', fontSize: 17}}>{this.state.post.postInfo.price}€</Text>
+					</Right>
+				</CardItem>
+			</Card>
+
+
+
 		);
 	}
 }
