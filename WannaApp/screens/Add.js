@@ -489,6 +489,8 @@ class Add extends Component {
 	}
 
 	async createPhotoAsync() {
+		this.state.price = this.state.price.replace("€","").replace(",",".");
+
 		result = await createPost(
 			this.state.selectedGenre,
 			this.state.selectedClothe,
