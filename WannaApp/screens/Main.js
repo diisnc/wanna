@@ -13,11 +13,11 @@ import Chat from './Chat';
 import UserPostProfile from './UserPostProfile';
 import SavedPosts from './SavedPosts';
 import React, { Component } from 'react';
-import { createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, Image, Animated, Easing } from 'react-native';
+import { StyleSheet, Text, Image, Animated, Easing } from 'react-native';
 
 const transitionConfig = () => {
 	return {
@@ -214,29 +214,29 @@ const MainTab = createMaterialTopTabNavigator(
 		Inspire: {
 			screen: FeedStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>INSPIRA-TE</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Inspira-te</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="home-outline" color={tintColor} size={26} />
+					<MaterialCommunityIcons name="home-outline" color={tintColor} size={28} />
 				)
 			}
 		},
 		Wanted: {
 			screen: FilterStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>FILTROS</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Filtros</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={26} />
+					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={28} />
 				)
 			}
 		},
 		Add: {
 			screen: Add,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>ADICIONAR</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Adicionar</Text>,
 				tabBarIcon: ({ tintColor }) => (
 					<Image
-						source={require('../assets/logo64.png')}
-						style={{ height: 26, width: 26 }}
+						source={require('../assets/add.png')}
+						style={{ height: 30, width: 30, flex: 1 }}
 					/>
 				)
 			}
@@ -244,18 +244,18 @@ const MainTab = createMaterialTopTabNavigator(
 		Combine: {
 			screen: Combine,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>COMBINAR</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Combinar</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={26} />
+					<MaterialCommunityIcons name="vector-combine" color={tintColor} size={28} />
 				)
 			}
 		},
 		Profile: {
 			screen: UserStack,
 			navigationOptions: {
-				tabBarLabel: <Text style={{ fontSize: 9 }}>PERFIL</Text>,
+				tabBarLabel: <Text style={{ fontSize: 9 }}>Perfil</Text>,
 				tabBarIcon: ({ tintColor }) => (
-					<MaterialIcons name="person-outline" color={tintColor} size={26} />
+					<MaterialIcons name="person-outline" color={tintColor} size={28} />
 				)
 			}
 		}
@@ -264,7 +264,7 @@ const MainTab = createMaterialTopTabNavigator(
 		swipeEnabled: true,
 		animationEnabled: true,
 		tabBarOptions: {
-			activeTintColor: 'red',
+			activeTintColor: '#3498DB',
 			inactiveTintColor: 'grey',
 			style: {
 				backgroundColor: 'white',
@@ -275,10 +275,14 @@ const MainTab = createMaterialTopTabNavigator(
 				elevation: 5
 			},
 			indicatorStyle: {
-				backgroundColor: 'red'
+				backgroundColor: 'white'
 			},
 			showIcon: true,
-			showLabel: true
+			showLabel: false,
+			iconStyle: {
+				width: 30,
+				height: 30
+			}
 		},
 		tabBarPosition: 'bottom'
 	}

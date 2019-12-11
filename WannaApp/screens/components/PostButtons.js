@@ -11,29 +11,25 @@ import {
 import {
 	View,
 	Text,
-	StyleSheet,
-	SafeAreaView,
-	TextInput,
-	Platform,
-	ScrollView,
-	Image,
-	TouchableHighlight,
-	Dimensions,
-	FlatList,
 	TouchableOpacity
 } from 'react-native';
 import { vote, removeVote, savePost, unsavePost } from '../../modules/post/post.api';
-import { MaterialIcons, MaterialCommunityIcons, EvilIcons, Ionicons } from '@expo/vector-icons';
-import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
+import { EvilIcons } from '@expo/vector-icons';
+import { CardItem, Left, Right } from 'native-base';
 
 class PostButtons extends Component {
 	render() {
 		return (
 			<CardItem>
 				{this.buildVotes(this.props.idPost)}
-				{this.buildSavedPost(this.props.idPost)}
-				{this.buildComments(this.props.idPost)}
-				{this.buildChat(this.props.idPost)}
+				
+				<Right>
+					<View style={{ flex: 1, flexDirection: 'row' }}>
+						{this.buildSavedPost(this.props.idPost)}
+						{this.buildComments(this.props.idPost)}
+						{this.buildChat(this.props.idPost)}
+					</View>
+				</Right>
 			</CardItem>
 		);
 	}
@@ -61,7 +57,7 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.likeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-up" size={32} style={{paddingRight: '5%'}}/>
+							<EvilIcons name="arrow-up" size={33} style={{paddingRight: '4%'}}/>
 						</TouchableOpacity>
 						
 						<TouchableOpacity
@@ -69,9 +65,9 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.disLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-down" size={32} style={{paddingRight: '2%'}}/>
+							<EvilIcons name="arrow-down" size={33} style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
 					</Left>
 				);
 			} else if (voteType == 1) {
@@ -82,7 +78,7 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.unLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-up" size={32} color="#3498DB" style={{paddingRight: '5%'}}/>
+							<EvilIcons name="arrow-up" size={33} color="#3498DB" style={{paddingRight: '4%'}}/>
 						</TouchableOpacity>
 						
 						<TouchableOpacity
@@ -90,9 +86,9 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.disLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-down" size={32} style={{paddingRight: '2%'}}/>
+							<EvilIcons name="arrow-down" size={33} style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
 					</Left>
 				);
 			} else if (voteType == -1) {
@@ -103,7 +99,7 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.likeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-up" size={32} style={{paddingRight: '5%'}}/>
+							<EvilIcons name="arrow-up" size={33} style={{paddingRight: '4%'}}/>
 						</TouchableOpacity>
 						
 						<TouchableOpacity
@@ -111,9 +107,9 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.unDisLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-down" size={32} color="#3498DB" style={{paddingRight: '2%'}}/>
+							<EvilIcons name="arrow-down" size={33} color="#3498DB" style={{paddingRight: '2%'}}/>
 						</TouchableOpacity>
-						<Text style={{paddingTop: '3%'}}>{showLikes}</Text>
+						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
 					</Left>
 				);
 			} else return null;
@@ -128,27 +124,27 @@ class PostButtons extends Component {
 
 			if (saved == 0) {
 				return (
-					<Right>
+					<View>
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.saveHandler(idPost);
 							}}>
-							<EvilIcons name="plus" size={32} />
+							<EvilIcons name="plus" size={33} style={{paddingRight: '3.5%'}}/>
 						</TouchableOpacity>
-					</Right>
+					</View>
 				);
 			} else {
 				return (
-					<Right>
+					<View>
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.unsaveHandler(idPost);
 							}}>
-							<EvilIcons name="plus" color="#3498DB" size={32} />
+							<EvilIcons name="plus" color="#3498DB" size={33} style={{paddingRight: '3.5%'}}/>
 						</TouchableOpacity>
-					</Right>
+					</View>
 				);
 			}
 		}
@@ -156,7 +152,7 @@ class PostButtons extends Component {
 
 	buildComments(idPost) {
 		return (
-			<Right>
+			<View>
 				<TouchableOpacity
 					activeOpacity={0.5}
 					onPress={() => {
@@ -164,15 +160,15 @@ class PostButtons extends Component {
 							idPost: idPost
 						});
 					}}>
-					<EvilIcons name="comment" size={32} />
+					<EvilIcons name="comment" size={33} style={{paddingRight: '3.5%'}}/>
 				</TouchableOpacity>
-			</Right>
+			</View>
 		);
 	}
 
 	buildChat(idPost) {
 		return (
-			<Right>
+			<View>
 				<TouchableOpacity
 					activeOpacity={0.5}
 					onPress={() => {
@@ -180,9 +176,9 @@ class PostButtons extends Component {
 							idPost: idPost
 						});
 					}}>
-					<EvilIcons name="envelope" size={32} />
+					<EvilIcons name="envelope" size={33} style={{paddingRight: '3.5%'}}/>
 				</TouchableOpacity>
-			</Right>
+			</View>
 		);
 	}
 

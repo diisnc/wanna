@@ -1,13 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
 	View,
 	Text,
 	StyleSheet,
 	SafeAreaView,
-	TextInput,
 	Platform,
-	ScrollView,
-	Image,
 	Dimensions,
 	FlatList,
 	TouchableOpacity,
@@ -19,14 +16,15 @@ import { feed } from '../modules/post/post.api';
 import { searchUser } from '../modules/profile/profile.api';
 import UserPost from './UserPost';
 import Loading from './Loading';
-import { SearchBar, ListItem } from 'react-native-elements';
+import Loading2 from './Loading2';
+import { SearchBar } from 'react-native-elements';
 const { height, width } = Dimensions.get('window');
 
 class Inspire extends Component {
 	state = {
 		feedData: [],
 		newData: [],
-		numPosts: 0,
+		numPosts: null,
 		loading: true,
 		inputSearch: null,
 		searchR: [],
@@ -104,7 +102,7 @@ class Inspire extends Component {
 								alignItems: 'stretch'
 							}}>
 							{this.buildHeader()}
-							<Loading/>
+							<Loading2/>
 							{/*<Text>Sem posts? Começa por seguir alguém!</Text>*/}
 						</View>
 					</SafeAreaView>
@@ -131,7 +129,7 @@ class Inspire extends Component {
 	buildHeader() {
 		return (
 			// Safe Box for Android
-			<View style={{ paddingTop: 20, height: 'auto', flex: 0 }}>
+			<View style={{ paddingTop: 10, height: 'auto', flex: 0 }}>
 				{/* Search Box */}
 				<View style={styles.viewStyle}>
 					<SearchBar
@@ -164,7 +162,7 @@ class Inspire extends Component {
 								</TouchableOpacity>
 							)}
 							enableEmptySections={true}
-							style={{ marginTop: 10 }}
+							style={{ marginTop: 0.5 }}
 							keyExtractor={(item, index) => item.username.toString()}
 						/>
 					)}
@@ -209,7 +207,8 @@ class Inspire extends Component {
 			return (
 				<View style={styles.container}>
 					{this.state.loading == true ? null : (
-						<FlatList
+						<FlatList 
+							showsVerticalScrollIndicator={false}
 							data={this.state.feedData}
 							keyExtractor={(item, index) => index.toString()}
 							style={styles.list}
@@ -297,7 +296,7 @@ const styles = StyleSheet.create({
 	viewStyle: {
 		height: 'auto',
 		flex: 0,
-		backgroundColor: 'red',
+		backgroundColor: 'white',
 		marginTop: Platform.OS == 'ios' ? 30 : 0
 	},
 	textStyle: {

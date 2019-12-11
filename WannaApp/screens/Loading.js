@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Button, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
-import { globalStyle, defaultNavigator } from './style';
-import { HitTestResultTypes } from 'expo/build/AR';
-const { width, height } = Dimensions.get('window');
 
 class Wanna extends Component {
 	render() {
