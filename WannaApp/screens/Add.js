@@ -10,7 +10,8 @@ import {
 	Image,
 	TouchableHighlight,
 	Button,
-	ToastAndroid
+	ToastAndroid,
+	TouchableOpacity
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
@@ -21,10 +22,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import { addPost } from '../modules/profile/profile.reducer';
+import { EvilIcons } from '@expo/vector-icons';
 
 const maleClothes = ['Camisa', 'Camisola', 'Calçado', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calçado', 'Casaco', 'Outro'];
-const colors = ['Azul', 'Vermelho', 'Rosa', 'Bege', 'Castanho',  'Preto', 'Branco', 'Outra'];
+const colors = ['Azul', 'Vermelho', 'Rosa', 'Verde', 'Amarelo', 'Bege', 'Castanho', 'Preto', 'Cinza', 'Branco', 'Outra'];
 const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
 const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
 
@@ -99,7 +101,7 @@ class Add extends Component {
 						alignItems: 'center',
 						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 1, textAlign: 'center' }}>NOVO POST</Text>
+					<Text style={{ flex: 1, textAlign: 'left', fontSize: 18}}>PUBLICAR</Text>
 				</View>
 			</View>
 		);
@@ -110,24 +112,51 @@ class Add extends Component {
 		return (
 			<ScrollView scrollEventThrottle={16}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
-					{this.buildPickedImagesScroll()}
-					{this.buildImagePicker()}
+					{this.buildImagesBox()}
 					{this.buildFilterForm()}
 				</View>
 			</ScrollView>
 		);
 	}
 
+	buildImagesBox() {
+		return (
+			<View
+			style={{
+				height: 100,
+				width: '100%',
+				flexDirection: 'row'
+			}}>
+				{this.buildPickedImagesScroll()}
+				{this.buildImagePicker()}
+			</View>
+		);
+	}
+
 	// Builds lateral scroll for picked images
 	buildPickedImagesScroll() {
-		if (this.state.pickedImagesBase64.length > 0) {
+		if (this.state.pickedImagesBase64.length > 0){
 			return (
 				<ScrollView
 					scrollEventThrottle={16}
 					horizontal={true}
-					style={{ height: 100, backgroundColor: 'green', margin: 10 }}>
+					style={{ height: 100, width: '75%',}}>
 					{this.buildImages()}
 				</ScrollView>
+			);
+		}
+		else {
+			return (
+				<View
+					style={{
+						height: 100,
+						width: '75%',
+						justifyContent: 'center',
+						alignItems: 'center',
+						padding: 10
+					}}>
+					<Text style={{fontSize: 18}}>Ainda não tens fotos do teu produto... Adiciona algumas!</Text>
+				</View>
 			);
 		}
 		return;
@@ -173,26 +202,23 @@ class Add extends Component {
 			<View
 				style={{
 					height: 100,
+					width: '25%',
 					flexDirection: 'row',
 					padding: 10,
 					justifyContent: 'center',
-					alignItems: 'center',
-					backgroundColor: 'pink'
+					alignItems: 'center'
 				}}>
-				{/* Take photo */}
-				<MaterialCommunityIcons.Button
-					name="camera"
-					size={40}
-					style={{ flex: 1 }}
-					onPress={this.takePhoto}
-				/>
-				{/* Select from gallery */}
-				<MaterialCommunityIcons.Button
-					name="folder-image"
-					size={40}
-					style={{ flex: 1 }}
-					onPress={this.pickImage}
-				/>
+				
+				<TouchableOpacity
+					activeOpacity={0.5}
+					onPress={this.takePhoto}>
+					<EvilIcons name="camera" size={40} style={{padding: 5}}/>
+				</TouchableOpacity>
+				<TouchableOpacity
+					activeOpacity={0.5}
+					onPress={this.pickImage}>
+					<EvilIcons name="image" size={40} style={{padding: 5}}/>
+				</TouchableOpacity>
 			</View>
 		);
 	}
