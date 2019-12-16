@@ -17,6 +17,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { createPost } from '../modules/post/post.api';
 import { connect } from 'react-redux';
+import * as Font from 'expo-font';
 import CheckBox from 'react-native-check-box';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImageManipulator from 'expo-image-manipulator';
@@ -49,7 +50,8 @@ class Add extends Component {
 		price: null,
 		offerPostage: false,
 		postagePrice: null,
-		completed: false
+		completed: false,
+		fontLoaded: false
 	};
 
 	render() {
@@ -77,13 +79,22 @@ class Add extends Component {
 		);
 	}
 
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
+	}
+
 	// Builds header of the page
 	buildHeader() {
 		this.startHeaderHeight = 80;
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
-		return (
+		if (this.state.fontLoaded){
+			return (
 			// Safe Box for Android
 			<View
 				style={{
@@ -101,10 +112,18 @@ class Add extends Component {
 						alignItems: 'center',
 						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 1, textAlign: 'left', fontSize: 18}}>PUBLICAR</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						PUBLICAR
+					</Text>
 				</View>
 			</View>
-		);
+			);
+		}
 	}
 
 	// Build space to pick image
@@ -170,7 +189,7 @@ class Add extends Component {
 			let imageUri = this.state.pickedImagesBase64[index];
 
 			items.push(
-				<View key={index} style={{ width: 100, backgroundColor: 'yellow', margin: 5 }}>
+				<View key={index} style={{ width: 100, margin: 3 }}>
 					<Image
 						key={index}
 						source={{
@@ -179,7 +198,6 @@ class Add extends Component {
 						style={{
 							width: 'auto',
 							height: '80%',
-							aspectRatio: 1,
 							overflow: 'hidden'
 						}}
 					/>
@@ -563,3 +581,4 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	}
 });
+
