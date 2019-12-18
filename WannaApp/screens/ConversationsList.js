@@ -119,7 +119,6 @@ class ConversationsList extends Component {
 			<View
 				style={{
 					height: this.startHeaderHeight,
-					backgroundColor: '#00afff',
 					borderBottomWidth: 1,
 					borderBottomColor: '#dddd'
 				}}>
@@ -130,17 +129,15 @@ class ConversationsList extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: '#00afff'
 					}}>
 					<Text
 						style={{
 							flex: 3,
 							textAlign: 'center',
-							color: 'white',
 							fontSize: 18,
 							fontWeight: 'bold'
 						}}>
-						As minhas mensagens
+						As Minhas Mensagens
 					</Text>
 				</View>
 			</View>
@@ -162,7 +159,7 @@ class ConversationsList extends Component {
 	buildFilterForm() {
 		return (
 			<ScrollView scrollEventThrottle={16}>
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
+				<View style={{ flex: 1, backgroundColor: 'white', margin: 10, flexDirection: 'row' }}>
 					<FlatList
 						data={this.state.conversationList}
 						renderItem={({ item }) => (
@@ -181,36 +178,32 @@ class ConversationsList extends Component {
 										  );
 								}}>
 								<View style={styles.containerStyle}>
-									{item.idReceiver === this.props.loggedUsername ? (
-										<Text>{item.idSender}</Text>
-									) : (
-										<Text>{item.idReceiver}</Text>
-									)}
-									<Text>{item.idPost}</Text>
-									<Text>Título do post</Text>
-									{item.idSender === this.props.loggedUsername ? (
-										<Text>{'You: ' + item.messageText}</Text>
-									) : (
-										<Text>{item.idSender + ': ' + item.messageText}</Text>
-									)}
-
-									<Text style={styles.date}>{item.createdAt}</Text>
-									<View
-										style={[
-											{
-												display: 'flex',
-												alignItems: 'flex-end'
-											}
-										]}>
+									<View>
 										<Image
 											source={{ uri: item.photoData }}
 											style={{
-												marginLeft: 20,
+												alignSelf: 'center',
+												marginHorizontal: 10,
 												width: 95,
 												height: 95,
 												borderRadius: 700
 											}}
 										/>
+									</View>
+									<View>
+										{item.idReceiver === this.props.loggedUsername ? (
+											<Text>{item.idSender}</Text>
+										) : (
+											<Text>{item.idReceiver}</Text>
+										)}
+										<Text>Título do post</Text>
+										{item.idSender === this.props.loggedUsername ? (
+											<Text>{'Tu: ' + item.messageText}</Text>
+										) : (
+											<Text>{item.idSender + ': ' + item.messageText}</Text>
+										)}
+
+										<Text style={styles.date}>{item.createdAt}</Text>										
 									</View>
 								</View>
 							</TouchableHighlight>
@@ -240,7 +233,6 @@ export default connect(
 const styles = StyleSheet.create({
 	containerStyle: {
 		borderWidth: 1,
-		borderRadius: 2,
 		borderColor: '#ddd',
 		borderBottomWidth: 0,
 		shadowColor: '#000',
@@ -250,7 +242,9 @@ const styles = StyleSheet.create({
 		elevation: 1,
 		marginLeft: 5,
 		marginRight: 5,
-		marginTop: 10
+		marginBottom: 10,
+		paddingVertical: 10,
+		flexDirection: 'row',
 	},
 	date: {
 		width: 'auto',

@@ -3,7 +3,7 @@ import { showError, connectionError } from './errors/error.reducer';
 import { store } from '../App';
 import { logout } from './auth/auth.service';
 
-const config = { url: 'http://127.0.0.1:8000' };
+const config = { url: 'http://infernoo.duckdns.org:8000' };
 
 var currentAuthToken;
 

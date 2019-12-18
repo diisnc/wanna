@@ -118,9 +118,9 @@ class SavedPosts extends Component {
 									});
 								}}>
 								<View style={styles.containerStyle}>
-									<Text style={{ alignSelf: 'center', flex: 2, fontSize: 16, marginLeft: '5%', marginHorizontal: 20 }}>
+									<Text style={{ alignSelf: 'center', flex: 2, fontSize: 16, marginHorizontal: 20 }}>
 										{item.idUser} {"\n"}
-										Título do post {"\n"}
+										Título do post: {"\n"}
 										Preço: {item.price}€{"\n"} 
 										Disponibilidade: {item.isAvailable}</Text>
 									<View>
