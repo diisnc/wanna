@@ -249,7 +249,7 @@ class Add extends Component {
 					{/* género */}
 					<View
 						key={'genre'}
-						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 50, flexDirection: 'row'}}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleGenre({ selected: value });
@@ -262,18 +262,18 @@ class Add extends Component {
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
 								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								marginBottom: 10,
+								backgroundColor: 'rgb(240, 240, 240)'
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 15, margin: 10, color: 'black' }}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
 					{/* tipo roupa */}
 					<View
 						key={'clothe'}
-						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 50, flexDirection: 'row'}}>
 						<ModalDropdown
 							onDropdownWillShow={this.clotheWillShow.bind(this)}
 							onSelect={(index, value) => {
@@ -287,18 +287,18 @@ class Add extends Component {
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
 								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								marginBottom: 10,
+								backgroundColor: 'rgb(240, 240, 240)'
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 15, margin: 10, color: 'black' }}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
 					{/* cor */}
 					<View
 						key={'color'}
-						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 50, flexDirection: 'row'}}>
 						<ModalDropdown
 							onDropdownWillShow={this.colorWillShow.bind(this)}
 							onSelect={(index, value) => {
@@ -312,18 +312,18 @@ class Add extends Component {
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
 								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								marginBottom: 10,
+								backgroundColor: 'rrgb(240, 240, 240)'
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 15, margin: 10, color: 'black' }}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
 					{/* tamanhos */}
 					<View
 						key={'sizes'}
-						style={{ height: 50, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 50, flexDirection: 'row'}}>
 						<ModalDropdown
 							onDropdownWillShow={this.sizeWillShow.bind(this)}
 							onSelect={(index, value) => {
@@ -337,28 +337,44 @@ class Add extends Component {
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
 								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								marginBottom: 10,
+								backgroundColor: 'rgb(240, 240, 240)'
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 15, margin: 10, color: 'black' }}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
 					{/* marca */}
-					<View style={{ flex: 1, padding: 10 }}>
+					<View style={{flex: 1}}>
 						<TextInput
-							style={{ flex: 1 }}
+							style={{
+								flex: 1,
+								backgroundColor: 'rgb(240, 240, 240)',
+								borderRadius: 30,
+								marginBottom: 10,
+								padding: 6,
+								paddingLeft: 12
+							}}
 							placeholder="Marca"
+							placeholderTextColor="black"
 							onChangeText={text => this.setState({ insertedBrand: text })}
 							value={this.state.insertedBrand}
 						/>
 					</View>
 					{/* descrição */}
-					<View style={{ flex: 1, padding: 10 }}>
+					<View style={{flex: 1}}>
 						<TextInput
-							style={{ flex: 1 }}
+							style={{
+								flex: 1,
+								backgroundColor: 'rgb(240, 240, 240)',
+								borderRadius: 30,
+								marginBottom: 10,
+								padding: 6,
+								paddingLeft: 12
+							}}
 							placeholder="Descrição"
+							placeholderTextColor="black"
 							onChangeText={text => this.setState({ insertedDescription: text })}
 							value={this.state.insertedDescription}
 						/>
@@ -370,10 +386,17 @@ class Add extends Component {
 							unit: '€'
 						}}
 						keyboardType={'numeric'}
-						style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
+						style={{
+							flex: 1,
+							backgroundColor: 'rgb(240, 240, 240)',
+							borderRadius: 30,
+							marginBottom: 10,
+							padding: 6,
+							paddingLeft: 12
+						}}
 						underlineColorAndroid="transparent"
-						placeholder="Inserir preço"
-						placeholderTextColor="grey"
+						placeholder="Preço"
+						placeholderTextColor="black"
 						value={this.state.price}
 						onChangeText={text => this.setState({ price: text })}
 					/>
@@ -394,10 +417,17 @@ class Add extends Component {
 								unit: '€'
 							}}
 							keyboardType={'numeric'}
-							style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
+							style={{
+								flex: 1,
+								backgroundColor: 'rgb(240, 240, 240)',
+								borderRadius: 30,
+								marginBottom: 10,
+								padding: 6,
+								paddingLeft: 12
+							}}
 							underlineColorAndroid="transparent"
-							placeholder="Inserir portes"
-							placeholderTextColor="grey"
+							placeholder="Custo portes"
+							placeholderTextColor="black"
 							value={this.state.postagePrice}
 							onChangeText={text => this.setState({ postagePrice: text })}
 						/>
