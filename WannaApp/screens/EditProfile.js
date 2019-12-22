@@ -35,7 +35,9 @@ class EditProfile extends Component {
 		avatarData: null,
 		location: null,
 		password: null,
-		loading: true
+		loading: true,
+		completed: false,
+		fontLoaded: false
 	};
 	constructor(props) {
 		super(props);
@@ -43,6 +45,13 @@ class EditProfile extends Component {
 
 	componentDidMount() {
 		this.getProfileToShow();
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	getProfileToShow() {
@@ -79,6 +88,7 @@ class EditProfile extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -97,10 +107,17 @@ class EditProfile extends Component {
 						alignItems: 'center',
 						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>Editar Perfil</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						EDITAR
+					</Text>
 				</View>
 			</View>
-		);
+		);}
 	}
 
 	renderForm() {

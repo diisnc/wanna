@@ -26,12 +26,20 @@ class Wanted extends Component {
 	state = {
 		wishlistData: [],
 		numPosts: 0,
-		loadingMoreData: false
+		loadingMoreData: false,
+		fontLoaded: false
 	};
 
 	componentDidMount() {
 		// get data from servers and save in state
 		this.getDataFromAPI();
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	async getDataFromAPI() {
@@ -69,6 +77,7 @@ class Wanted extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -87,7 +96,14 @@ class Wanted extends Component {
 						alignItems: 'center',
 						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>WANTED</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						DESEJADOS
+					</Text>
 					<MaterialCommunityIcons.Button
 						name="filter-variant"
 						size={40}
@@ -96,7 +112,7 @@ class Wanted extends Component {
 					/>
 				</View>
 			</View>
-		);
+		);}
 	}
 
 	// Builds feed of the page

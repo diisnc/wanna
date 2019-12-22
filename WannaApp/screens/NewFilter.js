@@ -41,8 +41,16 @@ class NewFilter extends Component {
 		selectedSize: null,
 		selectedMinPrice: 0,
 		selectedMaxPrice: 9999,
-		completed: false
+		completed: false,
+		fontLoaded: false
 	};
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
+	}
 
 	//onValueChange of the switch this function will be called
 	handleGenre(newState) {
@@ -148,6 +156,7 @@ class NewFilter extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -166,10 +175,17 @@ class NewFilter extends Component {
 						alignItems: 'center',
 						backgroundColor: 'blue'
 					}}>
-					<Text style={{ flex: 1, textAlign: 'center' }}>NOVO FILTRO</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						NOVO FILTRO
+					</Text>
 				</View>
 			</View>
-		);
+		);}
 	}
 
 	// Builds list of filters

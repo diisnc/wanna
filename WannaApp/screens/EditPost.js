@@ -17,11 +17,19 @@ class EditPost extends Component {
 		insertedColor: null,
 		insertedSize: null,
 		insertedBrand: null,
-		postLoaded: []
+		postLoaded: [],
+		fontLoaded: false
 	};
 
 	componentDidMount() {
 		this.loadPost();
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	async loadPost() {
@@ -58,6 +66,7 @@ class EditPost extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -76,10 +85,17 @@ class EditPost extends Component {
 						alignItems: 'center',
 						backgroundColor: 'blue'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>Editar Perfil</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						EDITAR
+					</Text>
 				</View>
 			</View>
-		);
+		);}
 	}
 
 	renderForm() {

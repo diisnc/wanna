@@ -25,7 +25,9 @@ const { width } = Dimensions.get('screen');
 class Filters extends Component {
 	state = {
 		filters: [],
-		loading: true
+		loading: true,
+		completed: false,
+		fontLoaded: false
 	};
 
 	componentDidMount() {
@@ -35,6 +37,13 @@ class Filters extends Component {
 		}
 
 		this.getFiltersFromAPI();
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	componentDidUpdate(prevProps) {
@@ -86,6 +95,7 @@ class Filters extends Component {
 
 	// Builds header of the page
 	buildHeader() {
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -104,7 +114,14 @@ class Filters extends Component {
 						alignItems: 'center',
 						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>OS MEUS FILTROS</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						FILTROS
+					</Text>
 					<MaterialCommunityIcons.Button
 						name="plus"
 						size={40}
@@ -114,6 +131,7 @@ class Filters extends Component {
 				</View>
 			</View>
 		);
+		}
 	}
 
 	// Builds list of filters

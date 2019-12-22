@@ -33,8 +33,16 @@ class Chat extends Component {
 		avatarContact: [],
 		text: '',
 		room: this.props.contact + this.props.idPost,
-		loading: true
+		loading: true,
+		fontLoaded: false
 	};
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
+	}
 
 	constructor(props) {
 		super(props);
@@ -218,6 +226,7 @@ class Chat extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -236,19 +245,17 @@ class Chat extends Component {
 						alignItems: 'center',
 						backgroundColor: '#00afff'
 					}}>
-					<Text
-						style={{
-							flex: 3,
-							textAlign: 'center',
-							fontSize: 18,
-							color: 'white',
-							fontWeight: 'bold'
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
 						}}>
 						{this.props.contact}
 					</Text>
 				</View>
 			</View>
-		);
+		);}
 	}
 
 	renderConversation() {

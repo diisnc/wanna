@@ -17,7 +17,6 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { createPost } from '../modules/post/post.api';
 import { connect } from 'react-redux';
-import * as Font from 'expo-font';
 import CheckBox from 'react-native-check-box';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImageManipulator from 'expo-image-manipulator';
@@ -78,7 +77,6 @@ class Add extends Component {
 			</SafeAreaView>
 		);
 	}
-
 
 	async componentWillMount() {
 		await Expo.Font.loadAsync({

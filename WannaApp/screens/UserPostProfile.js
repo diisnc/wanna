@@ -31,7 +31,8 @@ class UserPostProfile extends Component {
 		height: 0,
 		post: null,
 		postID: null,
-		loading: false
+		loading: false,
+		fontLoaded: false
 	};
 
 	componentDidMount() {
@@ -47,6 +48,13 @@ class UserPostProfile extends Component {
 			width: Dimensions.get('window').width,
 			height: Dimensions.get('window').height
 		});
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	fetchPostInfo = async idPost => {
@@ -82,6 +90,7 @@ class UserPostProfile extends Component {
 
 	// Builds header of the page
 	buildHeader() {
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -100,10 +109,17 @@ class UserPostProfile extends Component {
 						alignItems: 'center',
 						fontSize: 20
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>Post</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						POST
+					</Text>
 				</View>
 			</View>
-		);
+		);}
 	}
 
 	buildPost() {

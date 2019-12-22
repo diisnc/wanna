@@ -25,7 +25,8 @@ class FollowList extends Component {
 		loading: true,
 		width: 0,
 		list: [],
-		type: null
+		type: null,
+		fontLoaded: false
 	};
 
 	componentDidMount() {
@@ -35,6 +36,13 @@ class FollowList extends Component {
 		this.setState({ width: Dimensions.get('window').width * 0.75, type: typePassed });
 
 		this.getFeedDataFromApiAsync(typePassed);
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	async getFeedDataFromApiAsync(type) {
@@ -76,7 +84,7 @@ class FollowList extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
-
+		if (this.state.fontLoaded){
 		if (this.props.navigation.getParam('type') == 'Followers') {
 			return (
 				// Safe Box for Android
@@ -95,10 +103,15 @@ class FollowList extends Component {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>
-							{' '}
-							Seguidores{' '}
+						<Text style={{
+							flex: 1,
+							textAlign: 'left',
+							fontSize: 40,
+							fontFamily: 'run'
+							}}>
+							SEGUIDORES
 						</Text>
+						
 					</View>
 				</View>
 			);
@@ -120,14 +133,18 @@ class FollowList extends Component {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						<Text style={{ flex: 3, textAlign: 'center', fontSize: 20 }}>
-							{' '}
-							A seguir{' '}
+						<Text style={{
+							flex: 1,
+							textAlign: 'left',
+							fontSize: 40,
+							fontFamily: 'run'
+							}}>
+							A SEGUIR
 						</Text>
 					</View>
 				</View>
 			);
-		}
+		}}
 	}
 
 	// Insta style feed using UserPost

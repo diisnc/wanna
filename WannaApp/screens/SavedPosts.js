@@ -29,11 +29,19 @@ class SavedPosts extends Component {
 
 	state = {
 		savedPosts: [],
-		loading: true
+		loading: true,
+		fontLoaded: false
 	};
 
 	componentDidMount() {
 		this.getContactsAsync();
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	render() {
@@ -64,6 +72,7 @@ class SavedPosts extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -80,17 +89,17 @@ class SavedPosts extends Component {
 						justifyContent: 'center',
 						alignItems: 'center',
 					}}>
-					<Text
-						style={{
-							flex: 3,
-							textAlign: 'center',
-							fontSize: 20,
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
 						}}>
-						Posts Guardados
+						GUARDADOS
 					</Text>
 				</View>
 			</View>
-		);
+		);}
 	}
 
 	async getContactsAsync() {

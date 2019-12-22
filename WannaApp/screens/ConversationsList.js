@@ -30,7 +30,8 @@ class ConversationsList extends Component {
 
 	state = {
 		conversationList: [],
-		loading: true
+		loading: true,
+		fontLoaded: false
 	};
 
 	timestampToDate(conversationList) {
@@ -73,11 +74,16 @@ class ConversationsList extends Component {
 	}
 
 	componentDidMount() {
-		
 		this.props.navigation.addListener('willFocus', () => {
 			this.getContacts();
 		});
+	}
 
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	render() {
@@ -114,6 +120,7 @@ class ConversationsList extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -130,18 +137,18 @@ class ConversationsList extends Component {
 						justifyContent: 'center',
 						alignItems: 'center',
 					}}>
-					<Text
-						style={{
-							flex: 3,
-							textAlign: 'center',
-							fontSize: 18,
-							fontWeight: 'bold'
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
 						}}>
-						As Minhas Mensagens
+						MENSAGENS
 					</Text>
 				</View>
 			</View>
 		);
+		}
 	}
 
 	async getContacts() {

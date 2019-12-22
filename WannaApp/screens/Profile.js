@@ -41,7 +41,9 @@ class Profile extends Component {
 		username: '',
 		following: null,
 		userNrFollowers: null,
-		userNrFollowings: null
+		userNrFollowings: null,
+		completed: false,
+		fontLoaded: false
 	};
 
 	componentDidMount() {
@@ -50,6 +52,13 @@ class Profile extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
 	}
 
 	componentDidUpdate(prevProps) {
@@ -141,6 +150,7 @@ class Profile extends Component {
 
 	// Builds header of the page
 	buildHeader() {
+		if (this.state.fontLoaded){
 		return (
 			// Safe Box for Android
 			<View
@@ -158,7 +168,14 @@ class Profile extends Component {
 						alignItems: 'center',
 						justifyContent: 'flex-end',
 					}}>
-					<Text style={{  flex: 2, textAlign: 'center', fontSize: 20 }}>Perfil</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						PERFIL
+					</Text>
 					{this.state.username == this.props.loggedUsername ? (
 						<View style={{ flexDirection: 'row'}}>
 							<Feather.Button
@@ -180,6 +197,7 @@ class Profile extends Component {
 				</View>
 			</View>
 		);
+		}
 	}
 
 	// header do perfil do utilizador

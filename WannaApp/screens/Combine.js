@@ -28,7 +28,9 @@ class Combine extends Component {
 		numLowerClothes: 0,
 		selectedLowerClothe: null,
 		width: 0,
-		loading: true
+		loading: true,
+		completed: false,
+		fontLoaded: false
 	};
 
 	//onValueChange of the switch this function will be called
@@ -127,9 +129,17 @@ class Combine extends Component {
 		);
 	}
 
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			'run': require('../assets/fonts/run.ttf'),
+		});
+		this.setState({ fontLoaded: true });
+	}
+
 	// Builds header of the page
 	buildHeader() {
-		return (
+		if (this.state.fontLoaded){
+			return (
 			// Safe Box for Android
 			<View
 				style={{
@@ -147,7 +157,14 @@ class Combine extends Component {
 						alignItems: 'center',
 						backgroundColor: 'white'
 					}}>
-					<Text style={{ flex: 3, textAlign: 'center' }}>COMBINAR</Text>
+					<Text style={{
+						flex: 1,
+						textAlign: 'left',
+						fontSize: 40,
+						fontFamily: 'run'
+						}}>
+						COMBINAR
+					</Text>
 					<MaterialCommunityIcons.Button
 						name="plus"
 						size={40}
@@ -156,7 +173,8 @@ class Combine extends Component {
 					/>
 				</View>
 			</View>
-		);
+			);
+		}
 	}
 
 	// Builds list of filters
