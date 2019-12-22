@@ -1,27 +1,37 @@
 doctype html
 html
-	head
-		title= title
-		link(rel='stylesheet', href='/stylesheets/style.css')
-	body
-		h1=title
-		form(method="POST" action="/makeRegister")
-			label First Name
-			input(type="text" placeholder="Enter First Name" name="firstName" required value=registerData.firstName)
-			br
-			label Last Name
-			input(type="text" placeholder="Enter Last Name" name="lastName" required value=registerData.lastName)
-			br
-			label Username
-			input(type="text" placeholder="Enter Username" name="username" required value=registerData.username)
-			br
-			label Location
-			input(type="text" placeholder="Enter Location" name="location" required value=registerData.location)
-			br
-			label Email
-			input(type="email" placeholder="Enter Email" name="email" required value=registerData.email)
-			br
-			label Password
-			input(type="password" placeholder="Enter Password" name="password" required)
-			br
-			input.w3-button(type="submit" value="Register")
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .container-full
+      .login-wrap
+        .login-html
+          input#tab-1.sign-in(type='radio' name='tab' checked='')
+          label.tab(for='tab-1')=title
+          input#tab-2.sign-up(type='radio' name='tab' disabled='')
+          label.tab(for='tab-2' style='display:none')
+          .login-form
+            form.sign-in-htm(method="POST" action="/makeRegister")
+              div(style='width: 50%; float: left; padding-right: 10px;')
+                .group
+                  label.label(for='firstName') Primeiro Nome
+                  input.input(type="text" placeholder="Primeiro Nome" name="firstName" required)
+                .group
+                  label.label(for='lastName') &Uacute;ltimo Nome
+                  input.input(type="text" placeholder="Último Nome" name="lastName" required)
+              div(style='width: 50%; float: right; padding-left: 10px;')
+                .group
+                  label.label(for='username') Usermame
+                  input.input(type="text" placeholder="Nome de Utilizador" name="username" required)
+                .group
+                  label.label(for='location') Localiza&ccedil;&atilde;o
+                  input.input(type="text" placeholder="Localização" name="location" required)
+              .group
+                label.label(for='email') Email
+                input.input(type="email" placeholder="Email" name="email" required)
+              .group
+                label.label(for='password') Password
+                input.input(type="password" placeholder="Password" name="password" required)
+              .group
+                input.button(type='submit' value='Registar')

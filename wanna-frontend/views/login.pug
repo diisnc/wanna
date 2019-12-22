@@ -1,15 +1,27 @@
 doctype html
 html
-	head
-		title= title
-		link(rel='stylesheet', href='/stylesheets/style.css')
-	body
-		h1=title
-		form(method="POST" action="/makeLogin")
-			label Email
-			input(type="email" placeholder="Enter Email" name="email" required value=email)
-			br
-			label Password
-			input(type="password" placeholder="Enter Password" name="password" required)
-			br
-			input(type="submit" value="Login")
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .container-full
+      .login-wrap
+        .login-html
+          input#tab-1.sign-in(type='radio' name='tab' checked='')
+          label.tab(for='tab-1')=title
+          input#tab-2.sign-up(type='radio' name='tab' disabled='')
+          label.tab(for='tab-2' style='display:none')
+          .login-form
+            form.sign-in-htm(method="POST" action="/makeLogin")
+              .group
+                label.label(for='email') Email
+                input.input(type="email" placeholder="Email" name="email" required)
+              .group
+                label.label(for='password') Password
+                input.input(type="password" placeholder="Password" name="password" required)
+              .group
+                input.button(type='submit' value='Entrar')
+              div
+                br
+                button.loginBtn.loginBtn--facebook Iniciar com Facebook
+                button.loginBtn.loginBtn--google Iniciar com Google

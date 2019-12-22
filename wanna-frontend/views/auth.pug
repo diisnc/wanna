@@ -8,43 +8,43 @@ html
       .login-wrap
         .login-html
           input#tab-1.sign-in(type='radio' name='tab' checked='')
-          label.tab(for='tab-1') Sign In
+          label.tab(for='tab-1') Iniciar
           input#tab-2.sign-up(type='radio' name='tab')
-          label.tab(for='tab-2') Sign Up
+          label.tab(for='tab-2') Registo
           .login-form
             form.sign-in-htm(method="POST" action="/makeLogin")
               .group
-                label.label(for='user') Email
-                input.input(type="email" placeholder="Enter Email" name="email" required)
+                label.label(for='email') Email
+                input.input(type="email" placeholder="Email" name="email" required)
               .group
-                label.label(for='pass') Password
-                input.input(type="password" placeholder="Enter Password" name="password" required)
+                label.label(for='password') Password
+                input.input(type="password" placeholder="Password" name="password" required)
               .group
-                input.button(type='submit' value='Sign In')
+                input.button(type='submit' value='Entrar')
               div
                 br
-                button.loginBtn.loginBtn--facebook Login com Facebook
-                button.loginBtn.loginBtn--google Login com Google
-            .sign-up-htm
+                button.loginBtn.loginBtn--facebook Iniciar com Facebook
+                button.loginBtn.loginBtn--google Iniciar com Google
+            form.sign-up-htm(method="POST" action="/makeRegister")
               div(style='width: 50%; float: left; padding-right: 10px;')
                 .group
-                  label.label(for='first_name') Primeiro Nome
-                  input.input(type="text" placeholder="Enter First Name" name="firstName" required)
+                  label.label(for='firstName') Primeiro Nome
+                  input.input(type="text" placeholder="Primeiro Nome" name="firstName" required)
                 .group
-                  label.label(for='last_name') &Uacute;ltimo Nome
-                  input.input(type="text" placeholder="Enter Last Name" name="lastName" required)
+                  label.label(for='lastName') &Uacute;ltimo Nome
+                  input.input(type="text" placeholder="Último Nome" name="lastName" required)
               div(style='width: 50%; float: right; padding-left: 10px;')
                 .group
-                  label.label(for='user_name') Usermame
-                  input.input(type="text" placeholder="Enter Username"  required)
+                  label.label(for='username') Usermame
+                  input.input(type="text" placeholder="Nome de Utilizador" name="username" required)
                 .group
-                  label.label(for='local') Localiza&ccedil;&atilde;o
-                  input.input(type="text" placeholder="Enter Location" name="location" required)
+                  label.label(for='location') Localiza&ccedil;&atilde;o
+                  input.input(type="text" placeholder="Localização" name="location" required)
               .group
-                label.label(for='e_mail') Email
-                input.input(type="email" placeholder="Enter Email" name="email" required)
+                label.label(for='email') Email
+                input.input(type="email" placeholder="Email" name="email" required)
               .group
-                label.label(for='pass_') Password
-                input.input(type="password" placeholder="Enter Password" name="password" required)
+                label.label(for='password') Password
+                input.input(type="password" placeholder="Password" name="password" required)
               .group
-                input.button(type='submit' value='Sign Up')
+                input.button(type='submit' value='Registar')
