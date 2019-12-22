@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .container-full
+      .login-wrap
+        .login-html
+          input#tab-1.sign-in(type='radio' name='tab' checked='')
+          label.tab(for='tab-1') Sign In
+          input#tab-2.sign-up(type='radio' name='tab')
+          label.tab(for='tab-2') Sign Up
+          .login-form
+            form.sign-in-htm(method="POST" action="/makeLogin")
+              .group
+                label.label(for='user') Email
+                input.input(type="email" placeholder="Enter Email" name="email" required)
+              .group
+                label.label(for='pass') Password
+                input.input(type="password" placeholder="Enter Password" name="password" required)
+              .group
+                input.button(type='submit' value='Sign In')
+              div
+                br
+                button.loginBtn.loginBtn--facebook Login com Facebook
+                button.loginBtn.loginBtn--google Login com Google
+            .sign-up-htm
+              div(style='width: 50%; float: left; padding-right: 10px;')
+                .group
+                  label.label(for='first_name') Primeiro Nome
+                  input.input(type="text" placeholder="Enter First Name" name="firstName" required)
+                .group
+                  label.label(for='last_name') &Uacute;ltimo Nome
+                  input.input(type="text" placeholder="Enter Last Name" name="lastName" required)
+              div(style='width: 50%; float: right; padding-left: 10px;')
+                .group
+                  label.label(for='user_name') Usermame
+                  input.input(type="text" placeholder="Enter Username"  required)
+                .group
+                  label.label(for='local') Localiza&ccedil;&atilde;o
+                  input.input(type="text" placeholder="Enter Location" name="location" required)
+              .group
+                label.label(for='e_mail') Email
+                input.input(type="email" placeholder="Enter Email" name="email" required)
+              .group
+                label.label(for='pass_') Password
+                input.input(type="password" placeholder="Enter Password" name="password" required)
+              .group
+                input.button(type='submit' value='Sign Up')

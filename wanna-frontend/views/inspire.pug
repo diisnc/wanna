@@ -1,0 +1,38 @@
+extends header
+block content
+
+	each post in data
+		div(id=post.id class='post')
+			h1= post.idUser
+			a(href='/post?id='+post.id)
+				img(src=post.photoData)
+			h2= post.description
+			h3= post.price
+			form(method="POST" action="/vote")
+				input(type="hidden" name="idPost" value=post.id)
+				input(type="hidden" name="type" value=1)
+				input(type="submit" value="Like")
+			form(method="POST" action="/removeVote")
+				input(type="hidden" name="idPost" value=post.id)
+				input(type="hidden" name="type" value=0)
+				input(type="submit" value="RemoveLike")
+			p= post.nrlikes
+			form(method="POST" action="/vote")
+				input(type="hidden" name="idPost" value=post.id)
+				input(type="hidden" name="type" value=-1)
+				input(type="submit" value="Unlike")
+			form(method="POST" action="/removeVote")
+				input(type="hidden" name="idPost" value=post.id)
+				input(type="hidden" name="type" value=0)
+				input(type="submit" value="RemoveUnlike")
+			p= post.nrdislikes
+			form(method="POST" action="/save")
+				input(type="hidden" name="idPost" value=post.id)
+				input(type="submit" value="Save")
+			form(method="POST" action="/unsave")
+				input(type="hidden" name="idPost" value=post.id)
+				input(type="submit" value="Unsave")
+			form(method="POST" action="/comment")
+				input(type="hidden" name="idPost" value=post.id)
+				input(type="text" placeholder="Comment something..." name="commentData" required)
+				input(type="submit" value="Comment")

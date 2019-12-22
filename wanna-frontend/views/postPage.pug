@@ -1,0 +1,46 @@
+extends header
+block content
+
+	h1= data.userInfo.username
+	each photo in data.photos
+		img(src=photo.photoData)
+	h2= data.postInfo.description
+	h3= data.postInfo.price
+	h4= data.postInfo.category
+	h5= data.postInfo.color
+	h6= data.postInfo.size
+	form(method="POST" action="/votePost")
+		input(type="hidden" name="idPost" value=data.postInfo.id)
+		input(type="hidden" name="type" value=1)
+		input(type="submit" value="Like")
+	form(method="POST" action="/removeVotePost")
+		input(type="hidden" name="idPost" value=data.postInfo.id)
+		input(type="hidden" name="type" value=0)
+		input(type="submit" value="RemoveLike")
+	p= data.postInfo.nrlikes
+	form(method="POST" action="/votePost")
+		input(type="hidden" name="idPost" value=data.postInfo.id)
+		input(type="hidden" name="type" value=-1)
+		input(type="submit" value="Unlike")
+	form(method="POST" action="/removeVotePost")
+		input(type="hidden" name="idPost" value=data.postInfo.id)
+		input(type="hidden" name="type" value=0)
+		input(type="submit" value="RemoveUnlike")
+	p= data.postInfo.nrdislikes
+	form(method="POST" action="/savePost")
+		input(type="hidden" name="idPost" value=data.postInfo.id)
+		input(type="submit" value="Save")
+	form(method="POST" action="/unsavePost")
+		input(type="hidden" name="idPost" value=data.postInfo.id)
+		input(type="submit" value="Unsave")
+	each comment in comments
+		h1= comment.commentText
+		h2= comment.idUser
+		if comment.idUser === username
+			form(method="POST" action="/removeComment?idPost="+data.postInfo.id)
+				input(type="hidden" name="idComment" value=comment.id)
+				input(type="submit" value="RemoveComment")
+	form#commentForm(method="POST" action="/commentPost")
+		input(type="hidden" name="idPost" value=data.postInfo.id)
+		input(type="text" placeholder="Comment something..." name="commentData" required)
+		input(type="submit" value="Comment")

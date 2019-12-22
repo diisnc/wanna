@@ -1,0 +1,15 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		h1=title
+		form(method="POST" action="/makeLogin")
+			label Email
+			input(type="email" placeholder="Enter Email" name="email" required value=email)
+			br
+			label Password
+			input(type="password" placeholder="Enter Password" name="password" required)
+			br
+			input(type="submit" value="Login")

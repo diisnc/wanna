@@ -1,0 +1,16 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		form(method="POST" action="/search")
+			input(type="text" placeholder="Search..." name="usernameString" required)
+			input(type="submit" value="Search")
+		p
+			a(href="/profile") Profile
+		p
+			a(href="/") Feed
+		p
+			a(href="/logout") Logout
+		block content
