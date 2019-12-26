@@ -18,6 +18,11 @@
                     <i v-for="index in (5-user_stars)"class="far fa-star"></i>
                   </b></p>
                 </div>
+                <div style="margin-left: 30px;">
+                  <button v-if="this.is_following==0" @click="seguirAction()" class="btn btn-primary btn-download"><b>SEGUIR</b></button>
+                  <button v-if="this.is_following==1" @click="seguirAction()" class="btn btn-primary btn-white"><b>NÃO SEGUIR</b></button>
+
+                </div>
               </div>
 
               <!-- POSTS, SEGUIDORES E A SEGUIR -->
@@ -68,13 +73,15 @@ export default {
     data () {
     return {
       user_username: this.$router.currentRoute.params.username,
-      user_img: 'https://i.imgur.com/KMlWJNv.jpg',
-      user_name: 'Vitor Peixoto',
+      user_img: 'https://cdn.pensador.com/img/imagens/pe/xe/pexels_photo_4_2_c.jpg',
+      user_name: 'Bla bla bla',
       user_location: 'Braga, Portugal',
       user_stars: 4,
+      current_user_name: 'vitorpeixoto',
       publicacoes: 4,
       seguidores: 12786,
       a_seguir: 543,
+      is_following: 1,
       like: 0,
       dislike: 0,
       saved: 0,
@@ -298,6 +305,7 @@ export default {
     this.handleResize();
   },
   mounted: function() {
+    this.hideFollowButton();
   },
   methods: {
     isMobile() {
@@ -369,6 +377,17 @@ export default {
     },
     unsavepost(post_id){
       this.saved=0;
+    },
+    seguirAction(){
+      if(this.is_following == 0)
+        this.is_following = 1;
+      else if(this.is_following == 1)
+        this.is_following = 0;
+    },
+    hideFollowButton(){
+      console.log("OLA");
+      if(this.current_user_name === this.$router.currentRoute.params.username)
+        this.is_following = 404;
     }
   }
 }
@@ -539,6 +558,25 @@ export default {
   .btn-download:hover,
   .btn-download:focus{
     box-shadow: 0 0.2em 1em -0.3em rgba(100,49,252,0.9);
+    transform: translateY(-0.2em);
+    transition: 0.3s;
+  }
+  .btn-white{
+    margin-top: 5px;
+    border-radius:30px !important;
+    color: #000000 !important;
+    background: rgb(180,180,180);
+    background: linear-gradient(90deg, rgba(170,170,170,1) 0%, rgba(190,190,190,1) 100%);
+    text-transform: uppercase;
+    font-size: 14px !important;
+    letter-spacing: 3px;
+    text-decoration: none !important;
+    transition: 0.3s;
+    border-color: rgb(180,180,180) !important;
+  }
+  .btn-white:hover,
+  .btn-white:focus{
+    box-shadow: 0 0.2em 1em -0.3em rgba(180,180,180,0.9);
     transform: translateY(-0.2em);
     transition: 0.3s;
   }

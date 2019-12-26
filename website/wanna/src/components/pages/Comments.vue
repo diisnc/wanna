@@ -74,9 +74,9 @@
               <!-- COMENTÁRIOS -->
               <div class="comment-area">
                 <div v-for="comment in product.comments" class="my-comment">
-                  <a :href="comment.user"><img class="img-user" :src="comment.user_img"></a>
+                  <a :href="'/'+comment.user"><img class="img-user" :src="comment.user_img"></a>
                   <div class="comment">
-                    <a :href="comment.user" class="txt-username"><b>{{comment.user}}</b></a>
+                    <a :href="'/'+comment.user" class="txt-username"><b>{{comment.user}}</b></a>
                     <a class="txt-username">{{comment.text}}</a>
                     <a class="txt-username">•</a>
                     <a class="txt-username txt-tmstmp">{{moment(comment.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>

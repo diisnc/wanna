@@ -94,9 +94,9 @@
               <div class="comment-area">
                 <!-- COMENTÁRIO MAIS RECENTE -->
                 <div class="my-comment">
-                  <a :href="product.comments[0].user"><img class="img-user" :src="product.comments[0].user_img"></a>
+                  <a :href="'/'+product.comments[0].user"><img class="img-user" :src="product.comments[0].user_img"></a>
                   <div class="comment">
-                    <a :href="product.comments[0].user" class="txt-username"><b>{{product.comments[0].user}}</b></a>
+                    <a :href="'/'+product.comments[0].user" class="txt-username"><b>{{product.comments[0].user}}</b></a>
                     <a class="txt-username">{{product.comments[0].text}}</a>
                     <a class="txt-username">•</a>
                   <a class="txt-username txt-tmstmp">{{moment(product.comments[0].timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
@@ -151,9 +151,9 @@
                       <hr>
 
                       <div v-for="comment in product.comments" class="my-comment">
-                        <a :href="comment.user"><img class="img-user" :src="comment.user_img"></a>
+                        <a :href="'/'+comment.user"><img class="img-user" :src="comment.user_img"></a>
                         <div class="comment">
-                          <a :href="comment.user" class="txt-username"><b>{{comment.user}}</b></a>
+                          <a :href="'/'+comment.user" class="txt-username"><b>{{comment.user}}</b></a>
                           <a class="txt-username">{{comment.text}}</a>
                           <a class="txt-username">•</a>
                           <a class="txt-username txt-tmstmp">{{moment(comment.timestamp, "YYYY-MM-DDThh:mm:ss").locale('pt-pt').fromNow()}}</a>
