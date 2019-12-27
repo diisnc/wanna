@@ -35,6 +35,7 @@
     "jquery": "^3.4.1",
     "mdbvue": "^5.8.3",
     "moment": "^2.24.0",
+    "numeral": "^2.0.6",
     "perfect-scrollbar": "^1.4.0",
     "quasar": "^1.2.4",
     "simple-line-icons": "^2.4.1",

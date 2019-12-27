@@ -1,0 +1,406 @@
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(name='viewport' content='width=device-width,initial-scale=1.0')
+        link(rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons')
+        link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css')
+        link(href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel='stylesheet')
+        link(rel="stylesheet" href="/stylesheets/bootstrap.min.css")
+        link(href='../../../dist/static/css/mdb.min.css' rel='stylesheet')
+        style.
+            .small-txt{
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+            .small-txt-header{
+                font-size: 20px;
+            }
+            .prof-header{
+                margin:auto !important;
+                width: 95% !important;
+                text-align: left;
+                display: flex;
+            }
+            .prof-img-user{
+                width: 130px !important;
+                min-width: 130px !important;
+                height: 130px !important;
+                border-radius: 20px !important;
+                object-fit: cover;
+                margin-right: 10px;
+                box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+            }
+            .prof-img-post{
+                border-radius: 20px !important;
+                object-fit: cover;
+                height: 100% !important;
+                box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.3);
+            }
+            .prof-post{
+                display:inline-flex;
+                width: 31% !important;
+                min-width: 31% !important;
+                height: auto !important;
+                margin: 1%;
+                border-radius: 10% !important;
+                object-fit: cover;
+            }
+            .user-name{
+                margin:5px 0px 0px 10px;
+            }
+            .prof-container {
+                position: relative;
+                width: 37%;
+            }
+            .prof-container:after {
+                content: "";
+                display: block;
+                padding-bottom: 100%; 
+            }
+            .prof-container img {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+            .comment{
+                width:100%;
+                padding: 8px 10px 8px 15px;
+                border-radius:20px !important;
+                background-color: #EEE !important;
+                color: #000 !important;
+            }
+            .toggle-description{
+                padding: 0px 10px 0px 10px;
+            }
+            .details-post{
+                font-size:14px;
+                margin:0px !important;
+            }
+            .carousel-indicators li {
+                width: 5px !important;
+                height: 5px !important;
+                border-radius: 5px !important;
+            }
+            .carousel#carousel1 {
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0px 11px 32px -9px rgba(0,0,0,0.25);
+            }
+            .post-list{
+                text-align: center !important;
+            }
+            .v--modal-box {
+                border-radius: 20px !important; 
+                padding: 0px !important;
+            }
+            .card-op-area{
+                text-align: left;
+                width:auto !important;
+                margin: 0px 0px 15px 10px;
+                display: inline-block;
+            }
+            .my-comment{
+                text-align: left;
+                width:auto !important;
+                margin: 0px 0px 15px 10px;
+                display: flex !important;
+            }
+            .view-comments{
+                text-align: center;
+                width:auto !important;
+                margin: 0px 0px 0px 10px;
+                display: flex !important;
+            }
+            .card-options-area{
+                text-align: right;
+                width:auto !important;
+                margin: 5px 10px 15px 0px;
+                display: inline-block;
+                float: right;
+            }
+            .img-user{
+                width: 40px !important;
+                min-width: 40px !important;
+                height: 40px !important;
+                border-radius: 50px !important;
+                object-fit: cover;
+                margin-right: 10px;
+            }
+            .txt-username{
+                margin: 3px;
+                font-size: 15px;
+                color: #333 !important;
+            }
+            .txt-tmstmp{
+                color: #666 !important;
+                cursor: default;
+            }
+            .card{
+                border-radius:20px !important;
+                border: 0px !important;
+            }
+            .card-download-app{
+                background-color: #FFF !important;
+                top: 0px !important;
+                position: fixed !important;
+                margin-top: 90px;
+                text-align: center !important;
+                width: 330px;
+                height: 530px;
+                -webkit-box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.25);
+                -moz-box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.25);
+                box-shadow: 0px 11px 32px -9px rgba(28,64,222,0.25);
+            }
+            .btn-download{
+                margin-top: 5px;
+                border-radius:30px !important;
+                color: #FFF !important;
+                background: rgb(100,49,252);
+                background: linear-gradient(90deg, rgba(100,49,252,1) 0%, rgba(58,104,252,1) 100%);
+                text-transform: uppercase;
+                font-size: 14px !important;
+                letter-spacing: 3px;
+                text-decoration: none !important;
+                transition: 0.3s;
+            }
+            .btn-download:hover,
+            .btn-download:focus{
+                box-shadow: 0 0.2em 1em -0.3em rgba(100,49,252,0.9);
+                transform: translateY(-0.2em);
+                transition: 0.3s;
+            }
+            .btn-mini{
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width:35px !important;
+                height: 35px !important;
+                background-color:rgba(0,0,0,0.08) !important;
+                border-radius: 35px !important;
+                z-index: 99 !important;
+                margin: 0px !important;
+                padding: 0px !important;
+            }
+            .card-img-caixa{
+                position: relative;
+                top:0;
+                left:0;
+            }
+            .card-img-blur {
+                position: relative;
+                top:5px;
+                left:0;
+                border-radius: 20px !important;
+                filter: blur(13px);
+                opacity: 0.6;
+            }
+            .card-img-front {
+                position: absolute;
+                top:0px;
+                left:0px;
+                width: 100% !important;
+                border-radius: 20px !important;
+            }
+            .card-body{
+                padding: 2px 10px 20px 10px !important;
+                text-align: left;
+            }
+            .reactions-area,
+            .description-area,
+            .user-area,
+            .comment-area{
+                margin-top: 5px !important;
+                width:100%;
+                text-align:left;
+            }
+            .reaction-left-area{
+                text-align:left;
+                width: 50%;
+                height: 42px;
+                display: inline-block;
+            }
+            .reaction-right-area{
+                text-align:right;
+                width: 50%;
+                height: 42px;
+                display: inline-block;
+            }
+            .icon-reaction {
+                display: inline-block !important;
+                background-color: #333 !important;
+                background: #333 !important;
+                mask-size: cover;
+                cursor: pointer;
+                margin: 10px !important;
+                width: 25px !important;
+                height: 22px !important;
+                transition: 0.3s !important;
+            }
+            .icon-like-empty {
+                mask: url(https://svgur.com/i/G0S.svg);
+                transition: 0.3s !important;
+            }
+            .icon-like-empty:hover{
+                background-color: #F40056 !important;
+                transition: 0.3s !important;
+            }
+            .icon-like-full {
+                background-color: #F40056 !important;
+                mask: url(https://svgur.com/i/FzP.svg);
+                transition: 0.3s !important;
+            }
+            .icon-dislike-empty {
+                mask: url(https://svgur.com/i/Fzt.svg);
+                transition: 0.3s !important;
+            }
+            .icon-dislike-empty:hover{
+                background-color: #4A53FC !important;
+                transition: 0.3s !important;
+            }
+            .icon-dislike-full {
+                background-color: #4A53FC !important;
+                mask: url(https://svgur.com/i/G0c.svg);
+                transition: 0.3s !important;
+            }
+
+            .icon-save-empty {
+                mask: url(https://svgur.com/i/G1_.svg);
+                transition: 0.3s !important;
+                width: 21px !important;
+                height: 23px !important;
+            }
+            .icon-save-empty:hover{
+                background-color: #4A53FC !important;
+                transition: 0.3s !important;
+            }
+            .icon-save-full{
+                mask: url(https://svgur.com/i/G28.svg);
+                background-color: #333 !important;
+                width: 21px !important;
+                height: 23px !important;
+                transition: 0.3s !important;
+            }
+            .icon-buy-empty {
+                mask: url(https://svgur.com/i/G4_.svg);
+                transition: 0.3s !important;
+                width: 22px !important;
+                height: 24px !important;
+            }
+            .icon-buy-empty:hover{
+                background-color: #4A53FC !important;
+                transition: 0.3s !important;
+            }
+            .icon-send {
+                mask: url(https://svgur.com/i/G92.svg);
+                transition: 0.3s !important;
+                width: 23px !important;
+                height: 25px !important;
+                margin: 7px !important;
+            }
+            .comment-input{
+                margin: 0px 10px 0px 0px;
+                border-radius: 20px !important;
+                background-color: #EEE !important;
+                border: 0px !important;
+                color: #000 !important;
+                transition: 0.1s !important;
+            }
+            .bg-trans{
+                background-color: rgba(0,0,0,0) !important;
+                text-align: center;
+            }
+            .bg-trans:hover{
+                background-color:rgba(0,0,0,0.08) !important;
+                color: #000 !important;
+            }
+            button:focus{
+                outline: 0px !important;
+            }
+    body
+        div#app
+            div
+                desktop
+                    div#app
+                        .container
+                            .row.justify-content-md-center
+                                .col-sm-7
+                                    .card
+                                        .prof-header
+                                            img.prof-img-user(src='https://i.imgur.com/KMlWJNv.jpg')
+                                            div
+                                                h4.user-name
+                                                    b #{data.info.firstName} #{data.info.lastName}
+                                                p.user-name
+                                                    b
+                                                        i.fas.fa-at
+                                                        |  #{data.info.username}
+                                                p.user-name
+                                                    b
+                                                        i.fas.fa-map-marker-alt
+                                                        |  #{data.info.location}
+                                                p.user-name
+                                                    b
+                                                        if data.info.rating==='5.0'
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                        if data.info.rating==='4.0'
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.far.fa-star
+                                                        if data.info.rating==='3.0'
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                        if data.info.rating==='2.0'
+                                                            i.fas.fa-star
+                                                            i.fas.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                        if data.info.rating==='1.0'
+                                                            i.fas.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                        if data.info.rating==='0.0'
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                                            i.far.fa-star
+                                        .row(style='padding-top: 20px;')
+                                            .col
+                                                b.small-txt-header=data.posts.length 
+                                                br
+                                                p.small-txt PUBLICA&Ccedil;&Otilde;ES
+                                            .col
+                                                a(href='/followers')
+                                                    b.small-txt-header=data.nrFollowers.number
+                                                    br
+                                                p.small-txt SEGUIDORES
+                                            .col
+                                                a(href='/followings')
+                                                    b.small-txt-header=data.nrFollowings.number
+                                                    br
+                                                p.small-txt A SEGUIR
+                                .col-sm-10(style='text-align: left !important;')
+                                    each post in data.posts
+                                        .prof-container.prof-post
+                                            a(href='/post?id='+post.id)
+                                                img.prof-img-post(src=post.photoData)
+                                    
