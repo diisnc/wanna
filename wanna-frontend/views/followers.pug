@@ -1,5 +1,16 @@
-extends header
-block content
-
-	each user in data
-		p= user.followers_id
+doctype html
+html
+	head
+		title= title
+	body
+		form(method="POST" action="/search")
+			input(type="text" placeholder="Search..." name="usernameString" required)
+			input(type="submit" value="Search")
+		p
+			a(href="/profile") Profile
+		p
+			a(href="/") Feed
+		p
+			a(href="/logout") Logout
+		each user in data
+			p= user.followers_id

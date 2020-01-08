@@ -324,6 +324,15 @@ html
                 outline: 0px !important;
             }
     body
+        form(method="POST" action="/search")
+            input(type="text" placeholder="Search..." name="usernameString" required)
+            input(type="submit" value="Search")
+        p
+            a(href="/profile") Profile
+        p
+            a(href="/") Feed
+        p
+            a(href="/logout") Logout
         div#app
             div
                 desktop

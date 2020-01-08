@@ -417,70 +417,12 @@ router.post('/unsavePost', function(req, res, next){
 	})
 });
 
-router.post('/makeRegister', function(req, res, next) {
-	axios.post('http://infernoo.duckdns.org:8000/v1/auth/register', req.body)
-		.then(response => {
-			res.redirect('/login')
-		})
-		.catch(error => {
-			if(error.response && error.response.status==400){
-				var json=JSON.parse(error.response.config.data)
-				var e = 'Utilizador já existente'
-				if(error.response.data.name==='SequelizeValidationError'){
-					e = 'Password fraca'
-				}else if(error.response.data.name==='SequelizeUniqueConstraintError'){
-					json.username=''
-				}
-				res.render('register', { registerData: json, title: e})
-			}else{
-				res.redirect('/auth')
-			}
-		})
-});
-
-router.post('/makeLogin', function(req, res, next) {
-	axios.post('http://infernoo.duckdns.org:8000/v1/auth/login', req.body)
-		.then(response => {
-			res.cookie('accessToken', response.data.tokens.accessToken, { signed: true })
-			res.cookie('refreshToken', response.data.tokens.refreshToken, { signed: true })
-			res.cookie('username', response.data.user.username, { signed: true })
-			res.redirect('/')
-		})
-		.catch(error => {
-			if(error.response && error.response.status==400){
-				if(error.response.data.errors && error.response.data.errors.email==='Email is invalid'){
-					res.render('register', { registerData: '', title: 'Email desconhecido'})
-				}else{
-					res.render('login', { email: JSON.parse(error.response.config.data).email, title: 'Password errada'})
-				}
-			}else{
-				res.redirect('/auth')
-			}
-		})
-});
-
-router.get('/auth', function(req, res, next) {
-	res.render('auth')
-});
-
-router.get('/login', function(req, res, next) {
-	res.render('login', { email: '', title: 'Login' })
-});
-
-router.get('/logout', function(req, res, next) {
-	res.cookie('accessToken', '' , { signed: true })
-	res.cookie('refreshToken', '' , { signed: true })
-	res.cookie('username', '', { signed: true })
-	res.redirect('/')
-});
-
 router.get('/profile', function(req, res, next) {
 	axios.get('http://infernoo.duckdns.org:8000/v1/profile/', {
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
 		res.render('profile', {data: response.data})
-		console.log(response)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
@@ -553,6 +495,61 @@ router.get('/followers', function(req, res, next) {
 	})
 });
 
+router.post('/makeRegister', function(req, res, next) {
+	axios.post('http://infernoo.duckdns.org:8000/v1/auth/register', req.body)
+		.then(response => {
+			res.redirect('/login')
+		})
+		.catch(error => {
+			if(error.response && error.response.status==400){
+				var json=JSON.parse(error.response.config.data)
+				var e = 'Utilizador já existente'
+				if(error.response.data.name==='SequelizeValidationError'){
+					e = 'Password fraca'
+				}else if(error.response.data.name==='SequelizeUniqueConstraintError'){
+					json.username=''
+				}
+				res.render('register', { registerData: json, title: e})
+			}else{
+				res.redirect('/auth')
+			}
+		})
+});
 
+router.post('/makeLogin', function(req, res, next) {
+	axios.post('http://infernoo.duckdns.org:8000/v1/auth/login', req.body)
+		.then(response => {
+			res.cookie('accessToken', response.data.tokens.accessToken, { signed: true })
+			res.cookie('refreshToken', response.data.tokens.refreshToken, { signed: true })
+			res.cookie('username', response.data.user.username, { signed: true })
+			res.redirect('/')
+		})
+		.catch(error => {
+			if(error.response && error.response.status==400){
+				if(error.response.data.errors && error.response.data.errors.email==='Email is invalid'){
+					res.render('register', { registerData: '', title: 'Email desconhecido'})
+				}else{
+					res.render('login', { email: JSON.parse(error.response.config.data).email, title: 'Password errada'})
+				}
+			}else{
+				res.redirect('/auth')
+			}
+		})
+});
+
+router.get('/auth', function(req, res, next) {
+	res.render('auth')
+});
+
+router.get('/login', function(req, res, next) {
+	res.render('login', { email: '', title: 'Login' })
+});
+
+router.get('/logout', function(req, res, next) {
+	res.cookie('accessToken', '' , { signed: true })
+	res.cookie('refreshToken', '' , { signed: true })
+	res.cookie('username', '', { signed: true })
+	res.redirect('/')
+});
 
 module.exports = router;
