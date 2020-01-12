@@ -423,6 +423,34 @@ router.get('/profile', function(req, res, next) {
 	})
 	.then(response => {
 		res.render('profile', {data: response.data})
+		console.log(response.data)
+	})
+	.catch(error => {
+		if(error.response && error.response.status==401){
+			axios.post('http://infernoo.duckdns.org:8000/v1/auth/refresh-token', {
+				refreshToken: req.signedCookies.refreshToken
+			})
+			.then(response => {
+				res.cookie('accessToken', response.data.tokens.accessToken, { signed: true })
+				res.cookie('refreshToken', response.data.tokens.refreshToken, { signed: true })
+				res.redirect(req.url)
+			})
+			.catch(e => {
+				res.redirect('/auth')
+			})
+		}else{
+			res.redirect('/auth')
+		}
+	})
+});
+
+router.post('/profileOther', function(req, res, next){
+	axios.get('http://infernoo.duckdns.org:8000//v1/profile/?username='+idUser, {
+		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
+	})
+	.then(response => {
+		//res.render('/profile'+idUser)
+		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
@@ -449,6 +477,7 @@ router.get('/followings', function(req, res, next) {
 	})
 	.then(response => {
 		res.render('followings', {data: response.data})
+		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
@@ -475,6 +504,7 @@ router.get('/followers', function(req, res, next) {
 	})
 	.then(response => {
 		res.render('followers', {data: response.data})
+		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){

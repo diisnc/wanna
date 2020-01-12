@@ -342,7 +342,7 @@ html
                                 .col-sm-7
                                     .card
                                         .prof-header
-                                            img.prof-img-user(src='https://i.imgur.com/KMlWJNv.jpg')
+                                            img.prof-img-user(src=data.info.avatarData)
                                             div
                                                 h4.user-name
                                                     b #{data.info.firstName} #{data.info.lastName}
@@ -392,7 +392,7 @@ html
                                                             i.far.fa-star
                                                             i.far.fa-star
                                                             i.far.fa-star
-                                        .row(style='padding-top: 20px;')
+                                        .row(style='padding-top: 30px; padding-bottom: 30px; text-align:center;')
                                             .col
                                                 b.small-txt-header=data.posts.length 
                                                 br
