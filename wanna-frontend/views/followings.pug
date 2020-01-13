@@ -2,6 +2,28 @@ doctype html
 html
 	head
 		title= title
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+		link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+		style.
+			.btn-white{
+				margin-top: 16px;
+				border-radius:30px !important;
+				color: #000000 !important;
+				background: rgb(180,180,180);
+				background: linear-gradient(90deg, rgba(170,170,170,1) 0%, rgba(190,190,190,1) 100%);
+				text-transform: uppercase;
+				font-size: 12px !important;
+				letter-spacing: 2.5px;
+				text-decoration: none !important;
+				transition: 0.3s;
+				border-color: rgb(180,180,180) !important;
+			}
+			.btn-white:hover,
+			.btn-white:focus{
+				box-shadow: 0 0.2em 1em -0.3em rgba(180,180,180,0.9);
+				transform: translateY(-0.2em);
+				transition: 0.3s;
+			}
 	body
 		form(method="POST" action="/search")
 			input(type="text" placeholder="Search..." name="usernameString" required)
@@ -12,5 +34,16 @@ html
 			a(href="/") Feed
 		p
 			a(href="/logout") Logout
-		each user in data
-			p= user.followed_id
+		p
+			strong A seguir
+		.w3-container
+			ul.w3-ul.w3-card-4(style="width:50%; margin:auto; overflow:auto; max-height:700px;")
+				each user in data
+					li.w3-bar
+						span.w3-bar-item.w3-button.w3-white.w3-xlarge.w3-right.button.btn.btn-primary.btn-white 
+							b VER PERFIL
+						img.w3-bar-item.w3-circle.w3-hide-small(src="https://www.w3schools.com/w3css/img_avatar5.png"  style='width:85px') 
+						.w3-bar-item
+							span.w3-large= user.followed_id
+							br
+							span= user.followed_id
