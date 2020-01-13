@@ -569,7 +569,7 @@ export default {
     transition: 0.3s !important;
   }
   .icon-like-empty {
-    mask: url(https://svgur.com/i/G0S.svg);
+    mask: url('../../../public/icns/like.svg');
     transition: 0.3s !important;
   }
   .icon-like-empty:hover{
@@ -578,11 +578,11 @@ export default {
   }
   .icon-like-full {
     background-color: #F40056 !important;
-    mask: url(https://svgur.com/i/FzP.svg);
+    mask: url('../../../public/icns/like-full.svg');
     transition: 0.3s !important;
   }
   .icon-dislike-empty {
-    mask: url(https://svgur.com/i/Fzt.svg);
+    mask: url('../../../public/icns/dislike.svg');
     transition: 0.3s !important;
   }
   .icon-dislike-empty:hover{
@@ -591,12 +591,12 @@ export default {
   }
   .icon-dislike-full {
     background-color: #4A53FC !important;
-    mask: url(https://svgur.com/i/G0c.svg);
+    mask: url('../../../public/icns/dislike-full.svg');
     transition: 0.3s !important;
   }
 
   .icon-save-empty {
-    mask: url(https://svgur.com/i/G1_.svg);
+    mask: url('../../../public/icns/save.svg');
     transition: 0.3s !important;
     width: 21px !important;
     height: 23px !important;
@@ -606,14 +606,14 @@ export default {
     transition: 0.3s !important;
   }
   .icon-save-full{
-    mask: url(https://svgur.com/i/G28.svg);
+    mask: url('../../../public/icns/save-full.svg');
     background-color: #333 !important;
     width: 21px !important;
     height: 23px !important;
     transition: 0.3s !important;
   }
   .icon-buy-empty {
-    mask: url(https://svgur.com/i/G4_.svg);
+    mask: url('../../../public/icns/buy.svg');
     transition: 0.3s !important;
     width: 22px !important;
     height: 24px !important;
@@ -623,7 +623,7 @@ export default {
     transition: 0.3s !important;
   }
   .icon-send {
-    mask: url(https://svgur.com/i/G92.svg);
+    mask: url('../../../public/icns/direct.svg');
     transition: 0.3s !important;
     width: 23px !important;
     height: 25px !important;

@@ -173,17 +173,17 @@
   }
 
   .icon-home {
-    mask: url(https://svgur.com/i/FZX.svg);
+    mask: url('../../../public/icns/home.svg');
     width:22px;
     height: 24.5px;
   }
   .icon-profile {
-    mask: url(https://svgur.com/i/FYW.svg);
+    mask: url('../../../public/icns/profile.svg');
     width:25px;
     height: 24px;
   }
   .icon-notifs {
-    mask: url(https://svgur.com/i/FYn.svg);
+    mask: url('../../../public/icns/notifications.svg');
     width:21px;
     height: 25.5px;
   }
