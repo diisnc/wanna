@@ -272,7 +272,8 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 	User.getFollowings = async function getFollowings(username) {
 		result = await this.sequelize.query(
-			'SELECT "followed_id" FROM "FollowRelationships" where "follower_id" = :username',
+			'SELECT "FollowRelationships"."followed_id", "Users"."avatarData" FROM "FollowRelationships" ' +
+				+'JOIN "Users" ON "FollowRelationships"."follower_id" = "Users"."username" where "follower_id" = :username',
 			{
 				replacements: { username: username },
 				type: this.sequelize.QueryTypes.SELECT,
@@ -302,7 +303,8 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 	User.getFollowers = async function getFollowers(username) {
 		result = await this.sequelize.query(
-			'SELECT "follower_id" FROM "FollowRelationships" where "followed_id" = :username',
+			'SELECT "FollowRelationships"."follower_id", "Users"."avatarData" FROM "FollowRelationships" ' +
+				+'JOIN "Users" ON "FollowRelationships"."followed_id" = "Users"."username" where "followed_id" = :username',
 			{
 				replacements: { username: username },
 				type: this.sequelize.QueryTypes.SELECT,
@@ -312,18 +314,18 @@ module.exports = (sequelize, DataTypes) => {
 	};
 
 	/**
-	*	Returns the avatars of both users in a chat conversation
-	*/
+	 *	Returns the avatars of both users in a chat conversation
+	 */
 
-	User.getPhoto = async function (idContact){
+	User.getPhoto = async function(idContact) {
 		result = await this.sequelize.query(
 			'SELECT "Users"."avatarType", "Users"."avatarData", "Users"."username" FROM "Users" WHERE "Users"."username" = (:idContact)',
 			{
 				replacements: {
-					idContact: idContact
+					idContact: idContact,
 				},
 				type: this.sequelize.QueryTypes.SELECT,
-			}
+			},
 		);
 		console.log(result);
 		return result;

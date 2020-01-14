@@ -23,25 +23,32 @@ export const login = (email, password) => async dispatch => {
 	};
 	dispatch(AuthReducer.setAuthPending());
 	let response = await ourFetchAuth(config);
-	let data = await response.json();
-	if (response.status == 200) {
-		dispatch(
-			AuthReducer.setLoginSuccess(
-				data.tokens.accessToken,
-				data.tokens.refreshToken,
-				data.user.username
-			)
-		);
-		await _saveItem('authToken', data.tokens.accessToken);
-		await _saveItem('refreshToken', data.tokens.refreshToken);
-		await _saveItem('username', data.user.username);
-		NavigationService.navigate('Main');
-	} else {
-		data = JSON.stringify(data);
-		let error = data.replace(/[\[\]"\{\}]+/g, '');
-		// console.log('Está a despachar o erro: ' + error.errors);
-		console.log('Error1 ' + error);
-		dispatch(AuthReducer.setLoginError(error));
+	let data;
+	try {
+		data = await response.json();
+	} catch (e) {
+		alert('ERRO AO PROCESSAR O PEDIDO');
+	}
+	if (response != null) {
+		if (response.status == 200) {
+			dispatch(
+				AuthReducer.setLoginSuccess(
+					data.tokens.accessToken,
+					data.tokens.refreshToken,
+					data.user.username
+				)
+			);
+			await _saveItem('authToken', data.tokens.accessToken);
+			await _saveItem('refreshToken', data.tokens.refreshToken);
+			await _saveItem('username', data.user.username);
+			NavigationService.navigate('Main');
+		} else {
+			data = JSON.stringify(data);
+			let error = data.replace(/[\[\]"\{\}]+/g, '');
+			// console.log('Está a despachar o erro: ' + error.errors);
+			console.log('Error1 ' + error);
+			dispatch(AuthReducer.setLoginError(error));
+		}
 	}
 	//dispatch(generalError(error));
 };
