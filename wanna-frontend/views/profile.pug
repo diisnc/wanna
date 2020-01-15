@@ -328,7 +328,7 @@ html
             input(type="text" placeholder="Search..." name="usernameString" required)
             input(type="submit" value="Search")
         p
-            a(href="/profile") Profile
+            a(href="/myprofile") Profile
         p
             a(href="/") Feed
         p
@@ -410,6 +410,11 @@ html
                                 .col-sm-10(style='text-align: left !important;')
                                     each post in data.posts
                                         .prof-container.prof-post
+                                            a(href='/post?id='+post.postid)
+                                                img.prof-img-post(src=post.photoData)
+                                h1 Saved Posts
+                                .col-sm-10(style='text-align: left !important;')
+                                    each post in data2
+                                        .prof-container.prof-post
                                             a(href='/post?id='+post.id)
                                                 img.prof-img-post(src=post.photoData)
-                                    

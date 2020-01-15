@@ -417,13 +417,26 @@ router.post('/unsavePost', function(req, res, next){
 	})
 });
 
-router.get('/profile', function(req, res, next) {
+router.get('/myprofile', function(req, res, next) {
 	axios.get('http://infernoo.duckdns.org:8000/v1/profile/', {
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
-		res.render('profile', {data: response.data})
-		console.log(response.data)
+		response.data.posts.forEach(element => {
+			element.postid=hashids.encode(element.postid)
+		});
+		axios.get('http://infernoo.duckdns.org:8000/v1/profile/savedposts',{
+			headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
+		})
+		.then(response2 =>{
+			response2.data.forEach(function(entry) {
+				entry.id = hashids.encode(entry.id)
+			});
+			res.render('profile', {data: response.data, data2: response2.data})
+		})
+		.catch(error => {
+			next()
+		})
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
@@ -444,13 +457,15 @@ router.get('/profile', function(req, res, next) {
 	})
 });
 
-router.post('/profileOther', function(req, res, next){
-	axios.get('http://infernoo.duckdns.org:8000//v1/profile/?username='+idUser, {
+router.get('/profile', function(req, res, next){
+	axios.get('http://infernoo.duckdns.org:8000/v1/profile/?username='+req.query.username, {
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
-		//res.render('/profile'+idUser)
-		console.log(response.data)
+		response.data.posts.forEach(element => {
+			element.postid=hashids.encode(element.postid)
+		});
+		res.render('profile', {data: response.data})
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
@@ -477,7 +492,6 @@ router.get('/followings', function(req, res, next) {
 	})
 	.then(response => {
 		res.render('followings', {data: response.data})
-		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
@@ -504,7 +518,6 @@ router.get('/followers', function(req, res, next) {
 	})
 	.then(response => {
 		res.render('followers', {data: response.data})
-		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
