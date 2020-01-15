@@ -240,7 +240,7 @@ module.exports = (sequelize, DataTypes) => {
 				'FROM "Posts" JOIN "Photos" ON "Posts"."id" = "Photos"."idPost" ' +
 				'AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost") ' +
 				'WHERE "Posts"."idUser" = (:username) ' +
-				'ORDER BY "Posts"."createdAt"',
+				'ORDER BY "Posts"."createdAt" DESC',
 			{
 				replacements: { username: username },
 				type: this.sequelize.QueryTypes.SELECT,
