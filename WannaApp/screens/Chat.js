@@ -59,19 +59,6 @@ class Chat extends Component {
 		return true;
 	};
 
-	_keyboardDidShow = e => {
-		let keyboardHeight = e.endCoordinates.height;
-		this.setState({
-			minInputToolbarHeight: keyboardHeight + 5
-		});
-	};
-
-	_keyboardDidHide = () => {
-		this.setState({
-			minInputToolbarHeight: 45
-		});
-	};
-
 	timestampToDateFromDB(messages) {
 		newArray = messages;
 		[].map.call(newArray, function(obj) {
@@ -146,19 +133,6 @@ class Chat extends Component {
 		return formattedTime	 
 	}
 
-	componentWillMount() {
-		if (Platform.OS === 'android') {
-			this.keyboardDidShowListener = Keyboard.addListener(
-				'keyboardDidShow',
-				this._keyboardDidShow
-			);
-			this.keyboardDidHideListener = Keyboard.addListener(
-				'keyboardDidHide',
-				this._keyboardDidHide
-			);
-		}
-	}
-
 	componentDidMount() {
 		backHandlerCus = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 		let sub = {
@@ -176,21 +150,6 @@ class Chat extends Component {
 		socket.on('chat-message', msg => {
 			this.onReceivedMessage(msg);
 		});
-
-		Keyboard.addListener(isAndroid ? 'keyboardDidShow' : 'keyboardWillShow', e =>
-			this.setState({ viewPadding: e.endCoordinates.height - 40 })
-		);
-
-		Keyboard.addListener(isAndroid ? 'keyboardDidHide' : 'keyboardWillHide', () =>
-			this.setState({ viewPadding: viewPadding })
-		);
-	}
-
-	componentWillUnmount() {
-		if (Platform.OS === 'android') {
-			this.keyboardDidShowListener.remove();
-			this.keyboardDidHideListener.remove();
-		}
 	}
 
 	render() {
@@ -232,9 +191,7 @@ class Chat extends Component {
 			<View
 				style={{
 					height: this.startHeaderHeight,
-					backgroundColor: '#00afff',
 					borderBottomWidth: 1,
-					borderBottomColor: '#00afff'
 				}}>
 				<View
 					style={{
@@ -243,7 +200,6 @@ class Chat extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: '#00afff'
 					}}>
 					<Text style={{
 						flex: 1,

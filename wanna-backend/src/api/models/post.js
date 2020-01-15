@@ -167,7 +167,7 @@ module.exports = (sequelize, DataTypes) => {
 		object = new Object();
 
 		userInfo = await this.sequelize.query(
-			'SELECT "Users"."avatarType", "Users"."username", "Users"."avatarData" ' +
+			'SELECT "Users"."avatarType", "Users"."username", "Users"."avatarData", "Users"."location" ' +
 				'FROM "Users" JOIN "Posts" ON "Users"."username" = "Posts"."idUser"' +
 				'WHERE "Posts"."id" = (:idPost)',
 			{
