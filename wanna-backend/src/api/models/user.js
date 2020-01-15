@@ -272,7 +272,7 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 	User.getFollowings = async function getFollowings(username) {
 		result = await this.sequelize.query(
-			'SELECT "FollowRelationships"."followed_id", "Users"."avatarData" FROM "FollowRelationships" ' +
+			'SELECT "FollowRelationships"."followed_id","Users"."firstName","Users"."lastName","Users"."avatarData" FROM "FollowRelationships" ' +
 				'JOIN "Users" ON "FollowRelationships"."follower_id" = "Users"."username" where "follower_id" = :username',
 			{
 				replacements: { username: username },
@@ -303,7 +303,7 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 	User.getFollowers = async function getFollowers(username) {
 		result = await this.sequelize.query(
-			'SELECT "FollowRelationships"."follower_id", "Users"."avatarData" FROM "FollowRelationships" ' +
+			'SELECT "FollowRelationships"."follower_id", "Users"."avatarData", "Users"."firstName", "Users"."lastName" FROM "FollowRelationships" ' +
 				'JOIN "Users" ON "FollowRelationships"."followed_id" = "Users"."username" where "followed_id" = :username',
 			{
 				replacements: { username: username },
