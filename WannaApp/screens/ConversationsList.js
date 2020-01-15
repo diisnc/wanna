@@ -203,7 +203,7 @@ class ConversationsList extends Component {
 										) : (
 											<Text>{item.idReceiver}</Text>
 										)}
-										<Text>Título do post</Text>
+										<Text>{item.category}</Text>
 										{item.idSender === this.props.loggedUsername ? (
 											<Text>{'Tu: ' + item.messageText}</Text>
 										) : (

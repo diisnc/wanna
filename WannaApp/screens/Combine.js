@@ -171,16 +171,6 @@ class Combine extends Component {
 						justifyContent: 'flex-end',
 						alignItems: 'flex-end'
 					}}>
-						<Image
-							source={require('../assets/round_add.png')}
-							style={{
-								height: '90%',
-								aspectRatio: 1,
-								overflow: 'hidden'
-							}}
-							resizeMode="contain"
-							onPress={() => this.props.navigation.navigate('NewFilter')}
-						/>
 					
 					
 					</View>

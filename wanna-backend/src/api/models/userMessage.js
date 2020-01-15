@@ -56,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
 			' t1."idReceiver",'+
 			' t1."idPost",'+
 			' t1."createdAt",'+
+			' "Posts"."category", '+
 			' "Photos"."photoType",'+
 			' "Photos"."photoData"'+
 			' FROM "UserMessages" t1'+
