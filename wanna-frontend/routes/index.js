@@ -418,21 +418,18 @@ router.post('/unsavePost', function(req, res, next){
 });
 
 router.get('/myprofile', function(req, res, next) {
-	axios.get('http://infernoo.duckdns.org:8000/v1/profile/', {
+	axios.get('http://infernoo.duckdns.org:8000/v1/profile',{
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
 		response.data.posts.forEach(element => {
 			element.postid=hashids.encode(element.postid)
-		});
+		})
 		axios.get('http://infernoo.duckdns.org:8000/v1/profile/savedposts',{
 			headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 		})
 		.then(response2 =>{
-			response2.data.forEach(function(entry) {
-				entry.id = hashids.encode(entry.id)
-			});
-			res.render('myprofile', {data: response.data, data2: response2.data})
+			res.render('myprofile', {data: response.data, posts: response2.data})
 		})
 		.catch(error => {
 			next()
@@ -486,13 +483,49 @@ router.get('/profile', function(req, res, next){
 	})
 });
 
+router.get('/savedPosts', function(req, res, next) {
+	axios.get('http://infernoo.duckdns.org:8000/v1/profile',{
+		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
+	})
+	.then(response => {
+		axios.get('http://infernoo.duckdns.org:8000/v1/profile/savedposts',{
+			headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
+		})
+		.then(response2 =>{
+			response2.data.forEach(function(entry) {
+				entry.id = hashids.encode(entry.id)
+			})
+			res.render('savedposts', { data: response.data, posts: response2.data})
+		})
+		.catch(error => {
+			next()
+		})
+	})
+	.catch(error => {
+		if(error.response && error.response.status==401){
+			axios.post('http://infernoo.duckdns.org:8000/v1/auth/refresh-token', {
+				refreshToken: req.signedCookies.refreshToken
+			})
+			.then(response => {
+				res.cookie('accessToken', response.data.tokens.accessToken, { signed: true })
+				res.cookie('refreshToken', response.data.tokens.refreshToken, { signed: true })
+				res.redirect(req.url)
+			})
+			.catch(e => {
+				res.redirect('/auth')
+			})
+		}else{
+			res.redirect('/auth')
+		}
+	})
+});
+
 router.get('/followings', function(req, res, next) {
 	axios.get('http://infernoo.duckdns.org:8000/v1/profile/followings', {
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
 		res.render('followings', {data: response.data})
-		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){

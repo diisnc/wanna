@@ -394,8 +394,9 @@ html
                                                             i.far.fa-star
                                         .row(style='padding-top: 30px; padding-bottom: 30px; text-align:center;')
                                             .col
-                                                b.small-txt-header=data.posts.length 
-                                                br
+                                                a(href='/myprofile')
+                                                    b.small-txt-header=data.posts.length
+                                                    br
                                                 p.small-txt PUBLICA&Ccedil;&Otilde;ES
                                             .col
                                                 a(href='/followers')
@@ -408,12 +409,11 @@ html
                                                     br
                                                 p.small-txt A SEGUIR
                                             .col
-                                                a(href='/savedPosts')
-                                                    b.small-txt-header=posts.length
-                                                    br
+                                                b.small-txt-header=posts.length 
+                                                br
                                                 p.small-txt GUARDADAS
                                 .col-sm-10(style='text-align: left !important;')
-                                    each post in data.posts
+                                    each post in posts
                                         .prof-container.prof-post
-                                            a(href='/post?id='+post.postid)
+                                            a(href='/post?id='+post.id)
                                                 img.prof-img-post(src=post.photoData)
