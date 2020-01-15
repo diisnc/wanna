@@ -588,6 +588,14 @@ router.get('/login', function(req, res, next) {
 	res.render('login', { email: '', title: 'Login' })
 });
 
+router.get('/managePosts', function(req, res, next) {
+	res.render('managePosts')
+});
+
+router.get('/manageUsers', function(req, res, next) {
+	res.render('manageUsers')
+});
+
 router.get('/logout', function(req, res, next) {
 	res.cookie('accessToken', '' , { signed: true })
 	res.cookie('refreshToken', '' , { signed: true })
