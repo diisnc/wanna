@@ -165,12 +165,25 @@ class Combine extends Component {
 						}}>
 						COMBINAR
 					</Text>
-					<MaterialCommunityIcons.Button
-						name="plus"
-						size={40}
-						style={{ flex: 1 }}
-						onPress={() => this.props.navigation.navigate('NewFilter')}
-					/>
+					<View style={{
+						width: '50%',
+						height: '100%',
+						justifyContent: 'flex-end',
+						alignItems: 'flex-end'
+					}}>
+						<Image
+							source={require('../assets/round_add.png')}
+							style={{
+								height: '90%',
+								aspectRatio: 1,
+								overflow: 'hidden'
+							}}
+							resizeMode="contain"
+							onPress={() => this.props.navigation.navigate('NewFilter')}
+						/>
+					
+					
+					</View>
 				</View>
 			</View>
 			);
