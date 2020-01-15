@@ -85,6 +85,7 @@ class PostButtons extends Component {
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
+								this.unLikeHandler(idPost);
 								this.disLikeHandler(idPost);
 							}}>
 							<EvilIcons name="arrow-down" size={33} style={{paddingRight: '2%'}}/>
@@ -98,6 +99,7 @@ class PostButtons extends Component {
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
+								this.unDisLikeHandler(idPost);
 								this.likeHandler(idPost);
 							}}>
 							<EvilIcons name="arrow-up" size={33} style={{paddingRight: '4%'}}/>

@@ -11,6 +11,7 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 import { Card, CardItem, Body, Left, Right } from 'native-base';
 import { theme } from '../galio';
 import PostButtons from './components/PostButtons';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('window').width;
 

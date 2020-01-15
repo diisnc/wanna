@@ -124,98 +124,99 @@ class UserPostProfile extends Component {
 
 	buildPost() {
 		return (
-			<Card>
-				<CardItem>
-					<Left>
-						{this.state.post.userInfo.avatarData != null ? (
-							<Image
-									style={{ width: 60, height: 60, borderRadius: 50 }}
-									source={{ uri: this.state.post.userInfo.avatarData }}
-							/>
-						) : (
-							<Image
-									style={{ width: 60, height: 60, borderRadius: 50 }}
-									source={require('../assets/noImage.png')}
+			<ScrollView>
+				<Card>
+					<CardItem>
+						<Left>
+							{this.state.post.userInfo.avatarData != null ? (
+								<Image
+										style={{ width: 60, height: 60, borderRadius: 50 }}
+										source={{ uri: this.state.post.userInfo.avatarData }}
 								/>
-						)}
-						<Body>
-							<Text style={{ fontSize: 16, alignContent: 'center' }}>
-								{this.state.post.postInfo.idUser}
-							</Text>
-							<Text style={{ fontSize: 12, color: 'grey' }}>
-								LOCALIZAÇÃO
-							</Text>
-						</Body>
-					</Left>
-				</CardItem>
-
-				<CardItem cardBody>
-					<FlatList
-							horizontal
-							data={this.state.post.photos}
-							renderItem={({ index }) => {
-								return (
-									<View
-										key={index}
-										style={{
-											width: screenWidth - theme.SIZES.BASE * 0.5 ,
-											height: 300,
-											justifyContent: 'space-around',
-											alignItems: 'center'
-										}}>
-										<Image
-											source={{ uri: this.state.post.photos[index].photoData }}
-											style={{
-												aspectRatio: 1,
-												width: '90%',
-												backgroundColor: 'red'
-											}}
-											resizeMode="cover"
-										/>
-									</View>
-								);
-							}}
-							keyExtractor={(item, index) => this.state.postID + index.toString()}
-							pagingEnabled
-							snapToInterval={this.state.width}
-							snapToAlignment="center">
-					</FlatList>
-				</CardItem>
-
-				<PostButtons
-					idPost={this.state.post.postInfo.id}
-					idUser={this.state.post.postInfo.idUser}
-					navigation={this.props.navigation}
-				/>
-
-				<CardItem>	
-					<Left>
-						<View style={{flex: 1, flexDirection: 'column'}}>
-							<Text style={{fontWeight: 'bold', fontSize: 16}}>
-								{this.state.post.postInfo.category}
-							</Text>				
-							{this.state.post.postInfo.brand == null ? (
-								<Text style={{color: 'gray'}}>
-									{this.state.post.postInfo.color} • {this.state.post.postInfo.size}
-								</Text>
-							) : (									
-								<Text style={{color: 'gray'}}>
-									{this.state.post.postInfo.brand} • {this.state.post.postInfo.color} • {this.state.post.postInfo.size}
-								</Text>
+							) : (
+								<Image
+										style={{ width: 60, height: 60, borderRadius: 50 }}
+										source={require('../assets/noImage.png')}
+									/>
 							)}
+							<Body>
+								<Text style={{ fontSize: 16, alignContent: 'center' }}>
+									{this.state.post.postInfo.idUser}
+								</Text>
+								<Text style={{ fontSize: 12, color: 'grey' }}>
+									{ this.state.post.userInfo.location }
+								</Text>
+							</Body>
+						</Left>
+					</CardItem>
 
-							<Text style={{color: 'gray'}}>
-								{this.state.post.postInfo.description}
-							</Text>
-						</View>	
-					</Left>
-								
-					<Right>
-						<Text style={{color:'#3498DB', fontWeight: 'bold', fontSize: 17}}>{this.state.post.postInfo.price}€</Text>
-					</Right>
-				</CardItem>
-			</Card>
+					<CardItem cardBody>
+						<FlatList
+								horizontal
+								data={this.state.post.photos}
+								renderItem={({ index }) => {
+									return (
+										<View
+											key={index}
+											style={{
+												width: screenWidth - theme.SIZES.BASE * 0.5 ,
+												height: 300,
+												justifyContent: 'space-around',
+												alignItems: 'center'
+											}}>
+											<Image
+												source={{ uri: this.state.post.photos[index].photoData }}
+												style={{
+													aspectRatio: 1,
+													width: '90%',
+													backgroundColor: 'red'
+												}}
+												resizeMode="cover"
+											/>
+										</View>
+									);
+								}}
+								keyExtractor={(item, index) => this.state.postID + index.toString()}
+								pagingEnabled
+								snapToInterval={this.state.width}
+								snapToAlignment="center">
+						</FlatList>
+					</CardItem>
 
+					<PostButtons
+						idPost={this.state.post.postInfo.id}
+						idUser={this.state.post.postInfo.idUser}
+						navigation={this.props.navigation}
+					/>
+
+					<CardItem>	
+						<Left>
+							<View style={{flex: 1, flexDirection: 'column'}}>
+								<Text style={{fontWeight: 'bold', fontSize: 16}}>
+									{this.state.post.postInfo.category}
+								</Text>				
+								{this.state.post.postInfo.brand == null ? (
+									<Text style={{color: 'gray'}}>
+										{this.state.post.postInfo.color} • {this.state.post.postInfo.size}
+									</Text>
+								) : (									
+									<Text style={{color: 'gray'}}>
+										{this.state.post.postInfo.brand} • {this.state.post.postInfo.color} • {this.state.post.postInfo.size}
+									</Text>
+								)}
+
+								<Text style={{color: 'gray'}}>
+									{this.state.post.postInfo.description}
+								</Text>
+							</View>	
+						</Left>
+									
+						<Right>
+							<Text style={{color:'#3498DB', fontWeight: 'bold', fontSize: 17}}>{this.state.post.postInfo.price}€</Text>
+						</Right>
+					</CardItem>
+				</Card>
+			</ScrollView>					
 
 
 		);
