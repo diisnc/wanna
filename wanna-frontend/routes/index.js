@@ -432,7 +432,7 @@ router.get('/myprofile', function(req, res, next) {
 			response2.data.forEach(function(entry) {
 				entry.id = hashids.encode(entry.id)
 			});
-			res.render('profile', {data: response.data, data2: response2.data})
+			res.render('myprofile', {data: response.data, data2: response2.data})
 		})
 		.catch(error => {
 			next()
@@ -492,6 +492,7 @@ router.get('/followings', function(req, res, next) {
 	})
 	.then(response => {
 		res.render('followings', {data: response.data})
+		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
