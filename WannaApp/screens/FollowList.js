@@ -170,9 +170,10 @@ class FollowList extends Component {
 										}}>
 										{/* primeira coluna: foto do perfil */}
 										<View style= {{ marginHorizontal: '2%' }}>
-											<MaterialIcons 
-												name="person-outline" 
-												size={60}/>
+										<Image
+											source={{ uri: item.avatarData }}
+											style={{ width: 60, height: 60, borderRadius: 50 }}
+										/>
 										</View>
 										{/* segunda coluna: nome de perfil e localização */}
 										{this.state.type == 'Followings' ? (
