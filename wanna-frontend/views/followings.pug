@@ -41,9 +41,9 @@ html
 				each user in data
 					li.w3-bar
 						span.w3-bar-item.w3-button.w3-white.w3-xlarge.w3-right.button.btn.btn-primary.btn-white 
-							b VER PERFIL
-						img.w3-bar-item.w3-circle.w3-hide-small(src="https://www.w3schools.com/w3css/img_avatar5.png"  style='width:85px') 
+							a(href="/profile?username="+user.followed_id style="text-decoration: none;") VER PERFIL
+						img.w3-bar-item.w3-circle.w3-hide-small(src=user.avatarData) 
 						.w3-bar-item
 							span.w3-large= user.followed_id
 							br
-							span= user.followed_id
+							span #{user.firstName} #{user.lastName}

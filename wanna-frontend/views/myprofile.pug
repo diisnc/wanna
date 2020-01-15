@@ -412,3 +412,9 @@ html
                                         .prof-container.prof-post
                                             a(href='/post?id='+post.postid)
                                                 img.prof-img-post(src=post.photoData)
+                                h1 Saved Posts
+                                .col-sm-10(style='text-align: left !important;')
+                                    each post in data2
+                                        .prof-container.prof-post
+                                            a(href='/post?id='+post.id)
+                                                img.prof-img-post(src=post.photoData)
