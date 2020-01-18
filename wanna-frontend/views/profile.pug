@@ -176,6 +176,25 @@ html
                 transform: translateY(-0.2em);
                 transition: 0.3s;
             }
+            .btn-white{
+                margin-top: 5px;
+                border-radius:30px !important;
+                color: #000000 !important;
+                background: rgb(180,180,180);
+                background: linear-gradient(90deg, rgba(170,170,170,1) 0%, rgba(190,190,190,1) 100%);
+                text-transform: uppercase;
+                font-size: 14px !important;
+                letter-spacing: 3px;
+                text-decoration: none !important;
+                transition: 0.3s;
+                border-color: rgb(180,180,180) !important;
+            }
+            .btn-white:hover,
+            .btn-white:focus{
+                box-shadow: 0 0.2em 1em -0.3em rgba(180,180,180,0.9);
+                transform: translateY(-0.2em);
+                transition: 0.3s;
+            }
             .btn-mini{
                 position: absolute;
                 top: 10px;
@@ -392,6 +411,17 @@ html
                                                             i.far.fa-star
                                                             i.far.fa-star
                                                             i.far.fa-star
+                                            div(style='margin-left: 30px;')
+                                                if data.following===false                                                        
+                                                    form(method="POST" action="/follow")
+                                                        input(type="hidden" name="username" value=data.info.username)
+                                                        button.btn.btn-primary.btn-download(type="submit") 
+                                                            b SEGUIR
+                                                else 
+                                                    form(method="POST" action="/unfollow")
+                                                        input(type="hidden" name="username" value=data.info.username)
+                                                        button.btn.btn-primary.btn-white(type="submit") 
+                                                            b N&Atilde;O SEGUIR                                                    
                                         .row(style='padding-top: 30px; padding-bottom: 30px; text-align:center;')
                                             .col
                                                 b.small-txt-header=data.posts.length 
