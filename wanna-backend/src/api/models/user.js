@@ -257,7 +257,8 @@ module.exports = (sequelize, DataTypes) => {
 	 */
 	User.getUsernames = async function getUsernames(usernameString) {
 		result = await this.sequelize.query(
-			'SELECT "username" FROM "Users" WHERE "Users"."username" LIKE :usernameLike',
+			'SELECT "Users"."username", "Users"."firstName", "Users"."lastName", "Users"."avatarData" FROM "Users" WHERE "Users"."username" LIKE :usernameLike',
+
 			{
 				replacements: { usernameLike: '%' + usernameString + '%' },
 				type: this.sequelize.QueryTypes.SELECT,
