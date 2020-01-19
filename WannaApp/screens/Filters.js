@@ -36,7 +36,17 @@ class Filters extends Component {
 			this.startHeaderHeight = 60;
 		}
 
+		this.focusListener = this.props.navigation.addListener('didFocus', () => {
+			this.onFocusFunction();
+		});
+	}
+
+	onFocusFunction = () => {
 		this.getFiltersFromAPI();
+	};
+
+	componentWillUnmount() {
+		this.focusListener.remove();
 	}
 
 	async componentWillMount() {
@@ -95,42 +105,42 @@ class Filters extends Component {
 
 	// Builds header of the page
 	buildHeader() {
-		if (this.state.fontLoaded){
-		return (
-			// Safe Box for Android
-			<View
-				style={{
-					height: this.startHeaderHeight,
-					backgroundColor: 'white',
-					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
-				}}>
+		if (this.state.fontLoaded) {
+			return (
+				// Safe Box for Android
 				<View
 					style={{
-						height: '90%',
-						flexDirection: 'row',
-						padding: 10,
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: 'white'
+						height: this.startHeaderHeight,
+						backgroundColor: 'white',
+						borderBottomWidth: 1,
+						borderBottomColor: '#dddddd'
 					}}>
-					<Text style={{
-						flex: 1,
-						textAlign: 'left',
-						fontSize: 40,
-						fontFamily: 'run'
+					<View
+						style={{
+							height: '90%',
+							flexDirection: 'row',
+							padding: 10,
+							justifyContent: 'center',
+							alignItems: 'center',
+							backgroundColor: 'white'
 						}}>
-						FILTROS
+						<Text style={{
+							flex: 1,
+							textAlign: 'left',
+							fontSize: 40,
+							fontFamily: 'run'
+						}}>
+							FILTROS
 					</Text>
-					<MaterialCommunityIcons.Button
-						name="plus"
-						size={40}
-						style={{ flex: 1 }}
-						onPress={() => this.props.navigation.navigate('NewFilter')}
-					/>
+						<MaterialCommunityIcons.Button
+							name="plus"
+							size={40}
+							style={{ flex: 1 }}
+							onPress={() => this.props.navigation.navigate('NewFilter')}
+						/>
+					</View>
 				</View>
-			</View>
-		);
+			);
 		}
 	}
 

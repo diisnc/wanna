@@ -24,9 +24,30 @@ import * as ImagePicker from 'expo-image-picker';
 import { addPost } from '../modules/profile/profile.reducer';
 import { EvilIcons } from '@expo/vector-icons';
 
-const maleClothes = ['Camisa', 'Camisola', 'Calçado', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
+const maleClothes = [
+	'Camisa',
+	'Camisola',
+	'Calçado',
+	'Sweat',
+	'T-shirt',
+	'Calças',
+	'Casaco',
+	'Outro'
+];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calçado', 'Casaco', 'Outro'];
-const colors = ['Azul', 'Vermelho', 'Rosa', 'Verde', 'Amarelo', 'Bege', 'Castanho', 'Preto', 'Cinza', 'Branco', 'Outra'];
+const colors = [
+	'Azul',
+	'Vermelho',
+	'Rosa',
+	'Verde',
+	'Amarelo',
+	'Bege',
+	'Castanho',
+	'Preto',
+	'Cinza',
+	'Branco',
+	'Outra'
+];
 const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
 const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
 
@@ -50,7 +71,8 @@ class Add extends Component {
 		offerPostage: false,
 		postagePrice: null,
 		completed: false,
-		fontLoaded: false
+		fontLoaded: false,
+		addInProcess: false
 	};
 
 	render() {
@@ -80,7 +102,7 @@ class Add extends Component {
 
 	async componentWillMount() {
 		await Expo.Font.loadAsync({
-			'run': require('../assets/fonts/run.ttf'),
+			run: require('../assets/fonts/run.ttf')
 		});
 		this.setState({ fontLoaded: true });
 	}
@@ -91,35 +113,36 @@ class Add extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
-		if (this.state.fontLoaded){
+		if (this.state.fontLoaded) {
 			return (
-			// Safe Box for Android
-			<View
-				style={{
-					height: this.startHeaderHeight,
-					backgroundColor: 'white',
-					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
-				}}>
+				// Safe Box for Android
 				<View
 					style={{
-						height: '90%',
-						flexDirection: 'row',
-						padding: 10,
-						justifyContent: 'center',
-						alignItems: 'center',
-						backgroundColor: 'white'
+						height: this.startHeaderHeight,
+						backgroundColor: 'white',
+						borderBottomWidth: 1,
+						borderBottomColor: '#dddddd'
 					}}>
-					<Text style={{
-						flex: 1,
-						textAlign: 'left',
-						fontSize: 40,
-						fontFamily: 'run'
+					<View
+						style={{
+							height: '90%',
+							flexDirection: 'row',
+							padding: 10,
+							justifyContent: 'center',
+							alignItems: 'center',
+							backgroundColor: 'white'
 						}}>
-						PUBLICAR
-					</Text>
+						<Text
+							style={{
+								flex: 1,
+								textAlign: 'left',
+								fontSize: 40,
+								fontFamily: 'run'
+							}}>
+							PUBLICAR
+						</Text>
+					</View>
 				</View>
-			</View>
 			);
 		}
 	}
@@ -139,11 +162,11 @@ class Add extends Component {
 	buildImagesBox() {
 		return (
 			<View
-			style={{
-				height: 100,
-				width: '100%',
-				flexDirection: 'row'
-			}}>
+				style={{
+					height: 100,
+					width: '100%',
+					flexDirection: 'row'
+				}}>
 				{this.buildPickedImagesScroll()}
 				{this.buildImagePicker()}
 			</View>
@@ -152,17 +175,16 @@ class Add extends Component {
 
 	// Builds lateral scroll for picked images
 	buildPickedImagesScroll() {
-		if (this.state.pickedImagesBase64.length > 0){
+		if (this.state.pickedImagesBase64.length > 0) {
 			return (
 				<ScrollView
 					scrollEventThrottle={16}
 					horizontal={true}
-					style={{ height: 100, width: '75%',}}>
+					style={{ height: 100, width: '75%' }}>
 					{this.buildImages()}
 				</ScrollView>
 			);
-		}
-		else {
+		} else {
 			return (
 				<View
 					style={{
@@ -172,7 +194,9 @@ class Add extends Component {
 						alignItems: 'center',
 						padding: 10
 					}}>
-					<Text style={{fontSize: 18}}>Ainda não tens fotos do teu produto... Adiciona algumas!</Text>
+					<Text style={{ fontSize: 18 }}>
+						Ainda não tens fotos do teu produto... Adiciona algumas!
+					</Text>
 				</View>
 			);
 		}
@@ -224,16 +248,11 @@ class Add extends Component {
 					justifyContent: 'center',
 					alignItems: 'center'
 				}}>
-				
-				<TouchableOpacity
-					activeOpacity={0.5}
-					onPress={this.takePhoto}>
-					<EvilIcons name="camera" size={40} style={{padding: 5}}/>
+				<TouchableOpacity activeOpacity={0.5} onPress={this.takePhoto}>
+					<EvilIcons name="camera" size={40} style={{ padding: 5 }} />
 				</TouchableOpacity>
-				<TouchableOpacity
-					activeOpacity={0.5}
-					onPress={this.pickImage}>
-					<EvilIcons name="image" size={40} style={{padding: 5}}/>
+				<TouchableOpacity activeOpacity={0.5} onPress={this.pickImage}>
+					<EvilIcons name="image" size={40} style={{ padding: 5 }} />
 				</TouchableOpacity>
 			</View>
 		);
@@ -245,9 +264,7 @@ class Add extends Component {
 			<ScrollView scrollEventThrottle={16}>
 				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
 					{/* género */}
-					<View
-						key={'genre'}
-						style={{ height: 50, flexDirection: 'row'}}>
+					<View key={'genre'} style={{ height: 50, flexDirection: 'row' }}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleGenre({ selected: value });
@@ -269,9 +286,7 @@ class Add extends Component {
 						/>
 					</View>
 					{/* tipo roupa */}
-					<View
-						key={'clothe'}
-						style={{ height: 50, flexDirection: 'row'}}>
+					<View key={'clothe'} style={{ height: 50, flexDirection: 'row' }}>
 						<ModalDropdown
 							onDropdownWillShow={this.clotheWillShow.bind(this)}
 							onSelect={(index, value) => {
@@ -294,9 +309,7 @@ class Add extends Component {
 						/>
 					</View>
 					{/* cor */}
-					<View
-						key={'color'}
-						style={{ height: 50, flexDirection: 'row'}}>
+					<View key={'color'} style={{ height: 50, flexDirection: 'row' }}>
 						<ModalDropdown
 							onDropdownWillShow={this.colorWillShow.bind(this)}
 							onSelect={(index, value) => {
@@ -319,9 +332,7 @@ class Add extends Component {
 						/>
 					</View>
 					{/* tamanhos */}
-					<View
-						key={'sizes'}
-						style={{ height: 50, flexDirection: 'row'}}>
+					<View key={'sizes'} style={{ height: 50, flexDirection: 'row' }}>
 						<ModalDropdown
 							onDropdownWillShow={this.sizeWillShow.bind(this)}
 							onSelect={(index, value) => {
@@ -344,7 +355,7 @@ class Add extends Component {
 						/>
 					</View>
 					{/* marca */}
-					<View style={{flex: 1}}>
+					<View style={{ flex: 1 }}>
 						<TextInput
 							style={{
 								flex: 1,
@@ -361,7 +372,7 @@ class Add extends Component {
 						/>
 					</View>
 					{/* descrição */}
-					<View style={{flex: 1}}>
+					<View style={{ flex: 1 }}>
 						<TextInput
 							style={{
 								flex: 1,
@@ -561,22 +572,26 @@ class Add extends Component {
 	}
 
 	async createPhotoAsync() {
-		if( this.state.price != null ){
-			this.state.price = this.state.price.replace("€","").replace(",",".");
+		if (this.state.price != null) {
+			this.state.price = this.state.price.replace('€', '').replace(',', '.');
 		}
 
-		result = await createPost(
-			this.state.selectedGenre,
-			this.state.selectedClothe,
-			this.state.selectedColor,
-			this.state.insertedBrand,
-			this.state.selectedSize,
-			this.state.price,
-			this.state.pickedImagesBase64,
-			this.state.insertedDescription
-		);
+		if (this.state.addInProcess == false) {
+			this.setState({ addInProcess: true });
+			result = await createPost(
+				this.state.selectedGenre,
+				this.state.selectedClothe,
+				this.state.selectedColor,
+				this.state.insertedBrand,
+				this.state.selectedSize,
+				this.state.price,
+				this.state.pickedImagesBase64,
+				this.state.insertedDescription
+			);
+		}
 
 		if (result == 'OK') {
+			this.setState({ addInProcess: false });
 			this.props.navigation.navigate('Inspire');
 			ToastAndroid.show('Post created!', ToastAndroid.LONG);
 			this.props.addPostDispatch();
@@ -609,4 +624,3 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	}
 });
-
