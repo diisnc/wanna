@@ -7,9 +7,9 @@ import {
 	TextInput,
 	Platform,
 	ScrollView,
-	Button,
 	TouchableOpacity,
-	ToastAndroid
+	ToastAndroid,
+	Dimensions
 } from 'react-native';
 import { createFilter } from '../modules/filter/filter.api';
 import { connect } from 'react-redux';
@@ -17,6 +17,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { addFilter } from '../modules/profile/profile.reducer';
+import { Button, theme } from '../galio';
 
 const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
 const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
@@ -24,6 +25,7 @@ const colors = ['Todas', 'Azul', 'Vermelho', 'Preto', 'Branco', 'Outra'];
 const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
 const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
 const prices = [1, 2, 3, 4, 5, 10, 15, 30, 50, 75, 100, 200, 400, 500];
+const { width } = Dimensions.get('screen');
 
 class NewFilter extends Component {
 	state = {
@@ -173,7 +175,6 @@ class NewFilter extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
 					}}>
 					<Text style={{
 						flex: 1,
@@ -192,35 +193,37 @@ class NewFilter extends Component {
 	buildFilterForm() {
 		return (
 			<ScrollView scrollEventThrottle={16}>
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10 }}>
+				<View style={styles.containerStyle}>
 					{/* género */}
 					<View
 						key={'genre'}
-						style={{ height: 80, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 65, flexDirection: 'row'}}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleGenre({ selected: value });
 							}}
+
 							options={this.state.optionsGenre}
-							defaultValue={'Género'}
-							dropdownTextStyle={{
-								backgroundColor: '#fff',
-								fontSize: 17
-							}} /*Style here*/
+
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
-								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								justifyContent: 'center',
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+
+							textStyle={{ fontSize: 20, margin: 10}}
+							defaultValue={'Género'}
+
+							dropdownTextStyle={{
+								fontSize: 17,
+							}} /*Style here*/
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
+					<View style = {{ borderBottomWidth: 0.5, marginHorizontal: 5, justifyContent: 'center', borderColor: '#ddd' }}></View>
 					{/* tipo roupa */}
 					<View
 						key={'clothe'}
-						style={{ height: 80, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 65, flexDirection: 'row'}}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleClothe({ selected: value });
@@ -233,18 +236,17 @@ class NewFilter extends Component {
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
-								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								justifyContent: 'center',
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 20, margin: 10}}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
+					<View style = {{ borderBottomWidth: 0.5, marginHorizontal: 5, justifyContent: 'center', borderColor: '#ddd'  }}></View>
 					{/* cor */}
 					<View
 						key={'color'}
-						style={{ height: 80, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 65, flexDirection: 'row'}}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleColor({ selected: value });
@@ -252,23 +254,21 @@ class NewFilter extends Component {
 							options={this.state.optionsColors}
 							defaultValue={'Cor'}
 							dropdownTextStyle={{
-								backgroundColor: '#fff',
 								fontSize: 17
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
-								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								justifyContent: 'center',
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 20, margin: 10}}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
+					<View style = {{ borderBottomWidth: 0.5, marginHorizontal: 5, justifyContent: 'center', borderColor: '#ddd'  }}></View>
 					{/* tamanhos */}
 					<View
 						key={'sizes'}
-						style={{ height: 80, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 65, flexDirection: 'row'}}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleSizes({ selected: value });
@@ -276,76 +276,88 @@ class NewFilter extends Component {
 							options={this.state.optionsSizes}
 							defaultValue={'Tamanho'}
 							dropdownTextStyle={{
-								backgroundColor: '#fff',
 								fontSize: 17
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
-								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								justifyContent: 'center',
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 20, margin: 10}}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
+					<View style = {{ borderBottomWidth: 0.5, marginHorizontal: 5, justifyContent: 'center', borderColor: '#ddd'  }}></View>
 					{/* preço minimo */}
 					<View
 						key={'minPrice'}
-						style={{ height: 80, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 65, flexDirection: 'row'}}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleMinPrice({ selected: value });
 							}}
 							options={this.state.optionsPriceMin}
-							defaultValue={'Mínimo'}
+							defaultValue={'Valor Mínimo'}
 							dropdownTextStyle={{
-								backgroundColor: '#fff',
 								fontSize: 17
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
-								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								justifyContent: 'center',
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 20, margin: 10}}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
+					<View style = {{ borderBottomWidth: 0.5, marginHorizontal: 5, justifyContent: 'center', borderColor: '#ddd' }}></View>
 					{/* preço maximo */}
 					<View
 						key={'maxPrice'}
-						style={{ height: 80, flexDirection: 'row', backgroundColor: 'green' }}>
+						style={{ height: 65, flexDirection: 'row'}}>
 						<ModalDropdown
 							onSelect={(index, value) => {
 								this.handleMaxPrice({ selected: value });
 							}}
 							options={this.state.optionsPriceMax}
-							defaultValue={'Máximo'}
+							defaultValue={'Valor Máximo'}
 							dropdownTextStyle={{
-								backgroundColor: '#fff',
 								fontSize: 17
 							}} /*Style here*/
 							style={{
 								flex: 1,
-								backgroundColor: '#fff',
-								borderRadius: 30,
-								backgroundColor: 'rgb(19, 119, 237)'
+								justifyContent: 'center',
 							}}
-							textStyle={{ fontSize: 20, margin: 10, color: 'white' }}
+							textStyle={{ fontSize: 20, margin: 10}}
 							dropdownStyle={{ width: '60%' }}
 						/>
 					</View>
-					{this.state.completed ? (
-						<Button title="Adicionar" onPress={() => this.createFilter()} />
-					) : null}
-
-					<View style={styles.errorMessage}>
-						<Text>{this.props.errorMessage}</Text>
-					</View>
+						
 				</View>
+			
+				<View>
+					{this.state.completed ? (
+								<Button
+									shadowless
+									color='#3498DB' 
+									style={[styles.button]}
+									onPress={() => this.createFilter()}>
+									Adicionar Filtro
+								</Button>
+							) : 
+								<Button
+									shadowless
+									color= "#ddd"
+									style={[styles.button]}>
+									Adicionar Filtro
+								</Button>
+							}
+
+							<View style={styles.errorMessage}>
+								<Text>{this.props.errorMessage}</Text>
+							</View>
+				</View>		
 			</ScrollView>
+
+			
 		);
 	}
 
@@ -362,7 +374,7 @@ class NewFilter extends Component {
 		if (result == 'OK') {
 			this.props.dispatchAddFilter();
 			this.props.navigation.navigate('Filters');
-			ToastAndroid.show('Filter Created!', ToastAndroid.LONG);
+			ToastAndroid.show('Filtro Criado!', ToastAndroid.LONG);
 		}
 
 		return;
@@ -390,5 +402,34 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center'
-	}
+	},
+	shadow: {
+		shadowColor: 'black',
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		shadowOpacity: 0.2,
+		elevation: 2
+	},
+	button: {
+		marginTop: 6,
+		alignSelf: 'center',
+		marginBottom: theme.SIZES.BASE,
+		width: width - theme.SIZES.BASE * 3.5,
+		borderRadius: 25,
+		paddingVertical: 13
+	},
+	containerStyle: {
+		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: '#ddd',
+		borderBottomWidth: 0,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
+		marginLeft: 5,
+		marginRight: 5,
+		marginTop: 10,
+	  }
 });

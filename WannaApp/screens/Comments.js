@@ -85,7 +85,6 @@ class Comments extends Component {
 						padding: 10,
 						justifyContent: 'center',
 						alignItems: 'center',
-						backgroundColor: 'blue'
 					}}>
 					<Text style={{ flex: 3, textAlign: 'center' }}>Comentários</Text>
 				</View>
@@ -123,11 +122,19 @@ class Comments extends Component {
 												: 'row'
 									}
 								]}>
-								<Image
-									style={styles.imageStyles}
-									source={{ uri: item.avatarData }}
-									//source={require('../assets/noImage.png')}
-								/>
+
+								{item.avatarData ? (
+									<Image
+										source={{ uri: item.avatarData }}
+										style={[styles.imageStyles]}
+									/>
+								) : (
+									<Image
+										source={require('../assets/noImage.png')}
+										style={[styles.imageStyles]}
+									/>
+								)}
+
 								<Text style={styles.listItem}>{item.commentText}</Text>
 							</View>
 							<View style={styles.marginBottom} />
@@ -241,7 +248,6 @@ const styles = StyleSheet.create({
 		width: 35,
 		height: 35,
 		borderRadius: 35,
-		marginLeft: 10,
 		marginRight: 10
 	},
 	textInput: {

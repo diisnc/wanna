@@ -133,7 +133,9 @@ class Filters extends Component {
 							FILTROS
 					</Text>
 						<MaterialCommunityIcons.Button
-							name="plus"
+							name="magnify-plus-outline"
+							backgroundColor= 'white'
+							color= 'black'
 							size={40}
 							style={{ flex: 1 }}
 							onPress={() => this.props.navigation.navigate('NewFilter')}
@@ -148,9 +150,21 @@ class Filters extends Component {
 	buildFilterList() {
 		if (this.state.loading == true) return <Loading />;
 		else {
+
 			return (
+
 				<ScrollView scrollEventThrottle={16}>
-					<View style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
+					<View style={{flexDirection: 'row', flex: 1, marginTop: 15, marginHorizontal: 10}}>
+							<Text style={{ flex: 1, textAlign: 'center', fontSize: 15, fontFamily: 'run' }}>Categoria</Text>
+							<Text style={{ flex: 1, textAlign: 'center', fontSize: 15, fontFamily: 'run' }}>Cor</Text>
+							<Text style={{ flex: 1, textAlign: 'center', fontSize: 15, fontFamily: 'run' }}>Tamanho</Text>
+							<Text style={{ flex: 1, textAlign: 'center', fontSize: 15, fontFamily: 'run' }}>Min.</Text>
+							<Text style={{ flex: 1, textAlign: 'center', fontSize: 15, fontFamily: 'run' }}>Max.</Text>
+							<Text style={{ flex: 1, textAlign: 'center', fontSize: 15, fontFamily: 'run' }}></Text>
+					</View>
+					<View style={[styles.containerStyle]}>
+						
+
 						<FlatList
 							data={this.state.filters}
 							keyExtractor={(item, index) => item.id.toString()}
@@ -177,28 +191,29 @@ class Filters extends Component {
 			<View
 				key={'filter' + index}
 				style={{
-					height: 80,
+					height: 65,
 					flexDirection: 'row',
 					alignItems: 'center',
 					justifyContent: 'center',
-					backgroundColor: 'green'
+					borderColor: '#ddd',
+					borderBottomWidth: 0.5,
+					marginHorizontal: 5,
 				}}>
-				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
-					{item.category}
-				</Text>
-				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>{item.color}</Text>
-				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>{item.size}</Text>
-				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
-					{item.priceMin}
-				</Text>
-				<Text style={{ flex: 1, margin: 10, justifyContent: 'center' }}>
-					{item.priceMax}
-				</Text>
+				<Text style={{ flex: 1, textAlign: 'center', fontSize: 13, marginHorizontal: 1 }}>{item.category}</Text>
+				<Text style={{ flex: 1, textAlign: 'center', fontSize: 13, marginHorizontal: 1 }}>{item.color}</Text>
+				<Text style={{ flex: 1, textAlign: 'center', fontSize: 13, marginHorizontal: 1 }}>{item.size}</Text>
+				<Text style={{ flex: 1, textAlign: 'center', fontSize: 13, marginHorizontal: 1 }}>{item.priceMin}€</Text>
+				<Text style={{ flex: 1, textAlign: 'center', fontSize: 13, marginHorizontal: 1 }}>{item.priceMax}€</Text>
 				<Switch
-					style={{ margin: 10 }}
+					style={{ flex: 1}}
+
+					thumbColor= '#3498DB'
+
 					// controla switchValues, filterId servirá para selectedFilters
 					onValueChange={value => this.customToggleSwitch(value, item.id)}
-					value={item.isActive}></Switch>
+					value={item.isActive}>
+				</Switch>
+				
 			</View>
 		);
 	}
@@ -267,9 +282,25 @@ const styles = StyleSheet.create({
 		elevation: 2
 	},
 	button: {
+		marginTop: 6,
 		marginBottom: theme.SIZES.BASE,
 		width: width - theme.SIZES.BASE * 3.5,
 		borderRadius: 25,
+		alignSelf: "center",
 		paddingVertical: 13
-	}
+	},
+	containerStyle: {
+		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: '#ddd',
+		borderBottomWidth: 0,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
+		marginLeft: 5,
+		marginRight: 5,
+		marginTop: 10,
+	  }
 });
