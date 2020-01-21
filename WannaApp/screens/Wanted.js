@@ -15,7 +15,7 @@ import {
 	FlatList,
 	Dimensions
 } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { searchByFilter } from '../modules/filter/filter.api';
 import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
@@ -104,12 +104,7 @@ class Wanted extends Component {
 						}}>
 						DESEJADOS
 					</Text>
-					<MaterialCommunityIcons.Button
-						name="filter-variant"
-						size={40}
-						style={{ flex: 1 }}
-						onPress={() => this.props.navigation.navigate('Filters')}
-					/>
+
 				</View>
 			</View>
 		);}

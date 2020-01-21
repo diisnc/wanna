@@ -117,6 +117,7 @@ class Combine extends Component {
 				<View
 					style={{
 						flex: 1,
+						backgroundColor: '#fafafa',
 						flexDirection: 'column',
 						justifyContent: 'flex-start',
 						alignItems: 'stretch'
@@ -188,7 +189,8 @@ class Combine extends Component {
 				<View
 					style={{
 						flex: 8,
-						backgroundColor: 'black',
+						paddingTop: 15,
+						backgroundColor: '#fafafa',
 						justifyContent: 'space-around',
 						alignItems: 'center'
 					}}>
@@ -208,8 +210,7 @@ class Combine extends Component {
 				style={{
 					flex: 1,
 					width: this.state.width,
-					backgroundColor: 'green',
-					margin: 10,
+					backgroundColor: '#fafafa',
 					justifyContent: 'space-around',
 					alignItems: 'center'
 				}}>
@@ -238,8 +239,7 @@ class Combine extends Component {
 				style={{
 					flex: 1,
 					width: this.state.width,
-					backgroundColor: 'green',
-					margin: 10,
+					backgroundColor: '#fafafa',
 					justifyContent: 'space-around',
 					alignItems: 'center'
 				}}>
@@ -280,9 +280,9 @@ class Combine extends Component {
 		var sum = lowerPrice + upperPrice;
 
 		return (
-			<View style={{ flex: 1, backgroundColor: 'green', margin: 10 }}>
+			<View style={{backgroundColor: '#fafafa', flex: 1, width: '50%', justifyContent:'center', marginLeft: '25%'}}>
 				{/* upper selector */}
-				<Text>{sum} €</Text>
+				<Text style={[styles.containerStyle]}>Valor total do conjunto: {"\n"}{sum}€</Text>
 			</View>
 		);
 	}
@@ -298,7 +298,7 @@ class Combine extends Component {
 					style={{
 						width: this.state.width,
 						height: '100%',
-						backgroundColor: 'yellow',
+						backgroundColor: '#fafafa',
 						justifyContent: 'space-around',
 						alignItems: 'center'
 					}}>
@@ -309,9 +309,14 @@ class Combine extends Component {
 							aspectRatio: 1,
 							overflow: 'hidden'
 						}}
-						resizeMode="contain"
+						resizeMode="cover"
 					/>
-					{selectedUpper == post ? <Text style={{ flex: 1 }}>Selecionada</Text> : null}
+					{selectedUpper == post ? 
+						<View style={{ paddingHorizontal: 20 ,flexDirection: 'row',marginBottom: 8}}>
+							<Text style={{ flex: 1, textAlign: 'left'}}>Peça Selecionada</Text>
+							<Text style={{ flex: 1, textAlign: 'right'}}>{this.state.upperClothes[this.state.selectedUpperClothe].price}€</Text>
+						</View>
+					 : null}
 				</View>
 			</TouchableHighlight>
 		);
@@ -328,7 +333,7 @@ class Combine extends Component {
 					style={{
 						width: this.state.width,
 						height: '100%',
-						backgroundColor: 'yellow',
+						backgroundColor: '#fafafa',
 						justifyContent: 'space-around',
 						alignItems: 'center'
 					}}>
@@ -339,9 +344,14 @@ class Combine extends Component {
 							aspectRatio: 1,
 							overflow: 'hidden'
 						}}
-						resizeMode="contain"
+						resizeMode="cover"
 					/>
-					{selectedLower == post ? <Text>Selecionada</Text> : null}
+					{selectedLower == post ? 
+						<View style={{ paddingHorizontal: 20 ,flexDirection: 'row'}}>
+							<Text style={{ flex: 1, textAlign: 'left'}}>Peça Selecionada</Text>
+							<Text style={{ flex: 1, textAlign: 'right'}}>{this.state.lowerClothes[this.state.selectedLowerClothe].price}€</Text>
+						</View>
+					 : null}
 				</View>
 			</TouchableHighlight>
 		);
@@ -352,17 +362,17 @@ class Combine extends Component {
 		// if no clothes have been selected yet
 		if (this.state.selectedUpperClothe == null) {
 			this.setState({ selectedUpperClothe: index });
-			ToastAndroid.show('Upper clothe added to cart', ToastAndroid.SHORT);
+			ToastAndroid.show('Peça superior adicionada', ToastAndroid.SHORT);
 		}
 		// if the same clothe is selected, we remove the selection
 		else if (this.state.selectedUpperClothe == index) {
 			this.setState({ selectedUpperClothe: null });
-			ToastAndroid.show('Upper clothe removed from cart', ToastAndroid.SHORT);
+			ToastAndroid.show('Peça superior removida', ToastAndroid.SHORT);
 		}
 		// if a different clothe is chosen, replace the previous
 		else {
 			this.setState({ selectedUpperClothe: index });
-			ToastAndroid.show('Upper clothe replaced on cart', ToastAndroid.SHORT);
+			ToastAndroid.show('Peça superior substituída', ToastAndroid.SHORT);
 		}
 	}
 
@@ -371,17 +381,17 @@ class Combine extends Component {
 		// if no clothes have been selected yet
 		if (this.state.selectedLowerClothe == null) {
 			this.setState({ selectedLowerClothe: index });
-			ToastAndroid.show('Lower clothe added to cart', ToastAndroid.SHORT);
+			ToastAndroid.show('Peça inferior adicionada', ToastAndroid.SHORT);
 		}
 		// if the same clothe is selected, we remove the selection
 		else if (this.state.selectedLowerClothe == index) {
 			this.setState({ selectedLowerClothe: null });
-			ToastAndroid.show('Lower clothe removed from cart', ToastAndroid.SHORT);
+			ToastAndroid.show('Peça inferior removida', ToastAndroid.SHORT);
 		}
 		// if a different clothe is chosen, replace the previous
 		else {
 			this.setState({ selectedLowerClothe: index });
-			ToastAndroid.show('Lower clothe replaced on cart', ToastAndroid.SHORT);
+			ToastAndroid.show('Peça inferior substituída', ToastAndroid.SHORT);
 		}
 	}
 
@@ -404,5 +414,18 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	containerStyle: {
+		borderWidth: 0.5,
+		borderRadius: 2,
+		borderColor: '#ddd',
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
+		textAlign: 'center',
+		paddingHorizontal: 10,
+		paddingVertical: 5,
 	}
 });
