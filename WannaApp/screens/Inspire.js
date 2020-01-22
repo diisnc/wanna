@@ -137,7 +137,7 @@ class Inspire extends Component {
 						lightTheme
 						searchIcon={{ size: 20 }}
 						onChangeText={text => this.updateSearch(text)}
-						placeholder="Pesquisa por Utilizador..."
+						placeholder="Pesquisar pessoas..."
 						autoCorrect={false}
 						value={this.state.inputSearch}
 						containerStyle={{ backgroundColor: 'white' }}
