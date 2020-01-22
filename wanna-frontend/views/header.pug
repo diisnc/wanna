@@ -6,6 +6,15 @@ html
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
         style.
             @import url("https://fonts.googleapis.com/css?family=Raleway:400,700,900");
+            .column {
+              float: left;
+              width: 33.33% !important;
+            }
+            .row:after {
+              content: "";
+              display: table;
+              clear: both;
+            }
             .search__input {
                     width: 100%;
                     padding: 12px 24px;
@@ -41,19 +50,20 @@ html
                     }
     body
     .w3-top(style='position:relative; margin-bottom: 2%;')
-        .w3-bar.w3-white.w3-wide.w3-padding.w3-card
-            a.button(href='/' style='margin-left: 18%;')
-                img(src="/img/brand/full_logo.png" width='150' height='55' alt='Wanna' style='margin: auto; transition: width 1s')
-            .w3-display-middle(style='width: 20%;')
+        .w3-bar.w3-white.w3-wide.w3-padding.w3-card.row
+            .column
+                div(style="text-align:center")
+                    a.button(href='/')
+                        img(src="/img/brand/full_logo.png" width='150' height='55' alt='Wanna' style='margin: auto; transition: width 1s')
+            .column
                 .search__container
                     form(method="POST" action="/search" style="margin:auto; padding:0px;")
                         input.search__input(type='text' placeholder='Pesquisar pessoas...' name="usernameString" required)
-            .w3-right.w3-hide-small(style='width: 30%;')
-                a.button.btn(href="/") 
-                    img(src="/icns/home.svg" style="width:22px; height: 24.5px;")
-                a.button.btn(href='')
-                    img(src="/icns/notifications.svg" style="width:21px; height: 25.5px;")
-                a.button.btn(href="/myprofile")
-                    img(src="/icns/profile.svg" style="width:25px; height: 24px;")
-                a.button.btn(href="/logout" style="width:40px; height:40px;")
-                    img(src="/icns/logout.svg" style="width:24px; height: 25px;")
+            .column
+                div(style="margin-left:33%")
+                    div(style="float: left;margin:10px")
+                        a.button.btn(href="/myprofile")
+                            img(src="/icns/profile.svg" style="width:25px; height: 24px;")
+                    div(style="float: left;margin:10px")
+                        a.button.btn(href="/logout")
+                            img(src="/icns/logout.svg" style="width:24px; height: 25px;")
