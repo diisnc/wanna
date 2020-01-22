@@ -1,9 +1,8 @@
 doctype html
 html
 	head
-		include header.pug
-		title= title
 		meta(name='viewport' content='width=device-width, initial-scale=1')
+		include header.pug
 		link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
 		style.
 			.btn-white{
@@ -19,15 +18,12 @@ html
 				transition: 0.3s;
 				border-color: rgb(180,180,180) !important;
 			}
-			.btn-white:hover,
-			.btn-white:focus{
+			.btn-white:hover,.btn-white:focus{
 				box-shadow: 0 0.2em 1em -0.3em rgba(180,180,180,0.9);
 				transform: translateY(-0.2em);
 				transition: 0.3s;
 			}
 	body
-		p
-			strong A seguir
 		.w3-container
 			ul.w3-ul.w3-card-4(style="width:50%; margin:auto; overflow:auto; max-height:700px;")
 				each user in data

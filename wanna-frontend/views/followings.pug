@@ -2,7 +2,6 @@ doctype html
 html
 	head
 		include header.pug
-		title= title
 		meta(name='viewport' content='width=device-width, initial-scale=1')
 		link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
 		style.
@@ -26,15 +25,16 @@ html
 				transition: 0.3s;
 			}
 	body
-		p A seguir
-		.w3-container
-			ul.w3-ul.w3-card-4(style="width:50%; margin:auto; overflow:auto; max-height:700px;")
-				each user in data
-					li.w3-bar
-						span.w3-bar-item.w3-button.w3-white.w3-xlarge.w3-right.button.btn.btn-primary.btn-white 
-							a(href="/profile?username="+user.followed_id style="text-decoration: none;") VER PERFIL
-						img.w3-bar-item.w3-circle.w3-hide-small(src=user.avatarData style="width: 100px; height: 100px; padding-top: 0px; padding-left:0px; padding-right:0px; padding-bottom: 0px;") 
-						.w3-bar-item
-							span.w3-large= user.followed_id
-							br
-							span(style="color: gray;") #{user.firstName} #{user.lastName}
+		div#app
+			div
+				.w3-container
+					ul.w3-ul.w3-card-4(style="width:50%; margin:auto; overflow:auto; max-height:700px;")
+						each user in data
+							li.w3-bar
+								span.w3-bar-item.w3-button.w3-white.w3-xlarge.w3-right.button.btn.btn-primary.btn-white 
+									a(href="/profile?username="+user.followed_id style="text-decoration: none;") VER PERFIL
+								img.w3-bar-item.w3-circle.w3-hide-small(src=user.avatarData style="width: 100px; height: 100px; padding-top: 0px; padding-left:0px; padding-right:0px; padding-bottom: 0px;") 
+								.w3-bar-item
+									span.w3-large= user.followed_id
+									br
+									span(style="color: gray;") #{user.firstName} #{user.lastName}

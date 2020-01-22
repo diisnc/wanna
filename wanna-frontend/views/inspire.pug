@@ -1,8 +1,7 @@
 doctype html
 html
-	include header.pug
 	head
-		title= title
+		include header.pug
 	body
 		each post in data
 			div(id=post.id class='post')
