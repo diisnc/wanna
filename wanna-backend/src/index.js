@@ -8,7 +8,7 @@ const io = require('socket.io')(server);
 
 app.listen(port, () => console.info(`Server started on port ${port} (${env})`));
 
-server.listen(8001);
+server.listen(7999);
 
 
 socket.socketHandler(io);

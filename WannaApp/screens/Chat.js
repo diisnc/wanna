@@ -49,7 +49,7 @@ class Chat extends Component {
 		const connectionConfig = {
 			transports: ['websocket']
 		};
-		socket = SocketIOClient('https://5a3f05b3.ngrok.io', connectionConfig);
+		socket = SocketIOClient('http://infernoo.duckdns.org:7999', connectionConfig);
 	}
 
 	handleBackPress = () => {
