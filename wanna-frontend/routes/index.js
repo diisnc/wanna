@@ -573,12 +573,11 @@ router.get('/followers', function(req, res, next) {
 });
 
 router.post('/follow', function(req, res, next){
-	axios.get('http://infernoo.duckdns.org:8000/v1/profile/follow/'+req.body.username,{
+	axios.post('http://infernoo.duckdns.org:8000/v1/profile/follow/'+req.body.username,[],{
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
 		res.redirect("profile/?username="+req.body.username);
-		console.log(response.data)
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
@@ -600,7 +599,7 @@ router.post('/follow', function(req, res, next){
 });
 
 router.post('/unfollow', function(req, res, next){
-	axios.get('http://infernoo.duckdns.org:8000/v1/profile/unfollow/'+req.body.username,{
+	axios.post('http://infernoo.duckdns.org:8000/v1/profile/unfollow/'+req.body.username,[],{
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
