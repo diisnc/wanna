@@ -396,7 +396,7 @@ class Profile extends Component {
 							color='#3498DB' 
 							style={[styles.button, styles.shadow]}
 							onPress={() => this.followAction()}>
-							Follow
+							Seguir
 						</Button>
 
 					</View>
@@ -415,7 +415,7 @@ class Profile extends Component {
 							color='#3498DB' 
 							style={[styles.button, styles.shadow]}
 							onPress={() => this.unfollowAction()}>
-							Unfollow
+							Não Seguir
 						</Button>
  
 					</View>

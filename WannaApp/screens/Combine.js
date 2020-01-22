@@ -14,10 +14,14 @@ import {
 	TouchableHighlight,
 	Dimensions
 } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { upperitemsCombine, loweritemsCombine } from '../modules/post/post.api';
 import Loading from './Loading';
+import { Left } from 'native-base';
+import { AntDesign } from 'expo-vector-icons';
+
+global.indice = 0
 
 class Combine extends Component {
 	state = {
@@ -32,6 +36,7 @@ class Combine extends Component {
 		completed: false,
 		fontLoaded: false
 	};
+
 
 	//onValueChange of the switch this function will be called
 	toggleSwitch(newState) {
@@ -124,7 +129,6 @@ class Combine extends Component {
 					}}>
 					{this.buildHeader()}
 					{this.buildCombination()}
-					{this.checkout()}
 				</View>
 			</SafeAreaView>
 		);
@@ -191,34 +195,57 @@ class Combine extends Component {
 						flex: 8,
 						paddingTop: 15,
 						backgroundColor: '#fafafa',
-						justifyContent: 'space-around',
 						alignItems: 'center'
 					}}>
 					{/* Upper clothes selector */}
 					{this.buildUpperClothesSlider()}
 					{/* Lower clothes selector */}
 					{this.buildLowerClothesSlider()}
+					{this.checkout()}
 				</View>
 			);
 		}
 	}
+
+	
+	goIndex = () => {
+
+		this.flatListRef.scrollToIndex({animated: true,index: 2 });
+	};
+
 
 	// Build Upper Clothes selection slider and zoom
 	buildUpperClothesSlider() {
 		return (
 			<View
 				style={{
-					flex: 1,
+					flex: 3,
 					width: this.state.width,
 					backgroundColor: '#fafafa',
 					justifyContent: 'space-around',
-					alignItems: 'center'
+					alignItems: 'center',
+					flexDirection: 'row',
+					width: '100%',
+					marginTop: 10,
+					paddingHorizontal: '2%'
 				}}>
 				{/* upper selector */}
+				<View style={{justiftyContent:"center", alignItems:"center"}}>
+   					<AntDesign.Button
+						name="left"
+						color={'#3498DB'}
+						size={20}
+						style={{ backgroundColor: '#fafafa', width: 40}}
+						onPress={this.goIndex}
+					/>
+				</View>
+
 				<FlatList
+					style={{ flex: 4 }}
 					horizontal
+					ref={(ref) => { this.flatListRef = ref; }}
 					data={this.state.upperClothes}
-					renderItem={({ index }) =>
+					renderItem={({ index }) => 
 						this.buildUpperImages(index, this.state.selectedUpperClothe)
 					}
 					keyExtractor={item => item.id.toString()}
@@ -228,6 +255,16 @@ class Combine extends Component {
 					snapToInterval={this.state.width}
 					snapToAlignment={'center'}
 				/>
+
+				<View style={{justiftyContent:"center", alignItems:"center"}}>
+					<AntDesign.Button
+						name="right"
+						color={'#3498DB'}
+						size={20}
+						style={{ backgroundColor: '#fafafa', width: 45}}
+						onPress={() => this.props.navigation.navigte('ConversationsList')}
+					/>
+				</View>
 			</View>
 		);
 	}
@@ -237,13 +274,29 @@ class Combine extends Component {
 		return (
 			<View
 				style={{
-					flex: 1,
+					flex: 3,
 					width: this.state.width,
 					backgroundColor: '#fafafa',
 					justifyContent: 'space-around',
-					alignItems: 'center'
+					alignItems: 'center',
+					flexDirection: 'row',
+					width: '100%',
+					marginTop: 10,
+					paddingHorizontal: '2%'
 				}}>
 				{/* upper selector */}
+
+				<View style={{justiftyContent:"center", alignItems:"center"}}>
+   					<AntDesign.Button
+						name="left"
+						color={'#3498DB'}
+						size={20}
+						style={{ backgroundColor: '#fafafa', width: 40}}
+						onPress={this.goIndex}
+					/>
+				</View>
+
+
 				<FlatList
 					horizontal
 					data={this.state.lowerClothes}
@@ -257,7 +310,19 @@ class Combine extends Component {
 					snapToInterval={this.state.width}
 					snapToAlignment={'center'}
 				/>
+
+				<View style={{justiftyContent:"center", alignItems:"center"}}>
+					<AntDesign.Button
+						name="right"
+						color={'#3498DB'}
+						size={20}
+						style={{ backgroundColor: '#fafafa', width: 45}}
+						onPress={() => this.props.navigation.navigte('ConversationsList')}
+					/>
+				</View>
+
 			</View>
+			
 		);
 	}
 
@@ -280,9 +345,9 @@ class Combine extends Component {
 		var sum = lowerPrice + upperPrice;
 
 		return (
-			<View style={{backgroundColor: '#fafafa', flex: 1, width: '50%', justifyContent:'center', marginLeft: '25%'}}>
+			<View style={{backgroundColor: '#fafafa', flex: 1, width: '50%', justifyContent:'center'}}>
 				{/* upper selector */}
-				<Text style={[styles.containerStyle]}>Valor total do conjunto: {"\n"}{sum}€</Text>
+				<Text style={[styles.containerStyle]}>Valor total do conjunto: {"\n"}<Text style={{ color:'#3498DB', fontWeight: 'bold' }}>{sum}€</Text></Text>
 			</View>
 		);
 	}
@@ -300,21 +365,22 @@ class Combine extends Component {
 						height: '100%',
 						backgroundColor: '#fafafa',
 						justifyContent: 'space-around',
-						alignItems: 'center'
+						alignItems: 'center',
 					}}>
 					<Image
 						source={{uri: this.state.upperClothes[post].photoData}}
 						style={{
 							height: '90%',
 							aspectRatio: 1,
-							overflow: 'hidden'
+							overflow: 'hidden',
+							borderRadius: 20
 						}}
 						resizeMode="cover"
 					/>
 					{selectedUpper == post ? 
 						<View style={{ paddingHorizontal: 20 ,flexDirection: 'row',marginBottom: 8}}>
 							<Text style={{ flex: 1, textAlign: 'left'}}>Peça Selecionada</Text>
-							<Text style={{ flex: 1, textAlign: 'right'}}>{this.state.upperClothes[this.state.selectedUpperClothe].price}€</Text>
+							<Text style={{ color:'#3498DB', fontWeight: 'bold', flex: 1, textAlign: 'right'}}>{this.state.upperClothes[this.state.selectedUpperClothe].price}€</Text>
 						</View>
 					 : null}
 				</View>
@@ -342,14 +408,15 @@ class Combine extends Component {
 						style={{
 							height: '90%',
 							aspectRatio: 1,
-							overflow: 'hidden'
+							overflow: 'hidden',
+							borderRadius: 20
 						}}
 						resizeMode="cover"
 					/>
 					{selectedLower == post ? 
 						<View style={{ paddingHorizontal: 20 ,flexDirection: 'row'}}>
 							<Text style={{ flex: 1, textAlign: 'left'}}>Peça Selecionada</Text>
-							<Text style={{ flex: 1, textAlign: 'right'}}>{this.state.lowerClothes[this.state.selectedLowerClothe].price}€</Text>
+							<Text style={{ color:'#3498DB', fontWeight: 'bold', flex: 1, textAlign: 'right'}}>{this.state.lowerClothes[this.state.selectedLowerClothe].price}€</Text>
 						</View>
 					 : null}
 				</View>

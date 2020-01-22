@@ -197,17 +197,17 @@ class ConversationsList extends Component {
 											}}
 										/>
 									</View>
-									<View>
+									<View style={{ alignSelf: 'center' }}>
 										{item.idReceiver === this.props.loggedUsername ? (
 											<Text>{item.idSender}</Text>
 										) : (
 											<Text>{item.idReceiver}</Text>
 										)}
-										<Text>{item.category}</Text>
+										<Text>Categoria: {item.category}</Text>
 										{item.idSender === this.props.loggedUsername ? (
 											<Text>{'Tu: ' + item.messageText}</Text>
 										) : (
-											<Text>{item.idSender + ': ' + item.messageText}</Text>
+											<Text>{item.messageText}</Text>
 										)}
 
 										<Text style={styles.date}>{item.createdAt}</Text>										
@@ -239,26 +239,20 @@ export default connect(
 
 const styles = StyleSheet.create({
 	containerStyle: {
-		borderWidth: 1,
-		borderColor: '#ddd',
-		borderBottomWidth: 0,
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.8,
-		shadowRadius: 2,
-		elevation: 1,
-		marginLeft: 5,
-		marginRight: 5,
-		marginBottom: 10,
-		paddingVertical: 10,
 		flexDirection: 'row',
+		borderWidth: 0.5,
+		borderRadius: 50,
+		borderColor: '#ddd',
+		backgroundColor: '#fafafa',
+		textAlign: 'center',
+		paddingHorizontal: 10,
+		paddingVertical: 5,
 	},
 	date: {
 		width: 'auto',
-		maxWidth: '80%',
 		paddingTop: 2,
 		paddingBottom: 2,
-		fontSize: 14,
+		fontSize: 10,
 		color: '#a8a8a8'
 	}
 });

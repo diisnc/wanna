@@ -116,7 +116,7 @@ class SavedPosts extends Component {
 	buildFilterForm() {
 		return (
 			<ScrollView scrollEventThrottle={16}>
-				<View style={{ flex: 1, backgroundColor: 'white', margin: 10, flexDirection: 'row' }}>
+				<View style={{ flex: 1, backgroundColor: '#fafafa', margin: 10, flexDirection: 'row' }}>
 					<FlatList
 						data={this.state.savedPosts}
 						renderItem={({ item }) => (
@@ -170,18 +170,18 @@ export default connect(
 
 const styles = StyleSheet.create({
 	containerStyle: {
-		borderWidth: 1,
+		flexDirection: 'row',
+		borderWidth: 0.5,
+		borderRadius: 2,
 		borderColor: '#ddd',
-		borderBottomWidth: 0,
 		shadowColor: '#000',
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.8,
 		shadowRadius: 2,
 		elevation: 1,
-		marginLeft: 5,
-		marginRight: 5,
-		marginBottom: 10,
-		paddingVertical: 10,
-		flexDirection: 'row',
+		textAlign: 'center',
+		paddingHorizontal: 10,
+		paddingVertical: 5,
+		marginBottom: 10
 	}
 });
