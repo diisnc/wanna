@@ -19,6 +19,7 @@ router.get('/', function(req, res, next) {
 		response.data.forEach(function(entry) {
 			entry.id = hashids.encode(entry.id)
 		});
+		console.log(response.data)
 		res.render('inspire', { data: response.data, postID: postID })
 	})
 	.catch(error => {

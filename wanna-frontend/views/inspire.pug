@@ -3,7 +3,13 @@ html
 	head
 		include header.pug
 		link(rel="stylesheet" href="/stylesheets/bootstrap.min.css")
+		link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
 		style.
+			form{
+				display:inherit;
+				padding:5px;
+				vertical-align:middle;
+			}
 			.comment{
 				width:100%;
 				padding: 8px 10px 8px 15px;
@@ -44,7 +50,7 @@ html
 			.my-comment{
 				text-align: left;
 				width:auto !important;
-				margin: 0px 0px 15px 10px;
+				margin: 0px 0px 60px 10px;
 				display: flex !important;
 			}
 			.view-comments{
@@ -147,7 +153,11 @@ html
 				padding: 2px 10px 20px 10px !important;
 				text-align: left;
 			}
-			.reactions-area,
+			.reactions-area{
+				margin-top: 15px !important;
+				width:100%;
+				text-align:left;
+			}
 			.description-area,
 			.user-area,
 			.comment-area{
@@ -179,7 +189,7 @@ html
 				transition: 0.3s !important;
 			}
 			.icon-like-empty {
-				mask: url('../../../public/icns/like.svg');
+				mask: url('./img/icns/like.svg');
 				transition: 0.3s !important;
 			}
 			.icon-like-empty:hover{
@@ -188,11 +198,11 @@ html
 			}
 			.icon-like-full {
 				background-color: #F40056 !important;
-				mask: url('../../../public/icns/like-full.svg');
+				mask: url('./img/icns/like-full.svg');
 				transition: 0.3s !important;
 			}
 			.icon-dislike-empty {
-				mask: url('../../../public/icns/dislike.svg');
+				mask: url('./img/icns/dislike.svg');
 				transition: 0.3s !important;
 			}
 			.icon-dislike-empty:hover{
@@ -201,12 +211,12 @@ html
 			}
 			.icon-dislike-full {
 				background-color: #4A53FC !important;
-				mask: url('../../../public/icns/dislike-full.svg');
+				mask: url('./img/icns/dislike-full.svg');
 				transition: 0.3s !important;
 			}
 
 			.icon-save-empty {
-				mask: url('../../../public/icns/save.svg');
+				mask: url('./img/icns/save.svg');
 				transition: 0.3s !important;
 				width: 21px !important;
 				height: 23px !important;
@@ -216,14 +226,14 @@ html
 				transition: 0.3s !important;
 			}
 			.icon-save-full{
-				mask: url('../../../public/icns/save-full.svg');
+				mask: url('./img/icns/save-full.svg');
 				background-color: #333 !important;
 				width: 21px !important;
 				height: 23px !important;
 				transition: 0.3s !important;
 			}
 			.icon-buy-empty {
-				mask: url('../../../public/icns/buy.svg');
+				mask: url('./img/icns/buy.svg');
 				transition: 0.3s !important;
 				width: 22px !important;
 				height: 24px !important;
@@ -233,7 +243,7 @@ html
 				transition: 0.3s !important;
 			}
 			.icon-send {
-				mask: url('../../../public/icns/direct.svg');
+				mask: url('./img/icns/direct.svg');
 				transition: 0.3s !important;
 				width: 23px !important;
 				height: 25px !important;
@@ -248,7 +258,7 @@ html
 				transition: 0.1s !important;
 			}
 			.bg-trans{
-				background-color: rgba(0,0,0,0) !important;
+				background-color: rgb(74, 83, 252) !important;
 				text-align: center;
 			}
 			.bg-trans:hover{
@@ -262,170 +272,109 @@ html
 		#app
 			.container
 				.row
-					b-col(v-for='product in products' sm='8')
-						.card
-															// USER, TIMESTAMP e OPÇÕES
-							.user-area
-								.card-op-area
-									a(:href='product.user')
-										img.img-user(:src='product.user_img')
-									a.txt-username(:href='product.user')
-										b {{product.user}}
-									a.txt-username &bull;
-									a.txt-username.txt-tmstmp {{moment(product.timestamp, &quot;YYYY-MM-DDThh:mm:ss&quot;).locale(&apos;pt-pt&apos;).fromNow()}}
-								.card-options-area
-									b-button.search-bar.btn-mini.bg-trans(@mouseover='setmodal(product.id)' @click='showmodal(product.id)')
-										i.fas.fa-ellipsis-h
-									modal(v-if='shownmodal == product.id' @before-open='this.shownmodal=product.id' name='post_options' width='400px' height='auto')
-										b-list-group-item.post-list(href='') Copiar liga&ccedil;&atilde;o
-										b-list-group-item.post-list(href='') Reportar
-																	// FOTOS DO POST
-							.card-img-caixa
-								img.card-img.card-img-blur(v-if='product.imgs.length==1' :src='product.imgs[0]')
-								img.card-img.card-img-front(v-if='product.imgs.length==1' :src='product.imgs[0]' @dblclick='giveliketouch()')
-								b-carousel#carousel1(v-if='product.imgs.length>1' style='text-shadow: 1px 1px 2px #333;' controls='' indicators='' :interval='30000' v-model='slide' @sliding-start='onSlideStart' @sliding-end='onSlideEnd')
-									b-carousel-slide(v-for='image in product.imgs' :img-src='image')
-																// REAÇÕES AO POST
-							.reactions-area
-								.reaction-left-area
-									button.icon.icon-reaction.icon-like-empty(v-if='getlike(post_id) === 0' @click='givelike(post_id)')  &rlm;&rlm;&lrm; 
-									button.icon.icon-reaction.icon-like-full(v-if='getlike(post_id) === 1' @click='remvlike(post_id)')  &rlm;&rlm;&lrm; 
-									b {{product.likes}}
-									button.icon.icon-reaction.icon-dislike-empty(v-if='getdislike(post_id) === 0' @click='givedislike(post_id)')  &rlm;&rlm;&lrm; 
-									button.icon.icon-reaction.icon-dislike-full(v-if='getdislike(post_id) === 1' @click='remvdislike(post_id)')  &rlm;&rlm;&lrm; 
-								.reaction-right-area
-									button.icon.icon-reaction.icon-save-empty(v-if='getsave(post_id) === 0' @click='savepost(post_id)')  &rlm;&rlm;&lrm; 
-									button.icon.icon-reaction.icon-save-full(v-if='getsave(post_id) === 1' @click='unsavepost(post_id)')  &rlm;&rlm;&lrm; 
-									button.icon.icon-reaction.icon-buy-empty(@click='')  &rlm;&rlm;&lrm; 
-														// TITULO, MARCA, DESCRIÇÃO, PREÇO e AFINS
-							.description-area
-								.card-op-area
-									div(style='display:inline-flex;')
-										h5(style='margin:0px;') {{product.name}}
-										button.toggle-description(v-b-toggle='product.id')
-											i.fa.fa-sort-down
-									p.details-post(v-if='product.manufacturer')
-										b {{product.manufacturer}} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; {{product.size}} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; {{product.color}}
-									p.details-post(v-else='')
-										b {{product.size}} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; {{product.color}}
-								.card-options-area
-									h4(style='color: #4A53FC;')
-										b {{product.price.toFixed(2)}}&euro;
-								b-collapse.mt-2(v-bind:id='product.id')
-									.card-op-area
-										p.card-text {{product.description}}
-																	// COMENTÁRIOS
-							.comment-area
-											// COMENTÁRIO MAIS RECENTE
-								.my-comment
-									a(:href='product.comments[0].user')
-										img.img-user(:src='product.comments[0].user_img')
-									.comment
-										a.txt-username(:href='product.comments[0].user')
-											b {{product.comments[0].user}}
-										a.txt-username {{product.comments[0].text}}
-										a.txt-username &bull;
-										a.txt-username.txt-tmstmp
-											| {{moment(product.comments[0].timestamp, &quot;YYYY-MM-DDThh:mm:ss&quot;).locale(&apos;pt-pt&apos;).fromNow()}}
-											// INSERIR O MEU COMENTARIO
-								.my-comment
-									a(:href='current_user_name')
-										img.img-user(:src='current_user_img')
-									b-form-textarea.comment-input(v-model='text' rows='1' max-rows='4' v-bind:id="'comment_'+product.id" placeholder='Escreve um comentário...')
-									button.btn.icon.icon-send(@click='')
-											// VER MAIS COMENTARIOS
-								.view-comments
-											// BOTÃO PARA MODAL EM WEBSITE
-									b-button.search-bar.bg-trans(v-if='!isMobile()' @mouseover="setmodal('comments_'+product.id)" @click="showmodal('comments_'+product.id)")
-										| Ver todos os coment&aacute;rios
-											// BOTÃO PARA FULL PAGE EM MOBILE
-									b-button.search-bar(v-if='isMobile()' @click="$router.push('/comments/'+product.id)")
-										| Ver todos os coment&aacute;rios
-											// MODAL COM COMENTARIOS NO WEBSITE
-									modal(v-if="shownmodal == 'comments_'+product.id" @before-open="this.shownmodal='comments_'+product.id" name='post_options' width='40%' height='auto' scrollable='true')
-										div(style='padding:20px 20px 10px 10px;')
-											.card-op-area(style='margin-bottom: 0px !important')
-												div(style='display:inline-flex;')
-													h5(style='margin:0px;') {{product.name}}
-												p.details-post(v-if='product.manufacturer')
-													b {{product.manufacturer}} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; {{product.size}} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; {{product.color}}
-												p.details-post(v-else='')
-													b {{product.size}} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; {{product.color}}
-												p.card-text {{product.description}}
-											.card-options-area
-												h4(style='color: #4A53FC;')
-													b {{product.price.toFixed(2)}}&euro;
-											hr
-											.my-comment(v-for='comment in product.comments')
-												a(:href='comment.user')
-													img.img-user(:src='comment.user_img')
-												.comment
-													a.txt-username(:href='comment.user')
-														b {{comment.user}}
-													a.txt-username {{comment.text}}
-													a.txt-username &bull;
-													a.txt-username.txt-tmstmp {{moment(comment.timestamp, &quot;YYYY-MM-DDThh:mm:ss&quot;).locale(&apos;pt-pt&apos;).fromNow()}}
-											.my-comment
-												a(:href='current_user_name')
-													img.img-user(:src='current_user_img')
-												b-form-textarea.comment-input(v-model='text' rows='1' max-rows='4' v-bind:id="'comment_'+product.id" placeholder='Escreve um comentário...')
-												button.btn.icon PUBLICAR
-						// BARRA LATERAL PARA DOWNLOAD DA APP
-						b-col(sm='2' v-if='!isMobile() && this.showbanner==1 && this.window.width>800')
-							.card.card-download-app
-								b-button.search-bar.btn-mini(@click='hidebanner()')
-									i.fas.fa-times
-								div(style='padding:10px')
-									b-carousel#carousel-2(controls='' :interval='20000' v-model='slide' style='text-shadow: 1px 1px 2px #333;' @sliding-start='onSlideStart' @sliding-end='onSlideEnd')
-										b-carousel-slide(img-src='img/banners/wishlist.png')
-										b-carousel-slide(img-src='img/banners/dinheiro.png')
-										b-carousel-slide(img-src='img/banners/ambiente.png')
-									a.btn.btn-primary.btn-download(href='')
-										b Download app
-
-
-
-
-
-
-
-
-
-
-
-//
-		each post in data
-			div(id=post.id class='post')
-				h1= post.idUser
-				a(href='/post?id='+post.id)
-					img(src=post.photoData)
-				h2= post.description
-				h3= post.price
-				form(method="POST" action="/vote")
-					input(type="hidden" name="idPost" value=post.id)
-					input(type="hidden" name="type" value=1)
-					input(type="submit" value="Like")
-				form(method="POST" action="/removeVote")
-					input(type="hidden" name="idPost" value=post.id)
-					input(type="hidden" name="type" value=0)
-					input(type="submit" value="RemoveLike")
-				p= post.nrlikes
-				form(method="POST" action="/vote")
-					input(type="hidden" name="idPost" value=post.id)
-					input(type="hidden" name="type" value=-1)
-					input(type="submit" value="Unlike")
-				form(method="POST" action="/removeVote")
-					input(type="hidden" name="idPost" value=post.id)
-					input(type="hidden" name="type" value=0)
-					input(type="submit" value="RemoveUnlike")
-				p= post.nrdislikes
-				form(method="POST" action="/save")
-					input(type="hidden" name="idPost" value=post.id)
-					input(type="submit" value="Save")
-				form(method="POST" action="/unsave")
-					input(type="hidden" name="idPost" value=post.id)
-					input(type="submit" value="Unsave")
-				form(method="POST" action="/comment")
-					input(type="hidden" name="idPost" value=post.id)
-					input(type="text" placeholder="Comment something..." name="commentData" required)
-					input(type="submit" value="Comment")
+					each post in data
+						if post.isAvailable
+							div.col-sm-8(id=post.id)
+								.card
+									.user-area
+										.card-op-area
+											a(href='/profile?username='+post.idUser)
+												img.img-user(src=post.avatarData)
+											a.txt-username(href='/profile?username='+post.idUser)
+												b= post.idUser
+										//.card-options-area
+											//button.btn.search-bar.btn-mini.bg-trans.btn-secondary(type='button')
+												//i.fas.fa-ellipsis-h
+											// 
+									a(href="/post?id="+post.id)
+										.card-img-caixa
+											img.card-img.card-img-blur(src=post.photoData)
+											img.card-img.card-img-front(src=post.photoData)
+											// 
+									.reactions-area
+										.reaction-left-area
+											if post.votetype==1
+												form(method="POST" action="/removeVote")
+													input(type="hidden" name="idPost" value=post.id)
+													input(type="hidden" name="type" value=0)
+													input(type="image" src="/img/icns/up-vote-full.png" style="width:25px; height: 24px;")
+											else
+												form(method="POST" action="/vote")
+													input(type="hidden" name="idPost" value=post.id)
+													input(type="hidden" name="type" value=1)
+													input(type="image" src="/img/icns/up-vote.png" style="width:25px; height: 24px;")
+											b #{post.nrlikes}
+											if post.votetype==-1
+												form(method="POST" action="/removeVote")
+													input(type="hidden" name="idPost" value=post.id)
+													input(type="hidden" name="type" value=0)
+													input(type="image" src="/img/icns/down-vote-full.png" style="width:25px; height: 24px;")
+											else
+												form(method="POST" action="/vote")
+													input(type="hidden" name="idPost" value=post.id)
+													input(type="hidden" name="type" value=-1)
+													input(type="image" src="/img/icns/down-vote.png" style="width:25px; height: 24px;")
+											b #{post.nrdislikes}
+										.reaction-right-area
+											if post.saved==0
+												form(method="POST" action="/save")
+													input(type="hidden" name="idPost" value=post.id)
+													input(type="image" src="/img/icns/save.svg" style="width:25px; height: 24px;")
+											else
+												form(method="POST" action="/unsave")
+													input(type="hidden" name="idPost" value=post.id)
+													input(type="image" src="/img/icns/save-full.svg" style="width:25px; height: 24px;")
+											//
+											form(method="POST" action="/buy")
+												input(type="hidden" name="idPost" value=post.id)
+												input(type="image" src="/img/icns/buy.svg" style="width:25px; height: 24px;")
+									.description-area
+										.card-op-area
+											div(style='display: inline-flex;')
+												h5(style='margin: 0px;') #{post.category} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.description}
+											br
+											p.details-post
+												b #{post.brand} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.size} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.color}
+										.card-options-area
+											h4(style='color: rgb(74, 83, 252);')
+												b #{post.price} €
+									.comment-area
+										.my-comment
+											form(method="POST" action="/comment" style="width:100%")
+												input(type="hidden" name="idPost" value=post.id)
+												textarea#comment_104.comment-input.form-control(placeholder='Escreve um comentário...' wrap='soft' name="commentData" required style='resize: none; overflow-y: scroll; height: 60px;')
+												input(type="image" src="/img/icns/direct.svg" style="width:25px; height: 24px;")
+											// 
+											// 
+					.col-sm-2
+						.card.card-download-app
+							div(style='padding: 10px;')
+								#carousel-2.carousel.slide.pointer-event(role='region' aria-busy='false'  style='text-shadow: rgb(51, 51, 51) 1px 1px 2px;')
+									#carousel-2___BV_inner_.carousel-inner(role='list')
+										#__BVID__32.carousel-item.active(role='listitem' aria-current='true' aria-posinset='1' aria-setsize='3' aria-hidden='false')
+											img.img-fluid.w-100.d-block(src='img/banners/ambiente.png')
+											.carousel-caption
+												// 
+												// 
+										#__BVID__33.carousel-item(role='listitem' aria-current='false' aria-posinset='2' aria-setsize='3' aria-hidden='true')
+											img.img-fluid.w-100.d-block(src='img/banners/dinheiro.png')
+											.carousel-caption
+												// 
+												// 
+										#__BVID__34.carousel-item(role='listitem' aria-current='false' aria-posinset='3' aria-setsize='3' aria-hidden='true')
+											img.img-fluid.w-100.d-block(src='img/banners/wishlist.png')
+											.carousel-caption
+												// 
+												// 
+									a.carousel-control-prev(href='#' role='button' aria-controls='carousel-2___BV_inner_')
+										span.carousel-control-prev-icon(aria-hidden='true')
+										span.sr-only Previous Slide
+									a.carousel-control-next(href='#' role='button' aria-controls='carousel-2___BV_inner_')
+										span.carousel-control-next-icon(aria-hidden='true')
+										span.sr-only Next Slide
+									ol#carousel-2___BV_indicators_.carousel-indicators(aria-hidden='true' aria-label='Select a slide to display' aria-owns='carousel-2___BV_inner_' style='display: none;')
+										li#carousel-2___BV_indicator_1_.active(role='button' tabindex='-1' aria-current='true' aria-label='Goto Slide 1' aria-controls='carousel-2___BV_inner_' aria-describedby='__BVID__32')
+										li#carousel-2___BV_indicator_2_(role='button' tabindex='-1' aria-current='false' aria-label='Goto Slide 2' aria-controls='carousel-2___BV_inner_' aria-describedby='__BVID__33')
+										li#carousel-2___BV_indicator_3_(role='button' tabindex='-1' aria-current='false' aria-label='Goto Slide 3' aria-controls='carousel-2___BV_inner_' aria-describedby='__BVID__34')
+								a.btn.btn-primary.btn-download(href='')
+									b Download app
