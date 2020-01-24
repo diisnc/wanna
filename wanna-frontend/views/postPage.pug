@@ -2,7 +2,7 @@ doctype html
 html
 	include header.pug
 	head
-		title= title
+		title Wanna - #{data.postInfo.description}
 	body
 		h1= data.userInfo.username
 		each photo in data.photos

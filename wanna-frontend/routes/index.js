@@ -19,7 +19,6 @@ router.get('/', function(req, res, next) {
 		response.data.forEach(function(entry) {
 			entry.id = hashids.encode(entry.id)
 		});
-		console.log(response.data)
 		res.render('inspire', { data: response.data, postID: postID })
 	})
 	.catch(error => {
@@ -46,7 +45,7 @@ router.post('/search', function(req, res, next){
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
-		res.render('search', { data: response.data })
+		res.render('search', { data: response.data,string: req.body.usernameString})
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
