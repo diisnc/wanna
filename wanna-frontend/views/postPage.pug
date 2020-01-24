@@ -1,50 +1,117 @@
 doctype html
 html
-	include header.pug
 	head
 		title Wanna - #{data.postInfo.description}
+		link(rel="stylesheet" href="/stylesheets/style.css")
+		link(rel="stylesheet" href="/stylesheets/bootstrap.min.css")
+		link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
 	body
-		h1= data.userInfo.username
-		each photo in data.photos
-			img(src=photo.photoData)
-		h2= data.postInfo.description
-		h3= data.postInfo.price
-		h4= data.postInfo.category
-		h5= data.postInfo.color
-		h6= data.postInfo.size
-		form(method="POST" action="/votePost")
-			input(type="hidden" name="idPost" value=data.postInfo.id)
-			input(type="hidden" name="type" value=1)
-			input(type="submit" value="Like")
-		form(method="POST" action="/removeVotePost")
-			input(type="hidden" name="idPost" value=data.postInfo.id)
-			input(type="hidden" name="type" value=0)
-			input(type="submit" value="RemoveLike")
-		p= data.postInfo.nrlikes
-		form(method="POST" action="/votePost")
-			input(type="hidden" name="idPost" value=data.postInfo.id)
-			input(type="hidden" name="type" value=-1)
-			input(type="submit" value="Unlike")
-		form(method="POST" action="/removeVotePost")
-			input(type="hidden" name="idPost" value=data.postInfo.id)
-			input(type="hidden" name="type" value=0)
-			input(type="submit" value="RemoveUnlike")
-		p= data.postInfo.nrdislikes
-		form(method="POST" action="/savePost")
-			input(type="hidden" name="idPost" value=data.postInfo.id)
-			input(type="submit" value="Save")
-		form(method="POST" action="/unsavePost")
-			input(type="hidden" name="idPost" value=data.postInfo.id)
-			input(type="submit" value="Unsave")
-		each comment in comments
-			h1= comment.commentText
-			h2= comment.idUser
-			if comment.idUser === username
-				form(method="POST" action="/removeComment?idPost="+data.postInfo.id)
-					input(type="hidden" name="idComment" value=comment.id)
-					input(type="submit" value="RemoveComment")
-		form#commentForm(method="POST" action="/commentPost")
-			input(type="hidden" name="idPost" value=data.postInfo.id)
-			input(type="text" placeholder="Comment something..." name="commentData" required)
-			input(type="submit" value="Comment")
+		include header.pug
+		#app
+			.container
+				.row
+					.user-area
+						.card-op-area
+							a(href='/profile?username='+data.userInfo.username)
+								img.img-user(src=data.userInfo.avatarData)
+							a.txt-username(href='/profile?username='+data.userInfo.username)
+								b= data.userInfo.username
+					.col-sm-6
+						.card
+							.card-img-caixa
+								img.card-img.card-img-blur(src=data.photos[0].photoData)
+								img.card-img.card-img-front(src=data.photos[0].photoData)
+							.card-img-thumbnails
+								each ph in data.photos
+									.card-img-thumbnail
+										img.card-img.card-img-blur(src=ph.photoData)
+										img.card-img.card-img-front(src=ph.photoData)
+					.col-sm-2
+						.card(style="margin-bottom:15px")
+							h1= data.postInfo.description
+							h3= data.postInfo.category
+							h1(style='color: rgb(74, 83, 252);')
+								b #{data.postInfo.price} €
+							p.details-post
+								b #{data.postInfo.brand} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{data.postInfo.size} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{data.postInfo.color}
+						.reaction-left-area
+							if data.postInfo.votetype==1
+								form(method="POST" action="/removeVotePost")
+									input(type="hidden" name="idPost" value=data.postInfo.id)
+									input(type="hidden" name="type" value=0)
+									input(type="image" src="/img/icns/up-vote-full.png" style="width:25px; height: 24px;")
+							else
+								form(method="POST" action="/votePost")
+									input(type="hidden" name="idPost" value=data.postInfo.id)
+									input(type="hidden" name="type" value=1)
+									input(type="image" src="/img/icns/up-vote.png" style="width:25px; height: 24px;")
+							b(style="margin-right:40px") #{data.postInfo.nrlikes}
+							if data.postInfo.votetype==-1
+								form(method="POST" action="/removeVotePost")
+									input(type="hidden" name="idPost" value=data.postInfo.id)
+									input(type="hidden" name="type" value=0)
+									input(type="image" src="/img/icns/down-vote-full.png" style="width:25px; height: 24px;")
+							else
+								form(method="POST" action="/votePost")
+									input(type="hidden" name="idPost" value=data.postInfo.id)
+									input(type="hidden" name="type" value=-1)
+									input(type="image" src="/img/icns/down-vote.png" style="width:25px; height: 24px;")
+							b #{data.postInfo.nrdislikes}
+						.reaction-left-area
+							if data.postInfo.saved==0
+								form(style="margin-right:48px" method="POST" action="/savePost")
+									input(type="hidden" name="idPost" value=data.postInfo.id)
+									input(type="image" src="/img/icns/save.svg" style="width:25px; height: 24px;")
+							else
+								form(style="margin-right:48px" method="POST" action="/unsavePost")
+									input(type="hidden" name="idPost" value=data.postInfo.id)
+									input(type="image" src="/img/icns/save-full.svg" style="width:25px; height: 24px;")
+							form(method="POST" action="/buy")
+								input(type="hidden" name="idPost" value=data.postInfo.id)
+								input(type="image" src="/img/icns/buy.svg" style="width:25px; height: 24px;")
+					.col-sm-4
+						.card.card-download-app
+							div(style='padding: 10px;')
+								#carousel-2.carousel.slide.pointer-event(role='region' aria-busy='false'  style='text-shadow: rgb(51, 51, 51) 1px 1px 2px;')
+									#carousel-2___BV_inner_.carousel-inner(role='list')
+										#__BVID__32.carousel-item.active(role='listitem' aria-current='true' aria-posinset='1' aria-setsize='3' aria-hidden='false')
+											img.img-fluid.w-100.d-block(src='img/banners/dinheiro.png')
+											.carousel-caption
+												// 
+												// 
+										#__BVID__33.carousel-item(role='listitem' aria-current='false' aria-posinset='2' aria-setsize='3' aria-hidden='true')
+											img.img-fluid.w-100.d-block(src='img/banners/ambiente.png')
+											.carousel-caption
+												// 
+												// 
+										#__BVID__34.carousel-item(role='listitem' aria-current='false' aria-posinset='3' aria-setsize='3' aria-hidden='true')
+											img.img-fluid.w-100.d-block(src='img/banners/wishlist.png')
+											.carousel-caption
+												// 
+												// 
+									a.carousel-control-prev(href='#' role='button' aria-controls='carousel-2___BV_inner_')
+										span.carousel-control-prev-icon(aria-hidden='true')
+										span.sr-only Previous Slide
+									a.carousel-control-next(href='#' role='button' aria-controls='carousel-2___BV_inner_')
+										span.carousel-control-next-icon(aria-hidden='true')
+										span.sr-only Next Slide
+									ol#carousel-2___BV_indicators_.carousel-indicators(aria-hidden='true' aria-label='Select a slide to display' aria-owns='carousel-2___BV_inner_' style='display: none;')
+										li#carousel-2___BV_indicator_1_.active(role='button' tabindex='-1' aria-current='true' aria-label='Goto Slide 1' aria-controls='carousel-2___BV_inner_' aria-describedby='__BVID__32')
+										li#carousel-2___BV_indicator_2_(role='button' tabindex='-1' aria-current='false' aria-label='Goto Slide 2' aria-controls='carousel-2___BV_inner_' aria-describedby='__BVID__33')
+										li#carousel-2___BV_indicator_3_(role='button' tabindex='-1' aria-current='false' aria-label='Goto Slide 3' aria-controls='carousel-2___BV_inner_' aria-describedby='__BVID__34')
+								a.btn.btn-primary.btn-download(href='')
+									b Download app
+				.row
+					.col-sm-8
+						each comment in comments
+							p= comment.commentText
+							h2= comment.idUser
+							if comment.idUser === username
+								form(method="POST" action="/removeComment?idPost="+data.postInfo.id)
+									input(type="hidden" name="idComment" value=comment.id)
+									input(type="submit" value="RemoveComment")
+						form#commentForm(method="POST" action="/commentPost")
+							input(type="hidden" name="idPost" value=data.postInfo.id)
+							input(type="text" placeholder="Comment something..." name="commentData" required)
+							input(type="submit" value="Comment")
 		include footer.pug
