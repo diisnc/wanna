@@ -2,6 +2,7 @@
 	border-radius:20px !important;
 	border: 0px !important;
 }
+.description-area,
 .user-area,
 .comment-area{
 	margin-top: 5px !important;
@@ -120,4 +121,18 @@ form{
 	box-shadow: 0 0.2em 1em -0.3em rgba(100,49,252,0.9);
 	transform: translateY(-0.2em);
 	transition: 0.3s;
+}
+.my-comment{
+	text-align: left;
+	width:auto !important;
+	margin: 0px 0px 60px 10px;
+	display: flex !important;
+}
+.comment-input{
+	margin: 0px 10px 0px 0px;
+	border-radius: 20px !important;
+	background-color: #EEE !important;
+	border: 0px !important;
+	color: #000 !important;
+	transition: 0.1s !important;
 }

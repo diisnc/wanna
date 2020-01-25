@@ -16,11 +16,11 @@ html
 								img.img-user(src=data.userInfo.avatarData)
 							a.txt-username(href='/profile?username='+data.userInfo.username)
 								b= data.userInfo.username
-					.col-sm-6
+					.col-sm-6#gallery
 						.card
 							.card-img-caixa
-								img.card-img.card-img-blur(src=data.photos[0].photoData)
-								img.card-img.card-img-front(src=data.photos[0].photoData)
+								img.img-caixa.card-img.card-img-blur(src=data.photos[0].photoData)
+								img.img-caixa.card-img.card-img-front(src=data.photos[0].photoData)
 							.card-img-thumbnails
 								each ph in data.photos
 									.card-img-thumbnail
@@ -104,14 +104,27 @@ html
 				.row
 					.col-sm-8
 						each comment in comments
-							p= comment.commentText
-							h2= comment.idUser
-							if comment.idUser === username
-								form(method="POST" action="/removeComment?idPost="+data.postInfo.id)
-									input(type="hidden" name="idComment" value=comment.id)
-									input(type="submit" value="RemoveComment")
-						form#commentForm(method="POST" action="/commentPost")
-							input(type="hidden" name="idPost" value=data.postInfo.id)
-							input(type="text" placeholder="Comment something..." name="commentData" required)
-							input(type="submit" value="Comment")
+							.user-area
+								.card-op-area
+									a(href='/profile?username='+comment.idUser)
+										img.img-user(src=comment.avatarData)
+									a.txt-username(href='/profile?username='+comment.idUser)
+										b= comment.idUser
+									if comment.idUser === username
+										form(method="POST" action="/removeComment?idPost="+data.postInfo.id)
+											input(type="hidden" name="idComment" value=comment.id)
+											input(type="image" src="/img/icns/cross.png" style="width:25px; height: 24px;")
+									p.comment-input(style="margin-top:15px;padding:10px")= comment.commentText
+						.comment-area
+							.my-comment
+								form#commentForm(method="POST" action="/commentPost" style="width:100%")
+									input(type="hidden" name="idPost" value=data.postInfo.id)
+									textarea#comment_104.comment-input.form-control(placeholder='Escreve um comentário...' wrap='soft' name="commentData" required style='resize: none; overflow-y: scroll; height: 60px;')
+									input(type="image" src="/img/icns/direct.svg" style="width:25px; height: 24px;position:relative;top:25%")
+		script(src="/javascripts/jquery-3.4.1.min.js")
+		script.
+			$("#gallery img").click(function(e){
+				console.log(e)
+				$(".img-caixa").attr("src", $(this).attr('src'));
+			});
 		include footer.pug

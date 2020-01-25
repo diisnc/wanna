@@ -72,7 +72,6 @@ router.get('/post', function(req, res, next) {
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
 	.then(response => {
-		console.log(response.data)
 		axios.get('http://infernoo.duckdns.org:8000/v1/post/comment?idPost='+postId,{
 			headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 		})
