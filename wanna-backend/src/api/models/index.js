@@ -70,7 +70,7 @@ async function createFakeData(nrPosts) {
 	try {
 		await cloudinary.api.delete_all_resources();
 		await sequelize.sync({ force: true });
-		const users = await createFakeUsers(sequelize, 50);
+		const users = await createFakeUsers(sequelize, 35);
 		await db.User.bulkCreate(users, {
 			individualHooks: true,
 		});
