@@ -251,7 +251,7 @@ module.exports = (sequelize, DataTypes) => {
 	Post.getFilteredPosts = async function getFilteredPosts(idUser) {
 
 		body = await this.sequelize.query(
-			'SELECT * FROM "Filters" WHERE "Filters"."idUser" = (:idUser) "Filters"."isActive" = true',
+		'SELECT * FROM "Filters" WHERE "Filters"."idUser" = (:idUser) AND "Filters"."isActive" = true',
 			{
 				replacements: { idUser: idUser },
 				type: this.sequelize.QueryTypes.SELECT,
