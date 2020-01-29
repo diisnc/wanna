@@ -221,18 +221,24 @@ const MainTab = createMaterialTopTabNavigator(
 			screen: FeedStack,
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Inspira-te</Text>,
-				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="home-outline" color={tintColor} size={28} />
-				)
+				tabBarIcon: ({ focused }) =>
+					focused ? (
+						<MaterialCommunityIcons name="home" color={'blue'} size={28} />
+					) : (
+						<MaterialCommunityIcons name="home-outline" color={'grey'} size={28} />
+					)
 			}
 		},
 		Wanted: {
 			screen: FilterStack,
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Filtros</Text>,
-				tabBarIcon: ({ tintColor }) => (
-					<MaterialCommunityIcons name="heart-outline" color={tintColor} size={28} />
-				)
+				tabBarIcon: ({ focused }) =>
+					focused ? (
+						<MaterialCommunityIcons name="heart" color={'blue'} size={28} />
+					) : (
+						<MaterialCommunityIcons name="heart-outline" color={'grey'} size={28} />
+					)
 			}
 		},
 		Add: {
@@ -260,9 +266,12 @@ const MainTab = createMaterialTopTabNavigator(
 			screen: UserStack,
 			navigationOptions: {
 				tabBarLabel: <Text style={{ fontSize: 9 }}>Perfil</Text>,
-				tabBarIcon: ({ tintColor }) => (
-					<MaterialIcons name="person-outline" color={tintColor} size={28} />
-				)
+				tabBarIcon: ({ focused }) =>
+					focused ? (
+						<MaterialIcons name="person" color={'blue'} size={28} />
+					) : (
+						<MaterialIcons name="person-outline" color={'grey'} size={28} />
+					)
 			}
 		}
 	},
@@ -270,7 +279,7 @@ const MainTab = createMaterialTopTabNavigator(
 		swipeEnabled: true,
 		animationEnabled: true,
 		tabBarOptions: {
-			activeTintColor: '#3498DB',
+			activeTintColor: 'blue',
 			inactiveTintColor: 'grey',
 			style: {
 				backgroundColor: 'white',
