@@ -35,18 +35,6 @@ class Filters extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
-
-		this.focusListener = this.props.navigation.addListener('didFocus', () => {
-			this.onFocusFunction();
-		});
-	}
-
-	onFocusFunction = () => {
-		this.getFiltersFromAPI();
-	};
-
-	componentWillUnmount() {
-		this.focusListener.remove();
 	}
 
 	async componentWillMount() {
