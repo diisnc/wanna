@@ -155,9 +155,6 @@ class EditPost extends Component {
 						value={this.state.insertedDescription}
 					/>
 				</View>
-				<View style={styles.errorMessage}>
-					<Text>{this.props.errorMessage}</Text>
-				</View>
 
 				<Button
 					onPress={handleSubmit(submitForm)}

@@ -375,10 +375,6 @@ class NewFilter extends Component {
 									Adicionar Filtro
 								</Button>
 							}
-
-							<View style={styles.errorMessage}>
-								<Text>{this.props.errorMessage}</Text>
-							</View>
 				</View>		
 			</ScrollView>
 
