@@ -450,9 +450,6 @@ class Add extends Component {
 						<Button title="Criar" onPress={() => this.createPhotoAsync()} />
 					) : null}
 
-					<View style={styles.errorMessage}>
-						<Text>{this.props.errorMessage}</Text>
-					</View>
 				</View>
 			</ScrollView>
 		);

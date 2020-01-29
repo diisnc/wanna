@@ -81,10 +81,6 @@ class Login extends Component {
 						<FontAwesome name="google" onPress={() => alert('Login com Google')} style={{ padding: 7 }} size={29} color="#DB4437" />
 					</View>
 
-					<View style={styles.errorMessage}>
-						<Text>{this.props.errorMessage}</Text>
-					</View>
-
 					<View style={styles.signupTextCont}>
 						<Text style={styles.signupText}>Ainda não tens conta?</Text>
 						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}>

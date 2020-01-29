@@ -160,10 +160,6 @@ class EditProfile extends Component {
 						Confirmar Alterações
 					</Button>
 
-					<View style={styles.errorMessage}>
-						<Text>{this.props.errorMessage}</Text>
-					</View>
-
 					{this.props.registered ? (
 						<Text style={styles.loggedInDesc}>Register was successfull</Text>
 					) : null}

@@ -5,7 +5,7 @@
     "slug": "wanna",
     "privacy": "public",
     "sdkVersion": "33.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": ["android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,9 +22,6 @@
     ],
     "android": {
       "package": "com.wanna.wanna"
-    },
-    "ios": {
-      "supportsTablet": true
     },
     "androidStatusBar": {
 	  "barStyle": "light-content",

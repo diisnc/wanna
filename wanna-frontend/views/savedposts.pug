@@ -390,21 +390,21 @@ html
                                                 a(href='/myprofile')
                                                     b.small-txt-header=data.posts.length
                                                     br
-                                                p.small-txt PUBLICA&Ccedil;&Otilde;ES
+                                                p.small-txt(style='text-align:center;') PUBLICA&Ccedil;&Otilde;ES
                                             .col
                                                 a(href='/followers')
                                                     b.small-txt-header=data.nrFollowers.number
                                                     br
-                                                p.small-txt SEGUIDORES
+                                                p.small-txt(style='text-align:center;') SEGUIDORES
                                             .col
                                                 a(href='/followings')
                                                     b.small-txt-header=data.nrFollowings.number
                                                     br
-                                                p.small-txt A SEGUIR
+                                                p.small-txt(style='text-align:center;') A SEGUIR
                                             .col
                                                 b.small-txt-header=posts.length 
                                                 br
-                                                p.small-txt GUARDADAS
+                                                p.small-txt(style='text-align:center;') GUARDADAS
                                 .col-sm-10(style='text-align: left !important;')
                                     each post in posts
                                         .prof-container.prof-post

@@ -70,10 +70,6 @@ class Register extends Component {
 						Registar
 					</Button>
 
-					<View style={styles.errorMessage}>
-						<Text>{this.props.errorMessage}</Text>
-					</View>
-
 					<View style={styles.signinTextCont}>
 						<Text style={styles.signinText}>Tens uma conta?</Text>
 						<TouchableOpacity onPress={() => this.props.navigation.navigate('Wanna')}>
