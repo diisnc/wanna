@@ -274,79 +274,78 @@ html
 			.container
 				.row
 					each post in data
-						if post.isAvailable
-							div.col-sm-8(id=post.id)
-								.card
-									.user-area
-										.card-op-area
-											a(href='/profile?username='+post.idUser)
-												img.img-user(src=post.avatarData)
-											a.txt-username(href='/profile?username='+post.idUser)
-												b= post.idUser
-										//.card-options-area
-											//button.btn.search-bar.btn-mini.bg-trans.btn-secondary(type='button')
-												//i.fas.fa-ellipsis-h
-											// 
-									a(href="/post?id="+post.id)
-										.card-img-caixa
-											img.card-img.card-img-blur(src=post.photoData)
-											img.card-img.card-img-front(src=post.photoData)
-											// 
-									.reactions-area
-										.reaction-left-area
-											if post.votetype==1
-												form(method="POST" action="/removeVote")
-													input(type="hidden" name="idPost" value=post.id)
-													input(type="hidden" name="type" value=0)
-													input(type="image" src="/img/icns/up-vote-full.png" style="width:25px; height: 24px;")
-											else
-												form(method="POST" action="/vote")
-													input(type="hidden" name="idPost" value=post.id)
-													input(type="hidden" name="type" value=1)
-													input(type="image" src="/img/icns/up-vote.png" style="width:25px; height: 24px;")
-											b #{post.nrlikes}
-											if post.votetype==-1
-												form(method="POST" action="/removeVote")
-													input(type="hidden" name="idPost" value=post.id)
-													input(type="hidden" name="type" value=0)
-													input(type="image" src="/img/icns/down-vote-full.png" style="width:25px; height: 24px;")
-											else
-												form(method="POST" action="/vote")
-													input(type="hidden" name="idPost" value=post.id)
-													input(type="hidden" name="type" value=-1)
-													input(type="image" src="/img/icns/down-vote.png" style="width:25px; height: 24px;")
-											b #{post.nrdislikes}
-										.reaction-right-area
-											if post.saved==0
-												form(method="POST" action="/save")
-													input(type="hidden" name="idPost" value=post.id)
-													input(type="image" src="/img/icns/save.svg" style="width:25px; height: 24px;")
-											else
-												form(method="POST" action="/unsave")
-													input(type="hidden" name="idPost" value=post.id)
-													input(type="image" src="/img/icns/save-full.svg" style="width:25px; height: 24px;")
-											//
-											form(method="POST" action="/buy")
+						div.col-sm-8(id=post.id)
+							.card
+								.user-area
+									.card-op-area
+										a(href='/profile?username='+post.idUser)
+											img.img-user(src=post.avatarData)
+										a.txt-username(href='/profile?username='+post.idUser)
+											b= post.idUser
+									//.card-options-area
+										//button.btn.search-bar.btn-mini.bg-trans.btn-secondary(type='button')
+											//i.fas.fa-ellipsis-h
+										// 
+								a(href="/post?id="+post.id)
+									.card-img-caixa
+										img.card-img.card-img-blur(src=post.photoData)
+										img.card-img.card-img-front(src=post.photoData)
+										// 
+								.reactions-area
+									.reaction-left-area
+										if post.votetype==1
+											form(method="POST" action="/removeVote")
 												input(type="hidden" name="idPost" value=post.id)
-												input(type="image" src="/img/icns/buy.svg" style="width:25px; height: 24px;")
-									.description-area
-										.card-op-area
-											div(style='display: inline-flex;')
-												h5(style='margin: 0px;') #{post.category} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.description}
-											br
-											p.details-post
-												b #{post.brand} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.size} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.color}
-										.card-options-area
-											h4(style='color: rgb(74, 83, 252);')
-												b #{post.price} €
-									.comment-area
-										.my-comment
-											form(method="POST" action="/comment" style="width:100%")
+												input(type="hidden" name="type" value=0)
+												input(type="image" src="/img/icns/up-vote-full.png" style="width:25px; height: 24px;")
+										else
+											form(method="POST" action="/vote")
 												input(type="hidden" name="idPost" value=post.id)
-												textarea#comment_104.comment-input.form-control(placeholder='Escreve um comentário...' wrap='soft' name="commentData" required style='resize: none; overflow-y: scroll; height: 60px;')
-												input(type="image" src="/img/icns/direct.svg" style="width:25px; height: 24px;position:relative;top:25%")
-											// 
-											// 
+												input(type="hidden" name="type" value=1)
+												input(type="image" src="/img/icns/up-vote.png" style="width:25px; height: 24px;")
+										b #{post.nrlikes}
+										if post.votetype==-1
+											form(method="POST" action="/removeVote")
+												input(type="hidden" name="idPost" value=post.id)
+												input(type="hidden" name="type" value=0)
+												input(type="image" src="/img/icns/down-vote-full.png" style="width:25px; height: 24px;")
+										else
+											form(method="POST" action="/vote")
+												input(type="hidden" name="idPost" value=post.id)
+												input(type="hidden" name="type" value=-1)
+												input(type="image" src="/img/icns/down-vote.png" style="width:25px; height: 24px;")
+										b #{post.nrdislikes}
+									.reaction-right-area
+										if post.saved==0
+											form(method="POST" action="/save")
+												input(type="hidden" name="idPost" value=post.id)
+												input(type="image" src="/img/icns/save.svg" style="width:25px; height: 24px;")
+										else
+											form(method="POST" action="/unsave")
+												input(type="hidden" name="idPost" value=post.id)
+												input(type="image" src="/img/icns/save-full.svg" style="width:25px; height: 24px;")
+										//
+										form(method="POST" action="/buy")
+											input(type="hidden" name="idPost" value=post.id)
+											input(type="image" src="/img/icns/buy.svg" style="width:25px; height: 24px;")
+								.description-area
+									.card-op-area
+										div(style='display: inline-flex;')
+											h5(style='margin: 0px;') #{post.category} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.description}
+										br
+										p.details-post
+											b #{post.brand} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.size} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.color}
+									.card-options-area
+										h4(style='color: rgb(74, 83, 252);')
+											b #{post.price} €
+								.comment-area
+									.my-comment
+										form(method="POST" action="/comment" style="width:100%")
+											input(type="hidden" name="idPost" value=post.id)
+											textarea#comment_104.comment-input.form-control(placeholder='Escreve um comentário...' wrap='soft' name="commentData" required style='resize: none; overflow-y: scroll; height: 60px;')
+											input(type="image" src="/img/icns/direct.svg" style="width:25px; height: 24px;position:relative;top:25%")
+										// 
+										// 
 					.col-sm-2
 						.card.card-download-app
 							div(style='padding: 10px;')

@@ -179,7 +179,7 @@ module.exports = (sequelize, DataTypes) => {
 		object['userInfo'] = userInfo[0];
 
 		postInfo = await this.sequelize.query(
-			'SELECT "Posts"."id", "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", ' +
+			'SELECT "Posts"."id", "Posts"."idUser","Posts"."category", "Posts"."color", "Posts"."description", "Posts"."isAvailable" ,"Posts"."price", "Posts"."size", "Posts"."brand"' +
 				' coalesce((SELECT type AS "voteType" FROM "UserPosts" WHERE "user_id" = :idUser AND "post_id" = "Posts"."id"), 0) AS voteType,' +
 				' coalesce((SELECT count(type) AS "nrLikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = 1), 0) AS nrLikes,' +
 				' coalesce((SELECT count(type) AS "nrDislikes" FROM "UserPosts" WHERE "post_id" = "Posts"."id" AND "type" = -1), 0) AS nrDislikes,' +
