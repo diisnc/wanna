@@ -336,12 +336,14 @@ module.exports = (sequelize, DataTypes) => {
 			' AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost")'+
 			' WHERE "Posts"."category" = (:Calcas) OR'+
 					'"Posts"."category" = (:Calcoes) OR'+
-					'"Posts"."category" = (:Sapatos)',
+					'"Posts"."category" = (:Sapatos) OR'+
+					'"Posts"."category" = (:Saia)', 
 			{
 				replacements: {
 								Calcas: 'Calças',
 								Calcoes: 'Calções',
 								Sapatos: 'Sapatos',
+								Saia: 'Saia',
 							  },
 				type: this.sequelize.QueryTypes.SELECT,
 			},
