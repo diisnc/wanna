@@ -31,10 +31,11 @@ const maleClothes = [
 	'Sweat',
 	'T-shirt',
 	'Calças',
+	'Calções',
 	'Casaco',
 	'Outro'
 ];
-const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calçado', 'Casaco', 'Outro'];
+const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calções', 'Calçado', 'Casaco', 'Outro'];
 const colors = [
 	'Azul',
 	'Vermelho',
@@ -44,12 +45,15 @@ const colors = [
 	'Bege',
 	'Castanho',
 	'Preto',
-	'Cinza',
+	'Cinzento',
 	'Branco',
+	'Laranja',
+	'Roxo',
+	'Dourado',
 	'Outra'
 ];
 const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
-const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
+const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56', 'Outro'];
 
 class Add extends Component {
 	state = {

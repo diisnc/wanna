@@ -22,7 +22,7 @@ import { StyleSheet, Text, Image, Animated, Easing } from 'react-native';
 const transitionConfig = () => {
 	return {
 		transitionSpec: {
-			duration: 800,
+			duration: 450,
 			easing: Easing.out(Easing.poly(4)),
 			timing: Animated.timing,
 			useNativeDriver: true

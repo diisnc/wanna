@@ -19,11 +19,36 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 import { addFilter } from '../modules/profile/profile.reducer';
 import { Button, theme } from '../galio';
 
-const maleClothes = ['Camisa', 'Camisola', 'Sweat', 'T-shirt', 'Calças', 'Casaco', 'Outro'];
-const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Casaco', 'Outro'];
-const colors = ['Todas', 'Azul', 'Vermelho', 'Preto', 'Branco', 'Outra'];
+const maleClothes = [
+	'Camisa',
+	'Camisola',
+	'Calçado',
+	'Sweat',
+	'T-shirt',
+	'Calças',
+	'Calções',
+	'Casaco',
+	'Outro'
+];
+const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calções', 'Calçado', 'Casaco', 'Outro'];
+const colors = [
+	'Azul',
+	'Vermelho',
+	'Rosa',
+	'Verde',
+	'Amarelo',
+	'Bege',
+	'Castanho',
+	'Preto',
+	'Cinzento',
+	'Branco',
+	'Laranja',
+	'Roxo',
+	'Dourado',
+	'Outra'
+];
 const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
-const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56'];
+const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56', 'Outro'];
 const prices = [1, 2, 3, 4, 5, 10, 15, 30, 50, 75, 100, 200, 400, 500];
 const { width } = Dimensions.get('screen');
 
