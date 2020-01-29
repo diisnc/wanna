@@ -34,7 +34,9 @@ class Combine extends Component {
 		width: 0,
 		loading: true,
 		completed: false,
-		fontLoaded: false
+		fontLoaded: false,
+		currentUpperIndex: 0,
+		currentLowerIndex: 0
 	};
 
 
@@ -208,9 +210,50 @@ class Combine extends Component {
 	}
 
 	
-	goIndex = () => {
+	goPreviousUpper = () => {
+		var upIndex = this.state.currentUpperIndex;
+		var numClothes = this.state.numUpperClothes;
+		console.log(upIndex + "; " + numClothes)
+		if(upIndex > 0) {
+			this.flatListRefUpper.scrollToIndex({ animated: true, index: upIndex - 1 });
+			this.setState( {currentUpperIndex: upIndex - 1} );
+			console.log(this.state.currentUpperIndex + "««« " + numClothes)
+		}
+	};
 
-		this.flatListRef.scrollToIndex({animated: true,index: 2 });
+	goNextUpper = () => {
+		var upIndex = this.state.currentUpperIndex;
+		var numClothes = this.state.numUpperClothes;
+		console.log(upIndex + "; " + numClothes)
+		if(upIndex < numClothes - 1) {
+			this.flatListRefUpper.scrollToIndex({ animated: true, index: upIndex + 1});
+			this.setState( {currentUpperIndex: upIndex + 1} );
+			console.log(this.state.currentUpperIndex + "««« " + numClothes)
+			
+		}
+	};
+
+	goPreviousLower = () => {
+		var lowerIndex = this.state.currentLowerIndex;
+		var numClothes = this.state.numLowerClothes;
+		console.log(lowerIndex + "; " + numClothes)
+		if(lowerIndex > 0) {
+			this.flatListRefLower.scrollToIndex({ animated: true, index: lowerIndex - 1 });
+			this.setState( {currentLowerIndex: lowerIndex - 1} );
+			console.log(this.state.currentLowerIndex + "««« " + numClothes)
+		}
+	};
+
+	goNextLower = () => {
+		var lowerIndex = this.state.currentLowerIndex;
+		var numClothes = this.state.numLowerClothes;
+		console.log(lowerIndex + "; " + numClothes)
+		if(lowerIndex < numClothes - 1) {
+			this.flatListRefLower.scrollToIndex({ animated: true, index: lowerIndex + 1});
+			this.setState( {currentLowerIndex: lowerIndex + 1} );
+			console.log(this.state.currentLowerIndex + "««« " + numClothes)
+			
+		}
 	};
 
 
@@ -236,14 +279,14 @@ class Combine extends Component {
 						color={'#3498DB'}
 						size={20}
 						style={{ backgroundColor: '#fafafa', width: 40}}
-						onPress={this.goIndex}
+						onPress={this.goPreviousUpper}
 					/>
 				</View>
 
 				<FlatList
 					style={{ flex: 4 }}
 					horizontal
-					ref={(ref) => { this.flatListRef = ref; }}
+					ref={ (ref) => { this.flatListRefUpper = ref; } }
 					data={this.state.upperClothes}
 					renderItem={({ index }) => 
 						this.buildUpperImages(index, this.state.selectedUpperClothe)
@@ -262,7 +305,7 @@ class Combine extends Component {
 						color={'#3498DB'}
 						size={20}
 						style={{ backgroundColor: '#fafafa', width: 45}}
-						onPress={() => this.props.navigation.navigte('ConversationsList')}
+						onPress={this.goNextUpper}
 					/>
 				</View>
 			</View>
@@ -292,13 +335,14 @@ class Combine extends Component {
 						color={'#3498DB'}
 						size={20}
 						style={{ backgroundColor: '#fafafa', width: 40}}
-						onPress={this.goIndex}
+						onPress={this.goPreviousLower}
 					/>
 				</View>
 
 
 				<FlatList
 					horizontal
+					ref={ (ref) => { this.flatListRefLower = ref; } }
 					data={this.state.lowerClothes}
 					renderItem={({ index }) =>
 						this.buildLowerImages(index, this.state.selectedLowerClothe)
@@ -317,7 +361,7 @@ class Combine extends Component {
 						color={'#3498DB'}
 						size={20}
 						style={{ backgroundColor: '#fafafa', width: 45}}
-						onPress={() => this.props.navigation.navigte('ConversationsList')}
+						onPress={this.goNextLower}
 					/>
 				</View>
 
