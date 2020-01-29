@@ -14,6 +14,7 @@ import {
 	TouchableHighlight,
 	Dimensions
 } from 'react-native';
+import { connect } from 'react-redux';
 import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { upperitemsCombine, loweritemsCombine } from '../modules/post/post.api';
@@ -518,7 +519,15 @@ class Combine extends Component {
 		// adicionar objetos ao estado lower clothes
 	}
 }
-export default Combine;
+function mapStateToProps(store) {
+	return { loggedIn: store.auth.loggedIn, tokenValid: store.auth.tokenIsValid };
+}
+
+function mapDispatchToProps(dispatch) {
+	return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Combine);
 
 const styles = StyleSheet.create({
 	container: {
