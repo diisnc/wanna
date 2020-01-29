@@ -33,6 +33,18 @@ class Wanted extends Component {
 	componentDidMount() {
 		// get data from servers and save in state
 		this.getDataFromAPI();
+
+		this.focusListener = this.props.navigation.addListener('didFocus', () => {
+			this.onFocusFunction();
+		});
+	}
+
+	onFocusFunction = () => {
+		this.getDataFromAPI();
+	};
+
+	componentWillUnmount() {
+		this.focusListener.remove();
 	}
 
 	async componentWillMount() {
@@ -47,6 +59,7 @@ class Wanted extends Component {
 		// console.log(newState);
 		if (newState != null) {
 			this.setState({ wishlistData: newState, numPosts: newState.length, loading: false });
+			console.log("num posts recebidos: " + this.state.numPosts)
 		}
 
 		return;
@@ -135,32 +148,39 @@ class Wanted extends Component {
 	handlerNrPosts() {
 		if (this.state.wishlistData.length < 3)
 			return (
-				<FlatList
-					data={this.state.wishlistData}
-					keyExtractor={(item, index) => index.toString()}
-					style={styles.list}
-					renderItem={({ item, index }) => {
-						return (
-							<CardItem cardBody>
-								<TouchableOpacity
-									activeOpacity={0.8}
-									onPress={() => {
-										this.props.navigation.navigate('UserPostProfile', {
-											postID: item.idPost
-										});
-									}}>
-									<Image
-										source={{ uri: item.photoData }}
-										style={{
-											height: 300,
-											width: screenWidth - theme.SIZES.BASE * 0.5
-										}}
-									/>
-								</TouchableOpacity>
-							</CardItem>
-						);
-					}}
-				/>
+				<View style={{ alignItems: 'center' }}>
+					<FlatList
+						data={this.state.wishlistData}
+						keyExtractor={(item, index) => index.toString()}
+						style={styles.list, alignItems = 'center'}
+						renderItem={({ item, index }) => {
+							return (
+								<CardItem cardBody>
+									<TouchableOpacity
+										activeOpacity={0.8}
+										onPress={() => {
+											this.props.navigation.navigate('UserPostProfile', {
+												postID: item.idPost
+											});
+										}}>
+										<Image
+											source={{ uri: item.photoData }}
+											style={{
+												alignSelf: 'center',
+												height: 250,
+												width: screenWidth * 0.9,
+												borderRadius: screenWidth * 0.1,
+												marginBottom: 10
+											}}
+
+
+										/>
+									</TouchableOpacity>
+								</CardItem>
+							);
+						}}
+					/>
+				</View>
 			);
 		else return this.buildFeedTile();
 	}
@@ -171,13 +191,13 @@ class Wanted extends Component {
 
 		//console.log(this.state.feedData)
 
-		for (let post = 0, tileType = 1; post < this.state.numPosts; post += 3) {
+		for (let post = 0, tileType = 1; (post < this.state.numPosts) && (post + 2 < this.state.numPosts); post += 3) {
 			switch (tileType) {
 				// 2+1 tile type
 				case 1:
 					items.push(this.genTileType1(post));
 					tileType = 2;
-					break;
+					break; 
 				// 3 tile type
 				case 2:
 					items.push(this.genTileType2(post));
@@ -251,19 +271,16 @@ class Wanted extends Component {
 					height: tileHeight,
 					flexDirection: 'row',
 					alignItems: 'stretch',
-					backgroundColor: 'blue'
 				}}>
 				<View
 					style={{
 						flex: 1,
-						backgroundColor: 'grey',
 						margin: 10,
 						flexDirection: 'column'
 					}}>
 					<View
 						key={'tile' + postsPrinted}
-						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
-						<Text>{printId1}</Text>
+						style={{ flex: 1, margin: 10}}>
 						{/*
 						<Text
 							onPress={() =>
@@ -280,18 +297,26 @@ class Wanted extends Component {
 						<Text key={"price" + tyleNr}>{printPrice1}</Text>
 						<Text key={"photoType1" + tyleNr}>{printPhotoType11}</Text>
 						*/}
-						<Image
-							source={{ uri: primeiro.photoData }}
-							style={{
-								flex: 1
-							}}
-							resizeMode="contain"
-						/>
+						<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: primeiro.id});
+							}}>
+								
+								<Image
+									source={{ uri: primeiro.photoData }}
+									style={{
+										flex: 1,
+										borderRadius: 20
+									}}
+									resizeMode="cover"
+								/>
+						</TouchableOpacity>
 					</View>
 					<View
 						key={'tile' + postsPrinted + 1}
-						style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
-						<Text>{printId2}</Text>
+						style={{ flex: 1, margin: 10 }}>
 						{/*
 						<Text key={"idUser" + tyleNr+1}>{printIdUser2}</Text>
 						<Text key={"description" + tyleNr+1}>{printDescription2}</Text>
@@ -299,19 +324,26 @@ class Wanted extends Component {
 						<Text key={"price" + tyleNr+1}>{printPrice2}</Text>
 						<Text key={"photoType1" + tyleNr+1}>{printPhotoType12}</Text>
 						*/}
-						<Image
-							source={{ uri: segundo.photoData }}
-							style={{
-								flex: 1
-							}}
-							resizeMode="contain"
-						/>
+						<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: segundo.id});
+							}}>					
+							<Image
+								source={{ uri: segundo.photoData }}
+								style={{
+									flex: 1,
+									borderRadius: 20
+								}}
+								resizeMode="cover"
+							/>
+						</TouchableOpacity>	
 					</View>
 				</View>
 				<View
 					key={'tile' + postsPrinted + 2}
-					style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}>
-					<Text>{printId3}</Text>
+					style={{ flex: 2, margin: 10 }}>
 					{/*
 					<Text key={"idUser" + tyleNr+2}>{printIdUser3}</Text>
 					<Text key={"description" + tyleNr+2}>{printDescription3}</Text>
@@ -319,13 +351,21 @@ class Wanted extends Component {
 					<Text key={"price" + tyleNr+2}>{printPrice3}</Text>
 					<Text key={"photoType1" + tyleNr+2}>{printPhotoType13}</Text>
 					*/}
-					<Image
-						source={{ uri: terceiro.photoData }}
-						style={{
-							flex: 1
-						}}
-						resizeMode="contain"
-					/>
+					<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: terceiro.id});
+							}}>
+							<Image
+								source={{ uri: terceiro.photoData }}
+								style={{
+									flex: 1,
+									borderRadius: 20
+								}}
+								resizeMode="cover"
+							/>
+					</TouchableOpacity>
 				</View>
 			</View>
 		);
@@ -337,7 +377,7 @@ class Wanted extends Component {
 		var segundo = this.state.wishlistData[post + 1];
 		var terceiro = this.state.wishlistData[post + 2];
 		var postsPrinted = post;
-		var tileHeight = 150;
+		var tileHeight = 125;
 
 		// format data post 1
 		printId1 = 'id= ' + JSON.stringify(primeiro.id);
@@ -379,63 +419,87 @@ class Wanted extends Component {
 					height: tileHeight,
 					flexDirection: 'row',
 					alignItems: 'stretch',
-					backgroundColor: 'green'
 				}}>
 				<View
 					style={{
 						flex: 1,
-						backgroundColor: 'pink',
 						margin: 10
 					}}>
-					<Text key={'id' + postsPrinted}>{printId1}</Text>
+
 					{/*
+					<Text key={'id' + postsPrinted}>{printId1}</Text>
 					<Text key={"idUser" + post}>{printIdUser1}</Text>
 					<Text key={"description" + post}>{printDescription1}</Text>
 					<Text key={"isAvailable" + post}>{printIsAvailable1}</Text>
 					<Text key={"price" + post}>{printPrice1}</Text>
 					<Text key={"photoType1" + post}>{printPhotoType11}</Text>
 					*/}
-					<Image
-						source={{ uri: primeiro.photoData }}
-						style={{
-							flex: 1
-						}}
-						resizeMode="contain"
-					/>
+					<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: primeiro.id});
+							}}>
+						<Image
+							source={{ uri: primeiro.photoData }}
+							style={{
+								flex: 1,
+								borderRadius: 20
+							}}
+							resizeMode="cover"
+						/>
+					</TouchableOpacity>
 				</View>
-				<View style={{ flex: 1, backgroundColor: 'grey', margin: 10 }}>
-					<Text key={'id' + postsPrinted + 1}>{printId2}</Text>
+				<View style={{ flex: 1, margin: 10 }}>
+
 					{/*
+					<Text key={'id' + postsPrinted + 1}>{printId2}</Text>
 					<Text key={"idUser" + post+1}>{printIdUser2}</Text>
 					<Text key={"description" + post+1}>{printDescription2}</Text>
 					<Text key={"isAvailable" + post+1}>{printIsAvailable2}</Text>
 					<Text key={"price" + post+1}>{printPrice2}</Text>
 					<Text key={"photoType1" + post+1}>{printPhotoType12}</Text>
 					*/}
-					<Image
-						source={{ uri: segundo.photoData }}
-						style={{
-							flex: 1
-						}}
-						resizeMode="contain"
-					/>
+					<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: segundo.id});
+							}}>
+						<Image
+							source={{ uri: segundo.photoData }}
+							style={{
+								flex: 1,
+								borderRadius: 20
+							}}
+							resizeMode="cover"
+						/>
+					</TouchableOpacity>
 				</View>
-				<View style={{ flex: 1, backgroundColor: 'grey', margin: 10 }}>
-					<Text key={'id' + postsPrinted + 2}>{printId3}</Text>
+				<View style={{ flex: 1, margin: 10 }}>
 					{/*
+					<Text key={'id' + postsPrinted + 2}>{printId3}</Text>
 					<Text key={"idUser" + post+2}>{printIdUser3}</Text>
 					<Text key={"description" + post+2}>{printDescription3}</Text>
 					<Text key={"isAvailable" + post+2}>{printIsAvailable3}</Text>
 					<Text key={"price" + post+2}>{printPrice3}</Text>
 					<Text key={"photoType1" + post+2}>{printPhotoType13}</Text>
 					*/}
-					<Image
-						source={{ uri: terceiro.photoData }}
-						style={{
-							flex: 1
-						}}
-						resizeMode="contain"
-					/>
+					<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: terceiro.id});
+							}}>
+						<Image
+							source={{ uri: terceiro.photoData }}
+							style={{
+								flex: 1,
+								borderRadius: 20
+							}}
+							resizeMode="cover"
+						/>
+					</TouchableOpacity>
 				</View>
 			</View>
 		);
@@ -489,38 +553,45 @@ class Wanted extends Component {
 					height: tileHeight,
 					flexDirection: 'row',
 					alignItems: 'stretch',
-					backgroundColor: 'blue'
 				}}>
 				<View
 					key={'tile' + postsPrinted}
-					style={{ flex: 2, backgroundColor: 'pink', margin: 10 }}>
-					<Text>{printId1}</Text>
+					style={{ flex: 2, margin: 10 }}>
+
 					{/*
+					<Text>{printId1}</Text>
 					<Text key={"idUser" + tyleNr+2}>{printIdUser3}</Text>
 					<Text key={"description" + tyleNr+2}>{printDescription3}</Text>
 					<Text key={"isAvailable" + tyleNr+2}>{printIsAvailable3}</Text>
 					<Text key={"price" + tyleNr+2}>{printPrice3}</Text>
 					<Text key={"photoType1" + tyleNr+2}>{printPhotoType13}</Text>
 					*/}
-					<Image
-						source={{ uri: primeiro.photoData }}
-						style={{
-							flex: 1
-						}}
-						resizeMode="contain"
-					/>
+					<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: primeiro.id});
+							}}>
+						<Image
+							source={{ uri: primeiro.photoData }}
+							style={{
+								flex: 1,
+								borderRadius: 20
+							}}
+							resizeMode="cover"
+						/>
+					</TouchableOpacity>
 				</View>
 				<View
 					style={{
 						flex: 1,
-						backgroundColor: 'grey',
 						margin: 10,
 						flexDirection: 'column'
 					}}>
 					<View
 						key={'tile' + postsPrinted + 1}
-						style={{ flex: 1, backgroundColor: 'yellow', margin: 10 }}>
-						<Text>{printId2}</Text>
+						style={{ flex: 1, margin: 10 }}>
+
 						{/*
 						<Text
 							onPress={() =>
@@ -531,38 +602,56 @@ class Wanted extends Component {
 						*/}
 
 						{/*
+						<Text>{printId2}</Text>
 						<Text key={"idUser" + tyleNr}>{printIdUser1}</Text>
 						<Text key={"description" + tyleNr}>{printDescription1}</Text>
 						<Text key={"isAvailable" + tyleNr}>{printIsAvailable1}</Text>
 						<Text key={"price" + tyleNr}>{printPrice1}</Text>
 						<Text key={"photoType1" + tyleNr}>{printPhotoType11}</Text>
 						*/}
-						<Image
-							source={{ uri: segundo.photoData }}
-							style={{
-								flex: 1
-							}}
-							resizeMode="contain"
-						/>
+						<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: segundo.id});
+							}}>
+							<Image
+								source={{ uri: segundo.photoData }}
+								style={{
+									flex: 1,
+									borderRadius: 20
+								}}
+								resizeMode="cover"
+							/>
+						</TouchableOpacity>
 					</View>
 					<View
 						key={'tile' + postsPrinted + 2}
-						style={{ flex: 1, backgroundColor: 'red', margin: 10 }}>
-						<Text>{printId3}</Text>
+						style={{ flex: 1, margin: 10 }}>
+
 						{/*
+						<Text>{printId3}</Text>
 						<Text key={"idUser" + tyleNr+1}>{printIdUser2}</Text>
 						<Text key={"description" + tyleNr+1}>{printDescription2}</Text>
 						<Text key={"isAvailable" + tyleNr+1}>{printIsAvailable2}</Text>
 						<Text key={"price" + tyleNr+1}>{printPrice2}</Text>
 						<Text key={"photoType1" + tyleNr+1}>{printPhotoType12}</Text>
 						*/}
-						<Image
-							source={{ uri: terceiro.photoData }}
-							style={{
-								flex: 1
-							}}
-							resizeMode="contain"
-						/>
+						<TouchableOpacity
+							style={{ flex: 1 }}
+							activeOpacity={0.8}
+							onPress={() => {
+								this.props.navigation.navigate('UserPostProfile', {postID: terceiro.id});
+							}}>
+							<Image
+								source={{ uri: terceiro.photoData }}
+								style={{
+									flex: 1,
+									borderRadius: 20
+								}}
+								resizeMode="cover"
+							/>
+						</TouchableOpacity>
 					</View>
 				</View>
 			</View>

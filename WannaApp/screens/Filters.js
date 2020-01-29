@@ -35,6 +35,8 @@ class Filters extends Component {
 		if (Platform.OS == 'android') {
 			this.startHeaderHeight = 60;
 		}
+
+		this.getFiltersFromAPI();
 	}
 
 	async componentWillMount() {

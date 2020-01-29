@@ -28,9 +28,10 @@ const maleClothes = [
 	'Calças',
 	'Calções',
 	'Casaco',
-	'Outro'
+	'Outro',
+	'Qualquer'
 ];
-const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calções', 'Calçado', 'Casaco', 'Outro'];
+const femaleClothes = ['Top', 'Blusa', 'Vestido', 'Saia', 'Calças', 'Calções', 'Calçado', 'Casaco', 'Outro', 'Qualquer'];
 const colors = [
 	'Azul',
 	'Vermelho',
@@ -45,10 +46,11 @@ const colors = [
 	'Laranja',
 	'Roxo',
 	'Dourado',
-	'Outra'
+	'Outra',
+	'Qualquer'
 ];
-const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro'];
-const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56', 'Outro'];
+const sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'Outro', 'Qualquer'];
+const numSizes = ['32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56', 'Outro', 'Qualquer'];
 const prices = [1, 2, 3, 4, 5, 10, 15, 30, 50, 75, 100, 200, 400, 500];
 const { width } = Dimensions.get('screen');
 
@@ -98,8 +100,14 @@ class NewFilter extends Component {
 	handleClothe(newState) {
 		//console.log("Clothe selecionada: " + newState.selected);
 
-		// save selected genre
-		this.setState({ selectedClothe: newState.selected });
+		// when selecting "Qualquer" pass a null so backend do not verify
+		if(newState.selected == "Qualquer") {
+			this.setState({ selectedClothe: "" });
+		}
+		else {
+			// save selected genre
+			this.setState({ selectedClothe: newState.selected });
+		}
 
 		// give options for next step
 		this.setState({ optionsColors: colors });
@@ -107,10 +115,16 @@ class NewFilter extends Component {
 
 	//onValueChange of the switch this function will be called
 	handleColor(newState) {
-		//console.log("Cor selecionada: " + newState.selected);
+		console.log("Cor selecionada: " + newState.selected);
 
-		// save selected genre
-		this.setState({ selectedColor: newState.selected });
+		// when selecting "Qualquer" pass a null so backend do not verify
+		if(newState.selected == "Qualquer") {
+			this.setState({ selectedColor: "" });
+		}
+		else {
+			// save selected genre
+			this.setState({ selectedColor: newState.selected });
+		}
 
 		// give options for next step
 		this.setState({ optionsSizes: sizes });
@@ -120,9 +134,15 @@ class NewFilter extends Component {
 	handleSizes(newState) {
 		//console.log("Cor selecionada: " + newState.selected);
 
-		// save selected genre
-		this.setState({ selectedSize: newState.selected });
-
+		// when selecting "Qualquer" pass a null so backend do not verify
+		if(newState.selected == "Qualquer") {
+			this.setState({ selectedSize: "" });
+		}
+		else {
+			// save selected genre
+			this.setState({ selectedSize: newState.selected });
+		}
+		
 		// give options for next step
 		this.setState({ optionsPriceMin: prices });
 	}
@@ -375,6 +395,7 @@ class NewFilter extends Component {
 									Adicionar Filtro
 								</Button>
 							}
+
 				</View>		
 			</ScrollView>
 
