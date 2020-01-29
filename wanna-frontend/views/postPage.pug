@@ -124,7 +124,6 @@ html
 		script(src="/javascripts/jquery-3.4.1.min.js")
 		script.
 			$("#gallery img").click(function(e){
-				console.log(e)
 				$(".img-caixa").attr("src", $(this).attr('src'));
 			});
 		include footer.pug
