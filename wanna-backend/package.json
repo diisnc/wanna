@@ -1,13 +1,13 @@
 {
   "name": "wanna-backend",
-  "version": "10.17.0",
+  "version": "10.16.1",
   "description": "A marketplace/social network system for clothes",
   "author": "group",
   "main": "src/index.js",
   "private": false,
   "license": "UNLICENSED",
   "engines": {
-    "node": "10.17.0",
+    "node": "10.16.1",
     "yarn": "*"
   },
   "scripts": {

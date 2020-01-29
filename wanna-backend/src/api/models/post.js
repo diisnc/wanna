@@ -259,7 +259,7 @@ module.exports = (sequelize, DataTypes) => {
 		);
 		var sql = '';
 		for (var i = 0; i < body.length; i++) {
-			sql = sql.concat(' SELECT * FROM "Posts" JOIN "Photos" ON "Photos"."idPost" = "Posts"."id" AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost") WHERE ');
+			sql = sql.concat(' SELECT DISTINCT * FROM "Posts" JOIN "Photos" ON "Photos"."idPost" = "Posts"."id" AND "Photos"."id" IN (SELECT MIN("Photos"."id") FROM "Photos" GROUP BY "Photos"."idPost") WHERE ');
 			if (body[i].category) {
 				sql = sql.concat(
 					' "category" = \'' + body[i].category + "' AND ",
