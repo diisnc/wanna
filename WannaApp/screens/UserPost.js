@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity , Button } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { Card, CardItem, Body, Left, Right } from 'native-base';
 import { theme } from '../galio';
@@ -124,21 +124,17 @@ class UserPost extends Component {
 
 						<Right>
 							{this.props.item.brand == null ? null : (
-								<Text
-									style={{ color: '#3498DB', fontWeight: 'bold', fontSize: 17 }}>
-									{this.props.item.price}€
-								</Text>
+								<Button
+									title={this.props.item.price + " €"}
+									titleStyle={{fontWeight: 'bold', fontSize: 17}}
+									color='#3498DB'
+									onPress={() => {
+										this.props.navigation.navigate('Purchase', {
+											idPost: this.props.item.id,
+											price: this.props.item.price})
+									}}
+								/>
 							)}
-							<TouchableOpacity
-								activeOpacity={0.5}
-								onPress={() => {
-									this.props.navigation.navigate('Purchase', {
-										idPost: this.props.item.id
-									});
-								}}>
-								<EvilIcons name="cart" size={33} style={{ paddingRight: '3.5%' }} />
-								<Text>Comprar</Text>
-							</TouchableOpacity>
 						</Right>
 					</CardItem>
 				</Card>

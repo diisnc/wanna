@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, AsyncStorage, SafeAreaView, Platform, Text } from 'react-native';
+import { TouchableHighlight, AsyncStorage, SafeAreaView, Platform, Text, TextInput, ToastAndroid} from 'react-native';
 import { View, Container, Content, Grid, Col, Left, Right, Button, Icon, List, ListItem, Body, Radio, Input, Item } from 'native-base';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import FAIcon from '@expo/vector-icons/FontAwesome';
 
 class Purchase extends Component {
+
+	constructor(props) {
+		super(props);
+
+		console.log(this.props)
+
+	}
 
 	state = {
 		fontLoaded: false
@@ -100,63 +107,79 @@ class Purchase extends Component {
 			<Container style={{ backgroundColor: '#fdfdfd' }}>
 				<Content padder>
 					<View>
-						<Text style={{ marginTop: 15, fontSize: 18 }}>Shipping information</Text>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="Name"
-								onChangeText={text => this.setState({ name: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="Email"
-								onChangeText={text => this.setState({ email: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="Phone"
-								onChangeText={text => this.setState({ phone: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="Country"
-								onChangeText={text => this.setState({ country: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="Address"
-								onChangeText={text => this.setState({ address: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="City"
-								onChangeText={text => this.setState({ city: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="Postcode"
-								onChangeText={text => this.setState({ postcode: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
-						<Item regular style={{ marginTop: 7 }}>
-							<Input
-								placeholder="Note"
-								onChangeText={text => this.setState({ note: text })}
-								placeholderTextColor="#687373"
-							/>
-						</Item>
+						<Text style={{ margin: 10, fontSize: 18 }}>Informação de envio</Text>
+						
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="Nome"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ name: text })}
+						/>
+						</View>
+
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="Email"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ email: text })}
+						/>
+						</View>
+
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="Telemóvel"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ phone: text })}
+						/>
+						</View>
+
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="País"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ country: text })}
+						/>
+						</View>
+
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="Morada"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ address: text })}
+						/>
+						</View>
+
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="Cidade"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ city: text })}
+						/>
+						</View>
+
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="Código Postal"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ postcode: text })}
+						/>
+						</View>
+
+						<View style={{ flex: 1 }}>
+						<TextInput
+							style={ styles.formBox }
+							placeholder="Notas"
+							placeholderTextColor="black"
+							onChangeText={text => this.setState({ note: text })}
+						/>
+						</View>
 					</View>
 					<Text style={{ marginTop: 15, fontSize: 18 }}>Your order</Text>
 					<View style={styles.invoice}>
@@ -172,14 +195,14 @@ class Purchase extends Component {
 										fontSize: 18,
 										fontWeight: 'bold'
 									}}>
-									{this.state.total + '$'}
+									{this.props.navigation.getParam('price', 'N/A') + ' €'}
 								</Text>
 							</Col>
 						</Grid>
 					</View>
 					<View>
 						<Text style={{ marginTop: 15, marginBottom: 7, fontSize: 18 }}>
-							Payement method
+							Método de Pagamento
 						</Text>
 						<ListItem
 							style={{
@@ -188,7 +211,7 @@ class Purchase extends Component {
 								paddingLeft: 10,
 								marginLeft: 0
 							}}>
-							<Text>Pay with card</Text>
+							<Text>Pagar com cartão</Text>
 							<FAIcon
 								name="cc-mastercard"
 								size={20}
@@ -216,7 +239,7 @@ class Purchase extends Component {
 								marginLeft: 0,
 								borderTopWidth: 0
 							}}>
-							<Text>Pay with Paypal</Text>
+							<Text>Pagar com Paypal</Text>
 							<FAIcon
 								name="cc-paypal"
 								size={20}
@@ -238,12 +261,17 @@ class Purchase extends Component {
 							block
 							iconLeft>
 							<Icon name="ios-card" />
-							<Text style={{ color: '#fdfdfd' }}>Proceed to payement</Text>
+							<Text style={{ color: '#fdfdfd' }}>Confirmar</Text>
 						</Button>
 					</View>
 				</Content>
 			</Container>
 		);
+	}
+
+	checkout() {
+		this.props.navigation.navigate('MyFeed');
+		ToastAndroid.show('Compra efetuada!', ToastAndroid.LONG);
 	}
 }
 
@@ -258,5 +286,13 @@ const styles = {
 		width: '100%',
 		height: 1,
 		backgroundColor: '#bdc3c7'
+	},
+	formBox: {
+		flex: 1,
+		backgroundColor: 'rgb(240, 240, 240)',
+		borderRadius: 30,
+		marginBottom: 10,
+		padding: 6,
+		paddingLeft: 12
 	}
 };

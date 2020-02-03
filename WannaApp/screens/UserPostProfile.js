@@ -4,14 +4,12 @@ import {
 	Text,
 	StyleSheet,
 	SafeAreaView,
-	TextInput,
 	Platform,
 	ScrollView,
 	Image,
-	TouchableHighlight,
 	Dimensions,
 	FlatList,
-	TouchableOpacity
+	Button
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 global.Buffer = global.Buffer || require('buffer').Buffer;
@@ -219,19 +217,16 @@ class UserPostProfile extends Component {
 						</Left>
 
 						<Right>
-							<Text style={{ color: '#3498DB', fontWeight: 'bold', fontSize: 17 }}>
-								{this.state.post.postInfo.price}€
-							</Text>
-							<TouchableOpacity
-								activeOpacity={0.5}
+							<Button
+								title={this.state.post.postInfo.price + " €"}
+								titleStyle={{fontWeight: 'bold', fontSize: 17}}
+								color='#3498DB'
 								onPress={() => {
 									this.props.navigation.navigate('Purchase', {
-										idPost: this.state.post.postInfo.id
-									});
-								}}>
-								<EvilIcons name="cart" size={33} style={{ paddingRight: '3.5%' }} />
-								<Text>Comprar</Text>
-							</TouchableOpacity>
+										idPost: this.state.post.postInfo.id,
+										price: this.state.post.postInfo.price})
+								}}
+							/>	
 						</Right>
 					</CardItem>
 				</Card>
