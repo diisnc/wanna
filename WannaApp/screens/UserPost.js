@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	Image,
-	Dimensions,
-	TouchableOpacity
-} from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 global.Buffer = global.Buffer || require('buffer').Buffer;
 import { Card, CardItem, Body, Left, Right } from 'native-base';
 import { theme } from '../galio';
 import PostButtons from './components/PostButtons';
 import { ScrollView } from 'react-native-gesture-handler';
+import { EvilIcons } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -69,17 +63,12 @@ class UserPost extends Component {
 									</Text>
 								</TouchableOpacity>
 
-								<Text style={{ fontSize: 12, color: 'gray' }}>{this.props.item.location}</Text>
+								<Text style={{ fontSize: 12, color: 'gray' }}>
+									{this.props.item.location}
+								</Text>
 							</Body>
 						</Left>
 					</CardItem>
-
-
-
-
-
-
-
 
 					<CardItem cardBody>
 						<TouchableOpacity
@@ -96,45 +85,33 @@ class UserPost extends Component {
 						</TouchableOpacity>
 					</CardItem>
 
-
-
-
-
-
-
 					<PostButtons
-								idPost={this.props.item.id}
-								idUser={this.props.item.idUser}
-								navigation={this.props.navigation}
+						idPost={this.props.item.id}
+						idUser={this.props.item.idUser}
+						navigation={this.props.navigation}
 					/>
 
-
-
-
-
-
-					<CardItem>	
+					<CardItem>
 						<Left>
-							<View style={{flex: 1, flexDirection: 'column'}}>
-								<Text style={{fontWeight: 'bold', fontSize: 16}}>
+							<View style={{ flex: 1, flexDirection: 'column' }}>
+								<Text style={{ fontWeight: 'bold', fontSize: 16 }}>
 									{this.props.item.category}
 								</Text>
 
-								
 								{this.props.item.brand == null ? (
-									<Text style={{color: 'gray'}}>
+									<Text style={{ color: 'gray' }}>
 										{this.props.item.color} • {this.props.item.size}
 									</Text>
-								) : (									
-									<Text style={{color: 'gray'}}>
-										{this.props.item.brand} • {this.props.item.color} • {this.props.item.size}
+								) : (
+									<Text style={{ color: 'gray' }}>
+										{this.props.item.brand} • {this.props.item.color} •{' '}
+										{this.props.item.size}
 									</Text>
 								)}
-								
-								
+
 								{/* DESCRIÇÃO
 
-									Esta descrição não aparece no feed, mas depois aproveitem para o userPostProfile 
+									Esta descrição não aparece no feed, mas depois aproveitem para o userPostProfile
 									Nota: Talvez noutro CardItem, caso contrário o preço que aparece do lado direito
 										  vai deslizando para baixo se a descrição for grande :)
 
@@ -142,16 +119,27 @@ class UserPost extends Component {
 									{this.props.item.description}
 								</Text>
 								*/}
-							</View>	
+							</View>
 						</Left>
-								
+
 						<Right>
 							{this.props.item.brand == null ? null : (
-								<Text style={{color:'#3498DB', fontWeight: 'bold', fontSize: 17}}>{this.props.item.price}€</Text>
+								<Text
+									style={{ color: '#3498DB', fontWeight: 'bold', fontSize: 17 }}>
+									{this.props.item.price}€
+								</Text>
 							)}
+							<TouchableOpacity
+								activeOpacity={0.5}
+								onPress={() => {
+									this.props.navigation.navigate('Purchase', {
+										idPost: this.props.item.id
+									});
+								}}>
+								<EvilIcons name="plus" size={33} style={{ paddingRight: '3.5%' }} />
+							</TouchableOpacity>
 						</Right>
 					</CardItem>
-
 				</Card>
 			);
 		} else return null;

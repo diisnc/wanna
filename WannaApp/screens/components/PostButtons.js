@@ -8,11 +8,7 @@ import {
 	save,
 	unsave
 } from '../../modules/profile/profile.reducer';
-import {
-	View,
-	Text,
-	TouchableOpacity
-} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { vote, removeVote, savePost, unsavePost } from '../../modules/post/post.api';
 import { EvilIcons } from '@expo/vector-icons';
 import { CardItem, Left, Right } from 'native-base';
@@ -23,7 +19,7 @@ class PostButtons extends Component {
 		return (
 			<CardItem>
 				{this.buildVotes(this.props.idPost)}
-				
+
 				<Right>
 					<View style={{ flex: 1, flexDirection: 'row' }}>
 						{this.buildSavedPost(this.props.idPost)}
@@ -58,17 +54,17 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.likeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-up" size={33} style={{paddingRight: '4%'}}/>
+							<EvilIcons name="arrow-up" size={33} style={{ paddingRight: '4%' }} />
 						</TouchableOpacity>
-						
+
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.disLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-down" size={33} style={{paddingRight: '2%'}}/>
+							<EvilIcons name="arrow-down" size={33} style={{ paddingRight: '2%' }} />
 						</TouchableOpacity>
-						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
+						<Text style={{ paddingTop: '1%' }}>{showLikes}</Text>
 					</Left>
 				);
 			} else if (voteType == 1) {
@@ -79,18 +75,23 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.unLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-up" size={33} color="#3498DB" style={{paddingRight: '4%'}}/>
+							<EvilIcons
+								name="arrow-up"
+								size={33}
+								color="#3498DB"
+								style={{ paddingRight: '4%' }}
+							/>
 						</TouchableOpacity>
-						
+
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.unLikeHandler(idPost);
 								this.disLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-down" size={33} style={{paddingRight: '2%'}}/>
+							<EvilIcons name="arrow-down" size={33} style={{ paddingRight: '2%' }} />
 						</TouchableOpacity>
-						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
+						<Text style={{ paddingTop: '1%' }}>{showLikes}</Text>
 					</Left>
 				);
 			} else if (voteType == -1) {
@@ -102,17 +103,22 @@ class PostButtons extends Component {
 								this.unDisLikeHandler(idPost);
 								this.likeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-up" size={33} style={{paddingRight: '4%'}}/>
+							<EvilIcons name="arrow-up" size={33} style={{ paddingRight: '4%' }} />
 						</TouchableOpacity>
-						
+
 						<TouchableOpacity
 							activeOpacity={0.5}
 							onPress={() => {
 								this.unDisLikeHandler(idPost);
 							}}>
-							<EvilIcons name="arrow-down" size={33} color="#3498DB" style={{paddingRight: '2%'}}/>
+							<EvilIcons
+								name="arrow-down"
+								size={33}
+								color="#3498DB"
+								style={{ paddingRight: '2%' }}
+							/>
 						</TouchableOpacity>
-						<Text style={{paddingTop: '1%'}}>{showLikes}</Text>
+						<Text style={{ paddingTop: '1%' }}>{showLikes}</Text>
 					</Left>
 				);
 			} else return null;
@@ -133,7 +139,7 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.saveHandler(idPost);
 							}}>
-							<EvilIcons name="plus" size={33} style={{paddingRight: '3.5%'}}/>
+							<EvilIcons name="plus" size={33} style={{ paddingRight: '3.5%' }} />
 						</TouchableOpacity>
 					</View>
 				);
@@ -145,7 +151,12 @@ class PostButtons extends Component {
 							onPress={() => {
 								this.unsaveHandler(idPost);
 							}}>
-							<EvilIcons name="plus" color="#3498DB" size={33} style={{paddingRight: '3.5%'}}/>
+							<EvilIcons
+								name="plus"
+								color="#3498DB"
+								size={33}
+								style={{ paddingRight: '3.5%' }}
+							/>
 						</TouchableOpacity>
 					</View>
 				);
@@ -163,14 +174,14 @@ class PostButtons extends Component {
 							idPost: idPost
 						});
 					}}>
-					<EvilIcons name="comment" size={33} style={{paddingRight: '3.5%'}}/>
+					<EvilIcons name="comment" size={33} style={{ paddingRight: '3.5%' }} />
 				</TouchableOpacity>
 			</View>
 		);
 	}
 
 	buildChat(idPost) {
-		if(this.props.idUser != this.props.loggedUsername){
+		if (this.props.idUser != this.props.loggedUsername) {
 			return (
 				<View>
 					<TouchableOpacity
@@ -178,12 +189,11 @@ class PostButtons extends Component {
 						onPress={() => {
 							this.props.enterChat(this.props.idUser, null, idPost);
 						}}>
-						<EvilIcons name="envelope" size={33} style={{paddingRight: '3.5%'}}/>
+						<EvilIcons name="envelope" size={33} style={{ paddingRight: '3.5%' }} />
 					</TouchableOpacity>
 				</View>
 			);
-		}else return null;
-
+		} else return null;
 	}
 
 	async saveHandler(idPost) {

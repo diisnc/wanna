@@ -10,6 +10,7 @@ import FollowList from './FollowList';
 import Comments from './Comments';
 import ConversationsList from './ConversationsList';
 import Chat from './Chat';
+import Purchase from './Purchase';
 import UserPostProfile from './UserPostProfile';
 import SavedPosts from './SavedPosts';
 import React, { Component } from 'react';
@@ -97,7 +98,14 @@ const FilterStack = createStackNavigator(
 			navigationOptions: {
 				header: null
 			}
-		}
+		},
+		Purchase: {
+			screen: Purchase,
+			headerMode: 'none',
+			navigationOptions: {
+				header: null
+			}
+		},
 	},
 	{
 		transitionConfig
@@ -136,6 +144,13 @@ const UserStack = createStackNavigator(
 		},
 		UserPostProfile: {
 			screen: UserPostProfile,
+			headerMode: 'none',
+			navigationOptions: {
+				header: null
+			}
+		},
+		Purchase: {
+			screen: Purchase,
 			headerMode: 'none',
 			navigationOptions: {
 				header: null
@@ -198,6 +213,13 @@ const FeedStack = createStackNavigator(
 		},
 		Comments: {
 			screen: Comments,
+			headerMode: 'none',
+			navigationOptions: {
+				header: null
+			}
+		},
+		Purchase: {
+			screen: Purchase,
 			headerMode: 'none',
 			navigationOptions: {
 				header: null

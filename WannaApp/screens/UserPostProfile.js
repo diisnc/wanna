@@ -22,6 +22,7 @@ import { vote, removeVote, savePost, unsavePost } from '../modules/post/post.api
 import PostButtons from './components/PostButtons';
 import { Card, CardItem, Body, Left, Right } from 'native-base';
 import { theme } from '../galio';
+import { EvilIcons } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -189,17 +190,17 @@ class UserPostProfile extends Component {
 						navigation={this.props.navigation}
 					/>
 
-					<CardItem>	
+					<CardItem>
 						<Left>
 							<View style={{flex: 1, flexDirection: 'column'}}>
 								<Text style={{fontWeight: 'bold', fontSize: 16}}>
 									{this.state.post.postInfo.category}
-								</Text>				
+								</Text>
 								{this.state.post.postInfo.brand == null ? (
 									<Text style={{color: 'gray'}}>
 										{this.state.post.postInfo.color} • {this.state.post.postInfo.size}
 									</Text>
-								) : (									
+								) : (
 									<Text style={{color: 'gray'}}>
 										{this.state.post.postInfo.brand} • {this.state.post.postInfo.color} • {this.state.post.postInfo.size}
 									</Text>
@@ -208,15 +209,24 @@ class UserPostProfile extends Component {
 								<Text style={{color: 'gray'}}>
 									{this.state.post.postInfo.description}
 								</Text>
-							</View>	
+							</View>
 						</Left>
-									
+
 						<Right>
 							<Text style={{color:'#3498DB', fontWeight: 'bold', fontSize: 17}}>{this.state.post.postInfo.price}€</Text>
+							<TouchableOpacity
+								activeOpacity={0.5}
+								onPress={() => {
+									this.props.navigation.navigate('Purchase', {
+										idPost: this.state.post.postInfo.id
+									});
+								}}>
+								<EvilIcons name="plus" size={33} style={{ paddingRight: '3.5%' }} />
+							</TouchableOpacity>
 						</Right>
 					</CardItem>
 				</Card>
-			</ScrollView>					
+			</ScrollView>
 
 
 		);
