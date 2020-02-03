@@ -136,7 +136,8 @@ class UserPost extends Component {
 										idPost: this.props.item.id
 									});
 								}}>
-								<EvilIcons name="plus" size={33} style={{ paddingRight: '3.5%' }} />
+								<EvilIcons name="cart" size={33} style={{ paddingRight: '3.5%' }} />
+								<Text>Comprar</Text>
 							</TouchableOpacity>
 						</Right>
 					</CardItem>

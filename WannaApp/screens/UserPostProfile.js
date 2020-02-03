@@ -53,7 +53,7 @@ class UserPostProfile extends Component {
 
 	async componentWillMount() {
 		await Expo.Font.loadAsync({
-			'run': require('../assets/fonts/run.ttf'),
+			run: require('../assets/fonts/run.ttf')
 		});
 		this.setState({ fontLoaded: true });
 	}
@@ -91,36 +91,38 @@ class UserPostProfile extends Component {
 
 	// Builds header of the page
 	buildHeader() {
-		if (this.state.fontLoaded){
-		return (
-			// Safe Box for Android
-			<View
-				style={{
-					height: this.startHeaderHeight,
-					backgroundColor: 'white',
-					borderBottomWidth: 1,
-					borderBottomColor: '#dddddd'
-				}}>
+		if (this.state.fontLoaded) {
+			return (
+				// Safe Box for Android
 				<View
 					style={{
-						height: '90%',
-						flexDirection: 'row',
-						padding: 10,
-						justifyContent: 'center',
-						alignItems: 'center',
-						fontSize: 20
+						height: this.startHeaderHeight,
+						backgroundColor: 'white',
+						borderBottomWidth: 1,
+						borderBottomColor: '#dddddd'
 					}}>
-					<Text style={{
-						flex: 1,
-						textAlign: 'left',
-						fontSize: 40,
-						fontFamily: 'run'
+					<View
+						style={{
+							height: '90%',
+							flexDirection: 'row',
+							padding: 10,
+							justifyContent: 'center',
+							alignItems: 'center',
+							fontSize: 20
 						}}>
-						POST
-					</Text>
+						<Text
+							style={{
+								flex: 1,
+								textAlign: 'left',
+								fontSize: 40,
+								fontFamily: 'run'
+							}}>
+							POST
+						</Text>
+					</View>
 				</View>
-			</View>
-		);}
+			);
+		}
 	}
 
 	buildPost() {
@@ -131,21 +133,21 @@ class UserPostProfile extends Component {
 						<Left>
 							{this.state.post.userInfo.avatarData != null ? (
 								<Image
-										style={{ width: 60, height: 60, borderRadius: 50 }}
-										source={{ uri: this.state.post.userInfo.avatarData }}
+									style={{ width: 60, height: 60, borderRadius: 50 }}
+									source={{ uri: this.state.post.userInfo.avatarData }}
 								/>
 							) : (
 								<Image
-										style={{ width: 60, height: 60, borderRadius: 50 }}
-										source={require('../assets/noImage.png')}
-									/>
+									style={{ width: 60, height: 60, borderRadius: 50 }}
+									source={require('../assets/noImage.png')}
+								/>
 							)}
 							<Body>
 								<Text style={{ fontSize: 16, alignContent: 'center' }}>
 									{this.state.post.postInfo.idUser}
 								</Text>
 								<Text style={{ fontSize: 12, color: 'grey' }}>
-									{ this.state.post.userInfo.location }
+									{this.state.post.userInfo.location}
 								</Text>
 							</Body>
 						</Left>
@@ -153,35 +155,36 @@ class UserPostProfile extends Component {
 
 					<CardItem cardBody>
 						<FlatList
-								horizontal
-								data={this.state.post.photos}
-								renderItem={({ index }) => {
-									return (
-										<View
-											key={index}
+							horizontal
+							data={this.state.post.photos}
+							renderItem={({ index }) => {
+								return (
+									<View
+										key={index}
+										style={{
+											width: screenWidth - theme.SIZES.BASE * 0.5,
+											height: 300,
+											justifyContent: 'space-around',
+											alignItems: 'center'
+										}}>
+										<Image
+											source={{
+												uri: this.state.post.photos[index].photoData
+											}}
 											style={{
-												width: screenWidth - theme.SIZES.BASE * 0.5 ,
-												height: 300,
-												justifyContent: 'space-around',
-												alignItems: 'center'
-											}}>
-											<Image
-												source={{ uri: this.state.post.photos[index].photoData }}
-												style={{
-													aspectRatio: 1,
-													width: '90%',
-													backgroundColor: 'red'
-												}}
-												resizeMode="cover"
-											/>
-										</View>
-									);
-								}}
-								keyExtractor={(item, index) => this.state.postID + index.toString()}
-								pagingEnabled
-								snapToInterval={this.state.width}
-								snapToAlignment="center">
-						</FlatList>
+												aspectRatio: 1,
+												width: '90%',
+												backgroundColor: 'red'
+											}}
+											resizeMode="cover"
+										/>
+									</View>
+								);
+							}}
+							keyExtractor={(item, index) => this.state.postID + index.toString()}
+							pagingEnabled
+							snapToInterval={this.state.width}
+							snapToAlignment="center"></FlatList>
 					</CardItem>
 
 					<PostButtons
@@ -192,28 +195,33 @@ class UserPostProfile extends Component {
 
 					<CardItem>
 						<Left>
-							<View style={{flex: 1, flexDirection: 'column'}}>
-								<Text style={{fontWeight: 'bold', fontSize: 16}}>
+							<View style={{ flex: 1, flexDirection: 'column' }}>
+								<Text style={{ fontWeight: 'bold', fontSize: 16 }}>
 									{this.state.post.postInfo.category}
 								</Text>
 								{this.state.post.postInfo.brand == null ? (
-									<Text style={{color: 'gray'}}>
-										{this.state.post.postInfo.color} • {this.state.post.postInfo.size}
+									<Text style={{ color: 'gray' }}>
+										{this.state.post.postInfo.color} •{' '}
+										{this.state.post.postInfo.size}
 									</Text>
 								) : (
-									<Text style={{color: 'gray'}}>
-										{this.state.post.postInfo.brand} • {this.state.post.postInfo.color} • {this.state.post.postInfo.size}
+									<Text style={{ color: 'gray' }}>
+										{this.state.post.postInfo.brand} •{' '}
+										{this.state.post.postInfo.color} •{' '}
+										{this.state.post.postInfo.size}
 									</Text>
 								)}
 
-								<Text style={{color: 'gray'}}>
+								<Text style={{ color: 'gray' }}>
 									{this.state.post.postInfo.description}
 								</Text>
 							</View>
 						</Left>
 
 						<Right>
-							<Text style={{color:'#3498DB', fontWeight: 'bold', fontSize: 17}}>{this.state.post.postInfo.price}€</Text>
+							<Text style={{ color: '#3498DB', fontWeight: 'bold', fontSize: 17 }}>
+								{this.state.post.postInfo.price}€
+							</Text>
 							<TouchableOpacity
 								activeOpacity={0.5}
 								onPress={() => {
@@ -221,14 +229,13 @@ class UserPostProfile extends Component {
 										idPost: this.state.post.postInfo.id
 									});
 								}}>
-								<EvilIcons name="plus" size={33} style={{ paddingRight: '3.5%' }} />
+								<EvilIcons name="cart" size={33} style={{ paddingRight: '3.5%' }} />
+								<Text>Comprar</Text>
 							</TouchableOpacity>
 						</Right>
 					</CardItem>
 				</Card>
 			</ScrollView>
-
-
 		);
 	}
 }
