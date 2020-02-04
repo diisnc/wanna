@@ -282,9 +282,6 @@ html
 											img.img-user(src=post.avatarData)
 										a.txt-username(href='/profile?username='+post.idUser)
 											b= post.idUser
-									//.card-options-area
-										//button.btn.search-bar.btn-mini.bg-trans.btn-secondary(type='button')
-											//i.fas.fa-ellipsis-h
 										// 
 								a(href="/post?id="+post.id)
 									.card-img-caixa
@@ -342,7 +339,7 @@ html
 									.my-comment
 										form(method="POST" action="/comment" style="width:100%")
 											input(type="hidden" name="idPost" value=post.id)
-											textarea#comment_104.comment-input.form-control(placeholder='Escreve um comentário...' wrap='soft' name="commentData" required style='resize: none; overflow-y: scroll; height: 60px;')
+											textarea.comment-input.form-control(placeholder='Escreve um comentário...' wrap='soft' name="commentData" required style='resize: none; overflow-y: scroll; height: 60px;')
 											input(type="image" src="/img/icns/direct.svg" style="width:25px; height: 24px;position:relative;top:25%")
 										// 
 										// 
@@ -378,4 +375,25 @@ html
 										li#carousel-2___BV_indicator_3_(role='button' tabindex='-1' aria-current='false' aria-label='Goto Slide 3' aria-controls='carousel-2___BV_inner_' aria-describedby='__BVID__34')
 								a.btn.btn-primary.btn-download(href='')
 									b Download app
+					#navigation.col-sm-8(style="text-align:center;margin-top:30px")
+						if prevPage !== -1
+							a(href="/?page="+prevPage)
+								img#prevPage(src="./img/icns/wanna-anterior.png" style="width:20%")
+						if nextPage !== -1
+							a(href="/?page="+nextPage)
+								img#nextPage(src="./img/icns/wanna-proxima.png" style="width:20%")
+		script(src="/javascripts/jquery-3.4.1.min.js")
+		script.
+			$("#prevPage").hover(function(e){
+				$(this).attr("src","./img/icns/wanna-anterior-hover.png");
+			});
+			$("#prevPage").mouseout(function(e){
+				$(this).attr("src","./img/icns/wanna-anterior.png");
+			});
+			$("#nextPage").hover(function(e){
+				$(this).attr("src","./img/icns/wanna-proxima-hover.png");
+			});
+			$("#nextPage").mouseout(function(e){
+				$(this).attr("src","./img/icns/wanna-proxima.png");
+			});
 		include footer.pug

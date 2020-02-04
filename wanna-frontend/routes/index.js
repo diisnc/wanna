@@ -8,10 +8,7 @@ const hashids = new Hashids()
 router.get('/', function(req, res, next) {
 	var pageNumber=0
 	if(req.query.page)
-		pageNumber=req.query.page
-	var postID=''
-	if(req.query.postID)
-		postID=req.query.postID
+		pageNumber=parseInt(req.query.page)
 	axios.get('http://infernoo.duckdns.org:8000/v1/post/feed?page='+pageNumber,{
 		headers: {'Authorization': "bearer " + req.signedCookies.accessToken}
 	})
@@ -19,7 +16,22 @@ router.get('/', function(req, res, next) {
 		response.data.forEach(function(entry) {
 			entry.id = hashids.encode(entry.id)
 		});
-		res.render('inspire', { data: response.data, postID: postID })
+		if(req.query.page){
+			if(response.data.length!=5){
+				var pageNext=-1
+				var pagePrev=parseInt(req.query.page)-1
+			}else if(req.query.page==0){
+				var pageNext=parseInt(req.query.page)+1
+				var pagePrev=-1
+			}else{
+				var pageNext=parseInt(req.query.page)+1
+				var pagePrev=parseInt(req.query.page)-1
+			}
+		}else{
+			var pageNext=parseInt(req.query.page)+1
+			var pagePrev=-1
+		}
+		res.render('inspire', { data: response.data, nextPage: pageNext, prevPage: pagePrev})
 	})
 	.catch(error => {
 		if(error.response && error.response.status==401){
