@@ -125,7 +125,7 @@ form{
 .my-comment{
 	text-align: left;
 	width:auto !important;
-	margin: 0px 0px 60px 10px;
+	margin: 0px 0px 0px 10px;
 	display: flex !important;
 }
 .comment-input{
