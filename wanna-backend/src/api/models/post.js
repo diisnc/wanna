@@ -144,12 +144,11 @@ module.exports = (sequelize, DataTypes) => {
 				' WHERE "follower_id" = :idUser AND "Posts"."idUser"="followed_id") ' +
 				' ORDER BY "Posts"."createdAt"' +
 				' OFFSET :page1 ROWS' +
-				' FETCH NEXT :page2 ROWS ONLY',
+				' FETCH NEXT 5 ROWS ONLY',
 			{
 				replacements: {
 					idUser: usernameArg,
 					page1: 5 * pageArg,
-					page2: 5 * pageArg + 5,
 				},
 				type: this.sequelize.QueryTypes.SELECT,
 			},
