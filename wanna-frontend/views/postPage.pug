@@ -30,8 +30,9 @@ html
 						.card(style="margin-bottom:15px")
 							h1= data.postInfo.description
 							h3= data.postInfo.category
-							h1(style='color: rgb(74, 83, 252);')
-								b #{data.postInfo.price} €
+							if data.postInfo.isAvailable
+								h1(style='color: rgb(74, 83, 252);')
+									b #{data.postInfo.price} €
 							p.details-post
 								b #{data.postInfo.brand} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{data.postInfo.size} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{data.postInfo.color}
 						.reaction-left-area

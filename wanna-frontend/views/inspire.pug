@@ -333,8 +333,9 @@ html
 										p.details-post
 											b #{post.brand} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.size} &rlm;&rlm;&lrm; &bull; &rlm;&rlm;&lrm; #{post.color}
 									.card-options-area
-										h4(style='color: rgb(74, 83, 252);')
-											b #{post.price} €
+										if post.isAvailable
+											h4(style='color: rgb(74, 83, 252);')
+												b #{post.price} €
 								.comment-area
 									.my-comment
 										form(method="POST" action="/comment" style="width:100%")
