@@ -28,7 +28,7 @@ router.get('/', function(req, res, next) {
 				var pagePrev=parseInt(req.query.page)-1
 			}
 		}else{
-			var pageNext=parseInt(req.query.page)+1
+			var pageNext=1
 			var pagePrev=-1
 		}
 		res.render('inspire', { data: response.data, nextPage: pageNext, prevPage: pagePrev})
